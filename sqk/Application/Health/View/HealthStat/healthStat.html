@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <!--自定义样式及脚本放于此处-->
+        <link rel="stylesheet" href="__PUBLIC__/health/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/health/css/index.css">
+        <script type="text/javascript" src="__PUBLIC__/health/js/index/index.js"></script>
+        <title>{$config['system_name']}</title>
+    </head>
+    <body
+        <div class="container" style="width:98%;background-color: #fff;">
+
+            <div class="row" style="background-color: #fff;margin-bottom: 20px;">
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip1">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-send"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb" style="font-size: 32px;"><b>{$return['userCount']}</b></div>
+                                <div class="b-tip-titlel" style="font-size: 16px;"> 体检总人数</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            <span class="pull-left glyphicon glyphicon-time b-more"></span>截至&#12288;{$nowtime}
+                            <!--<span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip2">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-globe"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb" style="font-size: 32px;"><b>{$return['sumCount']}</b></div>
+                                <div class="b-tip-titlel" style="font-size: 16px;"> 体检总次数</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            <span class="pull-left glyphicon glyphicon-time b-more"></span>截至&#12288;{$nowtime}
+                            <!--<span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <form method="get" action="__CONTROLLER__/healthStat" class="form-horizontal" id="search-form">
+                    <div class="form-group" style="border-bottom: 1px solid #ccc;padding: 5px 0px;">
+                        <div class="col-sm-9" style="line-height: 34px;text-align: left;font-size: 20px;color: #333;">
+                            <b>用户数记录表</b>
+                        </div>
+                        <div class="col-sm-2" style="text-align: right;" >
+                            <select class="form-control" name="year">
+                                <foreach name="yArr" item="v" key="k">
+                                    <if condition="$v eq $year">
+                                        <option value="{$v}" selected='selected'>{$v}年</option>
+                                        <else/>
+                                        <option value="{$v}">{$v}年</option>
+                                    </if>
+                                    
+                                </foreach>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
+                                <span class="glyphicon glyphicon-search"></span> 搜索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <table class="b-row1 table" style="border:1px solid #ccc; ">
+                    <tr style="background-color: #ccc;" >
+                        <th style='width:22%;'>月份</th>
+                        <th>1月</th>
+                        <th>2月</th>
+                        <th>3月</th>
+                        <th>4月</th>
+                        <th>5月</th>
+                        <th>6月</th>
+                        <th>7月</th>
+                        <th>8月</th>
+                        <th>9月</th>
+                        <th>10月</th>
+                        <th>11月</th>
+                        <th>12月</th>
+                        <th>总计</th>
+                    </tr>
+                    <tr>
+                        <td>梨园格瑞雅居检测人次</td>
+                        <td>{$return['mArr']['m1']}</td>
+                        <td>{$return['mArr']['m2']}</td>
+                        <td>{$return['mArr']['m3']}</td>
+                        <td>{$return['mArr']['m4']}</td>
+                        <td>{$return['mArr']['m5']}</td>
+                        <td>{$return['mArr']['m6']}</td>
+                        <td>{$return['mArr']['m7']}</td>
+                        <td>{$return['mArr']['m8']}</td>
+                        <td>{$return['mArr']['m9']}</td>
+                        <td>{$return['mArr']['m10']}</td>
+                        <td>{$return['mArr']['m11']}</td>
+                        <td>{$return['mArr']['m12']}</td>
+                        <td>{$return['mArr']['count']}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form">
+                    <div class="form-group" style="border-bottom: 1px solid #ccc;padding: 5px 0px;">
+                        <div class="col-sm-12" style="line-height: 34px;text-align: left;font-size: 20px;color: #333;">
+                            <b>体检项次数统计</b>
+                        </div>   
+
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <table class="b-row2 table" style="border:1px solid #ccc; ">
+                    <tr style="background-color: #ccc;">
+                        <th style='width:22%;'>项目</th>
+                        <th>血糖</th>
+                        <th>血氧</th>
+                        <th>血压</th>
+                        <th>身高体重</th>
+                        <th>体温</th>
+                        <!--<th>身高</th>-->
+                    </tr>
+                    <tr>
+                        <td>梨园格瑞雅居检测人次</td>
+                        <td>{$return['catArr']['su']}</td>
+                        <td>{$return['catArr']['bs']}</td>
+                        <td>{$return['catArr']['bp']}</td>
+                        <td>{$return['catArr']['we']}</td>
+                        <td>{$return['catArr']['te']}</td>
+                        <!--<td>{$return['catArr']['he']}</td>-->
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form">
+                    <div class="form-group" style="border-bottom: 1px solid #ccc;padding: 5px 0px;">
+                        <div class="col-sm-12" style="line-height: 34px;text-align: left;font-size: 20px;color: #333;">
+                            <b>体检按月次数统计</b>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <table class="b-row3 table" style="border:1px solid #ccc; ">
+                    <tr style="background-color: #ccc;">
+                        <th style='width:8%;'>项目/月份</th>
+                        <th>1月</th>
+                        <th>2月</th>
+                        <th>3月</th>
+                        <th>4月</th>
+                        <th>5月</th>
+                        <th>6月</th>
+                        <th>7月</th>
+                        <th>8月</th>
+                        <th>9月</th>
+                        <th>10月</th>
+                        <th>11月</th>
+                        <th>12月</th>
+                        <th style='width:8%;'>总计</th>
+                    </tr>
+                    <tr>
+                        <td>血糖</td>
+                        <td>{$return['mcArr']['sum1']}</td>
+                        <td>{$return['mcArr']['sum2']}</td>
+                        <td>{$return['mcArr']['sum3']}</td>
+                        <td>{$return['mcArr']['sum4']}</td>
+                        <td>{$return['mcArr']['sum5']}</td>
+                        <td>{$return['mcArr']['sum6']}</td>
+                        <td>{$return['mcArr']['sum7']}</td>
+                        <td>{$return['mcArr']['sum8']}</td>
+                        <td>{$return['mcArr']['sum9']}</td>
+                        <td>{$return['mcArr']['sum10']}</td>
+                        <td>{$return['mcArr']['sum11']}</td>
+                        <td>{$return['mcArr']['sum12']}</td>
+                        <td>{$return['catArr']['su']}</td>
+                    </tr>
+                    <tr>
+                        <td>血氧</td>
+                        <td>{$return['mcArr']['bsm1']}</td>
+                        <td>{$return['mcArr']['bsm2']}</td>
+                        <td>{$return['mcArr']['bsm3']}</td>
+                        <td>{$return['mcArr']['bsm4']}</td>
+                        <td>{$return['mcArr']['bsm5']}</td>
+                        <td>{$return['mcArr']['bsm6']}</td>
+                        <td>{$return['mcArr']['bsm7']}</td>
+                        <td>{$return['mcArr']['bsm8']}</td>
+                        <td>{$return['mcArr']['bsm9']}</td>
+                        <td>{$return['mcArr']['bsm10']}</td>
+                        <td>{$return['mcArr']['bsm11']}</td>
+                        <td>{$return['mcArr']['bsm12']}</td>
+                        <td>{$return['catArr']['bs']}</td>
+                    </tr>
+                    <tr>
+                        <td>血压</td>
+                        <td>{$return['mcArr']['bpm1']}</td>
+                        <td>{$return['mcArr']['bpm2']}</td>
+                        <td>{$return['mcArr']['bpm3']}</td>
+                        <td>{$return['mcArr']['bpm4']}</td>
+                        <td>{$return['mcArr']['bpm5']}</td>
+                        <td>{$return['mcArr']['bpm6']}</td>
+                        <td>{$return['mcArr']['bpm7']}</td>
+                        <td>{$return['mcArr']['bpm8']}</td>
+                        <td>{$return['mcArr']['bpm9']}</td>
+                        <td>{$return['mcArr']['bpm10']}</td>
+                        <td>{$return['mcArr']['bpm11']}</td>
+                        <td>{$return['mcArr']['bpm12']}</td>
+                        <td>{$return['catArr']['bp']}</td>
+                    </tr>
+                    <tr>
+                        <td>身高体重</td>
+                        <td>{$return['mcArr']['wem1']}</td>
+                        <td>{$return['mcArr']['wem2']}</td>
+                        <td>{$return['mcArr']['wem3']}</td>
+                        <td>{$return['mcArr']['wem4']}</td>
+                        <td>{$return['mcArr']['wem5']}</td>
+                        <td>{$return['mcArr']['wem6']}</td>
+                        <td>{$return['mcArr']['wem7']}</td>
+                        <td>{$return['mcArr']['wem8']}</td>
+                        <td>{$return['mcArr']['wem9']}</td>
+                        <td>{$return['mcArr']['wem10']}</td>
+                        <td>{$return['mcArr']['wem11']}</td>
+                        <td>{$return['mcArr']['wem12']}</td>
+                        <td>{$return['catArr']['we']}</td>
+                    </tr>
+                    <tr>
+                        <td>体温</td>
+                        <td>{$return['mcArr']['tem1']}</td>
+                        <td>{$return['mcArr']['tem2']}</td>
+                        <td>{$return['mcArr']['tem3']}</td>
+                        <td>{$return['mcArr']['tem4']}</td>
+                        <td>{$return['mcArr']['tem5']}</td>
+                        <td>{$return['mcArr']['tem6']}</td>
+                        <td>{$return['mcArr']['tem7']}</td>
+                        <td>{$return['mcArr']['tem8']}</td>
+                        <td>{$return['mcArr']['tem9']}</td>
+                        <td>{$return['mcArr']['tem10']}</td>
+                        <td>{$return['mcArr']['tem11']}</td>
+                        <td>{$return['mcArr']['tem12']}</td>
+                        <td>{$return['catArr']['te']}</td>
+                    </tr>
+<!--                    <tr>
+                        <td>身高</td>
+                        <td>{$return['mcArr']['hem1']}</td>
+                        <td>{$return['mcArr']['hem2']}</td>
+                        <td>{$return['mcArr']['hem3']}</td>
+                        <td>{$return['mcArr']['hem4']}</td>
+                        <td>{$return['mcArr']['hem5']}</td>
+                        <td>{$return['mcArr']['hem6']}</td>
+                        <td>{$return['mcArr']['hem7']}</td>
+                        <td>{$return['mcArr']['hem8']}</td>
+                        <td>{$return['mcArr']['hem9']}</td>
+                        <td>{$return['mcArr']['hem10']}</td>
+                        <td>{$return['mcArr']['hem11']}</td>
+                        <td>{$return['mcArr']['hem12']}</td>
+                        <td>{$return['catArr']['he']}</td>
+                    </tr>-->
+
+                </table>
+            </div>
+
+
+        </div>
+    </body>
+</html> 

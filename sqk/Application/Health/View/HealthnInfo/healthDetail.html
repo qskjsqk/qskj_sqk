@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <link rel="stylesheet" href="/Public/admin/css/common.css">
+        <script type="text/javascript" src="/Public/health/js/common.js"></script>
+        <script type="text/javascript" src="/Public/health/js/healthn/healthdetail.js"></script>
+    </head>
+    <body>
+        <div class="detail_div" style="width: 98%;">
+
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-11"></div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-default"onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                            <span class="glyphicon glyphicon-share-alt"></span> 返回
+                        </button>
+                    </div>
+                </div>
+                <h1>{$health.title}</h1>
+                <div class="time">
+                    发布时间：{$health.add_time}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    发布人：{$health.usr}
+                </div>
+                <div class="main">
+                    {$health.content}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

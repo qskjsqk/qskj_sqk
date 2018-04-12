@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link href="__PUBLIC__/appm/css/mui.min.css" rel="stylesheet" />
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/main.js"></script>
+    </head>
+
+    <body>
+        <!--右上角弹出菜单-->
+        <div id="popover" class="mui-popover" style="width:150px;">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <a href="#" class="mui-icon mui-icon-person mui-pull-left" onclick="aHref('__MODULE__/login/setting')">
+                        <span style="font-size: 14px;padding-left: 5px;">个人中心</span>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a href="#" class="mui-icon mui-icon-mui-icon mui-icon-chatboxes mui-pull-left" onclick="aHref('__MODULE__/seller/order_manage')">
+                        <span style="font-size: 14px;padding-left: 5px;">订单管理</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-contact mui-pull-left" style="background-color: #9edee9;color: #9edee9;"></a>
+            <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
+            <a href="#popover" id="openPopover" class="mui-icon  mui-icon-contact mui-pull-right" style="background-color: #9edee9;color: #FFFFFF;"></a>
+        </header>
+        <!--主体-->
+        <div class="mui-content" style="background-color: #fff;">
+            <!--轮播图-->
+            <div id="slider" class="mui-slider" style="height:150px;">
+                <div class="mui-slider-group mui-slider-loop" id="sliderList">
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                    <div class="mui-slider-item">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                    <div class="mui-slider-item">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                    <div class="mui-slider-item">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                    <div class="mui-slider-item">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="#">
+                            <img src="img/lbt.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="mui-slider-indicator" id="dianList">
+                    <div class="mui-indicator mui-active"></div>
+                    <div class="mui-indicator"></div>
+                    <div class="mui-indicator"></div>
+                    <div class="mui-indicator"></div>
+                </div>
+            </div>
+            <!--九宫格-->
+            <div class="mui-slider">
+                <div class="mui-slider-group mui-slider-loop">
+                    <div class="mui-slider-item">
+                        <ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color: #fff;">
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/notice/notice_list')">
+                                    <img src="__PUBLIC__/appm/img/tzgg.png" style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">通知公告</div>
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/health/health_list')">
+                                    <img src="__PUBLIC__/appm/img/jkff.png" style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">健康服务</div>
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/Propinfo/wuye_list')">
+                                    <img src="__PUBLIC__/appm/img/wyff.png"style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">物业服务</div>
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/activity/activity_list')">
+                                    <img src="__PUBLIC__/appm/img/hdyy.png" style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">活动预约</div>
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/seller/seller_home')">
+                                    <img src="__PUBLIC__/appm/img/ykzshq.png" style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">一刻钟圈</div>
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="padding: 0;">
+                                <a href="#" onclick="aHref('__MODULE__/linkman/linkman_list')">
+                                    <img src="__PUBLIC__/appm/img/yjff.png" style="width:40px;height: 40px;">
+                                    <div class="mui-media-body" style="font-size: 12px;">应急服务</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--列表部分-->
+            <div class="mui-card">
+                <!--页眉，放置标题-->
+                <div class="mui-card-header">
+                    通知公告
+                    <a class="mui-icon mui-icon-forward mui-pull-right" style="color: #9edee9;" onclick="aHref('__MODULE__/notice/notice_list')"></a>
+                </div>
+                <!--内容区-->
+                <div class="mui-card-content">
+
+                    <!--<ul class="mui-table-view" id="noticeList">-->
+                    <!--                    <ul class="mui-table-view" >
+                    
+                                            <li class="mui-table-view-cell">
+                                                <div class="mui-slider-right mui-disabled">
+                                                    <a class="mui-btn mui-btn-red">删除</a>
+                                                </div>
+                                                <div class="mui-slider-handle mui-table">
+                                                    <div class="mui-table-cell">
+                                                        <div class="mui-media-body">
+                                                            <img src="img/xd.png" />&#12288;【公告】周四下午停水通知
+                                                            <span class="mui-ellipsis" style="float: right;color: #999;font-size:14px;">12:35</span>
+                                                            <p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+                                                        </div>
+                                                    </div>
+                    
+                                                </div>
+                                            </li>
+                    
+                                        </ul>-->
+                    <ul class="mui-table-view" id="noticeList">
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--列表部分-->
+            <div class="mui-card">
+                <!--页眉，放置标题-->
+                <div class="mui-card-header">
+                    社区活动
+                    <a class="mui-icon mui-icon-forward mui-pull-right" style="color: #9edee9;" onclick="aHref('__MODULE__/activity/activity_list')"></a>
+                </div>
+                <!--内容区-->
+                <div class="mui-card-content">
+
+                    <!--                    <ul class="mui-table-view" id="activList">
+                    
+                                            <li class="mui-table-view-cell">
+                                                    <div class="mui-slider-right mui-disabled">
+                                                            <a class="mui-btn mui-btn-red">删除</a>
+                                                    </div>
+                                                    <div class="mui-slider-handle mui-table">
+                                                            <div class="mui-table-cell">
+                                                                    <div class="mui-media-body">
+                                                                            <img src="img/xd.png" style=""> &#12288;【活动】周四下午停水通知
+                                                                            <span class="mui-ellipsis" style="float: right;color: #999;font-size:14px;">12:35</span>
+                                                                            <p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+                                                                    </div>
+                                                            </div>
+                    
+                                                    </div>
+                                            </li>
+                    
+                                        </ul>-->
+                    <ul class="mui-table-view" id="activList">
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                        <li class="mui-table-view-cell"><p class="mui-ellipsis" style="padding-right: 20%;">【公告】周四下午停水通知fasdfa fasdfasdfasdfasd</p>
+                            <span class="mui-badge">12:23</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+</html>

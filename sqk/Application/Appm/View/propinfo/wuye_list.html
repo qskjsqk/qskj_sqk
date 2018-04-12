@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/wuye_list.js"></script>
+    </head>
+
+    <body>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')">
+            </a>
+            <div class="mui-title .mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+            <a class="mui-icon  mui-icon-search mui-pull-right header-a" onclick="keyWordSelect()" id="searchBtn"></a>
+
+            <!--选项卡-->
+            <div class="mui-input-row" style="background-color: #fff;">
+                <div class="tab-div" id="tabWuye">
+                    <button id="wuye1" type="button" style="margin: -6px 0px 0px 0px;width: 25%;height: 38px;font-size: 15px;float: left;border: 0px;" class="mui-btn" onclick="changeTab(1, 0, 2, '报修')">物业报修</button>
+                    <button id="wuye2" type="button" style="margin: -6px 0px 0px 0px;width: 25%;height: 38px;font-size: 15px;float: left;border: 0px;" class="mui-btn" onclick="changeTab(2, 0, 1, '反馈')">意见反馈</button>
+                    <button id="wuye0" type="button" style="margin: -6px 0px 0px 0px;width: 25%;height: 38px;font-size: 15px;float: left;border: 0px;" class="mui-btn" onclick="changeTab(0, 1, 2, '上报')">险情上报</button>
+<!--                    <div class="tab-btn-sel" id="wuye1" onclick="changeTab(1, 0, 2, '报修')">物业报修</div>
+                    <div class="tab-btn-no" id="wuye2" onclick="changeTab(2, 0, 1, '反馈')">意见反馈</div>
+                    <div class="tab-btn-no" id="wuye0" onclick="changeTab(0, 1, 2, '上报')">险情上报</div>-->
+                    <button type="button" id="sendBtn" class="mui-btn mui-btn-warning" style="margin: -6px 0px 2px 0px;width: 24%;height: 38px;"></button>
+                </div>
+
+            </div>
+        </header>
+        <!--主体部分-->
+        <div class="mui-content" style="margin-top: 38px;background-color: #fff;">
+
+            <!--list页面部分-->
+            <ul class="mui-table-view" id="wuyeList">
+                <!--<li class="mui-table-view-cell" style="padding-right: 10px;">
+                        <div class="mui-media-body">
+                                <img src="img/xd.png" />&#12288;单元门卡消磁
+                                <span class="mui-ellipsis" style="float: right;"><font class="fontblack">待处理</font><p >23423</p></span>
+                                <p class="mui-ellipsis fontblack m-margin-t10 fontred"><span class="mui-icon mui-icon-contact" style="font-size: 18px;"></span>工作人员：您的报修已提交。</p>
+                                <p class="mui-ellipsis m-margin-t10">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+                        </div>
+                </li>-->
+            </ul>
+            <!--动态加载模块-->
+            <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
+            <input type="hidden" id="page" value="1">
+        </div>
+    </body>
+
+</html>

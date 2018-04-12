@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="x-rim-auto-match" content="none">
+
+        <link rel="stylesheet" href="__PUBLIC__/app/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/app/css/linkman.css">
+
+        <script src="__PUBLIC__/app/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/app/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/app/css/common.css">
+        <script src="__PUBLIC__/app/js/common.js"></script>
+        <script src="__PUBLIC__/app/js/linkman_list.js"></script>
+    </head>
+
+    <body>
+        <!--右上角弹出菜单-->
+        <!--<div id="popover" class="mui-popover" style="width:150px;">
+                <ul class="mui-table-view">
+                        <li class="mui-table-view-cell">
+                                <a href="#" class="mui-icon mui-icon-home mui-pull-left" onclick="aHome()">
+                                        <span style="font-size: 14px;padding-left: 5px;">返回首页</span>
+                                </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                                <a href="#" class="mui-icon mui-icon-person mui-pull-left" onclick="aHref('setting')">
+                                        <span style="font-size: 14px;padding-left: 5px;">个人中心</span>
+                                </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                                <a href="#" class="mui-icon mui-icon-mui-icon mui-icon-chatboxes mui-pull-left" onclick="aHref('order_manage')">
+                                        <span style="font-size: 14px;padding-left: 5px;">订单管理</span>
+                                </a>
+                        </li>
+                </ul>
+        </div>-->
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')">
+                <sapn class="comfont">应急服务</span>
+            </a>
+            <h1 class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>			
+            <!--<div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>-->
+            <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
+        </header>
+        <!--主体部分-->
+        <div class="mui-content">
+            <!--选项卡-->
+            <div class="mui-row">
+                <div class="tab-div m-float-l">
+                    <div class="tab-div-title">联系人列表</div>
+                </div>
+            </div>
+
+            <!--页面部分-->
+            <div class="mui-row">
+
+<!--                <div class="mui-card">
+                    <div class="mui-card-header">紧急电话</div>
+                    <div class="mui-card-header">
+                        <button type="button" class="mui-btn mui-btn-primary font16" style="width: 30%;" onclick="callPhone(110)"><span class="mui-icon mui-icon-phone" style="font-size: 20px;"></span>报警110</button>
+                        <button type="button" class="mui-btn mui-btn-danger font16" style="width: 30%;" onclick="callPhone(119)"><span class="mui-icon mui-icon-phone" style="font-size: 20px;"></span>火警119</button>
+                        <button type="button" class="mui-btn mui-btn-warning font16" style="width: 30%;" onclick="callPhone(120)"><span class="mui-icon mui-icon-phone" style="font-size: 20px;"></span>急救120</button>
+                    </div>
+                </div>-->
+
+                <div class="mui-card">
+                    <div class="mui-card-header">社区电话</div>
+                    <div class="mui-card-content" id="neighbList"></div>
+                </div>
+
+                <div class="mui-card">
+                    <div class="mui-card-header">紧急联系人</div>
+                    <div class="mui-card-content" id="helpList"></div>
+                </div>
+
+            </div>
+            <!--页面部分end-->
+
+            <!--添加按钮-->
+            <div class="mui-row">
+                <div class="addBtn" onclick="addLinkMan()"></div>
+
+                <div class="m-modal"></div>
+                <div class="m-modal-content linkman-content">
+                    <div class="linkman-content-img">
+                        <div class="linkman-content-div">
+                            <img src="__PUBLIC__/app/img/linkman.png">
+                        </div>
+                    </div>
+                    <div class="linkman-content-form">
+                        <form id="form">
+                            <div class="mui-button-row">
+                                <div class="linkman-input-div m-icon-name">
+                                    <input type="text" placeholder="请填写姓名" id="realname" name="realname">
+                                </div>
+                                <div class="linkman-input-div m-icon-address">
+                                    <input type="text" placeholder="请填写工作单位" id="department" name="department">
+                                </div>
+                                <div class="linkman-input-div m-icon-mobile">
+                                    <input type="text" placeholder="请填写手机号码" id="tel" name="tel">
+                                </div>
+                                <div class="linkman-input-div m-icon-telephone">
+                                    <input type="text" placeholder="请填写座机号码 如：xxx-xxxxxxxx" id="phone" name="phone">
+                                </div>
+                                <div class="linkman-input-div" style="padding: 10px;height: auto;">
+                                    <textarea type="text" placeholder="请填写描述" style="margin: 0;border: 0;" id="comment" name="comment"></textarea>
+                                </div>
+                            </div>
+                            <input type="hidden" name="id" value="" id="id">
+                        </form>
+                    </div>
+
+                    <div class="mui-button-row" style="margin-bottom: 10px;" id="detailBtn">
+                        <button type="button" class="mui-btn mui-btn-success" onclick="subForm()">确认</button> &#12288;
+                        <button type="button" class="mui-btn mui-btn-danger" onclick="closeModal()">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

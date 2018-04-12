@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <!--在js中可使用的常量：
+        var assignData=' . $json . ';
+        var module="'.MODULE_NAME.'";
+        var controller="'.CONTROLLER_NAME.'";
+        var action="'.ACTION_NAME.'";
+        var m_path="'.__ROOT__.'/index.php/'.MODULE_NAME.'";
+        var c_path="'.__ROOT__.'/index.php/'.MODULE_NAME.'/'.CONTROLLER_NAME.'";
+        var a_path="'.__ROOT__.'/index.php/'.MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME.'";
+        var root="'.__ROOT__.'";
+        var public="'.__ROOT__.'/Public";
+        -->
+        <!--自定义样式及脚本放于此处-->
+        <link rel="stylesheet" href="__PUBLIC__/admin/css/index.css">
+        <script type="text/javascript" src="__PUBLIC__/admin/js/index/index.js"></script>
+        <title>{$config['system_name']}</title>
+    </head>
+    <body
+        <div class="container" style="width: 100%;background-color: #e9ecf3;">
+            <div class="row" style="background-color: #fff;margin-bottom: 20px;" >
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip1">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-send"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb">1349</div>
+                                <div class="b-tip-titlel"> NewView djfks</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            查看更多
+                            <span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip2">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-globe"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb">1349</div>
+                                <div class="b-tip-titlel"> NewView djfks</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            查看更多
+                            <span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip3">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-gift"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb">1349</div>
+                                <div class="b-tip-titlel"> NewView djfks</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            查看更多
+                            <span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="b-tip-div col-xs-6 col-sm-3">
+                    <div class="b-tip b-color-tip4">
+                        <div class="b-tip-body">
+                            <div class="b-tip-left">
+                                <i class="glyphicon glyphicon-sound-dolby"></i>
+                            </div>
+                            <div class="b-tip-right">
+                                <div class="b-tip-titleb">1349</div>
+                                <div class="b-tip-titlel"> NewView djfks</div>
+                            </div>
+                        </div>
+                        <div class="b-tip-footer">
+                            查看更多
+                            <span class='b-more'><span class="pull-right glyphicon glyphicon-circle-arrow-right b-more"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+<!--                <div class="b-main-list col-xs-12 col-sm-6">
+                    <div class="b-main-list-info">
+                        <table class="table table-hover">
+                            <tr>
+                                <th colspan="4" style="text-align: left;color: #45c8dc;"><i class="glyphicon glyphicon-globe"></i>&#12288;酷炫的表名</th>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bell" style="margin-right: 5px;background-color: #3cc051;;padding: 2px;color: #fff;"></i>可福建省快乐的解放激发克里斯蒂</td>
+                                <td>3453</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #3cc051;">21</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bullhorn" style="margin-right: 5px;background-color: #ed4e2a;padding: 2px;color: #fff;"></i>可福建省快乐的解放激发克里斯蒂</td>
+                                <td>3453</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-send" style="margin-right: 5px;background-color: #fcb322;;padding: 2px;color: #fff;"></i></td>
+                                <td>4</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bell" style="margin-right: 5px;background-color: #3cc051;;padding: 2px;color: #fff;"></i></td>
+                                <td>3</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bullhorn" style="margin-right: 5px;background-color: #ed4e2a;padding: 2px;color: #fff;"></i></td>
+                                <td>3</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-send" style="margin-right: 5px;background-color: #fcb322;;padding: 2px;color: #fff;"></i></td>
+                                <td>3</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bell" style="margin-right: 5px;background-color: #3cc051;;padding: 2px;color: #fff;"></i></td>
+                                <td>3</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bullhorn" style="margin-right: 5px;background-color: #ed4e2a;padding: 2px;color: #fff;"></i></td>
+                                <td>3</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-send" style="margin-right: 5px;background-color: #fcb322;;padding: 2px;color: #fff;"></i></td>
+                                <td>4</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bell" style="margin-right: 5px;background-color: #3cc051;;padding: 2px;color: #fff;"></i></td>
+                                <td>4</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+                            <tr class="tr">
+                                <td><i class="glyphicon glyphicon-bullhorn" style="margin-right: 5px;background-color: #ed4e2a;padding: 2px;color: #fff;"></i></td>
+                                <td>4</td>
+                                <td>9:00-18:00</td>
+                                <td style="text-align: right;"><span class="badge" style="background-color: #fcb322;">已处理</span></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>-->
+                <div class="b-main-list col-xs-12 col-sm-12">
+                   
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html> 

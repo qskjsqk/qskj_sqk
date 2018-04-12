@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/notice_detail.js"></script>
+    </head>
+
+    <body>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
+            </a>
+            <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
+            <!--<div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>-->
+            <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
+        </header>
+        <!--主体部分-->
+        <div class="mui-content">
+            <!--选项卡-->
+            <div class="mui-row">
+                <div class="tab-div m-float-l">
+                    <div class="tab-div-title">通知公告</div>
+                </div>
+            </div>
+
+            <!--页面部分-->
+            <div class="mui-row">
+                <div class="mui-card">
+                    <!--内容区-->
+                    <div class="mui-card-content" style="margin: 0px;">
+                        <div class="m-detail-title">
+                            <div style="font-weight: bold;color: #333;font-size: 19px;" id="notice_title"></div>
+                            <div id="notice_ftitle"></div>
+                        </div>
+                    </div>
+                    <div class="mui-card-content">
+                        <div class="m-detail-content" id="notice_content"></div>
+                    </div>
+                    <!--页脚，放置补充信息或支持的操作-->
+                    <div class="mui-card-footer" id="read_num">浏览量：100</div>
+                </div>
+            </div>
+
+    </body>
+
+</html>

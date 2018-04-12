@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        {$Think.const.DATEPICKER}
+        <link rel="stylesheet" href="/Public/health/css/common.css">
+        <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+        <script type="application/javascript" src="/Public/health/js/common.js"></script>
+        <script type="application/javascript" src="/Public/health/js/devicedata/deviceData.js"></script>
+    </head>
+    <body>
+        <div class="option_search">
+            <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-danger" id="delArrayCat-btn" style="height: 34px;">
+                            <input type="hidden" id="be_table_num" value="{$be_table_num}">
+                            <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3" >
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="start_time" name="start_time" value="{$searchInfo['start_time']}" placeholder="请输入起始时间" onchange="checkse('start_time', 'end_time', 'start_time')">
+                            <span class="input-group-addon">至</span>
+                            <input type="text" class="form-control" id="end_time" name="end_time" value="{$searchInfo['end_time']}" placeholder="请输入结束时间" onchange="checkse('start_time', 'end_time', 'end_time')">
+                        </div>
+                    </div>
+                    <div class="col-sm-2" style="text-align: right;">
+                        <input type="text" class="form-control" id="keyword" name="keyword" value="{$searchInfo['keyword']}" placeholder="请输入关键字">
+                    </div>
+                    <div class="col-sm-2" style="text-align: right;" >
+                        <select class="form-control" name="table_num">
+                            <foreach name="catArr" item="v" key="k">
+                                <if condition="$v.table_num eq $searchInfo['table_num']">
+                                    <option value="{$v.table_num}" selected="selected">{$v.t_name}</option>
+                                    <else/>
+                                    <option value="{$v.table_num}">{$v.t_name}</option>
+                                </if>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
+                            <span class="glyphicon glyphicon-search"></span> 搜索
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="table_content">
+            <table class="table table-hover">
+                <tr>
+                    <th style="width: 50px;">全选</th>
+                    <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+                    <th >姓名</th>
+                    <th>身份证号</th>
+                    <th>手机号码</th>
+                    <th>体检项目</th>
+                    <th>体检时间</th>
+                    <th>设备名称</th>
+                    <th>操作</th>
+                </tr>
+                <notempty name="infoList">
+                    <foreach name="infoList" item="v" key="k">
+                        <tr class="tr">
+                            <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
+                            <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
+                            <td><a href="javascript:void(0)" onclick="submitKey('{$v.idcard}')">{$v.realname}</a></td>
+                            <td>{$v.idcard}</td>
+                            <td>{$v.tel}</td>
+                            <td>{$v.table_name}</td>
+                            <td>{$v.time}</td>
+                            <td>{$v.name}</td>
+                            <td>
+                                <div>
+                                    <button class="btn btn-default edit-btn" onclick="showDetail({$v.id}, {$v.table_num});">
+                                        <span class="glyphicon glyphicon-search"></span> 查看
+                                    </button>
+                                    <button class="btn btn-default del-btn" onclick="delCatLayer({$v.id}, {$v.table_num})">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </foreach>
+                </notempty>
+                <empty name="infoList">
+                    <tr><td colspan="9" style='text-align: center;'>(＞﹏＜)&#12288;暂无数据</td></tr>
+                </empty>
+            </table>
+            <div style="text-align: center;">
+                {$page}
+            </div>
+        </div>
+    </body>
+</html>

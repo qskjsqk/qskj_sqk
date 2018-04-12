@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+    <link rel="stylesheet" href="/Public/admin/css/common.css">
+</head>
+<body>
+    <div class="detail_div">
+        <div class="content">
+            <h1>{$prom.title}</h1>
+            <div class="time">
+                发布时间：{$prom.add_time}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="main">
+                <p>{$prom.content}</p>
+            </div>
+        </div>
+        <div class="prom_list">
+            <span class="model_title">促销列表</span>
+            <notempty name="itemsList">
+                <ul class="comment_content">
+                    <foreach name="itemsList" item="v" key="k">
+                        <li>
+                            <div class="list_header">
+                                <span><img src="/Public/Upload{$v.logo_img}" style="width: 40px;height: 40px;"/></span>
+                                <span style="font-size:15px; color:#1C77F6">{$v.name}&nbsp;&nbsp;[{$v.cat_name}]</span>
+                                <span style="font-size:11px; color:#999;">{$v.price}/{$v.quantifier}</span>
+                            </div>
+                            <div class="list_content">
+                                <p>{$v.content}</p>
+                            </div>
+                        </li>
+                    </foreach>
+                </ul>
+            </notempty>
+            <empty name="itemsList">
+                <ul class="comment_content">暂无促销信息</ul>
+            </empty>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <link href="__PUBLIC__/appm/css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/health_list.css">
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/health_detail.js"></script>
+    </head>
+
+    <body>
+
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
+                <sapn class="comfont"></span>
+            </a>
+            <h1 class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
+            <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
+
+        </header>
+        <!--主体部分-->
+        <div class="mui-content">
+
+            <!--tab卡-->
+            <div class="mui-row">
+                <div class="tab-div">
+                    <div class="tab-btn-no" id="title"></div>
+                </div>
+            </div>
+
+            <!--页面部分-->
+            <div class="mui-row" style="margin-bottom: 40px;">
+                <div class="mui-card">
+                    <!--页眉，放置标题-->
+                    <div class="mui-card-header">
+                        <span id="userName"></span>
+                    </div>
+                    <!--内容区-->
+                    <div class="mui-card-content">
+                        <div class="cardcontent" id="content">
+                            <div class="cardcontent-icon m-icon-xuey">
+                                <div class="cardcontent-r" id="content">
+<!--                                    <p><span class="fontblack">高压&nbsp;</span><span class="fontred font16">122&nbsp;</span>mmHg</p>
+                                    <p><span class="fontblack">低压&nbsp;</span><span class="fontred font16">80&nbsp;</span>mmHg</p>
+                                    <p><span class="fontblack">脉搏&nbsp;</span><span class="fontred font16">85&nbsp;</span>次/min</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                <div class="mui-card">
+                                    页眉，放置标题
+                                    <div class="mui-card-header">
+                                        体重体重<span class="list-right-span">更新于 2016-06-30 15:30</span>
+                                    </div>
+                                    内容区
+                                    <div class="mui-card-content">
+                                        <div class="cardcontent">
+                                            <div class="cardcontent-icon m-icon-tiz">
+                                                <div class="cardcontent-r">
+                                                    <p><span class="fontblack">体重&nbsp;</span><span class="fontred font16">75&nbsp;</span>Kg</p>
+                                                    <p><span class="fontblack">BMI&nbsp;</span><span class="fontred font16">80&nbsp;</span></p>
+                                                    <p><span class="fontblack">体脂&nbsp;</span><span class="fontred font16">85&nbsp;</span>%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="mui-card">
+                                    页眉，放置标题
+                                    <div class="mui-card-header">
+                                        运动<span class="list-right-span">更新于 2016-06-30 15:30</span>
+                                    </div>
+                                    内容区
+                                    <div class="mui-card-content">
+                                        <div class="cardcontent">
+                                            <div class="cardcontent-icon m-icon-yund">
+                                                <div class="cardcontent-r">
+                                                    <p><span class="fontblack">步数&nbsp;</span><span class="fontred font16">17598&nbsp;</span>步</p>
+                                                    <p><span class="fontblack">目标&nbsp;</span><span class="fontred font16">15.3&nbsp;</span>Km</p>
+                                                    <p><span class="fontblack">实际&nbsp;</span><span class="fontred font16">14.3&nbsp;</span>Km</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                <div class="mui-card">
+                    <!--页眉，放置标题-->
+                    <div class="mui-card-header mui-card-media">
+                        <img src="__PUBLIC__/appm/img/zhuanjia.png">
+                        <div class="mui-media-body">
+                            专家建议
+                            <p id="zjtime"></p>
+                        </div>
+                    </div>
+                    <!--内容区-->
+                    <div class="mui-card-content">
+                        <div class="cardcontent" style="height: auto" >
+                            <div style="width:100%;padding: 10px;" id="zjsug">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!--底部广告浮动-->
+            <div class="mui-bar mui-bar-tab footer-div">
+                <span style="color: #17515b;" onclick="callPhone(116114)"><b>010-114/116114</b></span>&#12288;|&#12288;
+                <!--<button type="button" class="mui-btn mui-btn-royal  mui-btn-outlined" style="padding: 3px;">点击立刻预约</button>-->
+                <span style="color: #17515b;" onclick="openModal()"><b>北京市预约挂号统一平台</b></span>
+            </div>
+            <!--弹出窗-->
+            <div class="m-modal-if" style="z-index: 9999999;">
+                <div style="width: 100%;height: 40px;background-color: #000;color: #fff;font-size: 16px;line-height: 40px;"><span class="mui-icon mui-icon-closeempty" style="margin: 0 10px;"></span>北京市预约挂号统一平台</div>
+                <div style="width:100%;height: 100%;background-color: #fff;">
+                    <iframe name="right" id="rightMain" src="http://www.bjguahao.gov.cn/index.htm" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"></iframe>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
