@@ -13,15 +13,22 @@ use Think\Controller;
 
 class BaseDBController extends Controller {
 
+    protected $dbFix;
+
     public function _initialize() {
+        //配置字典信息
+        $configdefC = A('Configdef');
+        $this->config = $configdefC->getAllDef();
+        $this->assign('config', $this->config);
+        $this->dbFix = $this->config['db_fix'];
         //初始化do something
     }
 
     public function showData($model, $where, $pageCondition, $joinStr, $fieldStr, $order = null) {
         $page = getPage($model, $where, $pageCondition, C('PAGE_SIZE'));
-        if($order!=null){
+        if ($order != null) {
             $infoList = $model->join($joinStr)->field($fieldStr)->where($where)->order($order)->limit($page->firstRow . ',' . $page->listRows)->select();
-        }else{
+        } else {
             $infoList = $model->join($joinStr)->field($fieldStr)->where($where)->order('id desc')->limit($page->firstRow . ',' . $page->listRows)->select();
         }
         $page = $page->show();
@@ -139,6 +146,15 @@ class BaseDBController extends Controller {
             $returnData['code'] = '502';
         }
         return $returnData;
+    }
+
+    public function madField($field0, $field1) {
+        return $this->dbFix . $field0 . ',' . $this->dbFix . $field1;
+    }
+
+    public function madJoin($join0, $join1) {
+        $arr = explode('.', $this->dbFix . $join1);
+        return 'left join ' . $arr[0] . ' on ' . $this->dbFix . $join0 . ' = ' . $this->dbFix . $join1;
     }
 
 }
