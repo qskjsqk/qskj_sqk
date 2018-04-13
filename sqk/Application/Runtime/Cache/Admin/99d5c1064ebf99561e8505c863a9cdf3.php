@@ -1,28 +1,27 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!--<title>通知公告分类</title>-->
-    {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+    <?php echo (ADMIN_META); echo (ADMIN_CSS); echo (ADMIN_COMPATIBLE); echo (ADMIN_JS); echo ($Assigndata); ?>
     <link rel="stylesheet" href="/Public/admin/css/common.css">
     <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
     <script type="application/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
     <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
     <script type="application/javascript" src="/Public/admin/js/common.js"></script>
-    <script type="application/javascript" src="/Public/admin/js/seller/sellerItemsCat.js"></script>
+    <script type="application/javascript" src="/Public/admin/js/seller/sellerCat.js"></script>
 </head>
 <body>
     <div class="option_search">
-        <button type="button" class="btn btn-success addItemsCat" id="addCatLayer-btn" style="height: 34px;">
+        <button type="button" class="btn btn-success addSellerCat" id="addCatLayer-btn" style="height: 34px;">
             <span class="glyphicon glyphicon-plus"></span> 新增
         </button>
-        <button type="button" class="btn btn-danger delItemsCat" id="delArrayCat-btn" style="height: 34px;">
+        <button type="button" class="btn btn-danger delSellerCat" id="delArrayCat-btn" style="height: 34px;">
             <span class="glyphicon glyphicon-trash"></span> 批量删除
         </button>
     </div>
     <div class="table_content">
         <table class="table table-hover">
             <tr>
-                <th style="width: 50px;">全选</th>
+                <th style="width: 50px;">序号</th>
                 <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
                 <th>分类名称</th>
                 <th>系统名称</th>
@@ -30,37 +29,30 @@
                 <th>添加时间</th>
                 <th>操作</th>
             </tr>
-            <notempty name="infoList">
-                <foreach name="infoList" item="v" key="k">
-                    <tr class="tr">
-                        <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
-                        <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
-                        <td>{$v.cat_name}</td>
-                        <td>{$v.sys_name}</td>
+            <?php if(!empty($infoList)): if(is_array($infoList)): foreach($infoList as $k=>$v): ?><tr class="tr">
+                        <td><?php echo (I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1);?></td>
+                        <td><input type="checkbox" name="rowChecked" value="<?php echo ($v["id"]); ?>"/></td>
+                        <td><?php echo ($v["cat_name"]); ?></td>
+                        <td><?php echo ($v["sys_name"]); ?></td>
                         <td>
-                            <if condition="$v.is_enable eq 0">禁用
-                                <else/>启用
-                            </if>
+                            <?php if($v["is_enable"] == 0): ?>禁用
+                                <?php else: ?>启用<?php endif; ?>
                         </td>
-                        <td>{$v.add_time}</td>
+                        <td><?php echo ($v["add_time"]); ?></td>
                         <td>
                             <div>
-                                <button class="btn btn-default edit-btn editItemsCat" onclick="editCatLayer({$v.id});">
+                                <button class="btn btn-default edit-btn editSellerCat" onclick="editCatLayer(<?php echo ($v["id"]); ?>);">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
-                                <button class="btn btn-default del-btn delItemsCat" onclick="delCatLayer({$v.id})">
+                                <button class="btn btn-default del-btn delSellerCat" onclick="delCatLayer(<?php echo ($v["id"]); ?>)">
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </button>
                             </div>
                         </td>
-                    </tr>
-                </foreach>
-            </notempty>
-            <empty name="infoList">
-                <tr><td colspan="7">暂无数据</td></tr>
-            </empty>
+                    </tr><?php endforeach; endif; endif; ?>
+            <?php if(empty($infoList)): ?><tr><td colspan="7">暂无数据</td></tr><?php endif; ?>
         </table>
-        <div style="text-align: center;">{$page}</div>
+        <div style="text-align: center;"><?php echo ($page); ?></div>
     </div>
 </body>
 <div class="catLayer" style="display: none;">

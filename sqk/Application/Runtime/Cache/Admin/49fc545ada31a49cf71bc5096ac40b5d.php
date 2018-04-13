@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
     <head>
-        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <?php echo (ADMIN_META); echo (ADMIN_CSS); echo (ADMIN_COMPATIBLE); echo (ADMIN_JS); echo ($Assigndata); ?>
         <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
         <link rel="stylesheet" href="/Public/admin/css/common.css">
         <link rel="stylesheet" type="text/css" href="/Public/Plugin/tab_little/css/style.css"/>
@@ -16,12 +16,12 @@
         <!--添加用户组信息-->
         <div class="container">
             <form method="post" action="#" class="form-horizontal" id="save-form" style="margin-top: 20px;">
-                <input type="hidden" name="id" value="{$userInfo.id}"/>
+                <input type="hidden" name="id" value="<?php echo ($userInfo["id"]); ?>"/>
                 <div class="form-group">
                     <label for="category_name" class="col-sm-2 control-label">用户角色</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="category_name" name="category_name" value="{$userInfo.category_name}" onclick="showUserGroupView();" placeholder="请选择类别" readonly>
-                        <input type="hidden" id="parent_id" name="cat_id" value="{$userInfo.cat_id}"/>
+                        <input type="text" class="form-control" id="category_name" name="category_name" value="<?php echo ($userInfo["category_name"]); ?>" onclick="showUserGroupView();" placeholder="请选择类别" readonly>
+                        <input type="hidden" id="parent_id" name="cat_id" value="<?php echo ($userInfo["cat_id"]); ?>"/>
                         <div class="col-sm-11 dropdown-menu" id="treeview" style="display: none;margin-left:15px;z-index: 111111111;"></div>
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
@@ -60,55 +60,55 @@
                 <div class="form-group">
                     <label for="usr" class="col-sm-2 control-label">用户名</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="usr" name="usr" value="{$userInfo.usr}" placeholder="请输入用户名">
+                        <input type="text" class="form-control" id="usr" name="usr" value="<?php echo ($userInfo["usr"]); ?>" placeholder="请输入用户名">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="pwd" class="col-sm-2 control-label">密&#12288;&#12288;码</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control" id="pwd" name="pwd" value="{$userInfo.pwd}" placeholder="请输入密码">
+                        <input type="password" class="form-control" id="pwd" name="pwd" value="<?php echo ($userInfo["pwd"]); ?>" placeholder="请输入密码">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="repwd" class="col-sm-2 control-label">确认密码</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control" id="repwd" name="repwd" value="{$userInfo.pwd}" placeholder="请输入确认密码">
+                        <input type="password" class="form-control" id="repwd" name="repwd" value="<?php echo ($userInfo["pwd"]); ?>" placeholder="请输入确认密码">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="realname" class="col-sm-2 control-label">姓&#12288;&#12288;名</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="realname" name="realname" value="{$userInfo.realname}" placeholder="请输入真实姓名">
+                        <input type="text" class="form-control" id="realname" name="realname" value="<?php echo ($userInfo["realname"]); ?>" placeholder="请输入真实姓名">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="tel" class="col-sm-2 control-label">手机号码</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="tel" name="tel" value="{$userInfo.tel}" placeholder="请输入手机号码">
+                        <input type="text" class="form-control" id="tel" name="tel" value="<?php echo ($userInfo["tel"]); ?>" placeholder="请输入手机号码">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="phone" class="col-sm-2 control-label">座机号码</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="phone" name="phone" value="{$userInfo.phone}" placeholder="请输入座机号码">
+                        <input type="text" class="form-control" id="phone" name="phone" value="<?php echo ($userInfo["phone"]); ?>" placeholder="请输入座机号码">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-2 control-label">电子邮箱</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="email" name="email" value="{$userInfo.email}" placeholder="请输入邮箱">
+                        <input type="text" class="form-control" id="email" name="email" value="<?php echo ($userInfo["email"]); ?>" placeholder="请输入邮箱">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>
                 <div class="form-group">
                     <label for="address" class="col-sm-2 control-label">地&#12288;&#12288;址</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="address" name="address" value="{$userInfo.address}" placeholder="请输入地址">
+                        <input type="text" class="form-control" id="address" name="address" value="<?php echo ($userInfo["address"]); ?>" placeholder="请输入地址">
                     </div>
                 </div>
                 <div class="form-group">
@@ -124,48 +124,28 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">权限设置</label>
                     <div class="col-sm-9">
-                        <input type="hidden" name="priviledges" value="{$userInfo.priviledges}" style="width: 500px;"/>
+                        <input type="hidden" name="priviledges" value="<?php echo ($userInfo["priviledges"]); ?>" style="width: 500px;"/>
                         <div class="tabmain" style="height: 485px;">
                             <div id="outerWrap">
                                 <div id="sliderParent"></div>
                                 <div class="blueline" id="blueline" style="top: 0px; "></div>
                                 <ul class="tabGroup"><!--panel左侧-->
-                                    <notempty name="priv">
-                                        <foreach name="priv" item="v" key="k">
-                                            <if condition="$k eq 0">
-                                                <li class="tabOption selectedTab">{$v.cat_name}</li>
-                                                <else />
-                                                <li class="tabOption">{$v.cat_name}</li>
-                                            </if>
-                                        </foreach>
-                                    </notempty>
+                                    <?php if(!empty($priv)): if(is_array($priv)): foreach($priv as $k=>$v): if($k == 0): ?><li class="tabOption selectedTab"><?php echo ($v["cat_name"]); ?></li>
+                                                <?php else: ?>
+                                                <li class="tabOption"><?php echo ($v["cat_name"]); ?></li><?php endif; endforeach; endif; endif; ?>
                                 </ul>
                                 <div id="container"><!--panel右侧-->
                                     <div id="content">
-                                        <notempty name="priv">
-                                            <foreach name="priv" item="v" key="k">
-                                                <div class="tabContent">
-                                                    <notempty name="v.children">
-                                                        <foreach name="v.children" item="v1" key="k1">
-                                                            <div style="line-height: 30px;">
-                                                                <input type="checkbox" name="{$v1.sys_name}" value="{$v1.sys_name}" onclick="setCheck(this.value, {$v1.id});"/>{$v1.cat_name}</br>
-                                                                <notempty name="v1.children">
-                                                                    <div style="margin-left: 20px;">
-                                                                        <foreach name="v1.children" item="v2" key="k2">
-                                                                            <if condition="($k2+1) %4 eq 0">
-                                                                                <input style="margin-left: 10px;" type="checkbox" class="pri_unit" name="{$v1.sys_name}{$v1.id}" value="{$v2.pri_value}"/>{$v2.pri_name}</br>
-                                                                                <else/>
-                                                                                <input style="margin-left: 10px;" type="checkbox" class="pri_unit" name="{$v1.sys_name}{$v1.id}" value="{$v2.pri_value}"/>{$v2.pri_name}
-                                                                            </if>
-                                                                        </foreach>
-                                                                    </div>
-                                                                </notempty>
-                                                            </div>
-                                                        </foreach>
-                                                    </notempty>
-                                                </div>
-                                            </foreach>
-                                        </notempty>
+                                        <?php if(!empty($priv)): if(is_array($priv)): foreach($priv as $k=>$v): ?><div class="tabContent">
+                                                    <?php if(!empty($v["children"])): if(is_array($v["children"])): foreach($v["children"] as $k1=>$v1): ?><div style="line-height: 30px;">
+                                                                <input type="checkbox" name="<?php echo ($v1["sys_name"]); ?>" value="<?php echo ($v1["sys_name"]); ?>" onclick="setCheck(this.value, <?php echo ($v1["id"]); ?>);"/><?php echo ($v1["cat_name"]); ?></br>
+                                                                <?php if(!empty($v1["children"])): ?><div style="margin-left: 20px;">
+                                                                        <?php if(is_array($v1["children"])): foreach($v1["children"] as $k2=>$v2): if(($k2+1) %4 == 0): ?><input style="margin-left: 10px;" type="checkbox" class="pri_unit" name="<?php echo ($v1["sys_name"]); echo ($v1["id"]); ?>" value="<?php echo ($v2["pri_value"]); ?>"/><?php echo ($v2["pri_name"]); ?></br>
+                                                                                <?php else: ?>
+                                                                                <input style="margin-left: 10px;" type="checkbox" class="pri_unit" name="<?php echo ($v1["sys_name"]); echo ($v1["id"]); ?>" value="<?php echo ($v2["pri_value"]); ?>"/><?php echo ($v2["pri_name"]); endif; endforeach; endif; ?>
+                                                                    </div><?php endif; ?>
+                                                            </div><?php endforeach; endif; endif; ?>
+                                                </div><?php endforeach; endif; endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +156,7 @@
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-9">
                         <button type="button" class="btn btn-primary" id="saveInfo-btn">提&#12288;&#12288;交</button>
-                        <button type="button" class="btn btn-warning" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')">取&#12288;&#12288;消</button>
+                        <button type="button" class="btn btn-warning" onclick="javascript:void(window.location.href = '/index.php/Admin/SysUserInfo/showList')">取&#12288;&#12288;消</button>
                     </div>
                 </div>
             </form>
@@ -226,7 +206,7 @@
         for (var i = 0; i < oLis.length; i++){	oLis[i].onclick = changeTab; };
         })();
         initPrivPanel();
-        initGroupPrivPanel({$userInfo.cat_id});
+        initGroupPrivPanel(<?php echo ($userInfo["cat_id"]); ?>);
         });
     </script>
 </html>

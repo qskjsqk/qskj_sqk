@@ -2,8 +2,8 @@
 <html lang="zh-CN">
     <head>
         {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
-        <link rel="stylesheet" href="/Public/admin/css/common.css">
-        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/Public/admin/css/common.css"/>
+        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css"/>
         <script type="application/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="application/javascript" src="/Public/admin/js/common.js"></script>
@@ -38,29 +38,20 @@
                             </span>
                         </div>
                     </div>
-                    <!--                    <div class="col-sm-2" style="text-align: right;">
-                    
-                                        </div>
-                                        <div class="col-sm-1">
-                    
-                                        </div>-->
                 </div>
             </form>
         </div>
         <div class="table_content">
             <table class="table table-hover">
                 <tr>
-                    <th style="width: 50px;">全选</th>
+                    <th style="width: 50px;">序号</th>
                     <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+                    <th>姓名</th>
+                    <th>角色</th>
                     <th>用户名</th>
-                    <th>用户组</th>
-                    <th>真实姓名</th>
                     <th>电话</th>
                     <th>添加时间</th>
-                    <th>最后登录IP</th>
                     <th>最后登录时间</th>
-                    <th>是否禁用</th>
-                    <th>认证状态</th>
                     <th>操作</th>
                 </tr>
                 <notempty name="infoList">
@@ -68,31 +59,21 @@
                         <tr class="tr">
                             <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
                             <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
-                            <td>{$v.usr}</td>
-                            <td>{$v.cat_name}</td>
-                            <td>{$v.realname}</td>
-                            <td>{$v.tel}</td>
-                            <td>{$v.add_time}</td>
-                            <td>{$v.last_ip}</td>
-                            <td>{$v.last_login_time}</td>
                             <td>
-                        <if condition="$v.is_enable eq 0">禁用
-                            <else/>启用
+                        <if condition="$v.is_enable eq 0"><span class="label label-default">禁用</span>
+                            <else/><span class="label label-success">启用</span>
                         </if>
+                        {$v.realname}
                         </td>
-                        <td>
-                        <if condition="$v.rns_type eq 0">未审核
-                            <elseif condition="$v.rns_type eq 1"/>通过
-                            <else/>未通过
-                        </if>
-                        </td>
+                        <td>{$v.cat_name}</td>
+                        <td>{$v.usr}</td>
+                        <td>{$v.tel}</td>
+                        <td>{$v.add_time}</td>
+                        <td title="登录IP:{$v.last_ip}">{$v.last_login_time}</td>
                         <td>
                             <div>
                                 <button class="btn btn-default edit-btn editUserInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}');">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
-                                </button>
-                                <button class="btn btn-default del-btn delUserInfo" onclick="rnsUserLayer({$v.id})">
-                                    <span class="glyphicon glyphicon-user"></span> 实名认证
                                 </button>
                             </div>
                         </td>
@@ -106,23 +87,4 @@
             <div style="text-align: center;">{$page}</div>
         </div>
     </body>
-    <div class="rnsLayer" style="display: none;">
-        <div class="container" style="width: 550px;margin-left: 0px;">
-            <div class="row">
-                <form method="post" action="#" class="form-horizontal" style="margin-top: 20px;">
-                    <div class="form-group">
-                        <label for="category_name" class="col-sm-2 control-label">姓名</label>
-                        <div class="col-sm-2">
-                            <div id="realname" style="height: 34px; line-height:34px;"></div>
-                        </div>
-                        <label class="col-sm-2 control-label">身份证</label>
-                        <div class="col-sm-4">
-                            <div id="idcard_num" style="height: 34px; line-height:34px;"></div>
-                        </div>
-                        <label id="checkStatus" class="col-sm-2 control-label">审核状态</label>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </html>

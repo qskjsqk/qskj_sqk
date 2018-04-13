@@ -7,14 +7,14 @@
         <script type="application/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="application/javascript" src="/Public/admin/js/common.js"></script>
-        <script type="application/javascript" src="/Public/admin/js/notice/noticeCat.js"></script>
+        <script type="application/javascript" src="/Public/admin/js/activity/activCat.js"></script>
     </head>
     <body>
         <div class="option_search">
-            <button type="button" class="btn btn-success addNoticeCat" id="addCatLayer-btn" style="height: 34px;">
+            <button type="button" class="btn btn-success addActivCat" id="addCatLayer-btn" style="height: 34px;">
                 <span class="glyphicon glyphicon-plus"></span> 新增
             </button>
-            <button type="button" class="btn btn-danger delNoticeCat" id="delArrayCat-btn" style="height: 34px;">
+            <button type="button" class="btn btn-danger delActivCat" id="delArrayCat-btn" style="height: 34px;">
                 <span class="glyphicon glyphicon-trash"></span> 批量删除
             </button>
         </div>
@@ -41,10 +41,10 @@
                         <td><?php echo ($v["add_time"]); ?></td>
                         <td>
                             <div>
-                                <button class="btn btn-default edit-btn editNoticeCat" onclick="editCatLayer(<?php echo ($v["id"]); ?>);" >
+                                <button class="btn btn-default edit-btn editActivCat" onclick="editCatLayer(<?php echo ($v["id"]); ?>);" style="height: 34px;">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
-                                <button class="btn btn-default del-btn delNoticeCat" onclick="delCatLayer(<?php echo ($v["id"]); ?>)">
+                                <button class="btn btn-default del-btn delActivCat" onclick="delCatLayer(<?php echo ($v["id"]); ?>)" style="height: 34px;">
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </button>
                             </div>
@@ -58,7 +58,7 @@
     <div class="catLayer" style="display: none;">
         <div class="container" style="width: 500px;">
             <div class="row">
-                <form method="post" action="#" class="form-horizontal" id="form_data" style="margin-top: 20px;">
+                <form method="post" action="#" class="form-horizontal" id="save_form" style="margin-top: 20px;">
                     <input type="hidden" name="id" id="id" value=""/>
                     <div class="form-group">
                         <label for="category_name" class="col-sm-3 control-label">所属分类</label>
@@ -70,7 +70,7 @@
                         </div>
                         <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
                         <!--<label class="col-sm-2 control-label"></label>-->
-                        <!--<div class="col-sm-9 dropdown-menu" id="treeview" style="display: none;"></div>-->
+                        <!--<div class="col-sm-9" id="treeview" style="display: none;">111222</div>-->
                     </div>
                     <div class="form-group">
                         <label for="cat_name" class="col-sm-3 control-label">分类名称</label>

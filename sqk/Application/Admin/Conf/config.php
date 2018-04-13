@@ -9,7 +9,7 @@
 return array(
     //'配置项'=>'配置值'
     //基础架构模块
-    'PAGE_SIZE' => 13,//分页条数
+    'PAGE_SIZE' => 10,//分页条数
     'DB_ACTION_LOG' => 'Sys_action_log', //配置日志数据库
     'DB_ALL_ATTACH' => 'Sys_all_attach', //配置附件数据库
     'DB_CONFIG_DEF' => 'Sys_config_def', //配置系统字典数据库

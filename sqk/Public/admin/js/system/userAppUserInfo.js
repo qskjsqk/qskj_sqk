@@ -1,5 +1,8 @@
 /**
- * Created by GX on 2017-02-20.
+ * @name userAppInfo-javascript
+ * @info 描述：居民用户信息相关脚本
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2018-4-13 14:39:17
  */
 $(function () {
     //新增按钮绑定事件
@@ -137,7 +140,14 @@ function bindingCardLayer(id) {
     });
 }
 
-function submitCardInfo(index,id,flag){
+/**
+ * 提交IC卡信息
+ * @param {type} index
+ * @param {type} id
+ * @param {type} flag
+ * @returns {undefined}
+ */
+function submitCardInfo(index, id, flag) {
     location.reload();
 //    $.post(c_path + '/rnsUser',{'id':id,'flag':flag},function(result){
 //        if(result.code == '500'){
@@ -150,6 +160,10 @@ function submitCardInfo(index,id,flag){
 //    });
 }
 
+/**
+ * 获取ic卡串号
+ * @returns {undefined}
+ */
 function getCardUfNum() {
     $.post(c_path + '/getCardUfNum', function (result) {
         if (result.code == '500') {

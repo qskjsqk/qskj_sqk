@@ -1,5 +1,8 @@
 /**
- * Created by GX on 2017-02-20.
+ * @name userAppDetail-javascript
+ * @info 描述：居民用户详情相关脚本
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2018-4-13 14:39:17
  */
 $(function () {
     //新增按钮绑定事件

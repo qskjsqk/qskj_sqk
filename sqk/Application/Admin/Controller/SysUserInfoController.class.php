@@ -17,26 +17,23 @@ class SysUserInfoController extends BaseDBController {
     protected $userInfoModel;
     protected $privCatModel;
     protected $privInfoModel;
-    protected $sellerInfoModel;
-    protected $orderInfoModel;
-    protected $config;
 
+    /**
+     * 初始化函数
+     */
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
-
+        parent::_initialize();
         $this->groupModel = D('SysUserGroup');
         $this->userInfoModel = D('SysUserInfo');
         $this->privCatModel = D('SysPrivCat');
         $this->privInfoModel = D('SysPrivInfo');
         $this->sellerInfoModel = D('SellerInfo');
         $this->orderInfoModel = D('SellerOrderInfo');
+//        dump(__ACTION__);
     }
 
     /**
-     * function:显示管理员用户列表
+     * 显示管理员用户列表
      */
     public function showList() {
         if (!empty($_GET['usr'])) {
@@ -48,26 +45,9 @@ class SysUserInfoController extends BaseDBController {
             $pageCondition['category_name'] = urldecode($_GET['category_name']);
             $pageCondition['cat_id'] = $_GET['cat_id'];
         }
-        $fieldStr = $this->config['db_fix'] . 'sys_user_info.*,' . $this->config['db_fix'] . 'sys_user_group.cat_name';
-        $joinStr = 'LEFT JOIN __SYS_USER_GROUP__ ON __SYS_USER_INFO__.cat_id=__SYS_USER_GROUP__.id';
+        $fieldStr = parent::madField('sys_user_info.*', 'sys_user_group.cat_name');
+        $joinStr = parent::madJoin('sys_user_info.cat_id', 'sys_user_group.id');
         parent::showData($this->userInfoModel, $where, $pageCondition, $joinStr, $fieldStr);
-    }
-
-    /**
-     * function:显示居民用户列表
-     */
-    public function showAppUserList() {
-        if (!empty($_GET['usr'])) {
-            $where['usr'] = array('LIKE', '%' . urldecode($_GET['usr']) . '%');
-            $pageCondition['usr'] = urldecode($_GET['usr']);
-        }
-        $res = parent::getDataByWhere($this->groupModel, 'sys_name="appUser"');
-        if ($res['code'] == 500) {
-            $where["cat_id"] = array('EQ', $res['data'][0]['id']);
-            $fieldStr = $this->config['db_fix'] . 'sys_user_info.*,' . $this->config['db_fix'] . 'sys_user_group.cat_name';
-            $joinStr = 'LEFT JOIN __SYS_USER_GROUP__ ON __SYS_USER_INFO__.cat_id=__SYS_USER_GROUP__.id';
-            parent::showData($this->userInfoModel, $where, $pageCondition, $joinStr, $fieldStr);
-        }
     }
 
     /**
@@ -84,22 +64,9 @@ class SysUserInfoController extends BaseDBController {
             $logC = A('Actionlog')->addLog('SysUserInfo', 'saveUserInfo', '添加/编辑用户信息');
             $this->ajaxReturn($returnData, 'JSON');
             exit;
-        } else {
-            dump($_GET['catName']);
-            switch ($_GET['catName']) {
-                case 'appUser':
-
-                    break;
-                case 'sellerUser':
-
-                    break;
-
-                default:
-                    break;
-            }
-            $this->assign('priv', $this->getPriviledges());
-            $this->display();
         }
+        $this->assign('priv', $this->getPriviledges());
+        $this->display();
     }
 
     /**
@@ -150,22 +117,9 @@ class SysUserInfoController extends BaseDBController {
      * @return bool
      */
     public function delUserInfo($id) {
+
         $successFlag = true;
-        if (!$this->isSellerUser($id)) {//非商家用户
-            $returnData = parent::delData($this->userInfoModel, $id);
-        } else {
-            $sellerCondition['user_id'] = array('EQ', $id);
-            $sellerInfo = $this->sellerInfoModel->where($sellerCondition)->find();
-            if (isset($sellerInfo)) {
-                $condition['seller_id'] = array('EQ', $sellerInfo['id']);
-                $orderInfo = $this->$this->orderInfoModel->where($condition)->select();
-                foreach ($orderInfo as $value1) {
-                    if ($value1['deal_type'] == 1 || $value1['deal_type'] == 2) {
-                        $dealFlag = false;
-                    }
-                }
-            }
-        }
+        $returnData = parent::delData($this->userInfoModel, $id);
 
         if ($returnData['code'] == '502') {
             $successFlag = fasle;
@@ -197,55 +151,10 @@ class SysUserInfoController extends BaseDBController {
     }
 
     /**
-     * function:是否为商家用户
-     * @param $id
-     * @return bool
-     */
-    public function isSellerUser($id) {
-        $condition['sys_name'] = array('EQ', 'sellerUser');
-        $groupInfo = $this->groupModel->where($condition)->find();
-        $userCondition['id'] = array('EQ', $id);
-        $userInfo = $this->userInfoModel->where($userCondition)->find();
-        if ($userInfo['cat_id'] == $groupInfo['id']) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * function:获取信息
      */
     public function getData() {
         $returnData = parent::getData($this->userInfoModel, $_POST['id']);
-        $this->ajaxReturn($returnData, 'JSON');
-    }
-
-    /**
-     * function:实名认证
-     */
-    public function rnsUser() {
-        $condition['id'] = array('EQ', $_POST['id']);
-        $data = array('rns_type' => $_POST['flag']);
-        $result = $this->userInfoModel->where($condition)->setField($data);
-        if ($result !== false) {
-            $userInfo = $this->userInfoModel->where($condition)->find();
-            if ($_POST['flag'] == '1') {
-                $healthCondition['idcard'] = array('EQ', $userInfo['idcard_num']);
-                $data = array('user_id' => $_POST['id']);
-            } else {
-                $healthCondition['idcard'] = array('EQ', $userInfo['idcard_num']);
-                $data = array('user_id' => 0);
-            }
-            $this->bloodpressModel->where($healthCondition)->setField($data);
-            $this->bloodsaturModel->where($healthCondition)->setField($data);
-            $this->sugarModel->where($healthCondition)->setField($data);
-            $this->temptrModel->where($healthCondition)->setField($data);
-            $this->weightModel->where($healthCondition)->setField($data);
-            $returnData['code'] = '500';
-        } else {
-            $returnData['code'] = '502';
-        }
         $this->ajaxReturn($returnData, 'JSON');
     }
 

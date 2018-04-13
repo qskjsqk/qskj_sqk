@@ -5,9 +5,6 @@
         <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
         <link rel="stylesheet" href="/Public/admin/css/common.css">
         <link rel="stylesheet" type="text/css" href="/Public/Plugin/tab_little/css/style.css"/>
-        <!--        <script src="/Public/Plugin/tab_little/js/event.js"></script>
-                <script src="/Public/Plugin/tab_little/js/tween.js"></script>
-        -->
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>

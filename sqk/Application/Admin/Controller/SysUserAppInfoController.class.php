@@ -48,15 +48,9 @@ class SysUserAppInfoController extends BaseDBController {
             parse_str($form_data, $param_arr); //转换数组
             $encriptTel = R('Login/EncriptPWD', array($param_arr['tel'])); //手机号加密
             $param_arr['qrcode_path'] = createQrcode($param_arr['tel'] . $encriptTel);
-            if (!$this->userappInfoModel->create($param_arr)) {
-                $returnData['code'] = '501'; //验证未通过
-                $returnData['msgError'] = $this->userappInfoModel->getError();
-                $this->ajaxReturn($returnData, 'JSON');
-            } else {
-                $returnData = parent::saveData($this->userappInfoModel, $param_arr);
-                $logC = A('Actionlog')->addLog('SysUserInfo', 'saveUserInfo', '添加/编辑居民用户信息');
-                $this->ajaxReturn($returnData, 'JSON');
-            }
+            $returnData = parent::saveData($this->userappInfoModel, $param_arr);
+            $logC = A('Actionlog')->addLog('SysUserInfo', 'saveUserInfo', '添加/编辑居民用户信息');
+            $this->ajaxReturn($returnData, 'JSON');
         } else {
             $this->display();
         }

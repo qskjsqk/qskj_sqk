@@ -19,18 +19,21 @@
                     <div class="col-sm-6"></div>
                     <div class="col-sm-3" >
                         <div class="input-group">
-                            <input type="text" class="form-control" id="start_time" name="start_time" value="{$searchInfo['start_time']}" placeholder="请输入起始时间" onchange="checkse('start_time', 'end_time', 'start_time')">
+                            <input type="text" class="form-control" id="start_time" name="start_time" value="{$searchInfo['start_time']}" placeholder="请输入起始时间" onchange="checkse('start_time', 'end_time', 'start_time')" readonly="readonly">
                             <span class="input-group-addon">至</span>
-                            <input type="text" class="form-control" id="end_time" name="end_time" value="{$searchInfo['end_time']}" placeholder="请输入结束时间" onchange="checkse('start_time', 'end_time', 'end_time')">
+                            <input type="text" class="form-control" id="end_time" name="end_time" value="{$searchInfo['end_time']}" placeholder="请输入结束时间" onchange="checkse('start_time', 'end_time', 'end_time')" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-sm-2" style="text-align: right;">
-                        <input type="text" class="form-control" id="keyword" name="keyword" value="{$searchInfo['keyword']}" placeholder="请输入关键字">
-                    </div>
-                    <div class="col-sm-1">
-                        <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-search"></span> 搜索
-                        </button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="keyword" name="keyword" value="{$searchInfo['keyword']}" placeholder="请输入关键字">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
+                                    <span class="glyphicon glyphicon-search"></span> 搜索
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </form>

@@ -12,7 +12,7 @@ namespace Admin\Controller;
 use Think\Controller;
 
 class LoginController extends Controller {
-    
+
     protected $config;
 
     public function _initialize() {
@@ -20,7 +20,6 @@ class LoginController extends Controller {
         $configdefC = A('Configdef');
         $this->config = $configdefC->getAllDef();
         $this->assign('config', $this->config);
-//        读取配置menu
     }
 
     public function index() {
@@ -28,12 +27,10 @@ class LoginController extends Controller {
     }
 
     public function login() {
-        $this->assign();
         $this->display();
     }
 
     public function main() {
-        $this->assign();
         $this->display();
     }
 
@@ -87,7 +84,6 @@ class LoginController extends Controller {
     }
 
     public function findpwd() {
-        $this->assign();
         $this->display();
     }
 
@@ -148,12 +144,13 @@ class LoginController extends Controller {
                     $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
                     if ($catInfo['sys_name'] != 'appUser') {
                         if ($catInfo != 0) {
-                            session('sys_name', $catInfo['sys_name']);
-                            session('cat_name', $catInfo['cat_name']);
-                            $errorMsg['userGroup'] = $catInfo['sys_name'];
+                            
                         } else {
                             $errorMsg['userGroup'] = 0;
                         }
+                        session('sys_name', $catInfo['sys_name']);
+                        session('cat_name', $catInfo['cat_name']);
+                        $errorMsg['userGroup'] = $catInfo['sys_name'];
 
                         $loginUpd['last_ip'] = get_client_ip();
                         $loginUpd['last_login_time'] = date('Y-m-d H:i:s', time());
@@ -186,7 +183,6 @@ class LoginController extends Controller {
      * 注册用户
      */
     public function registerUser() {
-
         if ($_POST['cat_id'] == '' || $_POST['cat_id'] == '0') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '请选择用户类型！';

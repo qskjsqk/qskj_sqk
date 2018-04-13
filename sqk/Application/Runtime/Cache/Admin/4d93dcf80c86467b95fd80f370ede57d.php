@@ -2,8 +2,8 @@
 <html lang="zh-CN">
     <head>
         <?php echo (ADMIN_META); echo (ADMIN_CSS); echo (ADMIN_COMPATIBLE); echo (ADMIN_JS); echo ($Assigndata); ?>
-        <link rel="stylesheet" href="/Public/admin/css/common.css">
-        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/Public/admin/css/common.css"/>
+        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css"/>
         <script type="application/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="application/javascript" src="/Public/admin/js/common.js"></script>
@@ -38,57 +38,39 @@
                             </span>
                         </div>
                     </div>
-                    <!--                    <div class="col-sm-2" style="text-align: right;">
-                    
-                                        </div>
-                                        <div class="col-sm-1">
-                    
-                                        </div>-->
                 </div>
             </form>
         </div>
         <div class="table_content">
             <table class="table table-hover">
                 <tr>
-                    <th style="width: 50px;">全选</th>
+                    <th style="width: 50px;">序号</th>
                     <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+                    <th>姓名</th>
+                    <th>角色</th>
                     <th>用户名</th>
-                    <th>用户组</th>
-                    <th>真实姓名</th>
                     <th>电话</th>
                     <th>添加时间</th>
-                    <th>最后登录IP</th>
                     <th>最后登录时间</th>
-                    <th>是否禁用</th>
-                    <th>认证状态</th>
                     <th>操作</th>
                 </tr>
                 <?php if(!empty($infoList)): if(is_array($infoList)): foreach($infoList as $k=>$v): ?><tr class="tr">
                             <td><?php echo (I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1);?></td>
                             <td><input type="checkbox" name="rowChecked" value="<?php echo ($v["id"]); ?>"/></td>
-                            <td><?php echo ($v["usr"]); ?></td>
-                            <td><?php echo ($v["cat_name"]); ?></td>
-                            <td><?php echo ($v["realname"]); ?></td>
-                            <td><?php echo ($v["tel"]); ?></td>
-                            <td><?php echo ($v["add_time"]); ?></td>
-                            <td><?php echo ($v["last_ip"]); ?></td>
-                            <td><?php echo ($v["last_login_time"]); ?></td>
                             <td>
-                        <?php if($v["is_enable"] == 0): ?>禁用
-                            <?php else: ?>启用<?php endif; ?>
+                        <?php if($v["is_enable"] == 0): ?><span class="label label-default">禁用</span>
+                            <?php else: ?><span class="label label-success">启用</span><?php endif; ?>
+                        <?php echo ($v["realname"]); ?>
                         </td>
-                        <td>
-                        <?php if($v["rns_type"] == 0): ?>未审核
-                            <?php elseif($v["rns_type"] == 1): ?>通过
-                            <?php else: ?>未通过<?php endif; ?>
-                        </td>
+                        <td><?php echo ($v["cat_name"]); ?></td>
+                        <td><?php echo ($v["usr"]); ?></td>
+                        <td><?php echo ($v["tel"]); ?></td>
+                        <td><?php echo ($v["add_time"]); ?></td>
+                        <td title="登录IP:<?php echo ($v["last_ip"]); ?>"><?php echo ($v["last_login_time"]); ?></td>
                         <td>
                             <div>
                                 <button class="btn btn-default edit-btn editUserInfo" onclick="javascript:void(window.location.href = '/index.php/Admin/SysUserInfo/edit/id/<?php echo ($v["id"]); ?>');">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
-                                </button>
-                                <button class="btn btn-default del-btn delUserInfo" onclick="rnsUserLayer(<?php echo ($v["id"]); ?>)">
-                                    <span class="glyphicon glyphicon-user"></span> 实名认证
                                 </button>
                             </div>
                         </td>
@@ -98,23 +80,4 @@
             <div style="text-align: center;"><?php echo ($page); ?></div>
         </div>
     </body>
-    <div class="rnsLayer" style="display: none;">
-        <div class="container" style="width: 550px;margin-left: 0px;">
-            <div class="row">
-                <form method="post" action="#" class="form-horizontal" style="margin-top: 20px;">
-                    <div class="form-group">
-                        <label for="category_name" class="col-sm-2 control-label">姓名</label>
-                        <div class="col-sm-2">
-                            <div id="realname" style="height: 34px; line-height:34px;"></div>
-                        </div>
-                        <label class="col-sm-2 control-label">身份证</label>
-                        <div class="col-sm-4">
-                            <div id="idcard_num" style="height: 34px; line-height:34px;"></div>
-                        </div>
-                        <label id="checkStatus" class="col-sm-2 control-label">审核状态</label>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </html>
