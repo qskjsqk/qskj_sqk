@@ -17,11 +17,11 @@ class SysPrivCatController extends BaseDBController {
     protected $infoModel;
 
     public function _initialize() {
+        parent::_initialize();
         $this->catModel = D('SysPrivCat');
         $this->infoModel = M('SysPrivInfo');
     }
-    
-    
+
     /**
      * function:显示权限分类列表
      */
@@ -29,7 +29,7 @@ class SysPrivCatController extends BaseDBController {
         $fatherCat = $this->catModel->where('parent_id=0')->select();
         foreach ($fatherCat as $v) {
             $v['catType'] = 'father';
-            $v['cat_name']="<b>".$v['cat_name']."</b>";
+            $v['cat_name'] = "<b>" . $v['cat_name'] . "</b>";
             $v['priInfo'] = array();
             $infoList[] = $v;
             $sonCat = $this->catModel->where('parent_id=' . $v['id'])->select();
@@ -44,18 +44,18 @@ class SysPrivCatController extends BaseDBController {
         $this->assign('infoList', $infoList);
         $this->display();
     }
-    
-    /**
-     * function:显示某一分类下权限信息列表
-     */
-    public function getInfoListByCatId() {
-        $catId = $_POST['cat_id'];
-        $fieldStr = 'qs_pm_sys_priv_info.*,qs_pm_sys_priv_cat.cat_name';
-        $joinStr = 'LEFT JOIN __SYS_PRIV_CAT__ ON __SYS_PRIV_INFO__.cat_id=__SYS_PRIV_CAT__.id';
-        $where = '__SYS_PRIV_INFO__.cat_id=' . $catId;
-        $infoList = parent::getListData($this->infoModel, $where, $joinStr, $fieldStr);
-        $this->ajaxReturn($infoList, 'JSON');
-    }
+
+//    /**
+//     * function:显示某一分类下权限信息列表
+//     */
+//    public function getInfoListByCatId() {
+//        $catId = $_POST['cat_id'];
+//        $fieldStr = parent::madField('sys_priv_info.*', 'sys_priv_cat.cat_name');
+//        $joinStr = parent::madJoin('sys_priv_info.cat_id', 'sys_priv_cat.id');
+//        $where[$this->dbFix . 'sys_priv_info.id'] = array('EQ', $catId);
+//        $infoList = parent::getListData($this->infoModel, $where, $joinStr, $fieldStr);
+//        $this->ajaxReturn($infoList, 'JSON');
+//    }
 
     /**
      * function:获取权限分类下拉列表（返回下拉树中数据）

@@ -29,11 +29,7 @@ class IndexController extends Controller {
         if ($_SESSION['user_id'] == null) {
             $this->redirect('Login/login');
         } elseif ($_SESSION['sys_token'] == $this->config['system_token']) {
-            $seller_info = $this->isSeller();
-            if (!empty($seller_info)) {
-                session('seller_id', $seller_info['id']);
-                $this->assign('seller_info', $seller_info);
-            }
+//            显示左上角用户
             if ($_SESSION['realname'] == NULL || $_SESSION['realname'] == '') {
                 $this->assign('realname', $_SESSION['usr']);
             } else {
@@ -46,13 +42,13 @@ class IndexController extends Controller {
                 $this->assign('shome', 'none');
             }
 //            判断提醒按钮显示状态
-            if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin' || $_SESSION['sys_name'] == 'wyUser') {
+            if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin') {
                 $this->assign('tixing', 'block');
             } else {
                 $this->assign('tixing', 'none');
             }
 //            判断消息按钮显示状态
-            if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin' || ($_SESSION['sys_name'] == 'sellerUser' && isset($_SESSION['seller_id']))) {
+            if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin') {
                 $this->assign('xiaoxi', 'block');
             } else {
                 $this->assign('xiaoxi', 'none');
@@ -75,26 +71,6 @@ class IndexController extends Controller {
     }
 
     /**
-     * 判断是否为商家
-     * @return type
-     */
-    public function isSeller() {
-        $cat_id = getCatId('sellerUser', D('SysUserGroup'));
-        if ($_SESSION['cat_id'] == $cat_id) {//商家用户
-            session('user_type', 'sellerUser');
-            $condition['user_id'] = $_SESSION['user_id'];
-            $sellerInfo = D('SellerInfo')->field('id,name')->where($condition)->find();
-            if (isset($sellerInfo)) {
-                return $sellerInfo;
-            } else {
-                return NULL;
-            }
-        } else {
-            return NULL;
-        }
-    }
-
-    /**
      * 获取启用分类字串
      * @param type $model
      * @param type $type
@@ -102,10 +78,6 @@ class IndexController extends Controller {
      */
     public function getEnableCatIds($model, $type) {
         if ($type == 0) {
-//            社区活动
-            $selectArr = $model->where('is_enable=1 and sys_name<>"slider"')->select();
-        } else {
-//            其他
             $selectArr = $model->where('is_enable=1')->select();
         }
 

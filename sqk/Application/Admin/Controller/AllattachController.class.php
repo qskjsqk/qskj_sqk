@@ -15,7 +15,6 @@ use Think\Upload;
 class AllattachController extends Controller {
 
     public function index() {
-        $this->assign();
         $this->display();
     }
 

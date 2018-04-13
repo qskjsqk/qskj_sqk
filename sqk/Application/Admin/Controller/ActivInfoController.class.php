@@ -18,14 +18,9 @@ class ActivInfoController extends BaseDBController {
     protected $commModel;
     protected $attachModel;
     protected $userInfoModel;
-    protected $config;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
-
+        parent::_initialize();
         $this->catModel = D('ActivCat');
         $this->infoModel = D('ActivInfo');
         $this->commModel = D('ActivComm');
@@ -37,23 +32,23 @@ class ActivInfoController extends BaseDBController {
      * function:显示活动信息列表
      */
     public function showList() {
-
         $this->assign('address_id', $_SESSION['address_id']);
+
         if ($_SESSION['address_id'] != 0) {
-            $where[$this->config['db_fix'] . 'activ_info.address_id'] = array('IN', '0,' . $_SESSION['address_id']);
+            $where[$this->dbFix . 'activ_info.address_id'] = array('IN', '0,' . $_SESSION['address_id']);
         }
         if (!empty($_GET['title'])) {
             $where['title'] = array('LIKE', '%' . urldecode($_GET['title']) . '%');
             $pageCondition['title'] = urldecode($_GET['title']);
         }
         if (!empty($_GET['cat_id'])) {
-            $where[$this->config['db_fix'] . 'activ_info.cat_id'] = array('EQ', $_GET['cat_id']);
+            $where[$this->dbFix . 'activ_info.cat_id'] = array('EQ', $_GET['cat_id']);
             $pageCondition['category_name'] = urldecode($_GET['category_name']);
             $pageCondition['cat_id'] = $_GET['cat_id'];
         }
 
-        $fieldStr = $this->config['db_fix'] . 'activ_info.*,' . $this->config['db_fix'] . 'activ_cat.cat_name,' . $this->config['db_fix'] . 'sys_user_info.usr,' . $this->config['db_fix'] . 'sys_user_info.realname';
-        $joinStr = 'LEFT JOIN __ACTIV_CAT__ ON __ACTIV_INFO__.cat_id=__ACTIV_CAT__.id LEFT JOIN __SYS_USER_INFO__ ON __ACTIV_INFO__.user_id=__SYS_USER_INFO__.id';
+        $fieldStr = parent::madField('activ_info.*', 'activ_cat.cat_name') . ',' . parent::madField('sys_user_info.realname', 'sys_user_info.usr');
+        $joinStr = parent::madJoin('activ_info.cat_id', 'activ_cat.id').' '.parent::madJoin('activ_info.user_id', 'sys_user_info.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
@@ -94,7 +89,7 @@ class ActivInfoController extends BaseDBController {
         $param_arr['user_id'] = $_SESSION['user_id'];
         $returnData = parent::saveData($this->infoModel, $param_arr); //添加活动信息
         if ($returnData['code'] == '500') {
-            foreach ($param_arr['files'] as $value) {//$this->attachModel
+            foreach ($param_arr['files'] as $value) {
                 $condition['id'] = array('EQ', $value);
                 if ($returnData['flag'] == 'add') {
                     $data = array('module_info_id' => $returnData['dataID']);
@@ -174,7 +169,7 @@ class ActivInfoController extends BaseDBController {
     public function showJoinList() {
         $userList = array();
         $returnData = parent::getData($this->infoModel, $_POST['id']);
-        $joinArr = explode(",", trim($returnData['data']['join_ids'], ",")); //trim($str,"Hed!")
+        $joinArr = explode(",", trim($returnData['data']['join_ids'], ","));
         foreach ($joinArr as $value) {
             $condition['id'] = array('EQ', $value);
             $userInfo = $this->userInfoModel->field('realname,tel,address,usr')->where($condition)->find();
@@ -195,7 +190,7 @@ class ActivInfoController extends BaseDBController {
         $where['activity_id'] = $returnData['data']['id'];
         $condition['module_info_id'] = $returnData['data']['id'];
         $condition['module_name'] = array('EQ', 'activity');
-        $commInfoList = $this->commModel->field($this->config['db_fix'] . 'activ_comm.*,' . $this->config['db_fix'] . 'sys_user_info.usr')->join('LEFT JOIN __SYS_USER_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USER_INFO__.id')->where($where)->order('id desc')->select();
+        $commInfoList = $this->commModel->field($this->dbFix . 'activ_comm.*,' . $this->dbFix . 'sys_user_info.usr')->join('LEFT JOIN __SYS_USER_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USER_INFO__.id')->where($where)->order('id desc')->select();
         $imgInfoList = $this->attachModel->where($condition)->order('id desc')->select();
         $this->assign('activ', $returnData['data']);
         $this->assign('imgInfo', $imgInfoList);
@@ -276,7 +271,7 @@ class ActivInfoController extends BaseDBController {
         }
         echo json_encode($returnData);
     }
-    
+
     /**
      * function:结束单条活动信息
      */

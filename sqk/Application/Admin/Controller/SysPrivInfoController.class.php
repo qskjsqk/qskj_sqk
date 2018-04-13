@@ -7,7 +7,6 @@
  * @datetime 2017-2-7 15:07:13
  */
 
-
 namespace Admin\Controller;
 
 use Think\Controller;
@@ -16,14 +15,9 @@ class SysPrivInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $config;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
-
+        parent::_initialize();
         $this->catModel = D('SysPrivCat');
         $this->infoModel = D('SysPrivInfo');
     }
@@ -32,9 +26,9 @@ class SysPrivInfoController extends BaseDBController {
      * function:显示权限信息列表
      */
     public function showList() {
-        $fieldStr = $this->config['db_fix'] . 'sys_priv_info.*,' . $this->config['db_fix'] . 'sys_priv_cat.cat_name';
-        $joinStr = 'LEFT JOIN __SYS_PRIV_CAT__ ON __SYS_PRIV_INFO__.cat_id=__SYS_PRIV_CAT__.id';
-        parent::showData($this->infoModel, [], [], $joinStr, $fieldStr,$this->config['db_fix'] . 'sys_priv_cat.parent_id asc');
+        $fieldStr = parent::madField('sys_priv_info.*', 'sys_priv_cat.cat_name');
+        $joinStr = parent::madJoin('sys_priv_info.cat_id', 'sys_priv_cat.id');
+        parent::showData($this->infoModel, [], [], $joinStr, $fieldStr, $this->dbFix . 'sys_priv_cat.parent_id asc');
     }
 
     /**
@@ -103,7 +97,7 @@ class SysPrivInfoController extends BaseDBController {
     }
 
     /**
-     * function:返回用户权限
+     * 返回用户权限
      */
     public function getPriviledges() {
         if ($_SESSION['user_id'] != NULL) {

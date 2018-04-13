@@ -45,23 +45,23 @@ class LoginController extends Controller {
         if ($_POST['c_name'] != 'Login') {
             if (isset($_SESSION['user_id'])) {
                 if ($_SESSION['sys_token'] == SYSTEM_TOKEN) {
-                    $return['flog'] = 1;
+                    $return['flag'] = 1;
                 } else {
-                    $return['flog'] = 1;
+                    $return['flag'] = 1;
                 }
             } else {
-                $return['flog'] = 0;
+                $return['flag'] = 0;
             }
         } else {
             if ($_POST['a_name'] == 'main') {
                 if (isset($_SESSION['user_id'])) {
                     if ($_SESSION['sys_token'] == SYSTEM_TOKEN) {
-                        $return['flog'] = 1;
+                        $return['flag'] = 1;
                     } else {
-                        $return['flog'] = 1;
+                        $return['flag'] = 1;
                     }
                 } else {
-                    $return['flog'] = 0;
+                    $return['flag'] = 0;
                 }
             }
         }
@@ -143,9 +143,7 @@ class LoginController extends Controller {
                     $userInfoC = A('SysUserInfo');
                     $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
                     if ($catInfo['sys_name'] != 'appUser') {
-                        if ($catInfo != 0) {
-                            
-                        } else {
+                        if ($catInfo == 0) {
                             $errorMsg['userGroup'] = 0;
                         }
                         session('sys_name', $catInfo['sys_name']);

@@ -17,6 +17,7 @@ class ActivCatController extends BaseDBController {
     protected $infoModel;
 
     public function _initialize() {
+        parent::_initialize();
         $this->catModel = D('ActivCat');
         $this->infoModel = M('ActivInfo');
     }

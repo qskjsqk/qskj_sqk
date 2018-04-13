@@ -17,6 +17,14 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 
 class ApiController extends BaseDBController {
 
+    public function _initialize() {
+        parent::_initialize();
+    }
+
+    /**
+     * 设置社区读卡串号
+     * 加密待做*******
+     */
     public function setCardUfNum() {
         $addressId = $_GET['addressId'];
         $cardUfNum = $_GET['cardUfNum'];

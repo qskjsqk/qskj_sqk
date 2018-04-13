@@ -16,13 +16,9 @@ class NoticeInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $config;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
+        parent::_initialize();
 
         $this->catModel = D('NoticeCat');
         $this->infoModel = D('NoticeInfo');
@@ -34,19 +30,19 @@ class NoticeInfoController extends BaseDBController {
     public function showList() {
         $this->assign('address_id', $_SESSION['address_id']);
         if ($_SESSION['address_id'] != 0) {
-            $where[$this->config['db_fix'] . 'notice_info.address_id'] = array('IN','0,'.$_SESSION['address_id']);
+            $where[$this->dbFix . 'notice_info.address_id'] = array('IN', '0,' . $_SESSION['address_id']);
         }
         if (!empty($_GET['title'])) {
             $where['title'] = array('LIKE', '%' . urldecode($_GET['title']) . '%');
             $pageCondition['title'] = urldecode($_GET['title']);
         }
         if (!empty($_GET['cat_id'])) {
-            $where[$this->config['db_fix'] . 'notice_info.cat_id'] = array('EQ', $_GET['cat_id']);
+            $where[$this->dbFix . 'notice_info.cat_id'] = array('EQ', $_GET['cat_id']);
             $pageCondition['category_name'] = urldecode($_GET['category_name']);
             $pageCondition['cat_id'] = $_GET['cat_id'];
         }
-        $fieldStr = $this->config['db_fix'] . 'notice_info.*,' . $this->config['db_fix'] . 'notice_cat.cat_name,' . $this->config['db_fix'] . 'sys_user_info.usr,' . $this->config['db_fix'] . 'sys_user_info.realname';
-        $joinStr = 'LEFT JOIN __NOTICE_CAT__ ON __NOTICE_INFO__.cat_id=__NOTICE_CAT__.id LEFT JOIN __SYS_USER_INFO__ ON __NOTICE_INFO__.user_id=__SYS_USER_INFO__.id';
+        $fieldStr = parent::madField('notice_info.*', 'notice_cat.cat_name') . ',' . parent::madField('sys_user_info.usr', 'sys_user_info.realname');
+        $joinStr = parent::madJoin('notice_info.cat_id', 'notice_cat.id') . ' ' . parent::madJoin('notice_info.user_id', 'sys_user_info.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 

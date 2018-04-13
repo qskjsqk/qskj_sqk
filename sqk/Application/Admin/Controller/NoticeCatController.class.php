@@ -15,14 +15,9 @@ class NoticeCatController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $config;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
-
+        parent::_initialize();
         $this->catModel = D('NoticeCat');
         $this->infoModel = M('NoticeInfo');
     }
@@ -121,6 +116,9 @@ class NoticeCatController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 批量删除通知分类
+     */
     public function delArrayCat() {
         $this->catModel->delete(rtrim($_POST['ids'], ",")); // 删除主键为ids的数据
         $logC = A('Actionlog')->addLog('NoticeCat', 'delArrayCat', '删除通知分类');

@@ -15,24 +15,14 @@ class SellerInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $userInfoModel;
-    protected $itemsInfoModel;
-    protected $orderInfoModel;
     protected $promInfoModel;
     protected $attachModel;
-    protected $config;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
 
+        parent::_initialize();
         $this->catModel = D('SellerCat');
         $this->infoModel = D('SellerInfo');
-        $this->userInfoModel = D('SellerUserInfo');
-        $this->itemsInfoModel = D('SellerItemsInfo');
-        $this->orderInfoModel = D('SellerOrderInfo');
         $this->promInfoModel = D('SellerPromInfo');
         $this->attachModel = D('SysAllAttach');
 //        dump(__ACTION__);
@@ -48,7 +38,7 @@ class SellerInfoController extends BaseDBController {
                 $pageCondition['name'] = urldecode($_GET['name']);
             }
             if (!empty($_GET['cat_id'])) {
-                $where[$this->config['db_fix'] . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
+                $where[$this->dbFix . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
                 $pageCondition['category_name'] = $_GET['category_name'];
                 $pageCondition['cat_id'] = $_GET['cat_id'];
             }
@@ -57,8 +47,9 @@ class SellerInfoController extends BaseDBController {
                 $pageCondition['is_checked'] = $_GET['is_checked'];
             }
         }
-        $fieldStr = $this->config['db_fix'] . 'seller_info.*,' . $this->config['db_fix'] . 'sys_user_info.usr,' . $this->config['db_fix'] . 'seller_cat.cat_name';
-        $joinStr = 'LEFT JOIN __SYS_USER_INFO__ ON __SELLER_INFO__.user_id=__SYS_USER_INFO__.id LEFT JOIN __SELLER_CAT__ ON __SELLER_INFO__.cat_id=__SELLER_CAT__.id';
+
+        $fieldStr = parent::madField('seller_info.*', 'seller_cat.cat_name');
+        $joinStr = parent::madJoin('seller_info.cat_id', 'seller_cat.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
@@ -102,11 +93,11 @@ class SellerInfoController extends BaseDBController {
         if ($returnData['code'] == '500') {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
             $info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
-            
+
             $returnData['data']['address_id'] = $info['data']['address_id'];
             $returnData['data']['usr'] = $info['data']['usr'];
             $returnData['data']['tel'] = $info['data']['tel'];
-            
+
             $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
             $condition['module_name'] = array('EQ', 'sellerInfo');
             $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
@@ -117,6 +108,7 @@ class SellerInfoController extends BaseDBController {
         }
         $this->display('saveSeller');
     }
+
     /**
      * function:删除附件
      */

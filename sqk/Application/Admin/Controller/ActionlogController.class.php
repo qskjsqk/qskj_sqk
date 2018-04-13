@@ -13,6 +13,10 @@ use Think\Controller;
 
 class ActionlogController extends BaseDBController {
 
+    public function _initialize() {
+        parent::_initialize();
+    }
+
     /**
      * 添加日志
      * @param type $controllerName
