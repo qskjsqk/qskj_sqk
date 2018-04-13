@@ -28,12 +28,12 @@ class LoginController extends Controller {
     }
 
     public function login() {
-        $this->assign();
+        //$this->assign();
         $this->display();
     }
 
     public function main() {
-        $this->assign();
+        //$this->assign();
         $this->display();
     }
 
