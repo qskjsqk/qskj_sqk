@@ -16,14 +16,16 @@ header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 
 header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
 
 class ActivityController extends Controller {
-    
+
+    public function _initialize() {
+        
+    }
+
     public function activity_list() {
-        $this->assign();
         $this->display();
     }
 
     public function activity_detail() {
-        $this->assign();
         $this->display();
     }
 
@@ -35,8 +37,8 @@ class ActivityController extends Controller {
         $num = C('PAGE_NUM')['activity'] * $_POST['page'];
         $keyword = $_POST['keyword'];
         $isEnable = $this->getEnableCatIds();
-        $acitvArr = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%'.$keyword.'%"')->order('id desc')->limit($num)->select();
-            $count = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%'.$keyword.'%"')->count();
+        $acitvArr = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
+        $count = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->count();
 
         if ($num < $count) {
             $returnData['ajaxLoad'] = '点击加载更多';
@@ -52,7 +54,7 @@ class ActivityController extends Controller {
         } else {
             for ($i = 0; $i < count($acitvArr); $i++) {
                 $data[$i]['id'] = $acitvArr[$i]['id'];
-                $data[$i]['title'] = str_replace($keyword, '<font color="red">'.$keyword.'</font>', $acitvArr[$i]['title']);
+                $data[$i]['title'] = str_replace($keyword, '<font color="red">' . $keyword . '</font>', $acitvArr[$i]['title']);
                 $data[$i]['cat_name'] = $this->getCatNameById($acitvArr[$i]['cat_id']);
                 $data[$i]['add_time'] = tranTime($acitvArr[$i]['add_time']);
                 $data[$i]['content'] = $acitvArr[$i]['content'];
@@ -342,7 +344,7 @@ class ActivityController extends Controller {
             return '0,0';
         } else {
             foreach ($selectArr as $value) {
-                $str.=',' . $value['id'];
+                $str .= ',' . $value['id'];
             }
             return '0' . $str;
         }

@@ -31,7 +31,6 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
-        $this->assign();
         $this->display();
     }
 
@@ -39,7 +38,6 @@ class LoginController extends Controller {
      * 个人中心页面
      */
     public function setting() {
-        $this->assign();
         $this->display();
     }
 
@@ -47,7 +45,6 @@ class LoginController extends Controller {
      * 注册页面
      */
     public function register() {
-        $this->assign();
         $this->display();
     }
 
@@ -55,7 +52,6 @@ class LoginController extends Controller {
      * 找回密码
      */
     public function findpwd() {
-        $this->assign();
         $this->display();
     }
 
