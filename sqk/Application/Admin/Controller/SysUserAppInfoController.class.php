@@ -63,29 +63,6 @@ class SysUserAppInfoController extends BaseDBController {
     }
 
     /**
-     * function:保存用户信息
-     */
-    public function saveUserMyInfo() {
-        if (IS_POST) {
-            $param_arr = array();
-            $form_data = $_POST['form_data'];
-            parse_str($form_data, $param_arr); //转换数组
-            foreach ($param_arr as $k => $v) {
-                if ($param_arr[$k] == null) {
-                    unset($param_arr[$k]);
-                }
-            }
-            $returnData = parent::saveData($this->userappInfoModel, $param_arr);
-            $this->ajaxReturn($returnData, 'JSON');
-            exit;
-        } else {
-            $userInfo = M('SysUserInfo')->where('id=' . $_SESSION['user_id'])->find();
-            $this->assign('userInfo', $userInfo);
-            $this->display();
-        }
-    }
-
-    /**
      * function:跳转编辑页面
      */
     public function edit() {
@@ -116,14 +93,6 @@ class SysUserAppInfoController extends BaseDBController {
 
         if ($returnData['code'] == '502') {
             $successFlag = fasle;
-        } else {
-            $sellerCondition['user_id'] = array('EQ', $id);
-            $sellerInfo = $this->sellerInfoModel->where($sellerCondition)->find();
-            if (isset($sellerInfo)) {
-                $condition['id'] = array('EQ', $sellerInfo['id']);
-                $data = array('user_id' => 0);
-                $this->sellerInfoModel->where($condition)->setField($data);
-            }
         }
         return $successFlag;
     }
@@ -142,23 +111,6 @@ class SysUserAppInfoController extends BaseDBController {
         $logC = A('Actionlog')->addLog('SysUserInfo', 'delArrUserInfo', '删除用户信息');
         $this->ajaxReturn($returnData, 'JSON');
     }
-
-//    /**
-//     * function:是否为商家用户
-//     * @param $id
-//     * @return bool
-//     */
-//    public function isSellerUser($id) {
-//        $condition['sys_name'] = array('EQ', 'sellerUser');
-//        $groupInfo = $this->groupModel->where($condition)->find();
-//        $userCondition['id'] = array('EQ', $id);
-//        $userInfo = $this->userappInfoModel->where($userCondition)->find();
-//        if ($userInfo['cat_id'] == $groupInfo['id']) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     /**
      * function:获取信息
@@ -250,6 +202,9 @@ class SysUserAppInfoController extends BaseDBController {
         echo json_encode($returnData);
     }
 
+    /**
+     * 查看用户详情
+     */
     public function appUserDetail() {
         $this->assign('address_id', $_SESSION['address_id']);
         $this->getUserInfo($_GET['id']);
