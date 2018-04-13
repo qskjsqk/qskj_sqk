@@ -2,9 +2,9 @@
 
 /**
  * @name SellerInfoController
- * @info 描述：通知信息控制器
- * @author GX
- * @datetime 2017-2-15 13:29:13
+ * @info 描述：商家信息控制器
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2017-2-7 15:07:13
  */
 
 namespace Admin\Controller;

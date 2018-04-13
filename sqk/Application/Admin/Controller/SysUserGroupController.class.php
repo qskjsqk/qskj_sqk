@@ -2,9 +2,9 @@
 
 /**
  * @name SysUserGroupController
- * @info 描述：用户组信息控制器
- * @author GX
- * @datetime 2017-2-15 13:29:13
+ * @info 描述：系统用户角色控制器
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2018-4-13 10:35:17
  */
 
 namespace Admin\Controller;

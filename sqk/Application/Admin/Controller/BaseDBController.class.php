@@ -2,9 +2,9 @@
 
 /**
  * @name BaseDBController
- * @info 描述：基础数据库操作控制器
- * @author GX
- * @datetime 2017-2-15 13:29:13
+ * @info 描述：基础数据库控制器
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2017-2-7 14:29:29
  */
 
 namespace Admin\Controller;

@@ -3,8 +3,8 @@
 /**
  * @name SysPrivCatController
  * @info 描述：系统权限分类控制器
- * @author Gao Xue
- * @datetime 2017-2-15 13:29:13
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2017-2-7 15:07:13
  */
 
 namespace Admin\Controller;

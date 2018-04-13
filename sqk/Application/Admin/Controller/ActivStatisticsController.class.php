@@ -2,9 +2,9 @@
 
 /**
  * @name ActivStatisticsController
- * @info 描述：活动统计控制器
- * @author GX
- * @datetime 2017-2-15 13:29:13
+ * @info 描述：活动统计图控制器
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2017-2-7 14:02:04
  */
 
 namespace Admin\Controller;
