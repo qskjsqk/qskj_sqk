@@ -7,3 +7,5 @@ apache 2.4.9
 2018-04-12
 
 test分支
+
+每个人push以前先pull
