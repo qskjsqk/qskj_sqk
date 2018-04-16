@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @name SellerInfoController
- * @info 描述：通知信息控制器
- * @author GX
- * @datetime 2017-2-15 13:29:13
+ * @name SellerCatController
+ * @info 描述：商家分类控制器
+ * @author Hellbao <1036157505@qq.com>
+ * @datetime 2017-2-7 15:07:13
  */
 
 namespace Admin\Controller;
@@ -50,9 +50,7 @@ class SellerInfoController extends BaseDBController {
         if (session('sys_name') == 'sqAdmin') {
             $where['address_id'] = session('address_id');
         }
-
         $fieldStr = parent::madField('seller_info.*', 'seller_cat.cat_name');
-
         $joinStr = parent::madJoin('seller_info.cat_id', 'seller_cat.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
@@ -64,7 +62,6 @@ class SellerInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         if ($returnData['code'] == '500') {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
-            //$info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
 
             $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
             $condition['module_name'] = array('EQ', 'sellerInfo');
