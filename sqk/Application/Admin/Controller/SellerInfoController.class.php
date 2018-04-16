@@ -2,9 +2,9 @@
 
 /**
  * @name SellerInfoController
- * @info 描述：商家信息控制器
- * @author Hellbao <1036157505@qq.com>
- * @datetime 2017-2-7 15:07:13
+ * @info 描述：通知信息控制器
+ * @author GX
+ * @datetime 2017-2-15 13:29:13
  */
 
 namespace Admin\Controller;
@@ -15,17 +15,26 @@ class SellerInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
+    protected $itemsInfoModel;
+    protected $orderInfoModel;
     protected $promInfoModel;
     protected $attachModel;
+    protected $config;
+    protected $communityInfoModel;
 
     public function _initialize() {
+        //配置字典信息
+        $configdefC = A('Configdef');
+        $this->config = $configdefC->getAllDef();
+        $this->assign('config', $this->config);
 
-        parent::_initialize();
         $this->catModel = D('SellerCat');
         $this->infoModel = D('SellerInfo');
+        $this->itemsInfoModel = D('SellerItemsInfo');
+        $this->orderInfoModel = D('SellerOrderInfo');
         $this->promInfoModel = D('SellerPromInfo');
         $this->attachModel = D('SysAllAttach');
-//        dump(__ACTION__);
+        $this->communityInfoModel = D('SysCommunityInfo');
     }
 
     /**
@@ -38,7 +47,7 @@ class SellerInfoController extends BaseDBController {
                 $pageCondition['name'] = urldecode($_GET['name']);
             }
             if (!empty($_GET['cat_id'])) {
-                $where[$this->dbFix . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
+                $where[$this->config['db_fix'] . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
                 $pageCondition['category_name'] = $_GET['category_name'];
                 $pageCondition['cat_id'] = $_GET['cat_id'];
             }
@@ -48,67 +57,46 @@ class SellerInfoController extends BaseDBController {
             }
         }
 
-        $fieldStr = parent::madField('seller_info.*', 'seller_cat.cat_name');
-        $joinStr = parent::madJoin('seller_info.cat_id', 'seller_cat.id');
+        if(session('sys_name') == 'sqAdmin') {
+            $where['address_id']  = session('address_id');
+        }
+
+        $fieldStr = $this->config['db_fix'] . 'seller_info.*,'  . $this->config['db_fix'] . 'seller_cat.cat_name';
+        $joinStr = 'LEFT JOIN __SELLER_CAT__ ON __SELLER_INFO__.cat_id=__SELLER_CAT__.id';
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
-    /**
-     * function:绑定商家用户
-     */
-    public function saveSellerUser() {
-        if (IS_POST) {
-            $param_arr = array();
-            $form_data = $_POST['form_data'];
-            parse_str($form_data, $param_arr); //转换数组
-            $param_arr['tel'] = $param_arr['usr'];
-            $param_arr['pwd'] = $param_arr['repassword'] = '123';
-            $param_arr['cat_id'] = getCatId('sellerUser', D('SysUserGroup'));
-            if (!$this->userInfoModel->create($param_arr)) {
-                $returnData['code'] = '501'; //验证未通过
-                $returnData['msgError'] = $this->userInfoModel->getError();
-            } else {
-                $param_arr['pwd'] = R('Login/EncriptPWD', array($param_arr['pwd'])); //密码加密
-                $param_arr['repassword'] = R('Login/EncriptPWD', array($param_arr['repassword'])); //密码加密
-                $returnData = parent::saveData($this->userInfoModel, $param_arr); //添加绑定用户信息
-            }
-            if ($returnData['code'] == '500') {
-                $condition['id'] = array('EQ', $returnData['dataID']);
-                $data['realname'] = '商家' . $returnData['dataID'];
-                $this->userInfoModel->where($condition)->data($data)->save();
-            }
-            $this->ajaxReturn($returnData, 'JSON');
-            exit;
-        }
-        $this->assign();
-        $this->display();
-    }
 
     /**
      * function:编辑商家信息
      */
     public function edit() {
-        $this->assign('address_id', $_SESSION['address_id']);
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         if ($returnData['code'] == '500') {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
-            $info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
-
-            $returnData['data']['address_id'] = $info['data']['address_id'];
-            $returnData['data']['usr'] = $info['data']['usr'];
-            $returnData['data']['tel'] = $info['data']['tel'];
+            //$info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
 
             $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
             $condition['module_name'] = array('EQ', 'sellerInfo');
             $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
             $this->assign('attachList', json_encode($attachList));
             $this->assign('sellerInfo', $returnData['data']);
+            $this->assign('communitys', $this->communityInfoModel->getLists());
+            $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         } else {
             $this->assign();
         }
         $this->display('saveSeller');
     }
 
+    /**
+     * function:添加商家信息页面
+     */
+    public function add() {
+        $this->assign('communitys', $this->communityInfoModel->getLists());
+        $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
+        $this->display();
+    }
     /**
      * function:删除附件
      */
@@ -117,81 +105,21 @@ class SellerInfoController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
-    /**
-     * function:完善用户基本信息
-     */
-    public function perfectInfo() {
-        $this->assign('address_id', $_SESSION['address_id']);
-        $condition['user_id'] = array('EQ', $_SESSION['user_id']);
-        $sellerInfo = $this->infoModel->where($condition)->find();
-        if (isset($sellerInfo)) {//商家信息存在--编辑操作
-            $sellerInfo['category_name'] = $this->getCatName($sellerInfo['cat_id']);
-        } else {//商家信息不存在--新增操作
-            $sellerInfo['user_id'] = $_SESSION['user_id'];
-        }
-        $this->assign('sellerInfo', $sellerInfo);
-        $this->display();
-    }
-
-    public function savePerfectInfo() {
-        if (IS_POST) {
-            $sellerInfo = array(
-                'id' => $_POST['id'],
-                'user_id' => $_POST['user_id'],
-                'name' => $_POST['name'],
-                'category_name' => $_POST['category_name'],
-                'cat_id' => $_POST['cat_id'],
-                'tel' => $_POST['tel'],
-                'work_start' => $_POST['work_start'],
-                'work_end' => $_POST['work_end'],
-                'address' => $_POST['address'],
-                'is_rest' => $_POST['is_rest'],
-                'introduction' => $_POST['introduction']);
-            if ($this->infoModel->create($sellerInfo)) {
-                if (!empty($_FILES['logo_icon']['name'])) {
-                    $AllAtach = A('Allattach');
-                    $imgInfo1 = $AllAtach->uploadFile('image', 'seller/logo');
-                    if ($imgInfo['flag'] == 'success') {
-                        $sellerInfo['logo_icon'] = ltrim($imgInfo['logo_icon']['savepath'] . $imgInfo['logo_icon']['savename'], '.');
-                    } else {
-                        $this->assign('fileErrorMsg1', $imgInfo['msg']);
-                        $this->assign('sellerInfo', $sellerInfo);
-                        $this->display('perfectInfo');
-                        exit;
-                    }
-                }
-                if (empty($_POST['id'])) {
-                    $result = $this->infoModel->add($sellerInfo);
-                    session('seller_id', $result);
-                    session('seller_name', $_POST['name']);
-                } else {
-                    $result = $this->infoModel->save($sellerInfo);
-                }
-                $logC = A('Actionlog')->addLog('SellerInfo', 'savePerfectInfo', '完善商家信息');
-                $this->assign('sellerInfo', $sellerInfo);
-                $this->display('perfectInfo');
-            } else {
-                $errorMsg = $this->infoModel->getError();
-                $this->assign('errorMsg', $errorMsg);
-                $this->assign('sellerInfo', $sellerInfo);
-                $this->display('perfectInfo');
-            }
-            exit;
-        }
-        $sellerInfo['user_id'] = $_SESSION['user_id'];
-        $this->assign('sellerInfo', $sellerInfo);
-        $this->display('perfectInfo');
-    }
 
     /**
      * function:保存商家信息
      */
     public function saveSellerInfo() {
         if (IS_POST) {
+            if(!empty(I('address_id'))) {
+                $address_id = I('address_id');
+            } else {
+                $address_id = session('address_id');
+            }
             $sellerInfo = array(
                 'id' => $_POST['id'],
-                'user_id' => $_POST['user_id'],
                 'name' => $_POST['name'],
+                'address_id' => $address_id,
                 'category_name' => $_POST['category_name'],
                 'cat_id' => $_POST['cat_id'],
                 'tel' => $_POST['tel'],

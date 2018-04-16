@@ -19,37 +19,23 @@
         <div class="container" >
             <form method="post" action="__CONTROLLER__/saveSellerInfo" enctype="multipart/form-data" class="form-horizontal" id="save-form" style="margin-top: 20px;">
                 <input type="hidden" name="id" value="{$sellerInfo.id}"/>
-                <input type="hidden" name="user_id" value="{$sellerInfo.user_id}"/>
                 <div id="fileJson" name="fileJson" style="display: none;">{$attachList}</div>
                 <div class="form-group">
                     <label for="address_id" class="col-sm-2 control-label">所属社区</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="address_id" name="address_id">
-                            <option value='1'>翠景北里</option>
-                            <option value='2'>翠屏北里</option>
-                            <option value='3'>翠屏南里</option>
-                            <option value='4'>大方居</option>
-                            <option value='5'>格瑞雅居</option>
-                            <option value='6'>葛布店东里</option>
-                            <option value='7'>金侨时代</option>
-                            <option value='8'>京洲园</option>
-                            <option value='9'>靓景明居</option>
-                            <option value='10'>梨园东里</option>
-                            <option value='11'>龙鼎园</option>
-                            <option value='12'>曼城家园</option>
-                            <option value='13'>群芳园</option>
-                            <option value='14'>万盛北里</option>
-                            <option value='15'>欣达园</option>
-                            <option value='16'>新城乐居</option>
-                            <option value='17'>新华联南区</option>
-                            <option value='18'>颐瑞东里</option>
-                            <option value='19'>颐瑞西里</option>
-                            <option value='20'>云景北里</option>
-                            <option value='21'>云景东里</option>
-                            <option value='22'>云景里</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                    <if condition="$Think.session.sys_name eq 'sysAdmin'">
+                        <div class="col-sm-8">
+                            <select class="form-control" id="address_id2" name="address_id">
+                                <foreach name="communitys" item="val" >
+                                    <option value='{$val.id}' <if condition="$val.id eq $sellerInfo['address_id']"> selected </if> >
+                                        {$val.com_name}
+                                    </option>
+                                </foreach>
+                            </select>
+                        </div>
+                        <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                        <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
+                        <label style="line-height: 33px;margin-left: 12px;">{$community}</label>
+                    </if>
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">商家名称</label>

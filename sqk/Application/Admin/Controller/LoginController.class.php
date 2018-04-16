@@ -20,6 +20,7 @@ class LoginController extends Controller {
         $configdefC = A('Configdef');
         $this->config = $configdefC->getAllDef();
         $this->assign('config', $this->config);
+//        读取配置menu
     }
 
     public function index() {
@@ -27,10 +28,12 @@ class LoginController extends Controller {
     }
 
     public function login() {
+        //$this->assign();
         $this->display();
     }
 
     public function main() {
+        //$this->assign();
         $this->display();
     }
 
@@ -45,23 +48,23 @@ class LoginController extends Controller {
         if ($_POST['c_name'] != 'Login') {
             if (isset($_SESSION['user_id'])) {
                 if ($_SESSION['sys_token'] == SYSTEM_TOKEN) {
-                    $return['flag'] = 1;
+                    $return['flog'] = 1;
                 } else {
-                    $return['flag'] = 1;
+                    $return['flog'] = 1;
                 }
             } else {
-                $return['flag'] = 0;
+                $return['flog'] = 0;
             }
         } else {
             if ($_POST['a_name'] == 'main') {
                 if (isset($_SESSION['user_id'])) {
                     if ($_SESSION['sys_token'] == SYSTEM_TOKEN) {
-                        $return['flag'] = 1;
+                        $return['flog'] = 1;
                     } else {
-                        $return['flag'] = 1;
+                        $return['flog'] = 1;
                     }
                 } else {
-                    $return['flag'] = 0;
+                    $return['flog'] = 0;
                 }
             }
         }
@@ -76,7 +79,7 @@ class LoginController extends Controller {
         } else {
             for ($i = 0; $i < count($selectArr); $i++) {
                 $options .= '<li class="b-text-center"><a href="javascript:void(0)" onclick="selectCat(' . $selectArr[$i]['id'] . ',this)">' . $selectArr[$i]['cat_name'] . '</a></li>' .
-                        '<li class="divider"></li>';
+                    '<li class="divider"></li>';
             }
         }
         $this->assign('options', $options);
@@ -84,6 +87,7 @@ class LoginController extends Controller {
     }
 
     public function findpwd() {
+        $this->assign();
         $this->display();
     }
 
@@ -129,50 +133,51 @@ class LoginController extends Controller {
         } else if ($_POST['password'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入密码！';
-        } else if ($_POST['validate'] == '') {
+        } /*else if ($_POST['validate'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入验证码！';
-        } else {
-            if (!$this->check_verify($_POST['validate'])) {
+        }*/ else {
+            /*if (!$this->check_verify($_POST['validate'])) {
                 $errorMsg['flag'] = 0;
                 $errorMsg['msg'] = '验证码错误！';
-            } else {
-                $userModel = M(C('DB_USER_INFO'));
-                $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
-                if (!empty($userArr)) {
-                    $userInfoC = A('SysUserInfo');
-                    $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
-                    if ($catInfo['sys_name'] != 'appUser') {
-                        if ($catInfo == 0) {
-                            $errorMsg['userGroup'] = 0;
-                        }
+            } else {*/
+            $userModel = M(C('DB_USER_INFO'));
+            $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
+            if (!empty($userArr)) {
+                $userInfoC = A('SysUserInfo');
+                $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
+                if ($catInfo['sys_name'] != 'appUser') {
+                    if ($catInfo != 0) {
                         session('sys_name', $catInfo['sys_name']);
                         session('cat_name', $catInfo['cat_name']);
                         $errorMsg['userGroup'] = $catInfo['sys_name'];
-
-                        $loginUpd['last_ip'] = get_client_ip();
-                        $loginUpd['last_login_time'] = date('Y-m-d H:i:s', time());
-                        $userModel->where('id=' . $userArr['id'])->save($loginUpd);
-
-                        session('usr', $userArr['usr']);
-                        session('sys_token', $this->config['system_token']);
-                        session('pwd', $userArr['pwd']);
-                        session('user_id', $userArr['id']);
-                        session('cat_id', $userArr['cat_id']);
-                        session('address_id', $userArr['address_id']);
-                        session('realname', $userArr['realname']);
-                        $logC = A('Actionlog')->addLog('login', 'loginSys', '登录系统');
-                        $errorMsg['flag'] = 1;
-                        $errorMsg['cat_id'] = $userArr['cat_id'];
                     } else {
-                        $errorMsg['flag'] = 0;
-                        $errorMsg['msg'] = '后台不允许登录APP用户！';
+                        $errorMsg['userGroup'] = 0;
                     }
+
+                    $loginUpd['last_ip'] = get_client_ip();
+                    $loginUpd['last_login_time'] = date('Y-m-d H:i:s', time());
+                    $userModel->where('id=' . $userArr['id'])->save($loginUpd);
+
+                    session('usr', $userArr['usr']);
+                    session('sys_token', $this->config['system_token']);
+                    session('pwd', $userArr['pwd']);
+                    session('user_id', $userArr['id']);
+                    session('cat_id', $userArr['cat_id']);
+                    session('address_id', $userArr['address_id']);
+                    session('realname', $userArr['realname']);
+                    $logC = A('Actionlog')->addLog('login', 'loginSys', '登录系统');
+                    $errorMsg['flag'] = 1;
+                    $errorMsg['cat_id'] = $userArr['cat_id'];
                 } else {
                     $errorMsg['flag'] = 0;
-                    $errorMsg['msg'] = '用户名或密码输入错误！';
+                    $errorMsg['msg'] = '后台不允许登录APP用户！';
                 }
+            } else {
+                $errorMsg['flag'] = 0;
+                $errorMsg['msg'] = '用户名或密码输入错误！';
             }
+            //}
         }
         $this->ajaxReturn($errorMsg);
     }
@@ -181,6 +186,7 @@ class LoginController extends Controller {
      * 注册用户
      */
     public function registerUser() {
+
         if ($_POST['cat_id'] == '' || $_POST['cat_id'] == '0') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '请选择用户类型！';
