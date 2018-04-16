@@ -3,14 +3,14 @@
     <head>
         {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}{$Think.const.DATEPICKER}
         <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/app/plugin/webuploader/webuploader.css">
+        <link rel="stylesheet" type="text/css" href="/Public/admin/plugin/webuploader/webuploader.css">
         <link rel="stylesheet" href="/Public/admin/css/common.css">
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/ueditor.config.js" charset="UTF-8"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/ueditor.all.min.js" charset="UTF-8"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/lang/zh-cn/zh-cn.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="__PUBLIC__/app/plugin/webuploader/webuploader.min.js"></script>
+        <script type="text/javascript" src="/Public/admin/plugin/webuploader/webuploader.min.js"></script>
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>
         <script type="text/javascript" src="/Public/admin/js/seller/sellerInfo.js"></script>
     </head>
@@ -181,7 +181,7 @@
             // 初始化Web Uploader
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传。
-                swf: '__PUBLIC__/admin/plugin/webuploader/Uploader.swf', // swf文件路径
+                swf: '/Public/admin/plugin/webuploader/Uploader.swf', // swf文件路径
                 server: '__MODULE__/allattach/uploadAttach/module_name/sellerInfo', // 文件接收服务端。
                 // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
                 pick: '#filePicker',

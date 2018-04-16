@@ -15,24 +15,14 @@ class SellerInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $itemsInfoModel;
-    protected $orderInfoModel;
-    protected $promInfoModel;
     protected $attachModel;
-    protected $config;
     protected $communityInfoModel;
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
+        parent::_initialize();
 
         $this->catModel = D('SellerCat');
         $this->infoModel = D('SellerInfo');
-        $this->itemsInfoModel = D('SellerItemsInfo');
-        $this->orderInfoModel = D('SellerOrderInfo');
-        $this->promInfoModel = D('SellerPromInfo');
         $this->attachModel = D('SysAllAttach');
         $this->communityInfoModel = D('SysCommunityInfo');
     }
@@ -47,7 +37,7 @@ class SellerInfoController extends BaseDBController {
                 $pageCondition['name'] = urldecode($_GET['name']);
             }
             if (!empty($_GET['cat_id'])) {
-                $where[$this->config['db_fix'] . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
+                $where[$this->dbFix . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
                 $pageCondition['category_name'] = $_GET['category_name'];
                 $pageCondition['cat_id'] = $_GET['cat_id'];
             }
@@ -57,15 +47,15 @@ class SellerInfoController extends BaseDBController {
             }
         }
 
-        if(session('sys_name') == 'sqAdmin') {
-            $where['address_id']  = session('address_id');
+        if (session('sys_name') == 'sqAdmin') {
+            $where['address_id'] = session('address_id');
         }
 
-        $fieldStr = $this->config['db_fix'] . 'seller_info.*,'  . $this->config['db_fix'] . 'seller_cat.cat_name';
-        $joinStr = 'LEFT JOIN __SELLER_CAT__ ON __SELLER_INFO__.cat_id=__SELLER_CAT__.id';
+        $fieldStr = parent::madField('seller_info.*', 'seller_cat.cat_name');
+
+        $joinStr = parent::madJoin('seller_info.cat_id', 'seller_cat.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
-
 
     /**
      * function:编辑商家信息
@@ -97,6 +87,7 @@ class SellerInfoController extends BaseDBController {
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         $this->display();
     }
+
     /**
      * function:删除附件
      */
@@ -105,13 +96,12 @@ class SellerInfoController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
-
     /**
      * function:保存商家信息
      */
     public function saveSellerInfo() {
         if (IS_POST) {
-            if(!empty(I('address_id'))) {
+            if (!empty(I('address_id'))) {
                 $address_id = I('address_id');
             } else {
                 $address_id = session('address_id');
