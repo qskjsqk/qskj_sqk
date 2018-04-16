@@ -150,7 +150,7 @@
                             <th>社区实体卡</th>
                             <td><if condition="$userInfo.iccard_num eq 0"><span class="label label-default">未绑定</span><else/>{$userInfo.iccard_num}</if></td>
                         <td>
-                            <button class="btn btn-info btn-block" onclick="bindingCardLayer({$v.id})">
+                            <button class="btn btn-info btn-block" onclick="bindingCardLayer({$userInfo.id})">
                                 <span class="glyphicon glyphicon-qrcode"></span> 绑卡
                             </button>
                         </td>

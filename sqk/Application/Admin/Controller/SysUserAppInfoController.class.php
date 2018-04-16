@@ -205,4 +205,13 @@ class SysUserAppInfoController extends BaseDBController {
         $this->display();
     }
 
+    public function setUserAppUfNum() {
+        $where['id'] = array('EQ', $_POST['id']);
+        $updData['iccard_num'] = $_POST['card_num'];
+        $updData['iccard_ufnum'] = $_POST['card_ufnum'];
+        $returnData = parent::setField($this->userappInfoModel, $where, $updData);
+        $logC = A('Actionlog')->addLog('SysUserInfo', 'setUserAppUfNum', '居民用户绑定实体卡');
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
 }
