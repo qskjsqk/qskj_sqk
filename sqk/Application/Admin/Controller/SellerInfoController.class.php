@@ -15,7 +15,6 @@ class SellerInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
-    protected $userInfoModel;
     protected $itemsInfoModel;
     protected $orderInfoModel;
     protected $promInfoModel;
@@ -31,13 +30,11 @@ class SellerInfoController extends BaseDBController {
 
         $this->catModel = D('SellerCat');
         $this->infoModel = D('SellerInfo');
-        $this->userInfoModel = D('SellerUserInfo');
         $this->itemsInfoModel = D('SellerItemsInfo');
         $this->orderInfoModel = D('SellerOrderInfo');
         $this->promInfoModel = D('SellerPromInfo');
         $this->attachModel = D('SysAllAttach');
         $this->communityInfoModel = D('SysCommunityInfo');
-//        dump(__ACTION__);
     }
 
     /**
@@ -77,7 +74,7 @@ class SellerInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         if ($returnData['code'] == '500') {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
-            $info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
+            //$info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
 
             $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
             $condition['module_name'] = array('EQ', 'sellerInfo');

@@ -270,3 +270,14 @@ function getConameById($id) {
     }
 }
 
+function dd($data, $is_exist = false)
+{
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+    if($is_exist == true) {
+        exit;
+    }
+}
+
+
