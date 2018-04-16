@@ -50,7 +50,7 @@ $(function () {
         $.post(c_path + '/saveSellerPromInfo', {"form_data": $('#save-form').serialize()}, function (result) {
             if (result.code == '500') {
                 layer.msg(constants.SUCCESS, {time: 1000, zIndex: 111111111}, function () {
-                    window.location.href = c_path + '/showList/seller_id/' + $('input[name="seller_id"]').val();
+                    window.location.href = c_path + '/showList';
                 });
             } else if (result.code == '502') {
                 layer.msg(constants.FAILD, {time: 1000, zIndex: 111111111});

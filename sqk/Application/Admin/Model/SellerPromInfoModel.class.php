@@ -13,8 +13,11 @@ class SellerPromInfoModel extends Model {
 //    protected $patchValidate = true;
     protected $_validate = array(
         array('title', 'require', '标题为必填项！'),
+        array('address_id', 'require', '社区必选！'),
+        array('seller_id', 'require', '商家必选！'),
         array('title', '1,200', '标题长度应在1-200之间！', 0, 'length'),
         array('start_time', 'require', '请选择开始时间！'),
         array('end_time', 'require', '请选择结束时间！'),
     );
+
 }

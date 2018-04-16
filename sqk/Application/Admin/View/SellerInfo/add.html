@@ -18,29 +18,26 @@
         <!--添加信息-->
         <div class="container" >
             <form method="post" action="__CONTROLLER__/saveSellerInfo" enctype="multipart/form-data" class="form-horizontal" id="save-form" style="margin-top: 20px;">
-                <input type="hidden" name="id" value="{$sellerInfo.id}"/>
                 <div id="fileJson" name="fileJson" style="display: none;">{$attachList}</div>
                 <div class="form-group">
                     <label for="address_id" class="col-sm-2 control-label">所属社区</label>
                     <if condition="$Think.session.sys_name eq 'sysAdmin'">
-                        <div class="col-sm-8">
-                            <select class="form-control" id="address_id2" name="address_id">
-                                <foreach name="communitys" item="val" >
-                                    <option value='{$val.id}' <if condition="$val.id eq $sellerInfo['address_id']"> selected </if> >
-                                        {$val.com_name}
-                                    </option>
-                                </foreach>
-                            </select>
-                        </div>
-                        <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
-                        <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="address_id2" name="address_id">
+                            <foreach name="communitys" item="val" >
+                                <option value='{$val.id}'>{$val.com_name}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                    <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
                         <label style="line-height: 33px;margin-left: 12px;">{$community}</label>
                     </if>
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">商家名称</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="name" name="name" value="{$sellerInfo.name}" placeholder="请输入名称">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="请输入名称">
                         <if condition="$errorMsg['name'] neq ''">
                             <span class="tipMsg">{$errorMsg['name']}</span>
                         </if>
@@ -50,7 +47,7 @@
                 <div class="form-group">
                     <label for="category_name" class="col-sm-2 control-label">所属类别</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="category_name" name="category_name" value="{$sellerInfo.category_name}" onclick="showTreeView();" placeholder="请选择类别" readonly>
+                        <input type="text" class="form-control" id="category_name" name="category_name" onclick="showTreeView();" placeholder="请选择类别" readonly>
                         <input type="hidden" id="parent_id" name="cat_id" value="{$sellerInfo.cat_id}"/>
                         <div class="col-sm-11 dropdown-menu" id="treeview" style="display: none;margin-left:15px;z-index: 111111111;"></div>
                         <if condition="$errorMsg['cat_id'] neq ''">

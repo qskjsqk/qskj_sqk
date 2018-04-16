@@ -20,4 +20,14 @@ class SellerInfoModel extends Model {
         array('tel', 'require', '商家电话为必填项！'),
         array('tel','/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/','号码格式不正确！'),
     );
+
+    //根据社区id获取该社区所有审核通过的商家
+    public function getSellerListByAddressId($addressId) {
+        $condition = [
+            'address_id' => $addressId,
+            'is_checked' => 1
+        ];
+        return  $this->where($condition)->select();
+    }
+
 }

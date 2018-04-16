@@ -133,14 +133,14 @@ class LoginController extends Controller {
         } else if ($_POST['password'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入密码！';
-        } else if ($_POST['validate'] == '') {
+        } /*else if ($_POST['validate'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入验证码！';
-        } else {
-            if (!$this->check_verify($_POST['validate'])) {
+        }*/ else {
+            /*if (!$this->check_verify($_POST['validate'])) {
                 $errorMsg['flag'] = 0;
                 $errorMsg['msg'] = '验证码错误！';
-            } else {
+            } else {*/
                 $userModel = M(C('DB_USER_INFO'));
                 $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
                 if (!empty($userArr)) {
@@ -177,7 +177,7 @@ class LoginController extends Controller {
                     $errorMsg['flag'] = 0;
                     $errorMsg['msg'] = '用户名或密码输入错误！';
                 }
-            }
+            //}
         }
         $this->ajaxReturn($errorMsg);
     }

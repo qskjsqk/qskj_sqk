@@ -15,7 +15,46 @@
         <div class="container">
             <form method="post" class="form-horizontal" id="save-form" style="margin-top: 20px;">
                 <input type="hidden" name="id" value="{$sellerPromInfo.id}"/>
-                <input type="hidden" name="seller_id" value="{$sellerPromInfo.seller_id}"/>
+                <div class="form-group">
+                    <label for="address_id" class="col-sm-2 control-label">所属社区</label>
+                    <if condition="$Think.session.sys_name eq 'sysAdmin'">
+                    <div class="col-sm-8">
+                        <select class="form-control" id="address_id" name="address_id">
+                            <option value='0'>全体社区</option>
+                            <foreach name="communitys" item="val" >
+                                <option value='{$val.id}' <if condition="$val.id eq $sellerPromInfo['address_id']"> selected </if> >
+                                    {$val.com_name}
+                                </option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                    <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
+                        <label style="line-height: 33px;margin-left: 12px;">{$community}</label>
+                    </if>
+                </div>
+
+                <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                <div class="form-group">
+                    <label for="address_id" class="col-sm-2 control-label">商家</label>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" id="seller_id" name="seller_id">
+                                <foreach name="sellers" item="val" >
+                                    <option value='{$val.id}' <if condition="$val.id eq $sellerPromInfo['seller_id']"> selected </if> >
+                                    {$val.name}
+                                    </option>
+                                </foreach>
+                            </select>
+                        </div>
+                        <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                </div>
+                </if>
+
+                <div class="form-group" id="sellers-select-div">
+
+                </div>
+
                 <div class="form-group">
                     <label for="title" class="col-sm-2 control-label">标题<span class="lable-dialog"> Title</span></label>
                     <div class="col-sm-8">
@@ -115,6 +154,43 @@
         });
         $('#start_time').datepicker({changeMonth:true,changeYear:true});
         $('#end_time').datepicker({changeMonth:true,changeYear:true});
+
+        //修改详情时渲染商家列表select
+        listSellers();
+
+        //点击改变社区时渲染商家列表select
+        $("#address_id").change(function () {
+            listSellers();
+        })
+
+        function listSellers() {
+            var address_id = $("#address_id").val();
+            $.ajax({
+                url : '__CONTROLLER__/getSellerListSync',
+                type : 'post',
+                data : {address_id : address_id},
+                success : function (res) {
+                    if(res.code == 0) {
+                        var sellers = eval(res.sellers);
+                        var str = '<label for="address_id" class="col-sm-2 control-label">商家</label> <div class="col-sm-8"> <select class="form-control" id="seller_id" name="seller_id">';
+                        for(var i = 0; i < sellers.length; i++) {
+                            var id = sellers[i]['id'];
+                            var name = sellers[i]['name'];
+                            str = str + '<option value='+id+'';
+                            if(id == "{$sellerPromInfo['seller_id']}") {
+                                str = str + ' selected' ;
+                            }
+                            str = str + '>'+name+'</option>';
+                        }
+                        str = str + '</select></div><label class="col-sm-2"><span class="tipMsg">*必选</span></label>';
+                        $("#sellers-select-div").html(str);
+                    } else {
+                        $("#sellers-select-div").html('');
+                    }
+                }
+            })
+        }
+
         });
     </script>
 </html>
