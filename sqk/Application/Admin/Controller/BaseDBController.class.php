@@ -110,6 +110,23 @@ class BaseDBController extends Controller {
     }
 
     /**
+     * function:根据条件设置某个字段的值
+     * @param $model
+     * @param $condition
+     * @param $data
+     * @return mixed
+     */
+    public function setField($model, $condition, $data) {
+        $result = $model->where($condition)->setField($data);
+        if ($result !== false) {
+            $returnData['code'] = '500';
+        } else {
+            $returnData['code'] = '502';
+        }
+        return $returnData;
+    }
+
+    /**
      * function:根据条件获取值
      * @param $condition
      * @param $data

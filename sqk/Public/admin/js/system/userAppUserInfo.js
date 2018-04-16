@@ -122,8 +122,7 @@ function bindingCardLayer(id) {
             submitCardInfo(index, id, 1);
         },
         btn2: function (index) {
-//            alert(2);
-            submitCardInfo(index, id, 0);
+
         },
         success: function (layero) {
 //            加载页面成功
@@ -137,33 +136,28 @@ function bindingCardLayer(id) {
  * 提交IC卡信息
  * @param {type} index
  * @param {type} id
- * @param {type} flag
  * @returns {undefined}
  */
-function submitCardInfo(index, id, flag) {
+function submitCardInfo(index, id) {
     $cardNum = $('#card_num').val();
-    $cardUfNum = $('#card_ufnum').val();
-    alert($cardNum);
-    alert($cardUfNum);
+    $cardUfNum = $('#card_ufnum').attr('value');
     if ($cardNum == '') {
+        layer.msg('请输入IC卡编号');
         return;
     }
     if ($cardUfNum == '') {
+        layer.msg('未读到IC卡串号');
         return;
     }
-    alert($cardNum);
-    alert($cardUfNum);
-    layer.msg(constants.FAILD);
-    location.reload();
-//    $.post(c_path + '/rnsUser',{'id':id,'flag':flag},function(result){
-//        if(result.code == '500'){
-//            layer.msg(constants.SUCCESS,{time: 1000},function(){
-//                location.reload();
-//            });
-//        }else{
-//            layer.msg(constants.FAILD);
-//        }
-//    });
+    $.post(c_path + '/setUserAppUfNum', {'id': id, 'card_num': $cardNum, 'card_ufnum': $cardUfNum}, function (result) {
+        if (result.code == '500') {
+            layer.msg(constants.SUCCESS, {time: 1000}, function () {
+                location.reload();
+            });
+        } else {
+            layer.msg(constants.FAILD);
+        }
+    });
 }
 
 /**
