@@ -181,7 +181,7 @@ class SysUserAppInfoController extends BaseDBController {
      */
     public function getCardUfNum() {
         //时间系数
-        $Ctime = 3600 * 24 * 0;
+        $Ctime = 3600 * 24 * 1;
         $address_id = $_SESSION['address_id'];
         $userCat = $this->getCatInfoByCid($_SESSION['cat_id']);
         $where['address_id'] = array('EQ', $address_id);

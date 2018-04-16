@@ -17,8 +17,13 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 
 class ActivityController extends Controller {
 
+    protected $config;
+    
     public function _initialize() {
-        
+         //配置字典信息
+        $configdefC = A('Admin/Configdef');
+        $this->config = $configdefC->getAllDef();
+        $this->assign('config', $this->config);
     }
 
     public function activity_list() {

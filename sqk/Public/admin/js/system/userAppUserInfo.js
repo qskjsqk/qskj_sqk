@@ -106,7 +106,8 @@ function bindingCardLayer(id) {
     $('#card_ufnum_btn').show();
     $('#card_ufnum_btn').html('请放置读卡器上点击读卡');
     $('#card_ufnum').hide();
-    $('#card_ufnum').attr('value', '');
+    $('#card_ufnum').val('');
+    $('#card_num').val('');
     layer.open({
         type: 1,
         title: ['绑定实体卡', 'font-size:16px;font-weight: bold;color: #2e8ded;'], //标题信息及样式
@@ -117,25 +118,17 @@ function bindingCardLayer(id) {
         content: $('.bindingCardLayer'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
         btn: ['确定', '取消'],
         yes: function (index) {
+//            alert(1);
             submitCardInfo(index, id, 1);
         },
         btn2: function (index) {
+//            alert(2);
             submitCardInfo(index, id, 0);
         },
         success: function (layero) {
-            $.post(c_path + '/getData', {'id': id}, function (result) {
-                if (result.code == '500') {
-                    $('#realname').html(result.data.realname);
-                    $('#idcard_num').html(result.data.idcard_num);
-                    if (result.data.rns_type == '1') {
-                        $('#checkStatus').html('通过');
-                    } else if (result.data.rns_type == '2') {
-                        $('#checkStatus').html('未通过');
-                    } else {
-                        $('#checkStatus').html('待审核');
-                    }
-                }
-            }, 'json');
+//            加载页面成功
+//            alert(3);
+
         }
     });
 }
@@ -148,6 +141,19 @@ function bindingCardLayer(id) {
  * @returns {undefined}
  */
 function submitCardInfo(index, id, flag) {
+    $cardNum = $('#card_num').val();
+    $cardUfNum = $('#card_ufnum').val();
+    alert($cardNum);
+    alert($cardUfNum);
+    if ($cardNum == '') {
+        return;
+    }
+    if ($cardUfNum == '') {
+        return;
+    }
+    alert($cardNum);
+    alert($cardUfNum);
+    layer.msg(constants.FAILD);
     location.reload();
 //    $.post(c_path + '/rnsUser',{'id':id,'flag':flag},function(result){
 //        if(result.code == '500'){

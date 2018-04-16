@@ -31,6 +31,7 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
+        dump($_COOKIE);
         $this->display();
     }
 
@@ -69,31 +70,38 @@ class LoginController extends Controller {
      * 用户登录
      */
     public function login() {
-        if ($_POST['username'] == '') {
-            $errorMsg['username'] = '请输入用户名！';
-        } else if ($_POST['password'] == '') {
-            $errorMsg['password'] = '请输入密码！';
-        } else {
-            $userModel = M(C('DB_USER_INFO'));
-            $userInfo = $userModel
-                    ->join('u left join '.$this->config['db_fix'].'sys_user_group g on u.cat_id=g.id')
-                    ->field('u.id,u.usr,u.pwd,u.pwd,g.sys_name')
-                    ->where('binary u.usr="' . $_POST['username'] . '" and u.pwd="' . $this->EncriptPWD($_POST['password']) . '" and g.sys_name="appUser"')
-                    ->find();
-            if (isset($userInfo)) {
-                cookie('pwd', $_POST['password'], 3600 * 24 * 30);
-                cookie('cookie_user', $_POST['username'], 3600 * 24 * 30);
-                cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
-//                session('usr', $userInfo['usr']);
-//                session('pwd', $userInfo['pwd']);
-//                session('user_id', $userInfo['id']);
-//                session('realname', $userInfo['realname']);
-//                session('user_cat_id', $userInfo['cat_id']);
-                $errorMsg['is_success'] = '';
-            } else {
-                $errorMsg['is_success'] = '用户名或密码错误！';
-            }
-        }
+
+        cookie('pwd', '123', 3600 * 24 * 30);
+        cookie('cookie_user', '张晓炜', 3600 * 24 * 30);
+        cookie('user_id', 106, 3600 * 24 * 30);
+        cookie('address_id', 1, 3600 * 24 * 30);
+        $errorMsg['is_success'] = '';
+
+//        if ($_POST['username'] == '') {
+//            $errorMsg['username'] = '请输入用户名！';
+//        } else if ($_POST['password'] == '') {
+//            $errorMsg['password'] = '请输入密码！';
+//        } else {
+//            $userModel = M(C('DB_USER_INFO'));
+//            $userInfo = $userModel
+//                    ->join('u left join ' . $this->config['db_fix'] . 'sys_user_group g on u.cat_id=g.id')
+//                    ->field('u.id,u.usr,u.pwd,u.pwd,g.sys_name')
+//                    ->where('binary u.usr="' . $_POST['username'] . '" and u.pwd="' . $this->EncriptPWD($_POST['password']) . '" and g.sys_name="appUser"')
+//                    ->find();
+//            if (isset($userInfo)) {
+//                cookie('pwd', $_POST['password'], 3600 * 24 * 30);
+//                cookie('cookie_user', $_POST['username'], 3600 * 24 * 30);
+//                cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
+////                session('usr', $userInfo['usr']);
+////                session('pwd', $userInfo['pwd']);
+////                session('user_id', $userInfo['id']);
+////                session('realname', $userInfo['realname']);
+////                session('user_cat_id', $userInfo['cat_id']);
+//                $errorMsg['is_success'] = '';
+//            } else {
+//                $errorMsg['is_success'] = '用户名或密码错误！';
+//            }
+//        }
         $this->ajaxReturn($errorMsg);
     }
 
