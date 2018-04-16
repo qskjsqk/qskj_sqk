@@ -8,6 +8,9 @@ apache 2.4.9
 
 test分支
 
+
 每个人push以前先pull
 
 666
+
+测试  写入一条  pull会不会覆盖掉本地
