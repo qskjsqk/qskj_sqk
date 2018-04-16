@@ -37,17 +37,23 @@ class SellerPromInfoController extends BaseDBController {
     public function showList() {
         $sysName = session('sys_name');
         if(!empty($sysName)) {
-            $userGroups = $this->userGroupModel->where(['is_enable' => 1])->getField('sys_name', true);
-            if(in_array($sysName, $userGroups)) {
-                $this->showPromInfo($sysName);
+            if(empty(I('seller_id'))) {
+                $userGroups = $this->userGroupModel->where(['is_enable' => 1])->getField('sys_name', true);
+                if(in_array($sysName, $userGroups)) {
+                    $this->showPromInfo($sysName, null);
+                }
+            } else {
+                $this->showPromInfo('', I('seller_id'));
             }
         }
     }
 
-    public function showPromInfo($type) {
-        if ($type == 'sqAdmin') {
+    public function showPromInfo($role, $seller_id = null) {
+        if ($role == 'sqAdmin' && empty($seller_id)) {
             $address = $this->userInfoModel->find(session('user_id'));
             $where['address_id'] = $address['address_id'];
+        } elseif(empty($role) && !empty($seller_id)) {
+            $where['seller_id'] = $seller_id;
         }
         parent::showData($this->infoModel, $where, [], '', '');
     }

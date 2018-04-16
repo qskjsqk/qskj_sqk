@@ -74,7 +74,6 @@ class SellerInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         if ($returnData['code'] == '500') {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
-            //$info = parent::getData($this->userInfoModel, $returnData['data']['user_id']);
 
             $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
             $condition['module_name'] = array('EQ', 'sellerInfo');
