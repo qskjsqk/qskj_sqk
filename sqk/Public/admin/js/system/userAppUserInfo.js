@@ -143,6 +143,8 @@ function bindingCardLayer(id) {
 function submitCardInfo(index, id, flag) {
     $cardNum = $('#card_num').val();
     $cardUfNum = $('#card_ufnum').val();
+    alert($cardNum);
+    alert($cardUfNum);
     if ($cardNum == '') {
         return;
     }
@@ -151,6 +153,7 @@ function submitCardInfo(index, id, flag) {
     }
     alert($cardNum);
     alert($cardUfNum);
+    layer.msg(constants.FAILD);
     location.reload();
 //    $.post(c_path + '/rnsUser',{'id':id,'flag':flag},function(result){
 //        if(result.code == '500'){
