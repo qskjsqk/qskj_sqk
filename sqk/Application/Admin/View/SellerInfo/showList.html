@@ -82,19 +82,7 @@
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
-                                <!--<button class="btn btn-default del-btn" onclick="delInfoLayer({$v.id})">-->
-                                <!--<span class="glyphicon glyphicon-trash"></span> 删除-->
-                                <!--</button>-->
-                                <!--<button class="btn btn-default" onclick="checkInfoLayer({$v.id})">-->
-                                <!--<span class="glyphicon glyphicon-check"></span> 审核-->
-                                <!--</button>-->
-                                <button class="btn btn-default items-btn showItemsInfo" onclick="javascript:void(window.location.href = '__MODULE__/SellerItemsInfo/showList/seller_id/{$v.id}')">
-                                    <span class="glyphicon glyphicon-list"></span> 服务项目
-                                </button>
-                                <button class="btn btn-default order-btn showOrderInfo" onclick="javascript:void(window.location.href = '__MODULE__/SellerOrderInfo/showList/seller_id/{$v.id}/seller_name/{$v.name}')">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span> 订单
-                                </button>
-                                <button class="btn btn-default prom-btn showPromInfo" onclick="javascript:void(window.location.href = '__MODULE__/SellerPromInfo/showList/seller_id/{$v.id}')">
+                                <button class="btn btn-default prom-btn showPromInfo" onclick="javascript:void(window.location.href = '__MODULE__/SellerPromInfo/showList/seller_id/{$v.id}/from/seller')">
                                     <span class="glyphicon glyphicon-usd"></span> 促销信息
                                 </button>
                             </div>

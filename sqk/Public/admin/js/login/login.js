@@ -54,6 +54,7 @@ function subLogin() {
     var pwd = $('#loginPwd').val();
     var validate = $('#loginYzm').val();
     $.post(c_path + "/loginSys", {'username': user, 'password': pwd, 'validate': validate}, function (data) {
+        console.log(data);
         if (data.flag == 0) {
             $('#warnMsg').html(data.msg);
             $('#warning').css('display', 'block');

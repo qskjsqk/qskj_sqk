@@ -14,7 +14,6 @@ use Think\Controller;
 class SellerPromInfoController extends BaseDBController {
 
     protected $infoModel;
-    protected $sellerItemsModel;
     protected $sellerPromModel;
     protected $userGroupModel;
     protected $userInfoModel;
@@ -23,7 +22,6 @@ class SellerPromInfoController extends BaseDBController {
 
     public function _initialize() {
         $this->infoModel = D('SellerPromInfo');
-        $this->sellerItemsModel = D('SellerItemsInfo');
         $this->sellerPromModel = D('SellerPromInfo');
         $this->userGroupModel = D('SysUserGroup');
         $this->userInfoModel = D('SysUserInfo');
@@ -43,6 +41,8 @@ class SellerPromInfoController extends BaseDBController {
                     $this->showPromInfo($sysName, null);
                 }
             } else {
+                $this->assign('from', I('from'));
+                $this->assign('seller_id', I('seller_id'));
                 $this->showPromInfo('', I('seller_id'));
             }
         }
@@ -67,6 +67,9 @@ class SellerPromInfoController extends BaseDBController {
         $this->assign('communitys', $this->communityInfoModel->getLists());
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         $this->assign('sellers', $this->sellerInfoModel->getSellerListByAddressId(session('address_id')));
+        if(!empty(I('from'))) {
+            $this->assign('from', I('from'));
+        }
 
         $this->display();
     }
@@ -122,6 +125,9 @@ class SellerPromInfoController extends BaseDBController {
         $this->assign('communitys', $this->communityInfoModel->getLists());
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         $this->assign('sellers', $this->sellerInfoModel->getSellerListByAddressId(session('address_id')));
+        if(!empty(I('from'))) {
+            $this->assign('from', I('from'));
+        }
         $this->display('saveSellerProm');
     }
 
