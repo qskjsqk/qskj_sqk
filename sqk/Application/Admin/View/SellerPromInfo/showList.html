@@ -9,9 +9,15 @@
 </head>
 <body>
     <div class="option_search">
-        <button type="button" class="btn btn-success addPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/saveSellerProm')" style="height: 34px;">
+        <if condition="$from neq ''">
+        <button type="button" class="btn btn-success addPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/saveSellerProm/seller_id/{$seller_id}/from/{$from}')" style="height: 34px;">
             <span class="glyphicon glyphicon-plus"></span> 新增
         </button>
+        <else/>
+            <button type="button" class="btn btn-success addPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/saveSellerProm')" style="height: 34px;">
+                <span class="glyphicon glyphicon-plus"></span> 新增
+            </button>
+        </if>
         <button type="button" class="btn btn-danger delPromInfo" id="delArrayInfo-btn" style="height: 34px;">
             <span class="glyphicon glyphicon-trash"></span> 批量删除
         </button>
@@ -40,9 +46,15 @@
                         <td>{$v.add_time}</td>
                         <td>
                             <div>
-                                <button class="btn btn-default edit-btn editPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/edit/id/{$v.id}')">
+                                <if condition="$from neq ''">
+                                <button class="btn btn-default edit-btn editPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/edit/id/{$v.id}/from/{$from}')">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
+                                <else/>
+                                    <button class="btn btn-default edit-btn editPromInfo" onclick="javascript:void(window.location.href='__CONTROLLER__/edit/id/{$v.id}')">
+                                        <span class="glyphicon glyphicon-edit"></span> 编辑
+                                    </button>
+                                </if>
                                 <!--<button class="btn btn-default del-btn" onclick="delInfoLayer({$v.id})">-->
                                     <!--<span class="glyphicon glyphicon-trash"></span> 删除-->
                                 <!--</button>-->

@@ -28,7 +28,6 @@ class SysUserInfoController extends BaseDBController {
         $this->privCatModel = D('SysPrivCat');
         $this->privInfoModel = D('SysPrivInfo');
         $this->sellerInfoModel = D('SellerInfo');
-        $this->orderInfoModel = D('SellerOrderInfo');
 //        dump(__ACTION__);
     }
 
