@@ -3,14 +3,14 @@
     <head>
         {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}{$Think.const.DATEPICKER}
         <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/app/plugin/webuploader/webuploader.css">
+        <link rel="stylesheet" type="text/css" href="/Public/admin/plugin/webuploader/webuploader.css">
         <link rel="stylesheet" href="/Public/admin/css/common.css">
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/ueditor.config.js" charset="UTF-8"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/ueditor.all.min.js" charset="UTF-8"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/lang/zh-cn/zh-cn.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="__PUBLIC__/app/plugin/webuploader/webuploader.min.js"></script>
+        <script type="text/javascript" src="/Public/admin/plugin/webuploader/webuploader.min.js"></script>
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>
         <script type="text/javascript" src="/Public/admin/js/activity/activInfo.js"></script>
     </head>
@@ -99,7 +99,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">签到次数</label>
                     <div class="col-sm-8" >
-                        <input type="text" class="form-control" id="singin_time" name="singin_time" value="{$activInfo.singin_time}" placeholder="请输入签到次数">
+                        <input type="text" class="form-control" id="signin_time" name="signin_time" value="{$activInfo.signin_time}" placeholder="请输入签到次数">
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
                 </div>

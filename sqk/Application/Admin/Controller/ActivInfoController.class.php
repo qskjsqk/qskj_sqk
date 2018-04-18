@@ -141,10 +141,17 @@ class ActivInfoController extends BaseDBController {
     public function publishActivInfo($id) {
         $condition['id'] = array('EQ', $id);
         $acvInfo = $this->infoModel->where($condition)->find();
+        $fen = $acvInfo['integral'];
         for ($i = 0; $i < $acvInfo['signin_time']; $i++) {
             $signData['activity_id'] = $acvInfo['id'];
             $signData['sign_num'] = $i + 1;
-            $signData['sign_integral'] = round($acvInfo['integral'] / $acvInfo['signin_time']);
+            if (($i + 1) != $acvInfo['signin_time']) {
+                $signData['sign_integral'] = round($acvInfo['integral'] / $acvInfo['signin_time']);
+                $fen = $fen - $signData['sign_integral'];
+            } else {
+                $signData['sign_integral'] = $fen;
+            }
+
             //生成二维码内容之后再补充
             $signData['sign_qrcode_path'] = createQrcode('23423423423423');
             $this->signModel->add($signData);
