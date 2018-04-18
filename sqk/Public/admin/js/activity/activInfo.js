@@ -3,6 +3,7 @@
  * Created by GX on 2017-02-20.
  */
 $(function () {
+
     //新增按钮绑定事件
     $('#saveInfo-btn').click(function () {
         $.post(c_path + '/saveActivInfo', {"form_data": $('#save-form').serialize()}, function (result) {
@@ -43,21 +44,14 @@ $(function () {
             publishInfoLayer(isChecked);
         }
     });
-    //批量结束按钮绑定事件
-    $('#overArrayInfo-btn').click(function () {
-        var isChecked = '';
-        if ($("input[name='rowChecked']:checked").length <= 0) {
-            layer.msg('请选择批量发布的数据！', {time: 2000});
-            return;
-        } else {
-            $('input[name="rowChecked"]:checked').each(function () {
-                isChecked += $(this).val() + ',';
-            });
-            overInfoLayer(isChecked);
-        }
-    });
+
     console.log(assignData);
-    
+    //binding悬停事件
+    $(".tips_show").mouseover(function () {
+        showActDetail($(this));
+    });
+
+
     //涉及相关社区参数
     //assignData.address_id 登录用户所属社区
     if (action == "edit") {
@@ -113,55 +107,6 @@ function publishInfoLayer(isChecked) {
                 });
             } else {
                 layer.msg(constants.FAILD);
-            }
-        }, 'json');
-    });
-}
-
-/**
- * 批量结束活动
- * @param {type} isChecked
- * @returns {undefined}
- */
-function overInfoLayer(isChecked) {
-    layer.confirm('确定要批量结束所选活动吗？', {
-        icon: 0,
-        title: '提示信息',
-        btn: ['确定', '取消'] //按钮
-    }, function (index) {
-        $.post(c_path + '/overArrayInfo', {'ids': isChecked}, function (result) {
-            if (result.code == '500') {
-                layer.msg(constants.SUCCESS, {time: 1000}, function () {
-                    location.reload();
-                    $('input[name="rowChecked"]:checked').each(function () {
-                        $(this).removeAttr('checked');
-                    });
-                });
-            } else {
-                layer.msg(constants.FAILD);
-            }
-        }, 'json');
-    });
-}
-
-/**
- * 开启活动
- * @param {type} id
- * @returns {undefined}
- */
-function openAct(id) {
-    layer.confirm('确定要开启本活动签到通道吗？', {
-        icon: 0,
-        title: '提示信息',
-        btn: ['确定', '取消'] //按钮
-    }, function (index) {
-        $.post(c_path + '/openAct', {'id': id}, function (result) {
-            if (result.code == '500') {
-                layer.msg(constants.SUCCESS, {time: 1000}, function () {
-                    location.reload();
-                });
-            } else {
-                layer.msg(result.msg);
             }
         }, 'json');
     });
@@ -237,4 +182,16 @@ function joinUser(id, join_num) {
         }
     });
     return;
+}
+
+function showActDetail(obj) {
+    console.log(obj);
+    var str = '发起：【' + assignData.infoList[obj.context.id].initiator + '】</br>' +
+            '联系：【' + assignData.infoList[obj.context.id].link_name + '|' + assignData.infoList[obj.context.id].link_tel + '】</br>' +
+            '发表：【' + assignData.infoList[obj.context.id].realname + '】</br>' +
+            '时间：【' + assignData.infoList[obj.context.id].add_time + '】</br>';
+    layer.tips(str, obj, {
+        tips: [2, '#3595CC'],
+        time: 4000
+    });
 }
