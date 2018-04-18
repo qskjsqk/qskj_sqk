@@ -19,6 +19,7 @@ class SmsController extends BaseDBController {
     protected $random;
     protected $time;
     protected $url;
+    protected $tpl_id;
 
     public function _initialize() {
         parent::_initialize();
@@ -26,10 +27,12 @@ class SmsController extends BaseDBController {
         $this->sdkappid = '1400084969';
         $this->appkey = '30e2429df6664b38403c44018ddeb6b3';
         $this->baseurl = 'https://yun.tim.qq.com/v5/tlssmssvr/sendsms';
+        $this->tpl_id = 109320;
+
         $this->random = $this->time = time();
     }
 
-    public function sendCode() {
+    public function sendCode($tel, $checkCode) {
         
         $getData['sdkappid'] = $this->sdkappid;
         $getData['random'] = $this->random;
@@ -37,28 +40,22 @@ class SmsController extends BaseDBController {
         $sigData['appkey'] = $this->appkey;
         $sigData['random'] = $this->random;
         $sigData['time'] = $this->time;
-        $sigData['mobile'] = '13521447599';
-
-//        $data = $this->get_symbol_data();
+        $sigData['mobile'] = $tel;
 
         $extra->ext = '';
         $extra->extend = '';
-        $extra->msg = '你的验证码是909090';
+        $extra->sign = "千松科技";
+        $extra->params = array($checkCode, '3');
         $extra->sig = $this->createSign($sigData);
-        $extra->tel->mobile = '13521447599';
+        $extra->tel->mobile = $tel;
         $extra->tel->nationcode = '86';
         $extra->time = $this->time;
-        $extra->type = 0;
+        $extra->tpl_id = 109320;
 
         $tPreSign = http_build_query($getData);
-
         $api_url = $this->baseurl . "?" . $tPreSign;
-        dump($extra);
-        dump($api_url);
         $tResult = $this->httpRequest($api_url, $extra);
-        dump($tResult);
-//        echo json_encode($tResult);
-//        return $tResult;
+        return $tResult;
     }
 
     /**
@@ -71,7 +68,6 @@ class SmsController extends BaseDBController {
     public function createSign($data) {
 //        ksort($data);
         $msg = http_build_query($data);
-//        $sign = hash_hmac('sha256', $msg, SECRET_KEY, true);
         $sign = hash('sha256', $msg, FALSE);
         return $sign;
     }
@@ -107,9 +103,7 @@ class SmsController extends BaseDBController {
                 $result = $ret;
             }
         }
-
         curl_close($curl);
-
         return $result;
     }
 

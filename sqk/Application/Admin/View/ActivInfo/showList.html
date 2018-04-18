@@ -25,9 +25,6 @@
                         <button type="button" class="btn btn-info pubActivInfo" id="publishArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-bullhorn"></span> 批量发布
                         </button>
-                        <button type="button" class="btn btn-warning overActivInfo" id="overArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-off"></span> 批量结束
-                        </button>
                     </div>
                     <div class="col-sm-1">
                     </div>
@@ -58,11 +55,9 @@
                     <th>&nbsp;活动标题</th>
                     <th>类别</th>
                     <th>活动积分</th>
-
-                    <th>活动联系人</th>
-                    <th>联系人电话</th>
+                    <th>签到次数</th>
+                    <th>活动地点</th>
                     <th>开始时间</th>
-                    <th>已预约人数</th>
                     <th>操作</th>
                 </tr>
                 <notempty name="infoList">
@@ -74,47 +69,52 @@
                             <input type="checkbox" name="" value="" disabled="disabled"/>
                             <else/><input type="checkbox" name="rowChecked" value="{$v.id}"/>
                         </if>
-                                
-                                
-                            </td>
-                            <td>
-                        <if condition="$v.is_publish eq 0">
-                            <span class="label label-default" style="padding: 4px">未发布</span>
-                            <else/>
-                            <span class="label label-success" style="padding: 4px">已发布</span>
-                        </if>
-                        <a href="__CONTROLLER__/activDetail/id/{$v.id}" title="【{$v.realname}】发布于【{$v.add_time}】">{$v.title}</a>
+
 
                         </td>
-                        <td>{$v.cat_name}</td>
+                        <td>
+                        <if condition="$v.is_publish eq 0">
+                            <span class="label label-default" style="padding: 4px">未发布{$v.is_publish}{$v.is_open}</span>
+                            <else/>
+                            <if condition="$v.is_open eq 0">
+                                <span class="label label-info" style="padding: 4px">已结束{$v.is_publish}{$v.is_open}</span>
+                                <else/>
+                                <span class="label label-success" style="padding: 4px">发布*开启{$v.is_publish}{$v.is_open}</span>
+                            </if>
+
+
+                        </if>
+
+                        <a class="tips_show" id="{$k}" href="__CONTROLLER__/activDetail/id/{$v.id}">{$v.title}</a>
+
+                        </td>
+                        <td >{$v.cat_name}</td>
                         <td>{$v.integral}</td>
-                        <td>{$v.link_name}</td>
-                        <td>{$v.link_tel}</td>
+                        <td>{$v.signin_time}</td>
+                        <td>{$v.address}</td>
                         <td>{$v.start_time}</td>
-                        <td><a href="javascript:void(0);" onclick="joinUser({$v.id}, {$v.join_num});">{$v.join_num}</a></td>
+                        <!--<td><a href="javascript:void(0);" onclick="joinUser({$v.id}, {$v.join_num});">{$v.join_num}</a></td>-->
                         <td>
                             <div>
-                                <if condition="$v.is_over eq 0">
-                                    <button class="btn btn-default edit-btn editActivInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
-                                        <span class="glyphicon glyphicon-edit"></span> 编辑
+                                <button class="btn btn-default edit-btn editActivInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
+                                    <span class="glyphicon glyphicon-edit"></span> 编辑
+                                </button>
+                                <if condition="$v.is_publish eq 0">
+                                    <button class="btn btn-default" disabled="disabled">
+                                        <span class="glyphicon glyphicon-time"></span> 待启
                                     </button>
+                                    <else/>
                                     <if condition="$v.is_open eq 0">
-                                        <button class="btn btn-success" onclick="openAct({$v.id})">
-                                            <span class="glyphicon glyphicon-ok"></span> 开启
+                                        <button class="btn btn-default" disabled="disabled">
+                                            <span class="glyphicon glyphicon-ok"></span> 结束
                                         </button>
                                         <else/>
                                         <button type="button" class="btn btn-danger" onclick="closeAct({$v.id})">
                                             <span class="glyphicon glyphicon-remove"></span> 关闭
                                         </button>
                                     </if>
-                                    <else/>
-                                    <!--                                    <button class="btn btn-default edit-btn editActivInfo disabled">
-                                                                            <span class="glyphicon glyphicon-edit"></span> 编辑
-                                                                        </button>-->
-                                    <button class="btn btn-default disabled">
-                                        <span class="glyphicon glyphicon-ok"></span> 该活动已结束！
-                                    </button>
                                 </if>
+
                                 <!--                                    
                                 <button class="btn btn-danger" onclick="">
                                 <span class="glyphicon glyphicon-remove"></span> 关闭

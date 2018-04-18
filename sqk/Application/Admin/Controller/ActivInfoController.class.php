@@ -18,6 +18,7 @@ class ActivInfoController extends BaseDBController {
     protected $commModel;
     protected $attachModel;
     protected $userInfoModel;
+    protected $signModel;
 
     public function _initialize() {
         parent::_initialize();
@@ -26,6 +27,7 @@ class ActivInfoController extends BaseDBController {
         $this->commModel = D('ActivComm');
         $this->attachModel = D('SysAllAttach');
         $this->userInfoModel = D('SysUserInfo');
+        $this->signModel = M('ActivSignin');
     }
 
     /**
@@ -48,7 +50,7 @@ class ActivInfoController extends BaseDBController {
         }
 
         $fieldStr = parent::madField('activ_info.*', 'activ_cat.cat_name') . ',' . parent::madField('sys_user_info.realname', 'sys_user_info.usr');
-        $joinStr = parent::madJoin('activ_info.cat_id', 'activ_cat.id').' '.parent::madJoin('activ_info.user_id', 'sys_user_info.id');
+        $joinStr = parent::madJoin('activ_info.cat_id', 'activ_cat.id') . ' ' . parent::madJoin('activ_info.user_id', 'sys_user_info.id');
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
@@ -138,7 +140,19 @@ class ActivInfoController extends BaseDBController {
      */
     public function publishActivInfo($id) {
         $condition['id'] = array('EQ', $id);
-        $data = array('is_publish' => '1');
+        $acvInfo = $this->infoModel->where($condition)->find();
+        for ($i = 0; $i < $acvInfo['signin_time']; $i++) {
+            $signData['activity_id'] = $acvInfo['id'];
+            $signData['sign_num'] = $i + 1;
+            $signData['sign_integral'] = round($acvInfo['integral'] / $acvInfo['signin_time']);
+            //生成二维码内容之后再补充
+            $signData['sign_qrcode_path'] = createQrcode('23423423423423');
+            $this->signModel->add($signData);
+        }
+        $data = array(
+            'is_publish' => '1',
+            'is_open' => '1'
+        );
         $result = $this->infoModel->where($condition)->setField($data);
         if ($result !== false) {
             $returnData['code'] = '500';
@@ -231,32 +245,6 @@ class ActivInfoController extends BaseDBController {
     }
 
     /**
-     * 开启活动
-     * @param type $id
-     * @return string
-     */
-    public function openAct() {
-
-        $condition['id'] = array('EQ', $_POST['id']);
-        $res = $this->infoModel->where($condition)->find();
-
-        if ($res['is_publish'] == 0) {
-            $returnData['code'] = '502';
-            $returnData['msg'] = '请先发布活动，再进行活动开启！';
-        } else {
-            $data = array('is_open' => '1');
-            $result = $this->infoModel->where($condition)->setField($data);
-            if ($result !== false) {
-                $returnData['code'] = '500';
-            } else {
-                $returnData['code'] = '502';
-                $returnData['msg'] = '活动开启失败，请重新操作！';
-            }
-        }
-        echo json_encode($returnData);
-    }
-
-    /**
      * 结束活动
      */
     public function closeAct() {
@@ -270,36 +258,6 @@ class ActivInfoController extends BaseDBController {
             $returnData['msg'] = '活动关闭失败，请重新操作！';
         }
         echo json_encode($returnData);
-    }
-
-    /**
-     * function:结束单条活动信息
-     */
-    public function overActivInfo($id) {
-        $condition['id'] = array('EQ', $id);
-        $data = array('is_over' => '1');
-        $result = $this->infoModel->where($condition)->setField($data);
-        if ($result !== false) {
-            $returnData['code'] = '500';
-        } else {
-            $returnData['code'] = '502';
-        }
-        return $returnData['code'];
-    }
-
-    /**
-     * function:批量结束活动信息
-     */
-    public function overArrayInfo() {
-        $returnData['code'] = '500';
-        $idArray = explode(',', rtrim($_POST['ids'], ","));
-        foreach ($idArray as $value) {
-            if ($this->overActivInfo($value) == '502') {
-                $returnData['code'] = '502';
-            }
-        }
-        $logC = A('Actionlog')->addLog('ActivInfo', 'overArrayInfo', '批量结束活动信息');
-        $this->ajaxReturn($returnData, 'JSON');
     }
 
 }

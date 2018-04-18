@@ -23,7 +23,30 @@
                         <h1>{$activ.title}</h1>
                         <div class="time">
                             发布时间：{$activ.add_time}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            发布人：{$activ.usr}
+                            发布人：{$activ.usr}</br>
+                        </div>
+                        <div>
+                            <table class="table table-bordered font14">
+                                <tr>
+                                    <td>活动积分</td>
+                                    <td>{$activ.integral}分</td>
+                                    <td>签到次数</td>
+                                    <td>{$activ.signin_time}次</td>
+                                </tr>
+                                <tr>
+                                    <td>发起人</td>
+                                    <td>{$activ.initiator}</td>
+                                    <td>联系人</td>
+                                    <td>{$activ.link_name}：{$activ.link_tel}</td>
+                                </tr>
+                                <tr>
+                                    <td>活动时间</td>
+                                    <td>{$activ.start_time}</td>
+                                    <td>活动地点</td>
+                                    <td>{$activ.address}</td>
+                                </tr>
+
+                            </table>
                         </div>
                         <div class="main">
                             {$activ.content}
@@ -32,7 +55,7 @@
                 </div>
                 <div class="row">
                     <div class="attach_list">
-                        <div class="model_title">图片列表</div>
+                        <div class="model_title">活动相册</div>
                         <notempty name="imgInfo">
                             <foreach name="imgInfo" item="v" key="k">
                                 <div class="list_header" style="margin-left: 75px;margin-bottom: 5px;margin-top:20px;float: left;">
