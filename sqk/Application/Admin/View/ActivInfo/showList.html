@@ -74,12 +74,12 @@
                         </td>
                         <td>
                         <if condition="$v.is_publish eq 0">
-                            <span class="label label-default" style="padding: 4px">未发布{$v.is_publish}{$v.is_open}</span>
+                            <span class="label label-default" style="padding: 4px">未发布</span>
                             <else/>
                             <if condition="$v.is_open eq 0">
-                                <span class="label label-info" style="padding: 4px">已结束{$v.is_publish}{$v.is_open}</span>
+                                <span class="label label-info" style="padding: 4px">已结束</span>
                                 <else/>
-                                <span class="label label-success" style="padding: 4px">发布*开启{$v.is_publish}{$v.is_open}</span>
+                                <span class="label label-success" style="padding: 4px">发布*开启</span>
                             </if>
 
 

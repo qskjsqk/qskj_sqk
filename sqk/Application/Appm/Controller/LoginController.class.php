@@ -31,7 +31,7 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
-        dump($_COOKIE);
+//        dump($_COOKIE);
         $this->display();
     }
 
