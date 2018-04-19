@@ -280,4 +280,16 @@ function dd($data, $is_exist = false)
     }
 }
 
+function syncData($flag = 0, $msg = '操作成功', $data = [])
+{
+    $returnData = [
+        'flag' => $flag,
+        'msg' => $msg,
+    ];
+    if(!empty($data)) {
+        $returnData['data'] = $data;
+    }
+    return $returnData;
+}
+
 
