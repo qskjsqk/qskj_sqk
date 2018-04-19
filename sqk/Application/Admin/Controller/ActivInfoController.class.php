@@ -18,6 +18,7 @@ class ActivInfoController extends BaseDBController {
     protected $commModel;
     protected $attachModel;
     protected $userInfoModel;
+    protected $userappInfoModel;
     protected $signModel;
 
     public function _initialize() {
@@ -27,6 +28,7 @@ class ActivInfoController extends BaseDBController {
         $this->commModel = D('ActivComm');
         $this->attachModel = D('SysAllAttach');
         $this->userInfoModel = D('SysUserInfo');
+        $this->userappInfoModel = D('SysUserappInfo');
         $this->signModel = M('ActivSignin');
     }
 
@@ -144,6 +146,7 @@ class ActivInfoController extends BaseDBController {
         $fen = $acvInfo['integral'];
         for ($i = 0; $i < $acvInfo['signin_time']; $i++) {
             $signData['activity_id'] = $acvInfo['id'];
+            $signData['sign_ids'] = ',';
             $signData['sign_num'] = $i + 1;
             if (($i + 1) != $acvInfo['signin_time']) {
                 $signData['sign_integral'] = round($acvInfo['integral'] / $acvInfo['signin_time']);
@@ -272,10 +275,13 @@ class ActivInfoController extends BaseDBController {
         $where['id'] = $signWhere['activity_id'] = array('EQ', $_GET['id']);
         $info = $this->infoModel->where($where)->find();
         $this->assign('activInfo', $info);
-        dump($info);
 
         $signInfo = $this->signModel->where($signWhere)->select();
-        dump($signInfo);
+        for ($i = 0; $i < count($signInfo); $i++) {
+            if ($signInfo[$i]['sign_sum'] != 0) {
+                $signInfo[$i]['data'] = $this->userappInfoModel->where('id in (' . trim($signInfo[$i]['sign_ids'], ',') . ')')->select();
+            }
+        }
         $this->assign('signInfo', $signInfo);
         $this->display();
     }

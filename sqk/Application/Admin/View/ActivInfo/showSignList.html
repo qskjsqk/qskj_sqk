@@ -13,12 +13,12 @@
         <div class="table_content">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <div class="col-sm-4">{$activInfo.title}</div>
+                    <div class="col-sm-4"><b>{$activInfo.title}</b></div>
                     <div class="col-sm-4 text-center">活动收藏人数：{$activInfo.like_num}</div>
                     <div class="col-sm-4 text-right">
                         活动签到人数：
                         <foreach name="signInfo" item="vvv" key="kkk">
-                            {$vvv.sign_sum}/
+                            {$vvv.sign_sum}&nbsp;/&nbsp;
                         </foreach>
                     </div>
                 </div>
@@ -27,92 +27,45 @@
                 <foreach name="signInfo" item="v" key="k">
 
                     <div class="panel panel-danger">
-                        <div class="panel-heading">第【{$v.sign_num}】次签到</div>
-                        <!--                <table class="table">
-                                            <th>产品</th><th>价格 </th>
-                                            <tr><td>产品 A</td><td>200</td></tr>
-                                            <tr><td>产品 B</td><td>400</td></tr>
-                                        </table>-->
+                        <div class="panel-body">
+                            <div class="col-sm-6"><h4>第【{$v.sign_num}】次签到,本次签到可获得积分【{$v.sign_integral}】分</h4></div>
+
+                            <div class="col-sm-6 text-right">
+                                <if condition="$v.sign_status eq 0">
+                                    <button type="button" class="btn btn-primary">尚未开启</button>
+                                    <else/>
+                                    <if condition="$v.sign_status eq 1"><button type="button" class="btn btn-success">正在签到</button>
+                                        <else/><button type="button" class="btn btn-warning">关闭签到</button>
+                                    </if>
+                                </if>
+
+                            </div>
+                        </div>
+                        <if condition="$v.sign_status eq 0">
+                            <else/>
+                            <table class="table table-hover">
+                                <tr class="tr">
+                                    <th>序号</th>
+                                    <th>用户名称</th>
+                                    <th>获得积分</th>
+                                    <th>签到时间</th>
+                                </tr>
+                                <foreach name="v.data" item="vv" key="kk">
+                                    <tr class="tr">
+                                        <td>{$kk+1}</td>
+                                        <td>{$vv.realname}</td>
+                                        <td>33分</td>
+                                        <td>{$vv.realname}</td>
+                                    </tr>
+                                </foreach>
+                            </table>
+
+                        </if>
+
                     </div>
                 </foreach>
             </notempty>
-            <table class="table table-hover">
-                <tr>
-                    <th>全选</th>
-                    <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
-                    <th>&nbsp;活动标题</th>
-                    <th>类别</th>
-                    <th>活动积分</th>
-                    <th>签到次数</th>
-                    <th>操作</th>
-                </tr>
-                <notempty name="infoList">
-                    <foreach name="infoList" item="v" key="k">
-                        <tr class="tr">
-                            <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
-                            <td>
-                        <if condition="$v.is_over eq 1 ||$v.is_open eq 1">
-                            <input type="checkbox" name="" value="" disabled="disabled"/>
-                            <else/><input type="checkbox" name="rowChecked" value="{$v.id}"/>
-                        </if>
-
-
-                        </td>
-                        <td>
-                        <if condition="$v.is_publish eq 0">
-                            <span class="label label-default" style="padding: 4px">未发布</span>
-                            <else/>
-                            <if condition="$v.is_open eq 0">
-                                <span class="label label-info" style="padding: 4px">已结束</span>
-                                <else/>
-                                <span class="label label-success" style="padding: 4px">发布*开启</span>
-                            </if>
-
-
-                        </if>
-
-                        <a class="tips_show" id="{$k}" href="__CONTROLLER__/activDetail/id/{$v.id}">{$v.title}</a>
-
-                        </td>
-                        <td >{$v.cat_name}</td>
-                        <td>{$v.integral}</td>
-                        <td>{$v.signin_time}</td>
-                        <!--<td><a href="javascript:void(0);" onclick="joinUser({$v.id}, {$v.join_num});">{$v.join_num}</a></td>-->
-                        <td>
-                            <div>
-                                <button class="btn btn-default list-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/activDetail/id/{$v.id}')">
-                                    <span class="glyphicon glyphicon-th-list"></span> 签到情况
-                                </button>
-                                <button class="btn btn-default edit-btn editActivInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
-                                    <span class="glyphicon glyphicon-edit"></span> 编辑
-                                </button>
-                                <if condition="$v.is_publish eq 0">
-                                    <button class="btn btn-default" disabled="disabled">
-                                        <span class="glyphicon glyphicon-time"></span> 待启
-                                    </button>
-                                    <else/>
-                                    <if condition="$v.is_open eq 0">
-                                        <button class="btn btn-default" disabled="disabled">
-                                            <span class="glyphicon glyphicon-ok"></span> 结束
-                                        </button>
-                                        <else/>
-                                        <button type="button" class="btn btn-danger" onclick="closeAct({$v.id})">
-                                            <span class="glyphicon glyphicon-remove"></span> 关闭
-                                        </button>
-                                    </if>
-                                </if>
-                            </div>
-                        </td>
-                        </tr>
-                    </foreach>
-                </notempty>
-                <empty name="infoList">
-                    <tr><td colspan="9">暂无数据</td></tr>
-                </empty>
-            </table>
-            <div style="text-align: center;">
-                {$page}
-            </div>
+            
         </div>
     </body>
 </html>
