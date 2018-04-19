@@ -267,4 +267,17 @@ class ActivInfoController extends BaseDBController {
         echo json_encode($returnData);
     }
 
+    public function showSignList() {
+
+        $where['id'] = $signWhere['activity_id'] = array('EQ', $_GET['id']);
+        $info = $this->infoModel->where($where)->find();
+        $this->assign('activInfo', $info);
+        dump($info);
+
+        $signInfo = $this->signModel->where($signWhere)->select();
+        dump($signInfo);
+        $this->assign('signInfo', $signInfo);
+        $this->display();
+    }
+
 }
