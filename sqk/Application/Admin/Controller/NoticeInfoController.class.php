@@ -16,12 +16,14 @@ class NoticeInfoController extends BaseDBController {
 
     protected $catModel;
     protected $infoModel;
+    protected $attachModel;
 
     public function _initialize() {
         parent::_initialize();
 
         $this->catModel = D('NoticeCat');
         $this->infoModel = D('NoticeInfo');
+        $this->attachModel = D('SysAllAttach');
     }
 
     /**
@@ -64,6 +66,11 @@ class NoticeInfoController extends BaseDBController {
             if (!empty($returnData['data']['cat_id'])) {
                 $res = $this->catModel->field(array('cat_name' => 'category_name'))->where(array('id' => $returnData['data']['cat_id']))->find();
                 $returnData['data']['category_name'] = $res['category_name'];
+                $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
+                $condition['module_name'] = array('EQ', 'notice');
+                $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
+                $this->assign('attachList', json_encode($attachList));
+//                dump($attachList);
             } else {
                 $returnData['data']['category_name'] = '所有分类';
             }
@@ -86,6 +93,15 @@ class NoticeInfoController extends BaseDBController {
         $param_arr['read_ids'] = ',';
         $returnData = parent::saveData($this->infoModel, $param_arr);
         if ($returnData['code'] == '500') {
+            foreach ($param_arr['files'] as $value) {
+                $condition['id'] = array('EQ', $value);
+                if ($returnData['flag'] == 'add') {
+                    $data = array('module_info_id' => $returnData['dataID']);
+                } else {
+                    $data = array('module_info_id' => $param_arr['id']);
+                }
+                $this->attachModel->where($condition)->setField($data);
+            }
             $logC = A('Actionlog')->addLog('NoticeInfo', 'saveNoticeInfo', '添加/编辑通知信息');
         }
         $this->ajaxReturn($returnData, 'JSON');

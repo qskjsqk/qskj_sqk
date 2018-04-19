@@ -103,10 +103,6 @@ function delUserLayer(isChecked) {
  * @returns {undefined}
  */
 function bindingCardLayer(id) {
-    $('#card_ufnum_btn').show();
-    $('#card_ufnum_btn').html('请放置读卡器上点击读卡');
-    $('#card_ufnum').hide();
-    $('#card_ufnum').val('');
     $('#card_num').val('');
     layer.open({
         type: 1,
@@ -140,16 +136,11 @@ function bindingCardLayer(id) {
  */
 function submitCardInfo(index, id) {
     $cardNum = $('#card_num').val();
-    $cardUfNum = $('#card_ufnum').attr('value');
     if ($cardNum == '') {
         layer.msg('请输入IC卡编号');
         return;
     }
-    if ($cardUfNum == '') {
-        layer.msg('未读到IC卡串号');
-        return;
-    }
-    $.post(c_path + '/setUserAppUfNum', {'id': id, 'card_num': $cardNum, 'card_ufnum': $cardUfNum}, function (result) {
+    $.post(c_path + '/setUserAppUfNum', {'id': id, 'card_num': $cardNum}, function (result) {
         if (result.code == '500') {
             layer.msg(constants.SUCCESS, {time: 1000}, function () {
                 location.reload();

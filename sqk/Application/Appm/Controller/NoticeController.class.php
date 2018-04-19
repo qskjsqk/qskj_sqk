@@ -16,11 +16,12 @@ header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 
 header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
 
 class NoticeController extends Controller {
-    
+
     public function notice_list() {
         $this->assign();
         $this->display();
     }
+
     public function notice_detail() {
         $this->assign();
         $this->display();
@@ -36,12 +37,12 @@ class NoticeController extends Controller {
         $isEnable = $this->getEnableCatIds();
         if ($_POST['type'] == 0) {
 //            未读
-            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ') and title like "%'.$keyword.'%"')->order('id desc')->limit($num)->select();
-            $count = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%'.$keyword.'%"')->count();
+            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
+            $count = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->count();
         } else {
 //            已读
-            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%'.$keyword.'%"')->order('id desc')->limit($num)->select();
-            $count = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%'.$keyword.'%"')->count();
+            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
+            $count = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->count();
         }
 //        dump(M('NoticeInfo')->getLastSql());exit;
         if ($num < $count) {
@@ -56,10 +57,11 @@ class NoticeController extends Controller {
         } else {
             for ($i = 0; $i < count($noticeArr); $i++) {
                 $data[$i]['id'] = $noticeArr[$i]['id'];
-                $data[$i]['title'] = str_replace($keyword, '<font color="red">'.$keyword.'</font>', $noticeArr[$i]['title']);
+                $data[$i]['title'] = str_replace($keyword, '<font color="red">' . $keyword . '</font>', $noticeArr[$i]['title']);
                 $data[$i]['cat_name'] = $this->getCatNameById($noticeArr[$i]['cat_id']);
                 $data[$i]['add_time'] = tranTime($noticeArr[$i]['add_time']);
                 $data[$i]['content'] = $noticeArr[$i]['content'];
+                $data[$i]['notice_pic'] = $this->getNoticePicPath($noticeArr[$i]['id']);
             }
             $returnData['page'] = $_POST['page'];
 
@@ -174,13 +176,12 @@ class NoticeController extends Controller {
             return '0,0';
         } else {
             foreach ($selectArr as $value) {
-                $str.=',' . $value['id'];
+                $str .= ',' . $value['id'];
             }
             return '0' . $str;
         }
     }
-    
-    
+
     /**
      * 通过分类id获取分类信息
      * @param type $cat_id
@@ -196,6 +197,16 @@ class NoticeController extends Controller {
         }
     }
 
+    public function getNoticePicPath($id) {
+        $attchModel = M(C('DB_ALL_ATTACH'));
+        $where['module_name'] = array('EQ', 'notice');
+        $where['module_info_id'] = array('EQ', $id);
+        $picArr = $attchModel->where($where)->find();
+        if (empty($picArr)) {
+            return 'Public/Upload/notice_pic_default.png';
+        } else {
+            return $picArr['file_path'];
+        }
+    }
+
 }
-
-

@@ -159,4 +159,18 @@ class AllattachController extends Controller {
         $this->success('删除成功', U('index/main'), 3);
     }
 
+    /**
+     * function:删除附件
+     */
+    public function delAttach() {
+        $model = M(C('DB_ALL_ATTACH'));
+        $condition['id'] = array('EQ', $_POST['id']);
+        if ($model->where($condition)->delete() !== false) {
+            $returnData['code'] = '500';
+        } else {
+            $returnData['code'] = '502';
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
 }

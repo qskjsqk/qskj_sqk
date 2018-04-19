@@ -18,8 +18,8 @@ class ActivInfoController extends BaseDBController {
     protected $commModel;
     protected $attachModel;
     protected $userInfoModel;
-    protected $userappInfoModel;
     protected $signModel;
+    protected $signInfoModel;
 
     public function _initialize() {
         parent::_initialize();
@@ -28,8 +28,8 @@ class ActivInfoController extends BaseDBController {
         $this->commModel = D('ActivComm');
         $this->attachModel = D('SysAllAttach');
         $this->userInfoModel = D('SysUserInfo');
-        $this->userappInfoModel = D('SysUserappInfo');
         $this->signModel = M('ActivSignin');
+        $this->signInfoModel = M('ActivSigninInfo');
     }
 
     /**
@@ -279,9 +279,10 @@ class ActivInfoController extends BaseDBController {
         $signInfo = $this->signModel->where($signWhere)->select();
         for ($i = 0; $i < count($signInfo); $i++) {
             if ($signInfo[$i]['sign_sum'] != 0) {
-                $signInfo[$i]['data'] = $this->userappInfoModel->where('id in (' . trim($signInfo[$i]['sign_ids'], ',') . ')')->select();
+                $signInfo[$i]['data'] = $this->signInfoModel->where('sign_id='.$signInfo[$i]['id'])->select();
             }
         }
+//        dump($signInfo[0]['data']);
         $this->assign('signInfo', $signInfo);
         $this->display();
     }

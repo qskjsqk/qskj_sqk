@@ -68,23 +68,35 @@ function getList(type, page, keyword) {
 //                            '</div>' +
 //                            '</div>' +
 //                            '</li>';
+//                    str += '<li class="mui-table-view-cell mui-media">' +
+//                            '<a href="javascript:">' +
+//                            '<img class="mui-media-object mui-pull-left" src="item.cover">' +
+//                            '<div class="mui-media-body">' +
+//                            '<div class="mui-ellipsis-2">' + data.data[i]["title"] + '</div>' +
+//                            '</div>' +
+//                            '<div class="meta-info">' +
+//                            '<div class="author">管理员</div>' +
+//                            '<div class="time">' + data.data[i]["add_time"] + '</div>' +
+//                            '</div>' +
+//                            '</a>' +
+//                            '</li>';
+//                    str += '<li class="mui-table-view-cell mui-media" onclick="getNoticeDetial(' + data.data[i]["id"] + ',0)">' +
+//                            '<a href="javascript:;">' +
+//                            '<div class="mui-media-body mui-ellipsis" style="color:#555;font-size:15px;" >' +
+//                            '<font color="#c00000;">[' + data.data[i]["cat_name"] + ']</font> <span class="mui-badge" style="float: right;">' + data.data[i]["add_time"] + '</span>' + data.data[i]["title"] +
+//                            '<p class="mui-ellipsis" style="">' + data.data[i]["content"].replace(/<[^>]+>/gi, '') + '</p>' +
+//                            '</div>' +
+//                            '</a>' +
+//                            '</li>';
                     str += '<li class="mui-table-view-cell mui-media">' +
-                            '<a href="javascript:">' +
-                            '<img class="mui-media-object mui-pull-left" src="item.cover">' +
+                            '<a href="javascript:;">' +
+                            '<img class="mui-media-object mui-pull-left" src="../../../' + data.data[i]["notice_pic"] + '">' +
                             '<div class="mui-media-body">' +
                             '<div class="mui-ellipsis-2">' + data.data[i]["title"] + '</div>' +
                             '</div>' +
                             '<div class="meta-info">' +
-                            '<div class="author">管理员</div>' +
+                            ' <div class="author fontred">[' + data.data[i]["cat_name"] + ']</div>' +
                             '<div class="time">' + data.data[i]["add_time"] + '</div>' +
-                            '</div>' +
-                            '</a>' +
-                            '</li>';
-                    str += '<li class="mui-table-view-cell mui-media" onclick="getNoticeDetial(' + data.data[i]["id"] + ',0)">' +
-                            '<a href="javascript:;">' +
-                            '<div class="mui-media-body mui-ellipsis" style="color:#555;font-size:15px;" >' +
-                            '<font color="#c00000;">[' + data.data[i]["cat_name"] + ']</font> <span class="mui-badge" style="float: right;">' + data.data[i]["add_time"] + '</span>' + data.data[i]["title"] +
-                            '<p class="mui-ellipsis" style="">' + data.data[i]["content"].replace(/<[^>]+>/gi, '') + '</p>' +
                             '</div>' +
                             '</a>' +
                             '</li>';

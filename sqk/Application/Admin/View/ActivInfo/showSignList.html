@@ -43,19 +43,26 @@
                         </div>
                         <if condition="$v.sign_status eq 0">
                             <else/>
-                            <table class="table table-hover">
+                            <table class="table table-hover font12">
                                 <tr class="tr">
                                     <th>序号</th>
                                     <th>用户名称</th>
                                     <th>获得积分</th>
+                                    <th>签到方式</th>
                                     <th>签到时间</th>
                                 </tr>
                                 <foreach name="v.data" item="vv" key="kk">
                                     <tr class="tr">
                                         <td>{$kk+1}</td>
                                         <td>{$vv.realname}</td>
-                                        <td>33分</td>
-                                        <td>{$vv.realname}</td>
+                                        <td>{$vv.sign_integral}</td>
+                                        <td>
+                                    <if condition="$vv.sign_type eq 0">
+                                        <span class="label label-info">二维码</span>
+                                        <else/><span class="label label-info">实体卡</span>
+                                    </if>
+                                        </td>
+                                        <td>{$vv.add_time}</td>
                                     </tr>
                                 </foreach>
                             </table>
