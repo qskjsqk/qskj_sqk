@@ -9,15 +9,16 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css">
         <link rel="stylesheet" href="__PUBLIC__/appm/css/activity.css">
-
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script src="__PUBLIC__/appm/js/mui.min.js"></script>
         <script type="text/javascript">
             //启用双击监听
             mui.init({
                 gestureConfig: {
-                    doubletap: true
+                    doubletap: true,
+                    swipeBack: true //启用右滑关闭功能
                 },
             });
         </script>
@@ -48,20 +49,42 @@
                         </li>
                 </ul>
         </div>-->
-        <header class="mui-bar mui-bar-nav">
+<!--        <header class="mui-bar mui-bar-nav">
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')">
             </a>
             <div class="mui-title mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
-            <a class="mui-icon  mui-icon-search mui-pull-right header-a" onclick="keyWordSelect()"></a>
-            <!--选项卡-->
+            <a class="mui-icon  mui-icon-extra mui-icon-extra-sweep mui-pull-right header-a" onclick="keyWordSelect()"></a>
+            选项卡
             <div class="mui-row" style="background-color: #fff;">
                 <div class="tab-div">
                     <div class="tab-div-title">社区最新活动</div>
                 </div>
             </div>
-        </header>
+        </header>-->
+        <nav class="mui-bar mui-bar-tab">
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/notice/notice_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-comment"><span class="mui-badge">9</span></span>
+                <span class="mui-tab-label">通知</span>
+            </a>
+            <a class="mui-tab-item mui-active" href="#tabbar-with-chat">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-class"></span>
+                <span class="mui-tab-label">活动</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/seller_home')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-gift"></span>
+                <span class="mui-tab-label">积分</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-map">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
+                <span class="mui-tab-label">榜单</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-map">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
+                <span class="mui-tab-label">我的</span>
+            </a>
+        </nav>
 
-        <div class="mui-content" style="margin-top: 40px;background-color: #fff;">
+        <div class="mui-content" style="background-color: #fff;">
             <!--list页面部分-->
             <ul class="mui-table-view" id="activityList">
 

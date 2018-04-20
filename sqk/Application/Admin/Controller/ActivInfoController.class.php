@@ -214,20 +214,13 @@ class ActivInfoController extends BaseDBController {
         $where['activity_id'] = $returnData['data']['id'];
         $condition['module_info_id'] = $returnData['data']['id'];
         $condition['module_name'] = array('EQ', 'activity');
-        $commInfoList = $this->commModel->field($this->dbFix . 'activ_comm.*,' . $this->dbFix . 'sys_user_info.usr')->join('LEFT JOIN __SYS_USER_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USER_INFO__.id')->where($where)->order('id desc')->select();
+        $commInfoList = $this->commModel->field($this->dbFix . 'activ_comm.*,' . $this->dbFix . 'sys_userapp_info.realname')->join('LEFT JOIN __SYS_USERAPP_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USERAPP_INFO__.id')->where($where)->order('id desc')->select();
         $imgInfoList = $this->attachModel->where($condition)->order('id desc')->select();
         $this->assign('activ', $returnData['data']);
         $this->assign('imgInfo', $imgInfoList);
         $this->assign('activComm', $commInfoList);
+//        dump($commInfoList);
         $this->display();
-    }
-
-    /**
-     * function:删除附件
-     */
-    public function delAttach() {
-        $returnData = parent::delData($this->attachModel, $_POST['id']);
-        $this->ajaxReturn($returnData, 'JSON');
     }
 
     /**

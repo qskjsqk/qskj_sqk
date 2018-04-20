@@ -189,8 +189,8 @@
             contentEditor.ready(function () {
                 contentEditor.setContent('{$activInfo.content}');
             });
-            
-            
+
+
             // 初始化Web Uploader
             var uploader = WebUploader.create({
                 auto: true, // 选完文件后，是否自动上传。
@@ -248,7 +248,7 @@
             var $filelist = $('#fileList');
             $filelist.on('click', '.del', function (e) {
                 $obj = $(this);
-                $.post('__CONTROLLER__/delAttach', {'id': $(this).next().val()}, function (result) {
+                $.post('__MODULE__/allattach/delAttach', {'id': $(this).next().val()}, function (result) {
                     if (result.code == '500') {
                         var id = $obj.parent().attr('id');
                         if (typeof (id) != 'undefined') {
@@ -260,6 +260,8 @@
             });
             $('#start_time').datetimepicker({changeMonth: true, changeYear: true});
             $('#end_time').datetimepicker({changeMonth: true, changeYear: true});
+
+            
         });
     </script>
 </html>

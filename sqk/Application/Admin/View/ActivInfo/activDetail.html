@@ -59,7 +59,7 @@
                         <notempty name="imgInfo">
                             <foreach name="imgInfo" item="v" key="k">
                                 <div class="list_header" style="margin-left: 75px;margin-bottom: 5px;margin-top:20px;float: left;">
-                                    <img src="/{$v.file_path}" style="width: 200px; height: 200px; border: 1px solid #ccc;"/>
+                                    <img src="/{$v.file_path}" style="width: 200px; height: 150px; border: 1px solid #ccc;"/>
                                 </div>
                             </foreach>
                         </notempty>
@@ -90,24 +90,23 @@
                                                     <ul class="comment_content">暂无评论</ul>
                                                 </empty>-->
                     </div>
-                    <notempty name="activComm">
-                        <ul class="comment_content">
-                            <foreach name="activComm" item="v" key="k">
-                                <li>
-                                    <div class="list_header">
-                                        <span style="font-size:15px; color:#1C77F6">{$v.usr}</span>
-                                        <span style="font-size:11px; color:#999;">{$v.add_time}</span>
-                                    </div>
-                                    <div class="list_content">
-                                        <p>{$v.content}</p>
-                                    </div>
-                                </li>
-                            </foreach>
-                        </ul>
-                    </notempty>
-                    <empty name="activComm">
-                        <ul class="comment_content">暂无评论</ul>
-                    </empty>
+                    <div class="row" style="padding: 0 20px;">
+                        </br>
+                        <notempty name="activComm">
+                            <ul class="list-group">
+                                <foreach name="activComm" item="v" key="k">
+                                    <li class="list-group-item">
+                                        <span class="badge">【{$v.realname}】发表于【{$v.add_time}】</span>
+                                        {$v.content}
+                                    </li>
+                                </foreach>
+                            </ul>
+                        </notempty>
+                        <empty name="activComm">
+                            <ul class="comment_content">暂无评论</ul>
+                        </empty>
+                    </div>
+
                 </div>
 
             </div>

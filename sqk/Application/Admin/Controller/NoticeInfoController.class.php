@@ -159,6 +159,14 @@ class NoticeInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         $sysUserInfo = D('SysUserInfo')->where(array('id' => $returnData['data']['user_id']))->find();
         $returnData['data']['usr'] = (!empty($sysUserInfo['realname']) ? $sysUserInfo['realname'] : $sysUserInfo['usr']);
+        
+        
+        $condition['module_info_id'] = $returnData['data']['id'];
+        $condition['module_name'] = array('EQ', 'notice');
+        $imgInfoList = $this->attachModel->where($condition)->order('id desc')->select();
+        $this->assign('imgInfo', $imgInfoList);
+        
+        
         $this->assign('notice', $returnData['data']);
         $this->display();
     }

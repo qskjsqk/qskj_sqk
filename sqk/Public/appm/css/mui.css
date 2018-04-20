@@ -1639,7 +1639,6 @@ input[type='submit']:enabled:active, input[type='submit'].mui-active:enabled,
 .mui-bar-tab .mui-tab-item .mui-icon ~ .mui-tab-label
 {
     font-size: 11px;
-
     display: block;
     overflow: hidden;
 

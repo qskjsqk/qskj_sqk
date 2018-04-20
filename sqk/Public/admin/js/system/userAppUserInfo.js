@@ -110,23 +110,36 @@ function bindingCardLayer(id) {
         skin: 'layui-layer-rim', //加上边框
         shadeClose: true, //是否点击遮罩关闭
         resize: false, //是否允许拉伸
-        area: ['420px', '230px'], //宽高
+        area: ['420px', '150px'], //宽高
         content: $('.bindingCardLayer'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-        btn: ['确定', '取消'],
-        yes: function (index) {
-//            alert(1);
-            submitCardInfo(index, id, 1);
-        },
-        btn2: function (index) {
-
-        },
+//        btn: ['确定', '取消'],
+//        yes: function (index) {
+////            alert(1);
+//            submitCardInfo(index, id);
+//        },
+//        btn2: function (index) {
+//
+//        },
         success: function (layero) {
 //            加载页面成功
-//            alert(3);
+            $('#card_num').focus();
+            document.onkeydown = function (event_e) {
+                if (window.event) {
+                    event_e = window.event;
+                }
+                console.log(event_e);
+                var int_keycode = event_e.key||event_e.code;
+                if (int_keycode == 'Enter') {
+                    submitCardInfo(id);
+                    return false;
+                }
+            }
 
         }
     });
 }
+
+
 
 /**
  * 提交IC卡信息
@@ -134,7 +147,7 @@ function bindingCardLayer(id) {
  * @param {type} id
  * @returns {undefined}
  */
-function submitCardInfo(index, id) {
+function submitCardInfo(id) {
     $cardNum = $('#card_num').val();
     if ($cardNum == '') {
         layer.msg('请输入IC卡编号');
@@ -151,18 +164,18 @@ function submitCardInfo(index, id) {
     });
 }
 
-/**
- * 获取ic卡串号
- * @returns {undefined}
- */
-function getCardUfNum() {
-    $.post(c_path + '/getCardUfNum', function (result) {
-        if (result.code == '500') {
-            $('#card_ufnum_btn').hide();
-            $('#card_ufnum').show();
-            $('#card_ufnum').attr('value', result.uf_num);
-        } else {
-            $('#card_ufnum_btn').html('读卡失败，点击重新读卡');
-        }
-    }, 'json');
-}
+///**
+// * 获取ic卡串号
+// * @returns {undefined}
+// */
+//function getCardUfNum() {
+//    $.post(c_path + '/getCardUfNum', function (result) {
+//        if (result.code == '500') {
+//            $('#card_ufnum_btn').hide();
+//            $('#card_ufnum').show();
+//            $('#card_ufnum').attr('value', result.uf_num);
+//        } else {
+//            $('#card_ufnum_btn').html('读卡失败，点击重新读卡');
+//        }
+//    }, 'json');
+//}
