@@ -18,12 +18,14 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 class NoticeController extends Controller {
 
     public function notice_list() {
-        $this->assign();
+        $noticeC = A('Seller');
+        $sliderData= $noticeC->getSlider();
+        $this->assign('sliderData',$sliderData);
         $this->display();
     }
 
     public function notice_detail() {
-        $this->assign();
+        $this->assign('time',time());
         $this->display();
     }
 
@@ -35,7 +37,7 @@ class NoticeController extends Controller {
         $keyword = $_POST['keyword'];
         $num = C('PAGE_NUM')['notice'] * $_POST['page'];
         $isEnable = $this->getEnableCatIds();
-        if ($_POST['type'] == 0) {
+        if ($_POST['type'] != 0) {
 //            未读
             $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
             $count = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->count();
@@ -126,6 +128,8 @@ class NoticeController extends Controller {
             $returnData['flag'] = 0;
             $returnData['msg'] = '操作失败,请重新操作';
         } else {
+            $findArr['notice_pic'] = $this->getNoticePicPath($findArr['id']);
+            $findArr['add_time'] = tranTime($findArr['add_time']);
             $newstr = $findArr['read_ids'] . $user_id;
             $newstrArr = explode(',', trim($newstr, ','));
             $newstr = implode(',', array_unique($newstrArr));

@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>通知</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -14,18 +14,7 @@
         <link href="__PUBLIC__/appm/css/notice.css" rel="stylesheet" type="text/css"/>
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
 
-        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
-        <script type="text/javascript">
-            //启用双击监听
-            mui.init({
-                gestureConfig: {
-                    doubletap: true, //双击关闭
-                }
-            });
-        </script>
-        {$Assigndata}
-        <script src="__PUBLIC__/appm/js/common.js"></script>
-        <script src="__PUBLIC__/appm/js/notice_list.js"></script>
+
 
     </head>
 
@@ -61,73 +50,61 @@
         </nav>
         <!--主体部分-->
         <div class="mui-content" style="background-color: #fff;">
-            
+
             <!--轮播图-->
             <div id="slider" class="mui-slider" style="height:150px;">
                 <div class="mui-slider-group mui-slider-loop" id="sliderList">
-                    <div class="mui-slider-item mui-slider-item-duplicate">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                    <div class="mui-slider-item">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                    <div class="mui-slider-item">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                    <div class="mui-slider-item">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                    <div class="mui-slider-item">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                    <div class="mui-slider-item mui-slider-item-duplicate">
-                        <a href="#">
-                            <img src="../../../Public/Upload/notice/2018-04-19/5ad8a48578e5f.jpg">
-                        </a>
-                    </div>
-                </div>
-                <div class="mui-slider-indicator" id="dianList">
-                    <div class="mui-indicator mui-active"></div>
-                    <div class="mui-indicator"></div>
-                    <div class="mui-indicator"></div>
-                    <div class="mui-indicator"></div>
+                    <foreach name="sliderData" item="v" key="k">
+                        <if condition="$k eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#">
+                                    <img src="../../../{$v.url}"  style="height:150px;">
+                                </a>
+                            </div>
+                            <else/>
+                            <div class="mui-slider-item">
+                                <a href="#">
+                                    <img src="../../../{$v.url}" style="height:150px;">
+                                </a>
+                            </div>  
+
+                        </if>
+                        <if condition="$k eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#">
+                                    <img src="../../../{$v.url}" style="height:150px;">
+                                </a>
+                            </div>
+                        </if>>
+                    </foreach>
                 </div>
             </div>
 
-            <!--list页面部分-->
 
-            <ul class="mui-table-view" id="noticeList">
-
-                <!--<li class="mui-table-view-cell" style="padding-right: 10px;">
-                        <div class="mui-media-body">
-                                <img src="img/xd.png" />&#12288;【公告】周四下午停水通知
-                                <span class="mui-ellipsis" style="float: right;color: #999;font-size:14px;">12:35</span>
-                                <p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-                        </div>
-                </li>-->
-                <li class="mui-table-view-cell mui-media">
-                    <a href="javascript:;">
-                        <div class="mui-media-body mui-ellipsis">
-                            [公告]周四下午停水通知<p style="float: right;">12:35</p>
-                            <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-            <!--动态加载模块-->
-            <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
-            <input type="hidden" id="page" value="1">
+            <div>
+                <!--list页面部分-->
+                <ul class="mui-table-view" id="noticeList"></ul>
+                <!--动态加载模块-->
+                <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
+                <input type="hidden" id="page" value="1">
+            </div>
         </div>
     </body>
 
 </html>
+<script src="__PUBLIC__/appm/js/mui.min.js"></script>
+<script type="text/javascript">
+                    //启用双击监听
+                    mui.init({
+                        gestureConfig: {
+                            doubletap: true, //双击关闭
+                        }
+                    });
+                    var slider = mui("#slider");
+                    slider.slider({
+                        interval: 5000
+                    });
+</script>
+{$Assigndata}
+<script src="__PUBLIC__/appm/js/common.js"></script>
+<script src="__PUBLIC__/appm/js/notice_list.js"></script>

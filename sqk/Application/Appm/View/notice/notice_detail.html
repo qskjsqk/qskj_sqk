@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="utf-8">
         <title></title>
@@ -10,6 +9,7 @@
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/notice_detail.css">
 
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script src="__PUBLIC__/appm/js/mui.min.js"></script>
@@ -17,51 +17,46 @@
             //启用双击监听
             mui.init({
                 gestureConfig: {
-                    doubletap: true
+                    doubletap: true,
                 },
             });
         </script>
         {$Assigndata}
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
         <script src="__PUBLIC__/appm/js/common.js"></script>
         <script src="__PUBLIC__/appm/js/notice_detail.js"></script>
     </head>
 
     <body>
         <!--头栏-->
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
-            </a>
-            <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
-            <!--<div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>-->
-            <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
-        </header>
+<!--                <header class="mui-bar mui-bar-nav">
+                    <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
+                    </a>
+                    <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
+                    <div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+                    <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
+                </header>-->
         <!--主体部分-->
         <div class="mui-content">
-            <!--选项卡-->
-            <div class="mui-row">
-                <div class="tab-div m-float-l">
-                    <div class="tab-div-title">通知公告</div>
+            <!--顶部banner图 开始-->
+            <div id="kr-article-banner" class="kr-article-banner">
+                <div id="kr-article-cover" class="kr-article-cover">
+                    <img id="kr-article-pic" src="#">
                 </div>
+                <h2 id="kr-article-title" class="kr-article-title"></h2>
             </div>
+            <!--顶部banner图 结束-->
 
-            <!--页面部分-->
-            <div class="mui-row">
-                <div class="mui-card">
-                    <!--内容区-->
-                    <div class="mui-card-content" style="margin: 0px;">
-                        <div class="m-detail-title">
-                            <div style="font-weight: bold;color: #333;font-size: 19px;" id="notice_title"></div>
-                            <div id="notice_ftitle"></div>
-                        </div>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="m-detail-content" id="notice_content"></div>
-                    </div>
-                    <!--页脚，放置补充信息或支持的操作-->
-                    <div class="mui-card-footer" id="read_num">浏览量：100</div>
+            <div class="kr-article-content">
+                <!-- 文章作者、发布时间等信息 -->
+                <div class="kr-article-meta">
+                    <div id="kr-article-author" class="kr-article-author"></div>
+                    <div class="kr-article-text">发表于</div>
+                    <div id="kr-article-time" class="kr-article-time"></div>
                 </div>
+                <!--文章详细内容-->
+                <div id="kr-article-article" class="kr-article-article" style="background-color: #fff;"></div>
             </div>
+        </div>
 
     </body>
 
