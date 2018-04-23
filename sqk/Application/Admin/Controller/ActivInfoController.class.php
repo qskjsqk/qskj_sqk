@@ -19,6 +19,7 @@ class ActivInfoController extends BaseDBController {
     protected $attachModel;
     protected $userInfoModel;
     protected $signModel;
+    protected $signInfoModel;
 
     public function _initialize() {
         parent::_initialize();
@@ -28,6 +29,7 @@ class ActivInfoController extends BaseDBController {
         $this->attachModel = D('SysAllAttach');
         $this->userInfoModel = D('SysUserInfo');
         $this->signModel = M('ActivSignin');
+        $this->signInfoModel = M('ActivSigninInfo');
     }
 
     /**
@@ -144,6 +146,7 @@ class ActivInfoController extends BaseDBController {
         $fen = $acvInfo['integral'];
         for ($i = 0; $i < $acvInfo['signin_time']; $i++) {
             $signData['activity_id'] = $acvInfo['id'];
+            $signData['sign_ids'] = ',';
             $signData['sign_num'] = $i + 1;
             if (($i + 1) != $acvInfo['signin_time']) {
                 $signData['sign_integral'] = round($acvInfo['integral'] / $acvInfo['signin_time']);
@@ -211,20 +214,13 @@ class ActivInfoController extends BaseDBController {
         $where['activity_id'] = $returnData['data']['id'];
         $condition['module_info_id'] = $returnData['data']['id'];
         $condition['module_name'] = array('EQ', 'activity');
-        $commInfoList = $this->commModel->field($this->dbFix . 'activ_comm.*,' . $this->dbFix . 'sys_user_info.usr')->join('LEFT JOIN __SYS_USER_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USER_INFO__.id')->where($where)->order('id desc')->select();
+        $commInfoList = $this->commModel->field($this->dbFix . 'activ_comm.*,' . $this->dbFix . 'sys_userapp_info.realname')->join('LEFT JOIN __SYS_USERAPP_INFO__ ON __ACTIV_COMM__.user_id=__SYS_USERAPP_INFO__.id')->where($where)->order('id desc')->select();
         $imgInfoList = $this->attachModel->where($condition)->order('id desc')->select();
         $this->assign('activ', $returnData['data']);
         $this->assign('imgInfo', $imgInfoList);
         $this->assign('activComm', $commInfoList);
+//        dump($commInfoList);
         $this->display();
-    }
-
-    /**
-     * function:删除附件
-     */
-    public function delAttach() {
-        $returnData = parent::delData($this->attachModel, $_POST['id']);
-        $this->ajaxReturn($returnData, 'JSON');
     }
 
     /**
@@ -272,10 +268,14 @@ class ActivInfoController extends BaseDBController {
         $where['id'] = $signWhere['activity_id'] = array('EQ', $_GET['id']);
         $info = $this->infoModel->where($where)->find();
         $this->assign('activInfo', $info);
-        dump($info);
 
         $signInfo = $this->signModel->where($signWhere)->select();
-        dump($signInfo);
+        for ($i = 0; $i < count($signInfo); $i++) {
+            if ($signInfo[$i]['sign_sum'] != 0) {
+                $signInfo[$i]['data'] = $this->signInfoModel->where('sign_id='.$signInfo[$i]['id'])->select();
+            }
+        }
+//        dump($signInfo[0]['data']);
         $this->assign('signInfo', $signInfo);
         $this->display();
     }

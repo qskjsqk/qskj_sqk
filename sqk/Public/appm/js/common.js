@@ -9,7 +9,7 @@ root_path = '';
  * @param {Object} sys_name
  */
 function aHref(sys_name) {
-     window.location.href =sys_name;
+    window.location.href = sys_name;
 //    mui.openWindow({
 //        url: sys_name + '.html',
 //        extras: {
@@ -121,3 +121,4 @@ function callPhone(phone) {
         }
     });
 }
+

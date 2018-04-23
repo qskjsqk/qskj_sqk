@@ -61,7 +61,7 @@ class View {
                 . '$("."+data.data[i]).css("display","none");'
                 . '}'
                 . '},"json");}'//权限过滤
-                . '</script>';
+                . 'console.log(assignData);</script>';
         $this->tVar['Assigndata'] = $js;
     }
 

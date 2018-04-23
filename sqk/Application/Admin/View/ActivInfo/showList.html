@@ -63,7 +63,7 @@
                         <tr class="tr">
                             <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
                             <td>
-                        <if condition="$v.is_over eq 1 ||$v.is_open eq 1">
+                        <if condition="$v.is_publish eq 1">
                             <input type="checkbox" name="" value="" disabled="disabled"/>
                             <else/><input type="checkbox" name="rowChecked" value="{$v.id}"/>
                         </if>

@@ -2,7 +2,7 @@
 
 /**
  * @name SellerPromInfoController
- * @info 描述：商家促销信息控制器
+ * @info 描述：商家广告信息控制器
  * @author GX
  * @datetime 2017-2-15 13:29:13
  */
@@ -19,25 +19,28 @@ class SellerPromInfoController extends BaseDBController {
     protected $userInfoModel;
     protected $communityInfoModel;
     protected $sellerInfoModel;
+    protected $attachModel;
 
     public function _initialize() {
+        parent::_initialize();
         $this->infoModel = D('SellerPromInfo');
         $this->sellerPromModel = D('SellerPromInfo');
         $this->userGroupModel = D('SysUserGroup');
         $this->userInfoModel = D('SysUserInfo');
         $this->communityInfoModel = D('SysCommunityInfo');
         $this->sellerInfoModel = D('SellerInfo');
+        $this->attachModel = D('SysAllAttach');
     }
 
     /**
-     * function:根据权限显示促销信息列表
+     * function:根据权限显示广告信息列表
      */
     public function showList() {
         $sysName = session('sys_name');
-        if(!empty($sysName)) {
-            if(empty(I('seller_id'))) {
+        if (!empty($sysName)) {
+            if (empty(I('seller_id'))) {
                 $userGroups = $this->userGroupModel->where(['is_enable' => 1])->getField('sys_name', true);
-                if(in_array($sysName, $userGroups)) {
+                if (in_array($sysName, $userGroups)) {
                     $this->showPromInfo($sysName, null);
                 }
             } else {
@@ -52,14 +55,14 @@ class SellerPromInfoController extends BaseDBController {
         if ($role == 'sqAdmin' && empty($seller_id)) {
             $address = $this->userInfoModel->find(session('user_id'));
             $where['address_id'] = $address['address_id'];
-        } elseif(empty($role) && !empty($seller_id)) {
+        } elseif (empty($role) && !empty($seller_id)) {
             $where['seller_id'] = $seller_id;
         }
         parent::showData($this->infoModel, $where, [], '', '');
     }
 
     /**
-     * function:跳转新增商家促销信息页面
+     * function:跳转新增商家广告信息页面
      */
     public function saveSellerProm() {
         $sellerPromInfo['seller_id'] = $_GET['seller_id'];
@@ -67,7 +70,7 @@ class SellerPromInfoController extends BaseDBController {
         $this->assign('communitys', $this->communityInfoModel->getLists());
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         $this->assign('sellers', $this->sellerInfoModel->getSellerListByAddressId(session('address_id')));
-        if(!empty(I('from'))) {
+        if (!empty(I('from'))) {
             $this->assign('from', I('from'));
         }
 
@@ -79,7 +82,7 @@ class SellerPromInfoController extends BaseDBController {
      */
     public function getSellerListSync() {
         $sellers = $this->sellerInfoModel->getSellerListByAddressId(I('address_id'));
-        if(!empty($sellers)) {
+        if (!empty($sellers)) {
             $data = ['code' => 0, 'sellers' => $sellers];
         } else {
             $data = ['code' => -1, 'sellers' => ''];
@@ -88,20 +91,32 @@ class SellerPromInfoController extends BaseDBController {
     }
 
     /**
-     * function:保存商家促销信息
+     * function:保存商家广告信息
      */
     public function saveSellerPromInfo() {
         $param_arr = array();
         $form_data = $_POST['form_data'];
         parse_str($form_data, $param_arr); //转换数组
-        if(empty($param_arr['seller_id'])) {
+        if (empty($param_arr['seller_id'])) {
             $this->ajaxReturn(['code' => '501', 'msgError' => '商家必选'], 'JSON');
         }
-        if(empty($param_arr['address_id'])) {
+        if (empty($param_arr['address_id'])) {
             $param_arr['address_id'] = session('address_id');
         }
         $param_arr['read_ids'] = ',';
         $returnData = parent::saveData($this->infoModel, $param_arr);
+        if ($returnData['code'] == '500') {
+            foreach ($param_arr['files'] as $value) {
+                $condition['id'] = array('EQ', $value);
+                if ($returnData['flag'] == 'add') {
+                    $data = array('module_info_id' => $returnData['dataID']);
+                } else {
+                    $data = array('module_info_id' => $param_arr['id']);
+                }
+                $this->attachModel->where($condition)->setField($data);
+            }
+            $logC = A('Actionlog')->addLog('ActivInfo', 'saveSellerPromInfo', '添加/编辑广告信息');
+        }
         $this->ajaxReturn($returnData, 'JSON');
     }
 
@@ -117,24 +132,40 @@ class SellerPromInfoController extends BaseDBController {
     }
 
     /**
-     * function:编辑商家促销项目信息
+     * function:编辑商家广告项目信息
      */
     public function edit() {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
+        
+        $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
+        $condition['module_name'] = array('EQ', 'sellerProm');
+        $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
+        $this->assign('attachList', json_encode($attachList));
+        
         $this->assign('sellerPromInfo', $returnData['data']);
         $this->assign('communitys', $this->communityInfoModel->getLists());
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
         $this->assign('sellers', $this->sellerInfoModel->getSellerListByAddressId(session('address_id')));
-        if(!empty(I('from'))) {
+        if (!empty(I('from'))) {
             $this->assign('from', I('from'));
         }
         $this->display('saveSellerProm');
     }
 
     /**
-     * function:促销详情
+     * function:广告详情
      */
     public function promDetail() {
+        
+        $returnData = parent::getData($this->infoModel, $_GET['id']);
+        $usrCondition['id'] = array('EQ', $returnData['data']['user_id']);
+        $usrInfo = $this->userInfoModel->field('realname,usr')->where($usrCondition)->find();
+        $returnData['data']['usr'] = (!empty($usrInfo['realname']) ? $usrInfo['realname'] : $usrInfo['usr']);
+        $condition['module_info_id'] = $returnData['data']['id'];
+        $condition['module_name'] = array('EQ', 'sellerProm');
+        $imgInfoList = $this->attachModel->where($condition)->order('id desc')->select();
+        $this->assign('prom', $returnData['data']);
+        $this->assign('imgInfo', $imgInfoList);
 
         $this->display();
     }

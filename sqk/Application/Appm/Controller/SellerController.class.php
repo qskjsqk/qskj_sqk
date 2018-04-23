@@ -643,5 +643,35 @@ class SellerController extends Controller {
             }
         }
     }
+    
+    
+    /**
+     * 获取首页轮播图
+     * @return type
+     */
+    public function getSlider() {
+            $selectArr = M('SellerPromInfo')->where('1=1')->select();
+            if (empty($selectArr)) {
+                $returnData = 0;
+            } else {
+                foreach ($selectArr as $value) {
+                    $str.=',' . $value['id'];
+                }
+                $str = ltrim($str,',');
+                $model = M(C('DB_ALL_ATTACH'));
+                $attachArr = $model->where('module_name="sellerProm" and module_info_id in (' . $str . ')')->order('id desc')->select();
+                if (empty($attachArr)) {
+                    $returnData = 0;
+                } else {
+                    for ($i = 0; $i < count($attachArr); $i++) {
+                        $data[$i]['url'] = $attachArr[$i]['file_path'];
+                        $data[$i]['sql'] = $model->getLastSql();
+                    }
+                    $returnData = $data;
+                }
+            }
+        return $returnData;
+//        $this->ajaxReturn($returnData, 'JSON');
+    }
 
 }

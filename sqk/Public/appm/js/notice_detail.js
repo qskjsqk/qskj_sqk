@@ -23,29 +23,31 @@ $(function () {
 function getNoticeDetail(id) {
     $.get(c_path + "/getNoticeDetail/id/" + id, function (data) {
         if (data.flag == 1) {
-            $("#notice_title").html(data.data.title);
-            $("#notice_ftitle").html(data.data.realname);
-            $("#read_num").html("<span style='float:left;'>浏览量：" + data.data.read_num + "</span><span style='float:right'>" + data.data.add_time + "</sapn>");
+            $("#kr-article-pic").attr('src','../../../'+data.data.notice_pic);
+            $("#kr-article-title").html(data.data.title);
+            $("title").html(data.data.title);
+            $("#kr-article-author").html(data.data.realname);
+            $("#kr-article-time").html(data.data.add_time);
             //为增强体验 图片加载完成之前隐藏，加载完成后显示
-            $("#notice_content").css('display', 'none');
-//            $("#notice_content").html(data.data.content.replace(/style="(.)*?"|^\s*|\&nbsp;/gi, ''));
-            $("#notice_content").html(data.data.content);
-            $('#notice_content table').css({'width': '100%'});
-            $('#notice_content table').attr({'border': '1'});
-            $('#notice_content').html(img_reset($('#notice_content').html()));
-            if ($('#notice_content img').length > 0) {
-                $('#notice_content img').each(function () {
+            $("#kr-article-article").css('display', 'none');
+//            $("#kr-article-article").html(data.data.content.replace(/style="(.)*?"|^\s*|\&nbsp;/gi, ''));
+            $("#kr-article-article").html(data.data.content+'</br></br>');
+            $('#kr-article-article table').css({'width': '100%'});
+            $('#kr-article-article table').attr({'border': '1'});
+            $('#kr-article-article').html(img_reset($('#kr-article-article').html()));
+            if ($('#kr-article-article img').length > 0) {
+                $('#kr-article-article img').each(function () {
                     $(this).css({'padding': '5px 0'});
                     $(this).attr('src', delHttp(this.src));
                     $(this).load(function () {
                         var img = new Image();
                         img.src = this.src;
                         $(this).css({'width': '100%'});
-                        $("#notice_content").css('display', 'block');
+                        $("#kr-article-article").css('display', 'block');
                     });
                 });
             } else {
-                $("#notice_content").css('display', 'block');
+                $("#kr-article-article").css('display', 'block');
             }
 
         } else {

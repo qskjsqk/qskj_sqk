@@ -13,13 +13,11 @@ use Think\Controller;
 
 class SellerItemsInfoController extends BaseDBController {
 
-    protected $catModel;
     protected $infoModel;
     protected $sellerInfoModel;
 
     public function _initialize() {
         parent::_initialize();
-        $this->catModel = D('SellerItemsCat');
         $this->infoModel = D('SellerItemsInfo');
         $this->sellerInfoModel = D('SellerInfo');
     }
@@ -45,10 +43,9 @@ class SellerItemsInfoController extends BaseDBController {
                 $where['name'] = array('LIKE', '%' . urldecode($_GET['name']) . '%');
                 $pageCondition['name'] = urldecode($_GET['name']);
             }
-            if (!empty($_GET['cat_id'])) {
-                $where[$this->dbFix . 'seller_items_info.cat_id'] = array('EQ', $_GET['cat_id']);
-                $pageCondition['category_name'] = $_GET['category_name'];
-                $pageCondition['cat_id'] = $_GET['cat_id'];
+            if (!empty($_GET['cat_type'])) {
+                $where['cat_type'] = array('EQ', $_GET['cat_type']);
+                $pageCondition['cat_type'] = $_GET['cat_type'];
             }
             if ($_GET['is_checked'] != '') {
                 $where['is_checked'] = array('EQ', $_GET['is_checked']);
@@ -57,14 +54,11 @@ class SellerItemsInfoController extends BaseDBController {
             if (empty($_GET['seller_id'])) {
                 $where['seller_id'] = array('EQ', $_SESSION['seller_id']);
                 $pageCondition['seller_id'] = $_SESSION['seller_id'];
-            } else {
-                $where['seller_id'] = array('EQ', $_GET['seller_id']);
-                $pageCondition['seller_id'] = $_GET['seller_id'];
             }
         }
-        $fieldStr = parent::madField('seller_items_info.*', 'seller_items_cat.cat_name');
-        $joinStr = parent::madJoin('seller_items_info.cat_id', 'seller_items_cat.id');
-        parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
+        $fieldStr = 'seller_items_info.*';
+        $joinStr ='';
+        parent::showData($this->infoModel, $where, $pageCondition, [], $fieldStr);
     }
 
     /**
