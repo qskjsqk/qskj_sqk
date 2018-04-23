@@ -56,9 +56,9 @@ function getActivList(page, keyword) {
                         '<div class="mui-card-content-inner">' +
                         '<p style="color: #000;font-size:1.1em;" onclick="getActivDetail(' + data.data[i]['id'] + ')">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
                         '<div>' +
-                        '<span class="mui-badge mui-badge-primary" style="float: left;">300分</span>' +
-                        '<span>&#12288;云景东里/2018.09.12</sapn>' +
-                        '<span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span>&nbsp;123人收藏</span>' +
+                        '<span class="mui-badge mui-badge-primary" style="float: left;">'+data.data[i]['integral']+'分</span>' +
+                        '<span>&#12288;'+data.data[i]['address_name']+'/'+data.data[i]['start_date']+'</sapn>' +
+                        '<span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span>&nbsp;'+data.data[i]['like_num']+'人收藏</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +

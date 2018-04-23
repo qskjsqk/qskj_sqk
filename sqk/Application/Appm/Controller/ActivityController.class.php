@@ -18,9 +18,9 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 class ActivityController extends Controller {
 
     protected $config;
-    
+
     public function _initialize() {
-         //配置字典信息
+        //配置字典信息
         $configdefC = A('Admin/Configdef');
         $this->config = $configdefC->getAllDef();
         $this->assign('config', $this->config);
@@ -64,20 +64,17 @@ class ActivityController extends Controller {
                 $data[$i]['id'] = $acitvArr[$i]['id'];
                 $data[$i]['title'] = str_replace($keyword, '<font color="red">' . $keyword . '</font>', $acitvArr[$i]['title']);
                 $data[$i]['cat_name'] = $this->getCatNameById($acitvArr[$i]['cat_id']);
-                $data[$i]['add_time'] = tranTime($acitvArr[$i]['add_time']);
-                $data[$i]['content'] = $acitvArr[$i]['content'];
 
                 $data[$i]['start_time'] = $acitvArr[$i]['start_time'];
-                $data[$i]['end_time'] = $acitvArr[$i]['end_time'];
-                $data[$i]['link_name'] = $acitvArr[$i]['link_name'];
-                $data[$i]['link_tel'] = $acitvArr[$i]['link_tel'];
 
                 $data[$i]['read_num'] = $acitvArr[$i]['read_num'];
                 $data[$i]['like_num'] = $acitvArr[$i]['like_num'];
-                $data[$i]['join_num'] = $acitvArr[$i]['join_num'];
-                $data[$i]['comm_num'] = $this->getCommNum($acitvArr[$i]['id']);
 
-                $data[$i]['join_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'join');
+                $times = strtotime($acitvArr[$i]['start_time']);
+                $data[$i]['start_date'] = date('Y.m.d', $times);
+                $data[$i]['address_name'] = getConameById($acitvArr[$i]['address_id']);
+                $data[$i]['integral'] = $acitvArr[$i]['integral'];
+
                 $data[$i]['like_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'like');
                 $picsInfo = $this->getAttachArr($acitvArr[$i]['id']);
                 if ($picsInfo['flag'] == 1) {
@@ -165,8 +162,12 @@ class ActivityController extends Controller {
                 $findArr['realname'] = $this->getRealnameById($findArr['user_id']);
                 $findArr['lookUser'] = $this->getRealnameById($user_id);
                 $findArr['comm_num'] = $this->getCommNum($findArr['id']);
-                $findArr['join_flag'] = $this->checkReadLikeJoin($findArr['id'], 'join');
                 $findArr['like_flag'] = $this->checkReadLikeJoin($findArr['id'], 'like');
+
+                $times = strtotime($findArr['start_time']);
+                $findArr['start_date'] = date('Y.m.d', $times);
+                $findArr['address_name'] = getConameById($findArr['address_id']);
+
                 $picsInfo = $this->getAttachArr($findArr['id']);
                 if ($picsInfo['flag'] == 1) {
                     $findArr['pics'] = $picsInfo['data'];

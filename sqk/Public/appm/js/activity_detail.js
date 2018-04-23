@@ -22,28 +22,29 @@ $(function () {
  */
 function getDetail(id) {
     $.get(c_path + "/getActivDetail/id/" + id, function (data) {
+        console.log(data);
         var picsStr = '';
         if (data.flag == 1) {
 
-            $('#joinBtn').attr('onclick', 'joinActiv(' + data.data.id + ',"' + data.data.lookUser + '","' + data.data.title + '")');
-
             $('#sendBtn').attr('onclick', 'addComm(' + data.data.id + ')');
-
             $('#zan').attr('onclick', 'zanActiv(' + data.data.id + ')');
 
             if (data.data['like_flag'] == 1) {
                 $('#zan').removeClass('m-icon-zan').addClass('m-icon-zaned').removeAttr('onclick');
             }
-
-            if (data.data['join_flag'] == 1) {
-                $('#joinBtn').removeClass('mui-btn-warning').addClass('mui-btn-success').removeAttr('onclick').html('取消参加');
-                $('#joinBtn').attr('onclick', 'concelJoinActiv(' + data.data.id + ',"' + data.data.lookUser + '","' + data.data.title + '")');
-            } else {
-                $('#joinBtn').removeClass('mui-btn-success').addClass('mui-btn-warning').html('马上参加');
-
-            }
-
+//基本信息
             $("#activ_title").html(data.data.title + "<p>" + data.data.realname + "&nbsp;发表于&nbsp;" + data.data.add_time + "</p>");
+            $("#integral").text(data.data.integral + "分");
+            $("#address_name_a_start_date").html("&nbsp;" + data.data.address_name + "/" + data.data.start_date);
+            $("#like_num1").html('&nbsp;' + data.data.like_num + '人收藏');
+//活动信息
+            $("#start_time").html(data.data.start_time + "&#12288;");
+            $("#end_time").html(data.data.end_time + "&#12288;");
+            $("#address").html(data.data.address + "&#12288;");
+            $("#signin_time").html(data.data.signin_time + "次&#12288;");
+            $("#initiator").html(data.data.initiator + "&#12288;");
+            $("#link_name").html(data.data.link_name + "&#12288;");
+            $("#link_tel").html(data.data.link_tel + "&#12288;");
 
             if (data.data.pics == 0) {
                 picsStr = '';
@@ -77,9 +78,7 @@ function getDetail(id) {
 
 
             $("#read_num").html("浏览" + data.data.read_num + "次");
-            $("#like_num").html(data.data.like_num);
-            $("#join_num").html(data.data.join_num);
-            $("#comm_num").html(data.data.comm_num);
+            $("#like_num").html("&nbsp;" + data.data.like_num + "人收藏");
 
             var commStr = '';
             if (data.data.commFlag == 1) {
@@ -109,54 +108,6 @@ function getDetail(id) {
         }
 
     }, 'json');
-}
-
-/**
- * 参加活动事件
- * @param {Object} id
- * @param {Object} realname
- * @param {Object} activ_name
- */
-function joinActiv(id, realname, activ_name) {
-    var btnArray = ['取消', '同意'];
-    mui.confirm('To ' + realname + '：您确定要参加《' + activ_name + '》活动吗？', '提示', btnArray, function (e) {
-        if (e.index == 1) {
-            $.get(c_path + "/joinActiv", {'id': id}, function (data) {
-                if (data.flag == 1) {
-                    getDetail(id);
-                    mui.toast('已经为您报名参加！');
-                } else {
-                    mui.toast(data.msg);
-                }
-            }, 'json');
-        } else {
-            mui.toast('取消参加！');
-        }
-    })
-}
-
-/**
- * 取消参加活动事件
- * @param {Object} id
- * @param {Object} realname
- * @param {Object} activ_name
- */
-function concelJoinActiv(id, realname, activ_name) {
-    var btnArray = ['取消', '确定'];
-    mui.confirm('To ' + realname + '：您确定要取消参加《' + activ_name + '》活动吗？', '提示', btnArray, function (e) {
-        if (e.index == 1) {
-            $.get(c_path + "/concelJoinActiv", {'id': id}, function (data) {
-                if (data.flag == 1) {
-                    mui.toast('已取消参加！');
-                    getDetail(id);
-                } else {
-                    mui.toast(data.msg);
-                }
-            }, 'json');
-        } else {
-            mui.toast('继续参加！');
-        }
-    })
 }
 
 /**

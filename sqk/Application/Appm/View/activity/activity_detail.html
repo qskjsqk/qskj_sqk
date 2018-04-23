@@ -3,12 +3,13 @@
 
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>活动详情</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css">
         <link rel="stylesheet" href="__PUBLIC__/appm/css/activity.css">
 
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
@@ -28,45 +29,14 @@
     </head>
 
     <body>
-        <!--右上角弹出菜单-->
-        <!--<div id="popover" class="mui-popover" style="width:150px;">
-                <ul class="mui-table-view">
-                        <li class="mui-table-view-cell">
-                                <a href="#" class="mui-icon mui-icon-home mui-pull-left" onclick="aHome()">
-                                        <span style="font-size: 14px;padding-left: 5px;">返回首页</span>
-                                </a>
-                        </li>
-                        <li class="mui-table-view-cell">
-                                <a href="#" class="mui-icon mui-icon-person mui-pull-left" onclick="aHref('setting')">
-                                        <span style="font-size: 14px;padding-left: 5px;">个人中心</span>
-                                </a>
-                        </li>
-                        <li class="mui-table-view-cell">
-                                <a href="#" class="mui-icon mui-icon-mui-icon mui-icon-chatboxes mui-pull-left" onclick="aHref('order_manage')">
-                                        <span style="font-size: 14px;padding-left: 5px;">订单管理</span>
-                                </a>
-                        </li>
-                </ul>
-        </div>-->
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
-            </a>
-            <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
 
-            <!--<div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()"></a>
+            <h1 id="title" class="mui-title header-a-l">活动详情</h1>
             <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
-            <!--选项卡-->
-            <div class="mui-row" style="background-color: #fff;">
-                <div class="tab-div m-float-l">
-                    <div class="tab-div-title">社区最新活动</div>
-                    <div class="tab-div-right">
-                        <button type="button" id="joinBtn" class="mui-btn mui-btn-warning" style="margin-top: -8px;">马上参加</button>
-                    </div>
-                </div>
-            </div>
         </header>
 
-        <div class="mui-content" style="background-color: #fff;margin-top: 45px;">
+        <div class="mui-content">
 
             <!--页面部分-->
             <div class="mui-row">
@@ -78,6 +48,42 @@
                             <p>who 发表于 2016-06-30 15:30</p>-->
                         </div>
                     </div>
+                </div>
+
+                <div class="mui-card">
+                    <div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(/Public/Upload/activity/2018-04-11/5acd833d494d2.PNG)" onclick="getActivDetail(' + data.data[i]['id'] + ')"></div>
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            <div>
+
+                                <span class="mui-badge mui-badge-primary font14" style="float: left;" id="integral"></span>
+                                <span class="font14" id="address_name_a_start_date">&#12288;云景东里/2018.09.12</span>
+                                <span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14 m-float-r" style="line-height: 1.5;" id="like_num1">&nbsp;人收藏</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-card">
+                    <div class="mui-card-header">活动信息</div>
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-divider font333">开始时间<span class="m-float-r .m-padding-lr10" id="start_time">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">结束时间<span class="m-float-r .m-padding-lr10" id="end_time">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">活动地点<span class="m-float-r .m-padding-lr10" id="address">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">签到次数<span class="m-float-r .m-padding-lr10" id="signin_time">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">发起人<span class="m-float-r .m-padding-lr10" id="initiator">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">联系人<span class="m-float-r .m-padding-lr10" id="link_name">23423&#12288;</span></li>
+                                <li class="mui-table-view-divider font333">联系方式<span class="m-float-r .m-padding-lr10" id="link_tel">23423&#12288;</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-card">
+
+                </div>
+                <div class="mui-card">
+                    <div class="mui-card-header">活动详情</div>
                     <div class="mui-card-content">
                         <!--主体-->
 
@@ -86,24 +92,14 @@
                             -->
                         </div>
                     </div>
-                    <div class="listfooter m-margin-b10 m-padding-lr10"><span id="read_num">浏览45次</span>
-
-                        <div class="listfooter-num">
-                            <p id="join_num"></p>
-                        </div>
-                        <div class="listfooter-zan m-icon-join"></div>
-
-                        <div class="listfooter-num">
-                            <p id="comm_num"></p>
-                        </div>
-                        <div class="listfooter-zan m-icon-pingl"></div>
-
-                        <div class="listfooter-num">
-                            <p id="like_num"></p>
-                        </div>
-                        <div class="listfooter-zan m-icon-zan" id='zan' onclick="zanActiv()"></div>
+                    <div class="mui-card-footer">
+                        <div class="mui-card-link"><span id="read_num">浏览45次</span></div>
+                        <a class="mui-card-link"></a>
+                        <div class="mui-card-link"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14" id="like_num">&nbsp;123人收藏</span></div>
                     </div>
+                </div>
 
+                <div class="mui-card">
                     <div class="mui-card-footer">
                         <!--评论表单-->
                         <div class="m-card-pinglun">
