@@ -7,12 +7,12 @@ body{
 }
 
 .header-a {
-    background-color: #9edee9;
+    background-color: #7cacff;
     color: #FFFFFF;
 }
 
 .header-ss-div {
-    background-color: #9edee9;
+    background-color: #7cacff;
 }
 
 .comfont {
@@ -20,7 +20,7 @@ body{
 }
 
 .header-a-l {
-    background-color: #9edee9;
+    background-color: #7cacff;
     color: #FFFFFF;
 }
 
@@ -373,6 +373,15 @@ body{
 .font999 {
     color: #999;
 }
+.font888 {
+    color: #888;
+}
+.font666 {
+    color: #666;
+}
+.font333 {
+    color: #333;
+}
 
 .fontgold {
     color: gold;
@@ -416,7 +425,9 @@ body{
 .font-sel {
     color: #9edee9;
 }
-
+.font-wb{
+    font-weight: bold;
+}
 
 /*表单相关*/
 

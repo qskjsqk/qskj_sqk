@@ -13,7 +13,6 @@ $(function () {
     $('#keyword').val('');
     getActivList(1, '');
 });
-
 //函数--------------------------------------------------------------------------------------------
 /**
  * 获取活动列表
@@ -22,7 +21,6 @@ $(function () {
 function getActivList(page, keyword) {
     $.post(c_path + "/getList", {'page': page, 'keyword': keyword}, function (data) {
         //最新活动
-
         var str = '';
         var picsStr = '';
         if (data.flag == 1) {
@@ -46,29 +44,25 @@ function getActivList(page, keyword) {
                 } else {
                     picsStr = '<div class="listcontent m-backgc-w">';
                     for (var j = 1; j < 4; j++) {
-                         picsStr += '<div class="listimg"><img src="' + appUpload_path + data.data[i]['pics'][j]['url'] + '"></div>';
+                        picsStr += '<div class="listimg"><img src="' + appUpload_path + data.data[i]['pics'][j]['url'] + '"></div>';
                     }
                     picsStr += '</div>';
                 }
-                
+
 
                 str += '<div class="mui-card">' +
-                        '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="getActivDetail(' + data.data[i]['id'] + ')"><div style="width:100%;height:30px;background-color:#000;position:absolute;bottom:0; right:0;color:#fff;line-height:30px; opacity:0.7">【' + data.data[i]['cat_name'] + '】&#12288;' + data.data[i]['title'] + '</div></div>' +
+                        '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="getActivDetail(' + data.data[i]['id'] + ')"></div>' +
                         '<div class="mui-card-content">' +
                         '<div class="mui-card-content-inner">' +
-//                        '<p style="color: #000;font-size:1.1em;">联系人：' + data.data[i]['link_name'] + '&#12288;&#12288;联系电话：' + data.data[i]['link_tel'] + '</p>' +
-                        '<p style="color: #000;font-size:1.1em;">积分：800&#12288;&#12288;地址：翠屏北里东区居委会</p>' +
-                        '<p  onclick="getActivDetail(' + data.data[i]['id'] + ')">' + data.data[i]['content'].replace(/<[^>]+>/gi, '').substr(0, 80) + '...' +
-                        '</p>'+ picsStr +
+                        '<p style="color: #000;font-size:1.1em;" onclick="getActivDetail(' + data.data[i]['id'] + ')">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
+                        '<div>' +
+                        '<span class="mui-badge mui-badge-primary" style="float: left;">300分</span>' +
+                        '<span>&#12288;云景东里/2018.09.12</sapn>' +
+                        '<span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span>&nbsp;123人收藏</span>' +
                         '</div>' +
                         '</div>' +
-                        '<div class="mui-card-footer">' +
-                        '<p class="mui-card-link">'+data.data[i]['add_time']+'</p>' +
-                        '<a class="mui-card-link"></a>' +
-                        '<p class="mui-card-link"><span class="mui-icon mui-icon-star"></span></p>' +
                         '</div>' +
                         '</div>';
-
 //                str += '<li class="mui-table-view-cell" style="padding-right: 10px;">' +
 //                        '<div class="mui-media-body" style="color:#555;">' +
 //                        '<div class="list-xiaod"></div>[' + data.data[i]['cat_name'] + ']&#12288;' + data.data[i]['title'] + '' +
@@ -101,8 +95,6 @@ function getActivList(page, keyword) {
         }
 
         $("#activityList").html(str);
-
-
         //动态加载--------------------------------------------------------------		
         $("#page").val(data.page);
         if (data.is_end == 1) {
@@ -115,7 +107,6 @@ function getActivList(page, keyword) {
         //---------------------------------------------------------------------
 
     }, 'json');
-
 }
 
 /**

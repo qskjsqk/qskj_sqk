@@ -95,7 +95,9 @@ function checkIsLogin() {
             mui.alert('您的登录信息已失效，请重新登录', '提示', '马上登录', function () {
                 aHref(m_path + "/login/index");
             });
-
+        } else {
+            //tabbar 通知公告
+            data.data.notice_num == 0 ? $('#notice_num').html('') : $('#notice_num').html('<span class="mui-badge">' + data.data.notice_num + '</span>');
         }
     }, 'json');
 

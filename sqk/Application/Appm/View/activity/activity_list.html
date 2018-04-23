@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>最新活动</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -49,18 +49,11 @@
                         </li>
                 </ul>
         </div>-->
-<!--        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')">
-            </a>
-            <div class="mui-title mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')"></a>
+            <div class="mui-title mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
             <a class="mui-icon  mui-icon-extra mui-icon-extra-sweep mui-pull-right header-a" onclick="keyWordSelect()"></a>
-            选项卡
-            <div class="mui-row" style="background-color: #fff;">
-                <div class="tab-div">
-                    <div class="tab-div-title">社区最新活动</div>
-                </div>
-            </div>
-        </header>-->
+        </header>
         <nav class="mui-bar mui-bar-tab">
             <a class="mui-tab-item" onclick="aHref('__MODULE__/notice/notice_list')">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-comment"><span class="mui-badge">9</span></span>
@@ -84,36 +77,51 @@
             </a>
         </nav>
 
-        <div class="mui-content" style="background-color: #fff;">
+        <div class="mui-content" style="background-color: #fff;margin-top:10px;">
+
+            <!--轮播图-->
+            <div id="slider" class="mui-slider" style="height:150px;">
+                <div class="mui-slider-group mui-slider-loop" id="sliderList">
+                    <foreach name="sliderData" item="v" key="k">
+                        <if condition="$k eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#">
+                                    <img src="../../../{$v.url}"  style="height:150px;">
+                                </a>
+                            </div>
+                            <else/>
+                            <div class="mui-slider-item">
+                                <a href="#">
+                                    <img src="../../../{$v.url}" style="height:150px;">
+                                </a>
+                            </div>  
+
+                        </if>
+                        <if condition="$k eq 0">
+                            <div class="mui-slider-item mui-slider-item-duplicate">
+                                <a href="#">
+                                    <img src="../../../{$v.url}" style="height:150px;">
+                                </a>
+                            </div>
+                        </if>>
+                    </foreach>
+                </div>
+            </div>
             <!--list页面部分-->
             <ul class="mui-table-view" id="activityList">
-
-
-                <!--<li class="mui-table-view-cell" style="padding-right: 10px;" onclick="aHref('activity_detail')">
-                        <div class="mui-media-body">
-                                <div class="list-xiaod"></div>【社区活动】&#12288;第1条科学建议
-                                <span class="mui-ellipsis" style="float: right;color: #999;font-size:14px;">12:35</span>
-                                <div class="listdigest">经验其实就是培养自信的过程，经历的多了，做的多了，人自然就自信了。经验其实就是培养自信的过程，经历的多了，做的多了，人自然就自信了。
-                                        <a href="#" onclick="getDetail(0)">【详情】</a>
-                                </div>
-                                <div class="listcontent m-backgc-w">
-                                        <div class="listimg"><img src="img/cs.jpg"></div>
-                                        <div class="listimg"><img src="img/cs.jpg"></div>
-                                        <div class="listimg"><img src="img/cs.jpg"></div>
-                                </div>
+                <div class="mui-card">
+                    <div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(/Public/Upload/activity/2018-04-11/5acd833d494d2.PNG)" onclick="getActivDetail(' + data.data[i]['id'] + ')"></div>
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            <p style="color: #000;font-size:1.1em;" onclick="getActivDetail()">【公益】放假啊看了电视剧分开拉就是打飞机阿斯利的空间看来飞机阿斯利的空间</p>
+                            <div>
+                                <span class="mui-badge mui-badge-primary" style="float: left;">300分</span>
+                                <span>&#12288;云景东里/2018.09.12</sapn>
+                                <span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span>123人收藏</span>
+                            </div>
                         </div>
-                        <div class="listfooter">
-                                <span style="color:#555;">联系人：李大妈，联系电话：010-12345678</span>
-                        </div>
-                        <div class="listfooter"><span>浏览45次</span>
-                                <div class="listfooter-num"><p>26</p></div>
-                                <div class="listfooter-zan m-icon-pingl"></div>
-                                <div class="listfooter-num"><p>26</p></div>
-                                <div class="listfooter-zan m-icon-zan"></div>
-                        </div>
-                </li>-->
-
-
+                    </div>
+                </div>
             </ul>
 
             <!--动态加载模块-->

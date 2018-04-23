@@ -27,6 +27,9 @@ class ActivityController extends Controller {
     }
 
     public function activity_list() {
+        $noticeC = A('Seller');
+        $sliderData = $noticeC->getSlider();
+        $this->assign('sliderData', $sliderData);
         $this->display();
     }
 
