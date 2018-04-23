@@ -182,7 +182,7 @@ function createQrcode($data) {
     // 下面注释了把二维码图片保存到本地的代码,如果要保存图片,用$fileName替换第二个参数false
     $path = "Public/Temfile/qrcode/";
     // 生成的文件名
-    $fileName = $path . date('YmdHis', time()) . '.png';
+    $fileName = $path . date('YmdHis', time()) . '-' . rand(1000, 9999) . '.png';
     //$fileName = $path . $data . '.png';
     QRcode::png($data, $fileName, $level, $size);
     return $fileName;
@@ -270,20 +270,19 @@ function getConameById($id) {
     }
 }
 
-function dd($data, $is_exist = false)
-{
+function dd($data, $is_exist = true) {
     echo "<pre>";
     print_r($data);
     echo "</pre>";
-    if($is_exist == true) {
+    if ($is_exist != false) {
         exit;
     }
 }
 
-function syncData($flag = 0, $msg = '操作成功', $data = [])
+function syncData($ret = 0, $msg = '操作成功', $data = [])
 {
     $returnData = [
-        'flag' => $flag,
+        'ret' => $ret,
         'msg' => $msg,
     ];
     if(!empty($data)) {

@@ -188,8 +188,10 @@ function showActDetail(obj) {
     console.log(obj);
     var str = '发起：【' + assignData.infoList[obj.context.id].initiator + '】</br>' +
             '联系：【' + assignData.infoList[obj.context.id].link_name + '|' + assignData.infoList[obj.context.id].link_tel + '】</br>' +
-            '发表：【' + assignData.infoList[obj.context.id].realname + '】</br>' +
-            '时间：【' + assignData.infoList[obj.context.id].add_time + '】</br>';
+            '地点：【' + assignData.infoList[obj.context.id].address + '】</br>' +
+            '时间：【' + assignData.infoList[obj.context.id].start_time + '】</br>'+
+            '发表：【' + assignData.infoList[obj.context.id].realname + '】</br>' 
+            
     layer.tips(str, obj, {
         tips: [2, '#3595CC'],
         time: 4000

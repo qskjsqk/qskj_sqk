@@ -23,4 +23,6 @@ return array(
     'DB_SLAVE_NO' => '', // 指定从服务器序号
     //系统
     'SYSTEM_TOKEN'=>'qs_sqk',//识别码
+
+    'SHOW_PAGE_TRACE' => true, //开发过程中开启页面Trace
 );

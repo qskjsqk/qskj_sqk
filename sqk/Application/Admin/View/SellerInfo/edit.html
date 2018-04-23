@@ -18,78 +18,109 @@
         <!--添加信息-->
         <div class="container" >
             <form method="post" action="__CONTROLLER__/saveSellerInfo" enctype="multipart/form-data" class="form-horizontal" id="save-form" style="margin-top: 20px;">
-                <input type="hidden" name="id" value="{$sellerInfo.id}"/>
-                <div id="fileJson" name="fileJson" style="display: none;">{$attachList}</div>
+                <div id="fileJson" name="fileJson" style="display: none;">{$data.attachList}</div>
+                <input type="hidden" name="id" value="{$data.sellerInfo.id}"/>
                 <div class="form-group">
-                    <label for="address_id" class="col-sm-2 control-label">所属社区</label>
-                    <if condition="$Think.session.sys_name eq 'sysAdmin'">
-                        <div class="col-sm-8">
-                            <select class="form-control" id="address_id2" name="address_id">
-                                <foreach name="communitys" item="val" >
-                                    <option value='{$val.id}' <if condition="$val.id eq $sellerInfo['address_id']"> selected </if> >
-                                        {$val.com_name}
-                                    </option>
-                                </foreach>
-                            </select>
-                        </div>
-                        <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
-                        <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
-                        <label style="line-height: 33px;margin-left: 12px;">{$community}</label>
-                    </if>
+                    <label for="name" class="col-sm-2 control-label">营业执照号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="business_license" name="business_license" placeholder="请输入13、16、18位字母或数字" value="{$data.sellerInfo.business_license}"/>
+                        <if condition="$data.errorMsg.business_license neq ''">
+                            <span class="tipMsg">{$data.errorMsg.business_license}</span>
+                        </if>
+                    </div>
+                    <label class="col-sm-2"><span class="tipMsg">*必填(13、16、18位)</span></label>
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">商家名称</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="name" name="name" value="{$sellerInfo.name}" placeholder="请输入名称">
-                        <if condition="$errorMsg['name'] neq ''">
-                            <span class="tipMsg">{$errorMsg['name']}</span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="请输入名称" value="{$data.sellerInfo.name}"/>
+                        <if condition="$data.errorMsg.name neq ''">
+                            <span class="tipMsg">{$data.errorMsg.name}</span>
                         </if>
                     </div>
-                    <label class="col-sm-2"><span class="tipMsg">*必填(1-50个字符)</span></label>
+                    <label class="col-sm-2"><span class="tipMsg">*必填(1-20个字符)</span></label>
                 </div>
                 <div class="form-group">
-                    <label for="category_name" class="col-sm-2 control-label">所属类别</label>
+                    <label for="editor" class="col-sm-2 control-label">资质文件</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="category_name" name="category_name" value="{$sellerInfo.category_name}" onclick="showTreeView();" placeholder="请选择类别" readonly>
-                        <input type="hidden" id="parent_id" name="cat_id" value="{$sellerInfo.cat_id}"/>
-                        <div class="col-sm-11 dropdown-menu" id="treeview" style="display: none;margin-left:15px;z-index: 111111111;"></div>
-                        <if condition="$errorMsg['cat_id'] neq ''">
-                            <span class="tipMsg">{$errorMsg['cat_id']}</span>
-                        </if>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div  id="filePicker">添加图片</div>
+                            </div>
+                            <div class="col-sm-9">
+                                <span class="tipMsg">营业执,照店面照片</span>
+                            </div>
+
+                        </div>
+
+                        <div id="fileList" id="upload" class="uploader-list" style="width: 100%;height: 120px;background-color: #fff;border:1px solid #ccc;border-radius: 4px;padding: 10px;"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address_id" class="col-sm-2 control-label">注册社区</label>
+                    <if condition="$Think.session.sys_name eq 'sysAdmin'">
+                    <div class="col-sm-8">
+                        <select class="form-control" id="address_id2" name="address_id">
+                            <foreach name="data.communitys" item="val" >
+                                <option value='{$val.id}' <if condition="$val.id eq $data['sellerInfo']['address_id']"> selected </if> >
+                                    {$val.com_name}
+                                </option>
+                            </foreach>
+                        </select>
                     </div>
                     <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">营业时间</label>
-                    <div class="col-sm-3" >
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="work_start" name="work_start" value="{$sellerInfo.work_start}" placeholder="请输入起始时间">
-                            <span class="input-group-addon">至</span>
-                            <input type="text" class="form-control" id="work_end" name="work_end" value="{$sellerInfo.work_end}" placeholder="请输入结束时间">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tel" class="col-sm-2 control-label">商家电话</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="tel" name="tel" value="{$sellerInfo.tel}" placeholder="请输入商家电话">
-                        <if condition="$errorMsg['tel'] neq ''">
-                            <span class="tipMsg">{$errorMsg['tel']}</span>
-                        </if>
-                    </div>
-                    <label class="col-sm-2"><span class="tipMsg">*必填</span></label>
+                    <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
+                        <label style="line-height: 33px;margin-left: 12px;">{$data.community}</label>
+                    </if>
                 </div>
                 <div class="form-group">
                     <label for="address" class="col-sm-2 control-label">商家地址</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="address" name="address" value="{$sellerInfo.address}" placeholder="请输入商家地址">
-                        <if condition="$errorMsg['address'] neq ''">
-                            <span class="tipMsg">{$errorMsg['address']}</span>
+                        <!--<input type="text" class="form-control" id="address" name="address" value="{$sellerInfo.address}" placeholder="请输入商家地址">-->
+                        <textarea class="form-control" id="address" name="address">{$data.sellerInfo.address}</textarea>
+                        <if condition="$data.errorMsg.address neq ''">
+                            <span class="tipMsg">{$data.errorMsg.address}</span>
                         </if>
                     </div>
-                    <label class="col-sm-2"><span class="tipMsg">*必填(1-300个字符)</span></label>
+                    <label class="col-sm-2"><span class="tipMsg">*必填(不超过28字)</span></label>
                 </div>
                 <div class="form-group">
+                    <label for="tel" class="col-sm-2 control-label">联系人</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="contacts" name="contacts" value="{$data.sellerInfo.contacts}" placeholder="请输入商家联系人">
+                        <if condition="$data.errorMsg.contacts neq ''">
+                            <span class="tipMsg">{$data.errorMsg.contacts}</span>
+                        </if>
+                    </div>
+                    <label class="col-sm-2"><span class="tipMsg">*必填(不超过10字)</span></label>
+                </div>
+                <div class="form-group">
+                    <label for="tel" class="col-sm-2 control-label">联系方式</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="tel" name="tel" value="{$data.sellerInfo.tel}" placeholder="手机号或者固话号" value="{$data.sellerInfo.tel}"/>
+                        <if condition="$data.errorMsg.tel neq ''">
+                            <span class="tipMsg">{$data.errorMsg.tel}</span>
+                        </if>
+                    </div>
+                    <label class="col-sm-2"><span class="tipMsg">*必填(手机号或者固话号)</span></label>
+                </div>
+                <div class="form-group wechat-div">
+                    <label for="weChat" class="col-sm-2 control-label">绑定微信</label>
+                    <div class="col-sm-8 wechat-list">
+                        <if condition="$data['sellerWechat'] neq NULL">
+                            <foreach name="data.sellerWechat" item="val">
+                            <p class="wechat-{$val.id}">
+                                <label style="width: 150px;">{$val.open_id}</label>
+                                <label style="width: 80px;">{$val.name}</label>
+                                <a class="btn btn-primary" title="{$val.id}">解绑</a>
+                            </p>
+                            </foreach>
+                        <else/>
+                            <span style="color:red;font-size: 14px;">暂无微信绑定</span>
+                        </if>
+                    </div>
+                </div>
+                <!--<div class="form-group">
                     <label for="logo_icon" class="col-sm-2 control-label">商家头像</label>
                     <div class="col-sm-2">
                         <div class="input-group">
@@ -105,34 +136,17 @@
                         </if>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="editor" class="col-sm-2 control-label">资质文件</label>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <div  id="filePicker">添加图片</div>
-                            </div>
-                            <div class="col-sm-9">
-                                <span class="tipMsg">请上传营业执照，税务登记证，店面照片，注册人身份证照片</span>
-                            </div>
-                                
-                        </div>
-                        
-                        <div id="fileList" id="upload" class="uploader-list" style="width: 100%;height: 120px;background-color: #fff;border:1px solid #ccc;border-radius: 4px;padding: 10px;"></div>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="editor" class="col-sm-2 control-label">商家介绍</label>
                     <div class="col-sm-8">
                         <script id="editor" type="text/plain" name="introduction"></script>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-9">
-                        <button type="submit" class="btn btn-primary" id="saveInfo-btn">提&#12288;&#12288;交</button>
+                        <button type="submit" class="btn btn-primary" id="saveInfo-btn">保&#12288;&#12288;存</button>
                         <button type="button" class="btn btn-warning" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')">取&#12288;&#12288;消</button>
                     </div>
                 </div>
@@ -142,6 +156,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             if ($('#fileJson').text().length > 0) {
+                console.log($('#fileJson').text().length);
                 var jsonObj = $.parseJSON($('#fileJson').text());
                 if (jsonObj.length > 0) {
                     var strHtml = '';
@@ -213,6 +228,7 @@
             uploader.on('uploadSuccess', function (file, response) {
                 $file = $('#' + file.id);
                 if (response.flag == 'success') {
+                    console.log(response.att_id);
                     $file.append('<div style="width:100px;margin-right:10px;"><img src="/' + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
                     $file.css('background-img', 'url()');
                     if ($('#input-title').val() == '') {
@@ -251,6 +267,12 @@
             
             $('#work_start').timepicker();
             $('#work_end').timepicker();
+
+            //控制微信绑定列表在新增时不显示
+            if("{$data.sellerInfo.id}" == '') {
+                $(".wechat-div").hide();
+            }
+
         });
     </script>
 </html>

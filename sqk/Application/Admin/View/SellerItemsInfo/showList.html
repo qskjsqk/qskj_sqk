@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/Public/admin/css/common.css">
+        <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/common.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/seller/sellerItemsInfo.js"></script>
+    </head>
+    <body>
+        <div class="option_search" >
+            <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
+                <input type="hidden" name="seller_id" value="{$searchInfo.seller_id}"/>
+                <div class="form-group">
+                    <div class="col-sm-3" style="min-width: 300px;">
+                        <button type="button" class="btn btn-success addItemsInfo" id="addInfo-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/saveSellerItems/seller_id/{$searchInfo.seller_id}')" style="height: 34px;">
+                            <span class="glyphicon glyphicon-plus"></span> 新增
+                        </button>
+                        <button type="button" class="btn btn-danger delItemsInfo" id="delArrayInfo-btn" style="height: 34px;">
+                            <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                        <button type="button" class="btn btn-warning checkItemsInfo" id="checkArrayInfo-btn" style="height: 34px;">
+                            <span class="glyphicon glyphicon-check"></span> 批量审核
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="cat_type" value="{$searchInfo.cat_type}">
+                            <option value="0">全积分兑换</option>
+                            <option value="1">积分加购价</option>
+                            <option value="2">第三方劵码</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2" style="min-width:135px;">
+                        <select class="form-control" name="is_checked" value="{$searchInfo.is_checked}">
+                            <option value="">审核状态</option>
+                            <option value="0">未审核</option>
+                            <option value="1">审核通过</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3" style="min-width:135px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" name="name" value="{$searchInfo.name}" placeholder="请输入积分商品名称">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
+                                    <span class="glyphicon glyphicon-search"></span> 搜索
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+        <div class="table_content">
+            <table class="table table-hover">
+                <tr>
+                    <th>全选</th>
+                    <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+                    <th>积分商品名称</th>
+                    <th>单价</th>
+                    <!--<th>库存量</th>-->
+                    <th>销量</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+                <notempty name="infoList">
+                    <foreach name="infoList" item="v" key="k">
+                        <tr class="tr">
+                            <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
+                            <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
+                            <td>
+                                <img src="/Public/Upload{$v.logo_img}" style="width: 40px;height: 40px;"/>
+                                {$v.name}
+                        <if condition="$v.is_checked eq 0">
+                            <span class="badge" style="margin-left: 10px;">{$v.cat_name}[未审核]</span>
+                            <else/>
+                            <span class="badge" style="margin-left: 10px; background-color:#457BCB;">{$v.cat_name}[审核通过]</span>
+                        </if>
+                        </td>
+                        <td>{$v.price}/{$v.quantifier}</td>
+                        <!--<td>{$v.count_num}</td>-->
+                        <td>{$v.sold_num}</td>
+                        <td>{$v.add_time}</td>
+                        <td>
+                            <div>
+                                <button class="btn btn-default edit-btn editItemsInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
+                                    <span class="glyphicon glyphicon-edit"></span> 编辑
+                                </button>
+                                <!--<button class="btn btn-default del-btn" onclick="delInfoLayer({$v.id})">-->
+                                <!--<span class="glyphicon glyphicon-trash"></span> 删除-->
+                                <!--</button>-->
+                            </div>
+                        </td>
+                        </tr>
+                    </foreach>
+                </notempty>
+                <empty name="infoList">
+                    <tr><td colspan="9">暂无数据</td></tr>
+                </empty>
+            </table>
+            <div style="text-align: center;">{$page}</div>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $("select[name='is_checked']").find("option[value='{$searchInfo.is_checked}']").prop("selected", 'selected');
+            $("select[name='cat_type']").find("option[value='{$searchInfo.cat_type}']").prop("selected", 'selected');
+        });
+    </script>
+</html>

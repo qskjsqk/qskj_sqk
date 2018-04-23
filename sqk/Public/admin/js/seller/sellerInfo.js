@@ -47,21 +47,19 @@ $(function() {
 });
 //删除商家信息
 function delInfoLayer(isChecked){
-    layer.confirm('确定要删除所有商家相关信息(包括历史订单)?', {
+    layer.confirm('确定要删除该商家?', {
         icon:2,
         title:'提示信息',
         btn: ['确定','取消'] //按钮
     }, function(index){
         $.post(c_path + '/delArraySellerInfo',{'ids':isChecked},function(result){
-            if(result.code == '500'){
+            if(result.ret == 0){
                 layer.msg(constants.SUCCESS,{time: 1000},function(){
                     location.reload();
                     window.parent.getNewNum();
                 });
-            }else if(result.code == '502'){
-                layer.msg(constants.FAILD);
             }else{
-                layer.msg(constants.ERRORMSG);
+                layer.msg(constants.FAILD);
             }
         },'json');
     });
@@ -74,7 +72,7 @@ function checkInfoLayer(isChecked){
         btn: ['确定','取消'] //按钮
     }, function(index){
         $.post(c_path + '/checkArrayInfo',{'ids':isChecked},function(result){
-            if(result.code == '500'){
+            if(result.ret == 0){
                 layer.msg(constants.SUCCESS,{time: 1000},function(){
                     location.reload();
                     window.parent.getNewNum();
@@ -85,3 +83,88 @@ function checkInfoLayer(isChecked){
         },'json');
     });
 }
+
+function checkSellerState(status, id) {
+    layer.confirm('确定进行该操作吗？', {
+        icon:2,
+        title:'提示信息',
+        btn: ['确定','取消'] //按钮
+    }, function(index){
+        $.ajax({
+            url : c_path + '/changeSellerStatus',
+            data : {id : id, status : status},
+            type : 'post',
+            success : function (res) {
+                console.log(res.ret);
+                if(res.ret == 0) {
+                    layer.msg(constants.SUCCESS,{time: 1000},function(){
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+        })
+    });
+}
+
+function delSeller(id) {
+    layer.confirm('确定进行该操作吗？', {
+        icon:2,
+        title:'提示信息',
+        btn: ['确定','取消'] //按钮
+    }, function(index){
+        $.ajax({
+            url : c_path + '/delSellerSync',
+            data : {id : id},
+            type : 'post',
+            success : function (res) {
+                console.log(res.ret);
+                if(res.ret == 0) {
+                    layer.msg(constants.SUCCESS,{time: 1000},function(){
+                        window.location.href = '__CONTROLLER__/showlist';
+                    });
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+        })
+    });
+}
+
+
+$(function () {
+
+    //解绑商家微信
+    $(".wechat-list p").each(function () {
+        $(this).find("a").click(function () {
+            var id = $(this).attr('title');
+
+            layer.confirm('确定要解绑吗？', {
+                icon:2,
+                title:'提示信息',
+                btn: ['确定','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url : c_path + '/untieWechat',
+                    data : {id : id},
+                    type : 'post',
+                    success : function (res) {
+                        console.log(res.ret);
+                        if(res.ret == 0) {
+                            $(".wechat-"+id).remove();
+                            layer.msg(constants.SUCCESS,{time: 1000},function(){
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                })
+            });
+
+        })
+    });
+
+
+})

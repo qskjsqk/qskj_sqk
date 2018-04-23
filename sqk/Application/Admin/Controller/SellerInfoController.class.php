@@ -13,18 +13,18 @@ use Think\Controller;
 
 class SellerInfoController extends BaseDBController {
 
-    protected $catModel;
     protected $infoModel;
     protected $attachModel;
     protected $communityInfoModel;
+    protected $sellerWechatBindingModel;
 
     public function _initialize() {
         parent::_initialize();
 
-        $this->catModel = D('SellerCat');
         $this->infoModel = D('SellerInfo');
         $this->attachModel = D('SysAllAttach');
         $this->communityInfoModel = D('SysCommunityInfo');
+        $this->sellerWechatBindingModel = D('SellerWechatBinding');
     }
 
     /**
@@ -32,61 +32,96 @@ class SellerInfoController extends BaseDBController {
      */
     public function showList() {
         if (GET) {
-            if (!empty($_GET['name'])) {
-                $where['name'] = array('LIKE', '%' . urldecode($_GET['name']) . '%');
-                $pageCondition['name'] = urldecode($_GET['name']);
+            if (!empty(I('name'))) {
+                $map['name'] = array('LIKE', '%' . urldecode(I('name')) . '%');
+                $map['tel'] = array('LIKE', '%' . urldecode(I('name')) . '%');
+                $map['_logic'] = 'or';
+                $pageCondition['name'] = urldecode(I('name'));
+                $where['_complex'] = $map;
             }
-            if (!empty($_GET['cat_id'])) {
-                $where[$this->dbFix . 'seller_info.cat_id'] = array('EQ', $_GET['cat_id']);
-                $pageCondition['category_name'] = $_GET['category_name'];
-                $pageCondition['cat_id'] = $_GET['cat_id'];
+            if (!empty(I('address_id'))) {
+                $where['address_id'] = intval(I('address_id'));
+                $pageCondition['address_id'] = intval(I('address_id'));
             }
-            if ($_GET['is_checked'] != '') {
-                $where['is_checked'] = array('EQ', $_GET['is_checked']);
-                $pageCondition['is_checked'] = $_GET['is_checked'];
+            if (!empty(I('status'))) {
+                $where['status'] = intval(I('status')) - 1;     //页面下拉框中状态值比数据库中对应的状态值大1(为避开0)
+                $pageCondition['status'] = I('status');
             }
         }
 
         if (session('sys_name') == 'sqAdmin') {
             $where['address_id'] = session('address_id');
         }
-        $fieldStr = parent::madField('seller_info.*', 'seller_cat.cat_name');
-        $joinStr = parent::madJoin('seller_info.cat_id', 'seller_cat.id');
+        $fieldStr = parent::madField('seller_info.*', 'sys_community_info.com_name');
+        $joinStr = parent::madJoin('seller_info.address_id', 'sys_community_info.id');
+        $data = [
+            'communitys' => $this->communityInfoModel->getLists(),
+            'sellerStatusMap' => $this->infoModel->sellerStatusMap(),
+            'allSellerCount' => $this->infoModel->getSellerCount(),
+            'currentComSellerCount' => $this->infoModel->getSellerCount(false),
+        ];
+        $this->assign('data', $data);
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
     /**
-     * function:编辑商家信息
+     * 编辑/新增商家信息视图
      */
     public function edit() {
-        $returnData = parent::getData($this->infoModel, $_GET['id']);
-        if ($returnData['code'] == '500') {
-            $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
-
-            $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
-            $condition['module_name'] = array('EQ', 'sellerInfo');
-            $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
-            $this->assign('attachList', json_encode($attachList));
-            $this->assign('sellerInfo', $returnData['data']);
-            $this->assign('communitys', $this->communityInfoModel->getLists());
-            $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
-        } else {
-            $this->assign();
+        $data = $attachList = $sellerInfo = $sellerWechat = [];
+        if(!empty(I('id'))) {
+            list($attachList, $sellerInfo, $sellerWechat) = self::getInfo(I('id'));
         }
-        $this->display('saveSeller');
-    }
-
-    /**
-     * function:添加商家信息页面
-     */
-    public function add() {
-        $this->assign('communitys', $this->communityInfoModel->getLists());
-        $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
+        $data = [
+            'communitys' => $this->communityInfoModel->getLists(),
+            'community' => $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'),
+            'sellerInfo' => $sellerInfo,
+            'sellerWechat' => $sellerWechat,
+        ];
+        if(!empty(I('id'))) $data['attachList'] = $attachList;
+        $this->assign('data', $data);
         $this->display();
     }
 
     /**
-     * function:删除附件
+     * 商家详细信息只读视图
+     */
+    public function detail() {
+        list($attachList, $sellerInfo, $sellerWechat) = self::getInfo(I('id'));
+        $sellerInfo['com_name'] = $this->communityInfoModel->where(['id' => $sellerInfo['address_id']])->getField('com_name');
+        $data = [
+            'attachList' => json_decode($attachList, true),
+            'sellerInfo' => $sellerInfo,
+            'sellerWechat' => $sellerWechat
+        ];
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    /**
+     * 获取详情
+     */
+    public function getInfo($id) {
+        if(empty($id)) $this->redirect('/Admin/SellerInfo/showList');
+
+        $attachList = $sellerInfo = $sellerWechat = [];
+        $returnData = parent::getData($this->infoModel, $id);
+        if ($returnData['code'] == '500') {
+            $condition = [
+                'module_info_id' => $id,
+                'module_name' => 'sellerInfo',
+            ];
+            $attachList = json_encode($this->attachModel->where($condition)->select());
+            $sellerInfo = $returnData['data'];
+            $sellerWechat= $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();
+        } else {
+            $this->redirect('/Admin/SellerInfo/showList');
+        }
+        return [$attachList, $sellerInfo, $sellerWechat];
+    }
+
+    /**
+     * 删除附件
      */
     public function delAttach() {
         $returnData = parent::delData($this->attachModel, $_POST['id']);
@@ -94,210 +129,114 @@ class SellerInfoController extends BaseDBController {
     }
 
     /**
-     * function:保存商家信息
+     * 解绑商家微信
+     */
+    public function untieWechat() {
+        if($this->sellerWechatBindingModel->where(['id' => I('id')])->save(['seller_id' => 0]) == true) {
+            $this->ajaxReturn(syncData(0, '解绑成功'));
+        } else {
+            $this->ajaxReturn(syncData(-1, '解绑失败,请重新操作'));
+        }
+    }
+
+    /**
+     * 改变商家状态(审核通过/暂停)
+     */
+    public function changeSellerStatus() {
+        $status['status'] = (I('status') == 0 || I('status') == 2) ? 1 : 2;
+        if($this->infoModel->where(['id' => I('id')])->save($status) == true) {
+            $this->ajaxReturn(syncData(0, '操作成功'));
+        } else {
+            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
+        }
+    }
+
+    /**
+     * 异步删除商家
+     */
+    public function delSellerSync() {
+        if($this->infoModel->where(['id' => I('id')])->delete() == true) {
+            $this->ajaxReturn(syncData(0, '操作成功'));
+        } else {
+            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
+        }
+    }
+
+    /**
+     * 保存商家信息
      */
     public function saveSellerInfo() {
-        if (IS_POST) {
-            if (!empty(I('address_id'))) {
-                $address_id = I('address_id');
+        $sellerInfo = [
+            'id' => I('id'),
+            'name' => I('name'),
+            'tel' => I('tel'),
+            'address_id' => I('address_id'),
+            'contacts' => I('contacts'),
+            'business_license' => I('business_license'),
+            'address' => I('address'),
+            'address_id' => !empty(I('address_id')) ? I('address_id') : session('address_id'),
+            'status' => 0,   //默认待审核
+            'admin_id' => session('user_id'),
+        ];
+        if ($this->infoModel->create($sellerInfo)) {
+            if(empty(I('id'))) {
+                $result = $this->infoModel->add($sellerInfo);
             } else {
-                $address_id = session('address_id');
+                $this->infoModel->save($sellerInfo);
+                $result = I('id');
             }
-            $sellerInfo = array(
-                'id' => $_POST['id'],
-                'name' => $_POST['name'],
-                'address_id' => $address_id,
-                'category_name' => $_POST['category_name'],
-                'cat_id' => $_POST['cat_id'],
-                'tel' => $_POST['tel'],
-                'work_start' => $_POST['work_start'],
-                'work_end' => $_POST['work_end'],
-                'address' => $_POST['address'],
-                'introduction' => $_POST['introduction']);
-            if ($this->infoModel->create($sellerInfo)) {
-                if (!empty($_FILES['logo_icon']['name'])) {
-                    $AllAtach = A('Allattach');
-                    $imgInfo = $AllAtach->uploadFile('image', 'seller/logo');
-                    if ($imgInfo['flag'] == 'success') {
-                        $sellerInfo['logo_icon'] = ltrim($imgInfo['logo_icon']['savepath'] . $imgInfo['logo_icon']['savename'], '.');
-                    } else {
-                        $this->assign('fileErrorMsg', $imgInfo['msg']);
-                        $this->assign('sellerInfo', $sellerInfo);
-                        $this->display('saveSeller');
-                        exit;
+            if ($result !== false) {
+                if(!empty(I('files')) && is_array(I('files'))) {
+                    foreach (I('files') as $value) {
+                        $this->attachModel->where(['id' => $value])->save(['module_info_id' => $result]);
                     }
                 }
-
-//                dump($_POST);
-//                exit;
-                if (empty($_POST['id'])) {
-                    $result = $this->infoModel->add($sellerInfo);
-                    $res_id = $result;
-                } else {
-                    $result = $this->infoModel->save($sellerInfo);
-                    $res_id = $_POST['id'];
-                }
-
-                if ($result !== false) {
-                    foreach ($_POST['files'] as $value) {//$this->attachModel
-                        $condition['id'] = array('EQ', $value);
-                        $data = array('module_info_id' => $res_id);
-                        $this->attachModel->where($condition)->setField($data);
-                    }
-                    $logC = A('Actionlog')->addLog('SellerInfo', 'saveSellerInfo', '添加/编辑商家信息');
-                    $this->redirect('/Admin/SellerInfo/showList');
-                }
-            } else {
-                $errorMsg = $this->infoModel->getError();
-                $this->assign('errorMsg', $errorMsg);
-                $this->assign('sellerInfo', $sellerInfo);
-                $this->display('saveSeller');
+                A('Actionlog')->addLog('SellerInfo', 'saveSellerInfo', '添加/编辑商家信息');
+                $this->redirect('/Admin/SellerInfo/detail/id/' . $result);
             }
-            exit;
-        }
-        $sellerInfo['user_id'] = $_GET['user_id'];
-        $this->assign('sellerInfo', $sellerInfo);
-        $this->display('saveSeller');
-    }
-
-    /**
-     * function:删除单条数据
-     * @param $id
-     * @return bool
-     */
-    public function delSellerInfo($id) {
-        $successFlag = true;
-        $sellerInfo = parent::getData($this->infoModel, $id);
-        $returnData = parent::delData($this->infoModel, $id);
-        if ($returnData['code'] == '502') {
-            $successFlag = fasle;
         } else {
-            $successFlag = $this->delSellerRel($id);
-            if ($successFlag) {
-                $userInfo = parent::getData($this->userInfoModel, $sellerInfo['data']['user_id']);
-                if (isset($userInfo)) {
-                    parent::delData($this->userInfoModel, $sellerInfo['data']['user_id']);
-                }
-            }
+            $data = [
+                'errorMsg' => $this->infoModel->getError(),
+                'sellerInfo' => $sellerInfo,
+                'communitys' => $this->communityInfoModel->getLists(),
+                'community' => $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'),
+            ];
+            $this->assign('data', $data);
+            $this->display('edit');
         }
-        return $successFlag;
     }
 
     /**
-     * function:删除商家相关信息（服务项目、订单、促销信息）
-     * @param $id
-     * @return bool
-     */
-    public function delSellerRel($id) {
-        $successFlag = true;
-        $condition['seller_id'] = array('EQ', $id);
-        $itemsData = $this->delData($condition, $this->itemsInfoModel, $id);
-        if ($itemsData['code'] == '502') {
-            $successFlag = fasle;
-            return $successFlag;
-        }
-        $orderData = $this->delData($condition, $this->orderInfoModel, $id);
-        if ($orderData['code'] == '502') {
-            $successFlag = fasle;
-            return $successFlag;
-        }
-        $promData = $this->delData($condition, $this->promInfoModel, $id);
-        if ($promData['code'] == '502') {
-            $successFlag = fasle;
-            return $successFlag;
-        }
-        return $successFlag;
-    }
-
-    public function delData($where, $model, $id) {
-        if ($model->where($where)->delete() !== false) {
-            $returnData['code'] = '500';
-        } else {
-            $returnData['code'] = '502';
-        }
-        return $returnData;
-    }
-
-    /**
-     * function:批量删除数据
+     * 批量删除数据
      */
     public function delArraySellerInfo() {
-        $returnData['code'] = '500';
         $idArray = explode(',', rtrim($_POST['ids'], ","));
         foreach ($idArray as $value) {
-            $dealFlag = true;
-            $condition['seller_id'] = array('EQ', $value);
-            $orderInfo = $this->orderInfoModel->where($condition)->select();
-            foreach ($orderInfo as $value1) {
-                if ($value1['deal_type'] == 1 || $value1['deal_type'] == 2) {
-                    $dealFlag = false;
-                }
-            }
-            if (!$dealFlag) {
-                $returnData['code'] = '503';
-                break;
-            } else {
-                if (!$this->delSellerInfo($value)) {
-                    $returnData['code'] = '502';
-                }
-            }
+            $this->infoModel->where(['id' => $value])->delete();
         }
         $logC = A('Actionlog')->addLog('SellerInfo', 'delArraySellerInfo', '删除商家信息');
-        $this->ajaxReturn($returnData, 'JSON');
+        $this->ajaxReturn(syncData(0, '已批量删除'));
     }
 
     /**
-     * function:审核单条商家信息
-     */
-    public function checkSellerInfo($id) {
-        $condition['id'] = array('EQ', $id);
-        $data = array('is_checked' => '1');
-        $result = $this->infoModel->where($condition)->setField($data);
-        if ($result !== false) {
-            $returnData['code'] = '500';
-        } else {
-            $returnData['code'] = '502';
-        }
-        return $returnData['code'];
-    }
-
-    /**
-     * function:批量审核商家信息
+     * 批量审核商家信息
      */
     public function checkArrayInfo() {
-        $returnData['code'] = '500';
         $idArray = explode(',', rtrim($_POST['ids'], ","));
         foreach ($idArray as $value) {
-            if ($this->checkSellerInfo($value) == '502') {
-                $returnData['code'] = '502';
-            }
+            $result = $this->infoModel->where(['id' => $value])->save(['status' => 1]);
         }
         $logC = A('Actionlog')->addLog('SellerInfo', 'checkArrayInfo', '审核商家信息');
-        $this->ajaxReturn($returnData, 'JSON');
+        $this->ajaxReturn(syncData(0, '已批量审核'));
     }
 
     /**
-     * function:获取商家分类列表彈出框中（返回下拉树中数据）
+     * 获取商家分类列表彈出框中（返回下拉树中数据）
      */
     public function getTreeViewData() {
         $result = queryCatList(0, $this->catModel);
         $treeData[0] = array('id' => 0, 'cat_name' => '', 'parent_id_path' => '', 'children' => $result);
         echo json_encode($treeData);
-    }
-
-    /**
-     * function:获取信息中所属分类名称
-     * @param $cat_id
-     * @return string
-     */
-    public function getCatName($cat_id) {
-        if (!empty($cat_id)) {
-            $res = $this->catModel->field(array('cat_name' => 'category_name'))->where(array('id' => $cat_id))->find();
-            $category_name = $res['category_name'];
-        } else {
-            $category_name = '所有分类';
-        }
-        return $category_name;
     }
 
 }

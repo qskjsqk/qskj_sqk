@@ -9,45 +9,33 @@
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>
         <script type="text/javascript" src="/Public/admin/js/activity/activInfo.js"></script>
     </head>
-    <body>
-        <div class="option_search">
-
-
-            <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
-                <div class="form-group">
-                    <div class="col-sm-5" style="min-width: 200px;">
-                        <button type="button" class="btn btn-success addActivInfo" id="addInfo-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/saveActiv')" style="height: 34px;">
-                            <span class="glyphicon glyphicon-plus"></span> 新增
-                        </button>
-                        <button type="button" class="btn btn-danger delActivInfo" id="delArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-trash"></span> 批量删除
-                        </button>
-                        <button type="button" class="btn btn-info pubActivInfo" id="publishArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-bullhorn"></span> 批量发布
-                        </button>
-                    </div>
-                    <div class="col-sm-1">
-                    </div>
-
-                    <div class="col-sm-2" style="text-align: right;">
-                        <input type="text" class="form-control" id="category_name" name="category_name" value="{$searchInfo.category_name}" onclick="showTreeView();" placeholder="请选择类别" readonly>
-                        <input type="hidden" id="parent_id" name="cat_id" value="{$searchInfo.cat_id}"/>
-                        <div class="dropdown-menu" id="treeview" style="display: none;margin-left:15px;"></div>
-                    </div>
-                    <div class="col-sm-3" style="text-align: right;">
-                        <div class='input-group'>
-                            <input type="text" class="form-control" id="title" name="title" value="{$searchInfo.title}" placeholder="请输入标题">
-                            <span class='input-group-btn'>
-                                <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
-                                    <span class="glyphicon glyphicon-search"></span> 搜索
-                                </button>
-                            </span>
-                        </div>
+    <body>        
+        <div class="table_content">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <div class="col-sm-4">{$activInfo.title}</div>
+                    <div class="col-sm-4 text-center">活动收藏人数：{$activInfo.like_num}</div>
+                    <div class="col-sm-4 text-right">
+                        活动签到人数：
+                        <foreach name="signInfo" item="vvv" key="kkk">
+                            {$vvv.sign_sum}/
+                        </foreach>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="table_content">
+            </div>
+            <notempty name="signInfo">
+                <foreach name="signInfo" item="v" key="k">
+
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">第【{$v.sign_num}】次签到</div>
+                        <!--                <table class="table">
+                                            <th>产品</th><th>价格 </th>
+                                            <tr><td>产品 A</td><td>200</td></tr>
+                                            <tr><td>产品 B</td><td>400</td></tr>
+                                        </table>-->
+                    </div>
+                </foreach>
+            </notempty>
             <table class="table table-hover">
                 <tr>
                     <th>全选</th>
@@ -92,22 +80,17 @@
                         <!--<td><a href="javascript:void(0);" onclick="joinUser({$v.id}, {$v.join_num});">{$v.join_num}</a></td>-->
                         <td>
                             <div>
-
+                                <button class="btn btn-default list-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/activDetail/id/{$v.id}')">
+                                    <span class="glyphicon glyphicon-th-list"></span> 签到情况
+                                </button>
                                 <button class="btn btn-default edit-btn editActivInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
-
                                 <if condition="$v.is_publish eq 0">
-                                    <button class="btn btn-default list-btn" disabled="disabled">
-                                        <span class="glyphicon glyphicon-th-list"></span> 签到情况
-                                    </button>
                                     <button class="btn btn-default" disabled="disabled">
                                         <span class="glyphicon glyphicon-time"></span> 待启
                                     </button>
                                     <else/>
-                                    <button class="btn btn-default list-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/showSignList/id/{$v.id}')">
-                                        <span class="glyphicon glyphicon-th-list"></span> 签到情况
-                                    </button>
                                     <if condition="$v.is_open eq 0">
                                         <button class="btn btn-default" disabled="disabled">
                                             <span class="glyphicon glyphicon-ok"></span> 结束
@@ -118,21 +101,6 @@
                                         </button>
                                     </if>
                                 </if>
-
-                                <!--                                    
-                                <button class="btn btn-danger" onclick="">
-                                <span class="glyphicon glyphicon-remove"></span> 关闭
-                                </button>-->
-                                <!--
-                                <button class="btn btn-default" onclick="publishInfoLayer({$v.id})">
-                                <span class="glyphicon glyphicon-bullhorn"></span> 发布
-                                </button>
-                                <button class="btn btn-default list-btn" onclick="javascript:void(window.location.href='__CONTROLLER__/activDetail/id/{$v.id}')">
-                                <span class="glyphicon glyphicon-zoom-in"></span> 查看
-                                </button>
-                                <button class="btn btn-default upload-btn" onclick="javascript:void(layer.msg('上传'))">
-                                <span class="glyphicon glyphicon-upload"></span> 上传
-                                </button>-->
                             </div>
                         </td>
                         </tr>

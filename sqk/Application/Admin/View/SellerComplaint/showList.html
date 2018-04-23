@@ -7,61 +7,19 @@
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>
-        <script type="text/javascript" src="/Public/admin/js/seller/sellerInfo.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/seller/sellerComplaint.js"></script>
     </head>
     <style>
-        .field-group{width:100%;margin-top: 20px;height: 30px;}
-        .field-name,.field-value{float:left;line-height: 30px;}
-        .field-name{width:30%;font-size: 18px;font-weight: normal;}
-        .field-value{width:60%;font-size: 16px;}
-        .field-btn{width:33%;float: left;}
-        .score-group{width:100%;border:1px darkgray solid;height: 100px;}
-        .score-left,.score-center,.score-right{float: left;height: 98px;}
-        .score-left{width:15%;}
-        .score-center{width:65%;}
-        .score-right{width:20%;}
-        .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
-        .score-right-btn {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
     </style>
     <body>
         <div class="option_search">
 
-            <div class="score-group">
-                <div class="score-left"></div>
-                <div class="score-center">
-                    <div class="score-item">
-                        <div class="score-field">梨园镇注册商家数:{$data.allSellerCount}</div>
-                    </div>
-                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
-                    <div class="score-item">
-                        <div class="score-field">本社区注册商家数:{$data.currentComSellerCount}</div>
-                    </div>
-                    </if>
-                </div>
-                <div class="score-right">
-                    <button class="score-right-btn btn btn-warning" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">反馈信息</button>
-                </div>
-            </div>
-
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-3" style="min-width: 300px;">
-                        <button type="button" class="btn btn-success addSellerInfo" id="addInfo-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit')" style="height: 34px;">
-                            <span class="glyphicon glyphicon-plus"></span> 新增商家
-                        </button>
                         <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
-                            <span class="glyphicon glyphicon-plus"></span> 显示全部商家
+                            <span class="glyphicon glyphicon-plus"></span> 显示全部反馈信息
                         </button>
-                        <!--<button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-trash"></span> 批量删除
-                        </button>
-                        <button type="button" class="btn btn-warning checkSellerInfo" id="checkArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-check"></span> 批量审核
-                        </button>-->
                     </div>
                     <div class="col-sm-2"></div>
                     <if condition="$Think.session.sys_name eq 'sysAdmin'">
@@ -69,24 +27,13 @@
                             <select class="form-control" name="address_id">
                                 <option value="">社区</option>
                                 <foreach name="data.communitys" item="val" >
-                                    <option value='{$val.id}' <if condition="$val.id eq $searchInfo['address_id']"> selected </if> >
+                                    <option value='{$val.id}' <if condition="$val.id eq $data['searchInfo']['address_id']"> selected </if> >
                                     {$val.com_name}
                                     </option>
                                 </foreach>
                             </select>
                         </div>
                     </if>
-                    <div class="col-sm-2">
-                        <select class="form-control" name="status">
-                            <option value="">状态</option>
-                            <foreach name="data.sellerStatusMap" item="val" >
-                                <option value='{$val.status_code}' <if condition="$val.status_code eq $searchInfo['status']"> selected </if> >
-                                {$val.status_name}
-                                </option>
-                            </foreach>
-
-                        </select>
-                    </div>
                     <div class="col-sm-2" style="min-width: 300px;">
                         <div class="input-group">
                             <input type="text" class="form-control" id="name" name="name" value="{$searchInfo.name}" placeholder="请输入商家名/注册手机号">
@@ -107,29 +54,27 @@
                 <tr>
                     <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
                     <th>序号</th>
-                    <th>&nbsp;注册小区</th>
-                    <th>&nbsp;商家名称</th>
-                    <th>注册手机号</th>
-                    <th>联系人</th>
+                    <th>&nbsp;反馈用户</th>
+                    <th>&nbsp;被反馈商家</th>
+                    <th>注册社区</th>
+                    <th>反馈类型</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
-                <notempty name="infoList">
-                    <foreach name="infoList" item="v" key="k">
+                <notempty name="data.infoList">
+                    <foreach name="data.infoList" item="v" key="k">
                         <tr class="tr">
                             <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
                             <td>{$v.id}</td>
-                            <td>{$v.com_name}</td>
+                            <td>{$v.usr}</td>
                             <td>{$v.name}</td>
-                            <td>{$v.tel}</td>
-                            <td>{$v.contacts}</td>
+                            <td>{$v.com_name}</td>
+                            <td>{$v.cat_name}</td>
                             <td>
                                 <if condition="$v.status eq 0">
-                                    待审核
-                                <elseif condition="$v.status eq 1"/>
-                                    正常
-                                <elseif condition="$v.status eq 2"/>
-                                    暂停账号
+                                    未处理
+                                <else/>
+                                    已处理
                                 </if>
                             </td>
                         <td>
@@ -137,6 +82,11 @@
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}')">
                                     <span class="glyphicon glyphicon-edit"></span> 查看
                                 </button>
+                                <if condition="$v.status eq 0">
+                                    <button class="btn btn-default edit-btn change-complaint-status" title="{$v.id}">
+                                        <span class="glyphicon glyphicon-edit"></span>标记为已处理
+                                    </button>
+                                </if>
                             </div>
                         </td>
                         </tr>
@@ -146,7 +96,7 @@
                     <tr><td colspan="9">暂无数据</td></tr>
                 </empty>
             </table>
-            <div style="text-align: center;">{$page}</div>
+            <div style="text-align: center;">{$data.page}</div>
 
             <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
                 <span class="glyphicon glyphicon-trash"></span> 批量删除
