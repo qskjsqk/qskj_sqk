@@ -27,9 +27,12 @@ class ActivityController extends Controller {
     }
 
     public function activity_list() {
+        $this->assign('address_id', cookie('address_id'));
+        $catArr = M('ActivCat')->where('is_enable=1')->select();
         $noticeC = A('Seller');
         $sliderData = $noticeC->getSlider();
         $this->assign('sliderData', $sliderData);
+        $this->assign('catData', $catArr);
         $this->display();
     }
 
@@ -45,8 +48,22 @@ class ActivityController extends Controller {
         $num = C('PAGE_NUM')['activity'] * $_POST['page'];
         $keyword = $_POST['keyword'];
         $isEnable = $this->getEnableCatIds();
-        $acitvArr = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
-        $count = M('ActivInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->count();
+        $where['is_publish'] = array('EQ', 1);
+
+        if (!empty($keyword)) {
+            $where['title'] = array('LIKE', '%' . urldecode($keyword) . '%');
+        }
+        if ($_POST['cat_id'] != 0) {
+            $where['cat_id'] = array('EQ', $_POST['cat_id']);
+        } else {
+            $where['cat_id'] = array('IN', $isEnable);
+        }
+        if ($_POST['integral'] != 0) {
+            $where['integral'] = array('EQ', $_POST['integral']);
+        }
+
+        $acitvArr = M('ActivInfo')->where($where)->order('id desc')->limit($num)->select();
+        $count = M('ActivInfo')->where($where)->count();
 
         if ($num < $count) {
             $returnData['ajaxLoad'] = '点击加载更多';
@@ -76,6 +93,8 @@ class ActivityController extends Controller {
                 $data[$i]['integral'] = $acitvArr[$i]['integral'];
 
                 $data[$i]['like_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'like');
+
+                $data[$i]['is_open'] = $acitvArr[$i]['is_open'];
                 $picsInfo = $this->getAttachArr($acitvArr[$i]['id']);
                 if ($picsInfo['flag'] == 1) {
                     $data[$i]['pics'] = $picsInfo['data'];
@@ -87,6 +106,7 @@ class ActivityController extends Controller {
             $returnData['data'] = $data;
         }
         $returnData['sql'] = M('ActivInfo')->getLastSql();
+        $returnData['where'] = $_POST;
         $this->ajaxReturn($returnData);
     }
 
@@ -105,7 +125,7 @@ class ActivityController extends Controller {
     }
 
     /**
-     * 置位已读，点赞，参加
+     * 置位已读，点收藏，参加
      * @param type $type
      */
     public function setReadLikeJoin($id, $type) {
@@ -167,6 +187,10 @@ class ActivityController extends Controller {
                 $times = strtotime($findArr['start_time']);
                 $findArr['start_date'] = date('Y.m.d', $times);
                 $findArr['address_name'] = getConameById($findArr['address_id']);
+
+                $findArr['comm_num'] = $this->getCommNum($findArr['id']);
+                $findArr['join_flag'] = $this->checkReadLikeJoin($findArr['id'], 'join');
+                $findArr['like_flag'] = $this->checkReadLikeJoin($findArr['id'], 'like');
 
                 $picsInfo = $this->getAttachArr($findArr['id']);
                 if ($picsInfo['flag'] == 1) {
@@ -272,9 +296,9 @@ class ActivityController extends Controller {
     }
 
     /**
-     * 点赞该活动
+     * 收藏该活动
      */
-    public function zanActiv() {
+    public function likeActiv() {
         $user_id = cookie('user_id');
         $returnData = $this->setReadLikeJoin($_GET['id'], 'like');
         $this->ajaxReturn($returnData);
@@ -303,7 +327,7 @@ class ActivityController extends Controller {
     }
 
     /**
-     * 返回已读，已赞，已参加状态
+     * 返回已读，已收藏，已参加状态
      * @param type $id
      * @param type $type
      * @return int

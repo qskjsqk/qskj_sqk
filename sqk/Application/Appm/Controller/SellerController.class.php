@@ -18,8 +18,19 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 class SellerController extends Controller {
 
 //------------------------------------------------------------------------------
-    public function seller_home() {
-        $this->assign();
+    protected $config;
+
+    public function _initialize() {
+        //配置字典信息
+        $configdefC = A('Admin/Configdef');
+        $this->config = $configdefC->getAllDef();
+        $this->assign('config', $this->config);
+    }
+
+    public function item_list() {
+        $this->assign('address_id', cookie('address_id'));
+        $sliderData = $this->getSlider();
+        $this->assign('sliderData', $sliderData);
         $this->display();
     }
 
@@ -190,7 +201,7 @@ class SellerController extends Controller {
             return '0,0';
         } else {
             foreach ($selectArr as $value) {
-                $str.=',' . $value['id'];
+                $str .= ',' . $value['id'];
             }
             return ltrim($str, ',');
         }
@@ -247,7 +258,7 @@ class SellerController extends Controller {
             return '尚未添加商品';
         } else {
             foreach ($selectArr as $value) {
-                $str.=',' . $this->getItemCatNameById($value['cat_id']);
+                $str .= ',' . $this->getItemCatNameById($value['cat_id']);
             }
             $str = ltrim($str, ',');
             $newstrArr = explode(',', trim($str, ','));
@@ -583,14 +594,14 @@ class SellerController extends Controller {
             $sqlIn = '0,0';
         } else {
             foreach ($selectItemArr as $value) {
-                $sqlIn.= ',' . $value['id'];
+                $sqlIn .= ',' . $value['id'];
             }
             $sqlIn = '0' . $sqlIn;
         }
         $selectRelArr = M('SellerOrderItemRel')
-                ->join('r left join qs_gryj_seller_order_info o on r.order_id=o.id')
-                ->field('r.*,o.deal_type')
-                ->where('r.item_id in (' . $sqlIn . ') and o.deal_type=3')->select();
+                        ->join('r left join qs_gryj_seller_order_info o on r.order_id=o.id')
+                        ->field('r.*,o.deal_type')
+                        ->where('r.item_id in (' . $sqlIn . ') and o.deal_type=3')->select();
         if (!empty($selectRelArr)) {
             $SumNUm = 0;
             foreach ($selectRelArr as $value) {
@@ -643,33 +654,32 @@ class SellerController extends Controller {
             }
         }
     }
-    
-    
+
     /**
      * 获取首页轮播图
      * @return type
      */
     public function getSlider() {
-            $selectArr = M('SellerPromInfo')->where('1=1')->select();
-            if (empty($selectArr)) {
+        $selectArr = M('SellerPromInfo')->where('1=1')->select();
+        if (empty($selectArr)) {
+            $returnData = 0;
+        } else {
+            foreach ($selectArr as $value) {
+                $str .= ',' . $value['id'];
+            }
+            $str = ltrim($str, ',');
+            $model = M(C('DB_ALL_ATTACH'));
+            $attachArr = $model->where('module_name="sellerProm" and module_info_id in (' . $str . ')')->order('id desc')->select();
+            if (empty($attachArr)) {
                 $returnData = 0;
             } else {
-                foreach ($selectArr as $value) {
-                    $str.=',' . $value['id'];
+                for ($i = 0; $i < count($attachArr); $i++) {
+                    $data[$i]['url'] = $attachArr[$i]['file_path'];
+                    $data[$i]['sql'] = $model->getLastSql();
                 }
-                $str = ltrim($str,',');
-                $model = M(C('DB_ALL_ATTACH'));
-                $attachArr = $model->where('module_name="sellerProm" and module_info_id in (' . $str . ')')->order('id desc')->select();
-                if (empty($attachArr)) {
-                    $returnData = 0;
-                } else {
-                    for ($i = 0; $i < count($attachArr); $i++) {
-                        $data[$i]['url'] = $attachArr[$i]['file_path'];
-                        $data[$i]['sql'] = $model->getLastSql();
-                    }
-                    $returnData = $data;
-                }
+                $returnData = $data;
             }
+        }
         return $returnData;
 //        $this->ajaxReturn($returnData, 'JSON');
     }

@@ -27,16 +27,22 @@ function getDetail(id) {
         if (data.flag == 1) {
 
             $('#sendBtn').attr('onclick', 'addComm(' + data.data.id + ')');
-            $('#zan').attr('onclick', 'zanActiv(' + data.data.id + ')');
 
-            if (data.data['like_flag'] == 1) {
-                $('#zan').removeClass('m-icon-zan').addClass('m-icon-zaned').removeAttr('onclick');
+            if (data.data['join_flag'] == 0) {
+                if (data.data['like_flag'] == 0) {
+                    $('#joinLikeBtn').html('<button type="button" class="mui-btn mui-btn-success mui-btn-block" onclick="likeActiv(' + data.data.id + ')">收藏</button>');
+                } else {
+                    $('#joinLikeBtn').html('<button type="button" class="mui-btn mui-btn-warning mui-btn-block ">已收藏</button>');
+                }
+            } else {
+                $('#joinLikeBtn').html('<button type="button" class="mui-btn mui-btn-block mui-btn-outlined bgfff">已参加</button>');
             }
+            
 //基本信息
             $("#activ_title").html(data.data.title + "<p>" + data.data.realname + "&nbsp;发表于&nbsp;" + data.data.add_time + "</p>");
             $("#integral").text(data.data.integral + "分");
             $("#address_name_a_start_date").html("&nbsp;" + data.data.address_name + "/" + data.data.start_date);
-            $("#like_num1").html('&nbsp;' + data.data.like_num + '人收藏');
+            $("#like_num").html('&nbsp;' + data.data.like_num + '人收藏');
 //活动信息
             $("#start_time").html(data.data.start_time + "&#12288;");
             $("#end_time").html(data.data.end_time + "&#12288;");
@@ -77,8 +83,11 @@ function getDetail(id) {
             }
 
 
+            
+
+
             $("#read_num").html("浏览" + data.data.read_num + "次");
-            $("#like_num").html("&nbsp;" + data.data.like_num + "人收藏");
+            $("#comm_num").html("&nbsp;" + data.data.comm_num + "人评论");
 
             var commStr = '';
             if (data.data.commFlag == 1) {
@@ -132,14 +141,14 @@ function addComm(id) {
 }
 
 /**
- * 点赞活动事件
+ * 收藏活动事件
  * @param {Object} id
  */
-function zanActiv(id) {
-    $.get(c_path + "/zanActiv", {'id': id}, function (data) {
+function likeActiv(id) {
+    $.get(c_path + "/likeActiv", {'id': id}, function (data) {
         if (data.flag == 1) {
             getDetail(id);
-            mui.toast('您高贵地赞了一下！');
+            mui.toast('已将此活动添加到收藏里！');
         } else {
             mui.toast(data.msg);
         }
