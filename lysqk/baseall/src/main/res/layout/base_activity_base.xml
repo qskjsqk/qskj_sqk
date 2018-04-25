@@ -15,12 +15,4 @@
         android:layout_below="@+id/toolbar">
 
     </ViewStub>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/line"
-        android:background="@color/color_line"/>
 </RelativeLayout>

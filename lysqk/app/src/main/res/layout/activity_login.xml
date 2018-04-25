@@ -1,7 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/login_bg" />
+
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="365dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_50dp"
+        android:background="@mipmap/login_view_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_30dp"
+            android:src="@mipmap/default_head" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="输入登录码进行登录"
+            android:textColor="@color/color_32"
+            android:textSize="@dimen/text_18sp" />
+
+
+        <com.zhcd.lysqk.view.PasswordInputView
+            android:id="@+id/input_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_20dp" />
+
+        <ImageView
+            android:id="@+id/iv_login"
+            android:layout_width="295dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_30dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/login_btn" />
+    </LinearLayout>
+
+    <com.zhcd.lysqk.view.CustomizeKeyboard
+        android:id="@+id/view_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

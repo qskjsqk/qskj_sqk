@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -25,7 +24,6 @@ public class ZHBaseActivity extends AppCompatActivity {
 
     protected ViewStub baseContainer;
     protected View content;
-    protected View line;
 
     /**
      * Handler 消息处理
@@ -36,6 +34,7 @@ public class ZHBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initSuperUI();
     }
 
@@ -79,7 +78,6 @@ public class ZHBaseActivity extends AppCompatActivity {
                 KeyBoardUtils.closeKeyboard(ZHBaseActivity.this);
             }
         });
-        line = findViewById(R.id.line);
     }
 
 
@@ -89,9 +87,6 @@ public class ZHBaseActivity extends AppCompatActivity {
     public void hideCommonBaseTitle() {
         if (toolbar != null) {
             toolbar.setVisibility(View.GONE);
-        }
-        if (line != null) {
-            line.setVisibility(View.GONE);
         }
     }
 
