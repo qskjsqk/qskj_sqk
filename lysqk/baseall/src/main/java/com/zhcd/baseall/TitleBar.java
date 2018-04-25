@@ -75,10 +75,13 @@ public class TitleBar extends RelativeLayout {
         });
 
     }
+
     public TitleBar setBackText(String title) {
+        llBack.setVisibility(View.VISIBLE);
         tvBack.setText(title);
         return this;
     }
+
     public TitleBar setTitleText(String title) {
         tvTitle.setText(title);
         return this;
