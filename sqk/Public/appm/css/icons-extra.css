@@ -15,6 +15,10 @@
     text-decoration: none;
     -webkit-font-smoothing: antialiased;
 }
+.mui-icon-extra-active{
+    color: #7cacff;
+}
+
 .mui-icon-extra-cold:before { content: "\e500"; }
 .mui-icon-extra-share:before { content: "\e200"; }
 .mui-icon-extra-class:before { content: "\e118"; }

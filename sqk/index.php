@@ -12,7 +12,7 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 header("content-type:text/html;charset=utf-8");
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG', true);
-define ('No_CACHE_RUNTIME',true);
+define ('NO_CACHE_RUNTIME',true);
 
 // 定义应用目录
 define('APP_PATH', './Application/');

@@ -77,6 +77,8 @@ class LoginController extends Controller {
         cookie('address_id', 1, 3600 * 24 * 30);
         $errorMsg['is_success'] = '';
 
+
+
 //        if ($_POST['username'] == '') {
 //            $errorMsg['username'] = '请输入用户名！';
 //        } else if ($_POST['password'] == '') {
@@ -109,11 +111,15 @@ class LoginController extends Controller {
      * 检测用户是否登录
      */
     public function checkIsLogin() {
-        $json['user_id'] = cookie('user_id');
-        if ($json['user_id'] == null) {
+        $user_id = cookie('user_id');
+        if ($user_id == null) {
             $returnData['flag'] = 0;
         } else {
-            $returnData['flag'] = $json['user_id'];
+            $noticeC = A('Notice');
+            $isEnable = $noticeC->getEnableCatIds();
+            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')')->count();
+            $returnData['data'] = $data;
+            $returnData['flag'] = $user_id;
         }
         $this->ajaxReturn($returnData);
     }

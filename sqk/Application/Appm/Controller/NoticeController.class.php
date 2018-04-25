@@ -19,13 +19,13 @@ class NoticeController extends Controller {
 
     public function notice_list() {
         $noticeC = A('Seller');
-        $sliderData= $noticeC->getSlider();
-        $this->assign('sliderData',$sliderData);
+        $sliderData = $noticeC->getSlider();
+        $this->assign('sliderData', $sliderData);
         $this->display();
     }
 
     public function notice_detail() {
-        $this->assign('time',time());
+        $this->assign('time', time());
         $this->display();
     }
 
@@ -37,15 +37,10 @@ class NoticeController extends Controller {
         $keyword = $_POST['keyword'];
         $num = C('PAGE_NUM')['notice'] * $_POST['page'];
         $isEnable = $this->getEnableCatIds();
-        if ($_POST['type'] != 0) {
 //            未读
-            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ') and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
-            $count = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->count();
-        } else {
-//            已读
-            $noticeArr = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->order('id desc')->limit($num)->select();
-            $count = M('NoticeInfo')->where('is_publish=1 and read_ids like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')  and title like "%' . $keyword . '%"')->count();
-        }
+        $noticeArr = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ')')->order('id desc')->limit($num)->select();
+        $count = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ')')->count();
+
 //        dump(M('NoticeInfo')->getLastSql());exit;
         if ($num < $count) {
             $returnData['ajaxLoad'] = '点击加载更多';
@@ -64,6 +59,8 @@ class NoticeController extends Controller {
                 $data[$i]['add_time'] = tranTime($noticeArr[$i]['add_time']);
                 $data[$i]['content'] = $noticeArr[$i]['content'];
                 $data[$i]['notice_pic'] = $this->getNoticePicPath($noticeArr[$i]['id']);
+                $data[$i]['is_read'] = strstr($noticeArr[$i]['read_ids'], ',' . $user_id . ',') == FALSE ? 0 : 1;
+                $data[$i]['not_read_num'] = $notReadCount;
             }
             $returnData['page'] = $_POST['page'];
 
