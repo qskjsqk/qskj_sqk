@@ -1,6 +1,6 @@
 /**
- * 商家反馈信息JS
- * Created by GX on 2018-04-21.
+ * 积分商品JS
+ * Created by xiaohuihui on 2018-04-24.
  */
 $(function() {
 
@@ -17,16 +17,22 @@ $(function() {
         }
     })
 
-    //标记反馈信息位已处理(列表页)
+    //上/下积分商品(列表页)
     $(".table tr:gt(0)").each(function () {
-        $(this).find("td").last().find("button:eq(1)").click(function () {
-            var id = $(this).attr('title');
-            layer.confirm('确定要标记为已处理吗？', {
+        $(this).find("td").last().find("button:eq(2)").click(function () {
+            var idStatusStr = $(this).attr('title');
+            var idStatusArray = idStatusStr.split("-");
+            if(idStatusArray[1] == 1) {
+                var operNotice = '确定要下架该商品吗？';
+            } else if(idStatusArray[1] == 2) {
+                var operNotice = '确定要将该商品上架吗？';
+            }
+            layer.confirm(operNotice, {
                 icon:2,
                 title:'提示信息',
                 btn: ['确定','取消'] //按钮
             }, function(index){
-                operStatusSync(id);
+                operStatusSync(idStatusArray[0], idStatusArray[1]);
             })
         })
     })
@@ -34,14 +40,14 @@ $(function() {
 });
 
 
-//删除商家反馈信息
+//删除积分商品
 function delInfoLayer(isChecked){
-    layer.confirm('确定要删除该反馈信息吗?', {
+    layer.confirm('确定要删除该积分商品吗?', {
         icon:2,
         title:'提示信息',
         btn: ['确定','取消'] //按钮
     }, function(index){
-        $.post(c_path + '/delBatchSellerComplaint',{'ids':isChecked},function(result){
+        $.post(c_path + '/delBatchSellerIntegralGoods',{'ids':isChecked},function(result){
             if(result.ret == 0){
                 layer.msg(constants.SUCCESS,{time: 1000},function(){
                     location.reload();
@@ -54,21 +60,10 @@ function delInfoLayer(isChecked){
     });
 }
 
-//标记反馈信息位已处理(详情页)
-function changeStatus(id) {
-    layer.confirm('确定要标记为已处理吗？', {
-        icon:2,
-        title:'提示信息',
-        btn: ['确定','取消'] //按钮
-    }, function(index){
-        operStatusSync(id);
-    })
-}
-
-function operStatusSync(id) {
+function operStatusSync(id, status) {
     $.ajax({
-        url : c_path + '/markedAsProcessed',
-        data : {id : id},
+        url : c_path + '/goodsFrame',
+        data : {id : id, status : status},
         type : 'post',
         success : function (res) {
             if(res.ret == 0) {

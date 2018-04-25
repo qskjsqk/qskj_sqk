@@ -43,7 +43,12 @@
                     </if>
                 </div>
                 <div class="score-right">
-                    <button class="score-right-btn btn btn-warning" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">反馈信息</button>
+                    <button class="score-right-btn btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">
+                        反馈信息
+                        <if condition="$data.complaintCount gt 0">
+                            <span class="badge alert-danger">{$data.complaintCount}</span>
+                        </if>
+                    </button>
                 </div>
             </div>
 
@@ -53,13 +58,10 @@
                         <button type="button" class="btn btn-success addSellerInfo" id="addInfo-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit')" style="height: 34px;">
                             <span class="glyphicon glyphicon-plus"></span> 新增商家
                         </button>
-                        <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
-                            <span class="glyphicon glyphicon-plus"></span> 显示全部商家
-                        </button>
-                        <!--<button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                        <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
                         </button>
-                        <button type="button" class="btn btn-warning checkSellerInfo" id="checkArrayInfo-btn" style="height: 34px;">
+                        <!--<button type="button" class="btn btn-warning checkSellerInfo" id="checkArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-check"></span> 批量审核
                         </button>-->
                     </div>
@@ -148,8 +150,8 @@
             </table>
             <div style="text-align: center;">{$page}</div>
 
-            <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
-                <span class="glyphicon glyphicon-trash"></span> 批量删除
+            <button type="button" class="btn btn-success" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                显示全部商家
             </button>
 
         </div>

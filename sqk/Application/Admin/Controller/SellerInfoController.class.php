@@ -17,6 +17,7 @@ class SellerInfoController extends BaseDBController {
     protected $attachModel;
     protected $communityInfoModel;
     protected $sellerWechatBindingModel;
+    protected $sellerComplaintModel;
 
     public function _initialize() {
         parent::_initialize();
@@ -25,6 +26,7 @@ class SellerInfoController extends BaseDBController {
         $this->attachModel = D('SysAllAttach');
         $this->communityInfoModel = D('SysCommunityInfo');
         $this->sellerWechatBindingModel = D('SellerWechatBinding');
+        $this->sellerComplaintModel = D('SellerComplaint');
     }
 
     /**
@@ -59,6 +61,7 @@ class SellerInfoController extends BaseDBController {
             'sellerStatusMap' => $this->infoModel->sellerStatusMap(),
             'allSellerCount' => $this->infoModel->getSellerCount(),
             'currentComSellerCount' => $this->infoModel->getSellerCount(false),
+            'complaintCount' => $this->sellerComplaintModel->getSellerComplaintCount(),
         ];
         $this->assign('data', $data);
         parent::showData($this->infoModel, $where, $pageCondition, $joinStr, $fieldStr);
@@ -92,7 +95,8 @@ class SellerInfoController extends BaseDBController {
         $data = [
             'attachList' => json_decode($attachList, true),
             'sellerInfo' => $sellerInfo,
-            'sellerWechat' => $sellerWechat
+            'sellerWechat' => $sellerWechat,
+            'sellerComplaintCount' => $this->sellerComplaintModel->getSellerComplaintCountById($sellerInfo['id']),
         ];
         $this->assign('data', $data);
         $this->display();
@@ -173,6 +177,7 @@ class SellerInfoController extends BaseDBController {
             'address_id' => I('address_id'),
             'contacts' => I('contacts'),
             'business_license' => I('business_license'),
+            'address_api_url' => I('address_api_url'),
             'address' => I('address'),
             'address_id' => !empty(I('address_id')) ? I('address_id') : session('address_id'),
             'status' => 0,   //默认待审核

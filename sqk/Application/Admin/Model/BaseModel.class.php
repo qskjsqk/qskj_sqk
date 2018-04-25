@@ -21,7 +21,7 @@ class BaseModel extends Model {
      * @param array $map    追加到分页链接中的查询数据参数
      * @param array $join   连表
      * @param array $field  查询字段
-     * @param mixed $order  排序(缺省则默认按照主表的id正序)
+     * @param mixed $order  排序(缺省则默认按照主表的id倒序)
      * @return array        分页、分页链接中参数、数据本体组成的数组
      */
     public function listPage($where = [], $map = [], $join = [], $field = [], $order = null) {

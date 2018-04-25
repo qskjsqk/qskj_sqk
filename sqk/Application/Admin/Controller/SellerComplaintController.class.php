@@ -48,23 +48,10 @@ class SellerComplaintController extends BaseDBController {
         }
 
         if (session('sys_name') == 'sqAdmin') {
-            $where['address_id'] = session('address_id');
+            $where[$this->dbFix . 'seller_complaint.address_id'] = session('address_id');
         }
-        $join = [
-            ['sys_community_info', 'id', 'address_id'],
-            ['seller_complaint_cat', 'id', 'cat_id'],
-            ['sys_userapp_info', 'id', 'user_id'],
-            ['seller_info', 'id', 'seller_id'],
-        ];
-        $field = [
-            'seller_complaint.*',
-            'sys_community_info.com_name',
-            'seller_complaint_cat.cat_name',
-            'sys_userapp_info.usr',
-            'seller_info.name',
-            'seller_info.contacts',
-            'seller_info.tel',
-        ];
+
+        list($join, $field) = self::createJoinAndField();
         list($page, $pageCondition, $infoList) = $this->infoModel->listPage($where, $pageCondition, $join, $field);
         $data = [
             'page' => $page,
@@ -111,6 +98,7 @@ class SellerComplaintController extends BaseDBController {
         $complaintInfo['cat_name'] = $this->sellerComplaintCatModel->where(['id' => $complaintInfo['cat_id']])->getField('cat_name');
         $complaintInfo['sellerInfo'] = $this->sellerInfoModel->where(['id' => $complaintInfo['seller_id']])->field('name,contacts,tel')->find();
         $this->assign('complaintInfo', $complaintInfo);
+        if(!empty(I('seller_id'))) $this->assign('seller_id', I('seller_id'));
         $this->display();
     }
 
@@ -119,6 +107,45 @@ class SellerComplaintController extends BaseDBController {
      */
     public function getComName($address_id) {
         return $this->communityInfoModel->where(['id' => $address_id])->getField('com_name');
+    }
+
+    /**
+     * 显示某商家反馈信息列表
+     */
+    public function showListById() {
+        $where[$this->dbFix . 'seller_complaint.seller_id'] = intval(I('seller_id'));
+
+        list($join, $field) = self::createJoinAndField();
+        list($page, $pageCondition, $infoList) = $this->infoModel->listPage($where, [], $join, $field);
+        $data = [
+            'page' => $page,
+            'infoList' => $infoList,
+            'seller_id' => I('seller_id'),
+        ];
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    /**
+     * 返回列表页查询时连表信息和查询字段
+     */
+    public static function createJoinAndField() {
+            $join = [
+                ['sys_community_info', 'id', 'address_id'],
+                ['seller_complaint_cat', 'id', 'cat_id'],
+                ['sys_userapp_info', 'id', 'user_id'],
+                ['seller_info', 'id', 'seller_id'],
+            ];
+            $field = [
+                'seller_complaint.*',
+                'sys_community_info.com_name',
+                'seller_complaint_cat.cat_name',
+                'sys_userapp_info.usr',
+                'seller_info.name',
+                'seller_info.contacts',
+                'seller_info.tel',
+            ];
+        return [$join, $field];
     }
 
 

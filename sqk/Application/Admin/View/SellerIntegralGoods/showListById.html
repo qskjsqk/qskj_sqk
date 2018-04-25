@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+    <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
+    <link rel="stylesheet" href="/Public/admin/css/common.css">
+    <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
+    <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/common.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/seller/sellerComplaint.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div class="option_search">
+
+    <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
+        <div class="form-group">
+            <div class="col-sm-3" style="min-width: 300px;">
+                <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                    <span class="glyphicon glyphicon-trash"></span> 批量删除
+                </button>
+            </div>
+            <div class="col-sm-2"></div>
+
+        </div>
+    </form>
+
+</div>
+<div class="table_content">
+    <table class="table table-hover">
+        <tr>
+            <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+            <th>序号</th>
+            <th>&nbsp;反馈用户</th>
+            <th>&nbsp;被反馈商家</th>
+            <th>注册社区</th>
+            <th>反馈类型</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        <notempty name="data.infoList">
+            <foreach name="data.infoList" item="v" key="k">
+                <tr class="tr">
+                    <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
+                    <td>{$v.id}</td>
+                    <td>{$v.usr}</td>
+                    <td>{$v.name}</td>
+                    <td>{$v.com_name}</td>
+                    <td>{$v.cat_name}</td>
+                    <td>
+                        <if condition="$v.status eq 0">
+                            未处理
+                            <else/>
+                            已处理
+                        </if>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}/seller_id/{$data.seller_id}')">
+                                <span class="glyphicon glyphicon-edit"></span> 查看
+                            </button>
+                            <if condition="$v.status eq 0">
+                                <button class="btn btn-default edit-btn change-complaint-status" title="{$v.id}">
+                                    <span class="glyphicon glyphicon-edit"></span>标记为已处理
+                                </button>
+                            </if>
+                        </div>
+                    </td>
+                </tr>
+            </foreach>
+        </notempty>
+        <empty name="data.infoList">
+            <tr><td colspan="9">暂无数据</td></tr>
+        </empty>
+    </table>
+    <div style="text-align: center;">{$data.page}</div>
+
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("select[name='is_checked']").find("option[value='{$searchInfo.is_checked}']").prop("selected", 'selected');
+    });
+</script>
+</html>
