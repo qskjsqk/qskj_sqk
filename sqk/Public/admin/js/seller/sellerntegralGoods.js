@@ -16,26 +16,6 @@ $(function() {
             delInfoLayer(isChecked);
         }
     })
-
-    //上/下积分商品(列表页)
-    $(".table tr:gt(0)").each(function () {
-        $(this).find("td").last().find("button:eq(2)").click(function () {
-            var idStatusStr = $(this).attr('title');
-            var idStatusArray = idStatusStr.split("-");
-            if(idStatusArray[1] == 1) {
-                var operNotice = '确定要下架该商品吗？';
-            } else if(idStatusArray[1] == 2) {
-                var operNotice = '确定要将该商品上架吗？';
-            }
-            layer.confirm(operNotice, {
-                icon:2,
-                title:'提示信息',
-                btn: ['确定','取消'] //按钮
-            }, function(index){
-                operStatusSync(idStatusArray[0], idStatusArray[1]);
-            })
-        })
-    })
     
 });
 
@@ -60,10 +40,28 @@ function delInfoLayer(isChecked){
     });
 }
 
-function operStatusSync(id, status) {
+//上/下积分商品(列表页)
+function changeGoodsStatus(str) {
+    var idStatusArray = str.split("-");
+    if(idStatusArray[1] == 1) {
+        var operNotice = '确定要下架该商品吗？';
+    } else if(idStatusArray[1] == 2) {
+        var operNotice = '确定要将该商品上架吗？';
+    }
+    layer.confirm(operNotice, {
+        icon:2,
+        title:'提示信息',
+        btn: ['确定','取消'] //按钮
+    }, function(index){
+        operStatusSync('/goodsFrame', {id : idStatusArray[0], status : idStatusArray[1]});
+    })
+}
+
+//ajax请求
+function operStatusSync(requestAddress, param) {
     $.ajax({
-        url : c_path + '/goodsFrame',
-        data : {id : id, status : status},
+        url : c_path + requestAddress,
+        data : param,
         type : 'post',
         success : function (res) {
             if(res.ret == 0) {
@@ -75,6 +73,40 @@ function operStatusSync(id, status) {
             }
         }
     })
+}
+
+//查看积分商品详情
+function showGoodsInfo(id, seller_name) {
+    layer.open({
+        type: 1,
+        title: [seller_name,'font-size:16px;font-weight: bold;color: #2e8ded;'], //标题信息及样式
+        skin: 'layui-layer-rim', //加上边框
+        shadeClose:true,//是否点击遮罩关闭
+        resize:false,//是否允许拉伸
+        area: ['650px', '500px'], //宽高
+        content: $('.catLayer'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+        /*btn: ['确定', '取消'],
+        yes: function (index) {
+            saveSellerCat(index);
+        },
+        cancel: function (index) {
+        },*/
+        success: function(layero){
+            $.post(c_path + '/getGoodsInfoSync',{'id' : id},function(result){
+                if(result.ret == 0) {
+                    var data = result.data;
+                    $("img[class='goods_pic']").attr('src', '/' + data.goods_pic);
+                    $("p[class='goods_name']").html(data.goods_name);
+                    $("p[class='required_integral']").html(data.required_integral + '积分');
+                    $("p[class='seller_name']").html(seller_name);
+                    $("p[class='goods_detail']").html(data.goods_detail);
+                    $("p[class='use_of_knowledge']").html(data.use_of_knowledge);
+                } else {
+                    console.log(result.msg);
+                }
+            },'json');
+        }
+    });
 }
 
 

@@ -10,9 +10,34 @@
         <script type="text/javascript" src="/Public/admin/js/seller/sellerntegralGoods.js"></script>
     </head>
     <style>
+        .field-group{width:100%;margin-top: 20px;height: 30px;}
+        .field-name,.field-value{float:left;line-height: 30px;}
+        .field-name{width:30%;font-size: 18px;font-weight: normal;}
+        .field-value{width:60%;font-size: 16px;}
+        .field-btn{width:33%;float: left;}
+        .score-group{width:100%;border:1px darkgray solid;height: 100px;}
+        .score-left,.score-center,.score-right{float: left;height: 98px;}
+        .score-left{width:20%;}
+        .score-center{width:60%;}
+        .score-right{width:20%;}
+        .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
     </style>
     <body>
         <div class="option_search">
+
+            <div class="score-group">
+                <div class="score-left"></div>
+                <div class="score-center">
+                    <div class="score-item">
+                        <div class="score-field">梨园镇积分商品数量:&nbsp;&nbsp;{$data.allGoodsCount}</div>
+                    </div>
+                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                        <div class="score-item">
+                            <div class="score-field">本社区积分商品数量:&nbsp;&nbsp;{$data.currentGoodsCount}</div>
+                        </div>
+                    </if>
+                </div>
+            </div>
 
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
@@ -83,18 +108,18 @@
                             </td>
                         <td>
                             <div>
-                                <button class="btn btn-success" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}')">
+                                <button class="btn btn-success" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
                                     查看详情
                                 </button>
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}')">
                                      兑换记录
                                 </button>
                                 <if condition="$v.status eq 1">
-                                    <button class="btn btn-danger delSellerInfo change-goods-status" title="{$v.id}-{$v.status}">
+                                    <button class="btn btn-danger delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         下架
                                     </button>
                                 <elseif condition="$v.status eq 2"/>
-                                    <button class="btn btn-success delSellerInfo change-goods-status" title="{$v.id}-{$v.status}">
+                                    <button class="btn btn-success delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         上架
                                     </button>
                                 </if>
@@ -115,6 +140,47 @@
 
         </div>
     </body>
+
+    <div class="catLayer" style="display: none;">
+        <div class="container" style="width: 500px;">
+            <div class="row">
+                    <div class="form-group" style="width:500px;">
+                        <label for="goods_pic" class="col-sm-3 control-label">商品图片</label>
+                        <div class="col-sm-7">
+                            <img src="" class="goods_pic" width="200"/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="width:500px;">
+                        <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
+                        <div class="col-sm-7">
+                            <p class="goods_name"></p>
+                            <p class="required_integral"></p>
+                        </div>
+                    </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="goods_detail" class="col-sm-3 control-label">商品详情</label>
+                    <div class="col-sm-7">
+                        <p class="goods_detail"></p>
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="seller_name" class="col-sm-3 control-label">适用门店</label>
+                    <div class="col-sm-7">
+                        <p class="seller_name"></p>
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="use_of_knowledge" class="col-sm-3 control-label">适用须知</label>
+                    <div class="col-sm-7">
+                        <p class="use_of_knowledge">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         $(document).ready(function () {
             $("select[name='is_checked']").find("option[value='{$searchInfo.is_checked}']").prop("selected", 'selected');

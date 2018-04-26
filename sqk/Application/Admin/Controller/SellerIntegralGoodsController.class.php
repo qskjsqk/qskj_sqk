@@ -26,6 +26,25 @@ class SellerIntegralGoodsController extends BaseDBController {
     }
 
     /**
+     * 返回列表页查询时连表信息和查询字段
+     */
+    private static function createJoinAndField()
+    {
+        $join = [
+            ['sys_community_info', 'id', 'address_id'],
+            ['seller_integral_goods_cat', 'id', 'cat_id'],
+            ['seller_info', 'id', 'seller_id'],
+        ];
+        $field = [
+            'seller_integral_goods.*',
+            'sys_community_info.com_name',
+            'seller_integral_goods_cat.cat_name',
+            'seller_info.name as seller_name',
+        ];
+        return [$join, $field];
+    }
+
+    /**
      * 显示积分商品列表
      */
     public function showList() {
@@ -44,7 +63,7 @@ class SellerIntegralGoodsController extends BaseDBController {
         }
 
         if (session('sys_name') == 'sqAdmin') {
-            $where[$this->dbFix . 'seller_complaint.address_id'] = session('address_id');
+            $where[$this->dbFix . 'seller_integral_goods.address_id'] = session('address_id');
         }
 
         //管理员不能看到未发布的积分商品
@@ -57,6 +76,8 @@ class SellerIntegralGoodsController extends BaseDBController {
             'searchInfo' => $pageCondition,
             'infoList' => $infoList,
             'communitys' => $this->communityInfoModel->getLists(),
+            'allGoodsCount' => $this->infoModel->getIntegralGoodsCount(true),
+            'currentGoodsCount' => session('sys_name') == 'sqAdmin' ? $this->infoModel->getIntegralGoodsCount(false) : null,
         ];
         $this->assign('data', $data);
         $this->display();
@@ -89,22 +110,13 @@ class SellerIntegralGoodsController extends BaseDBController {
     }
 
     /**
-     * 返回列表页查询时连表信息和查询字段
+     * 积分商品详情页
      */
-    public static function createJoinAndField()
-    {
-        $join = [
-            ['sys_community_info', 'id', 'address_id'],
-            ['seller_integral_goods_cat', 'id', 'cat_id'],
-            ['seller_info', 'id', 'seller_id'],
-        ];
-        $field = [
-            'seller_integral_goods.*',
-            'sys_community_info.com_name',
-            'seller_integral_goods_cat.cat_name',
-            'seller_info.name as seller_name',
-        ];
-        return [$join, $field];
+    public function getGoodsInfoSync() {
+        $id = I('id');
+        if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-1, '获取失败,请重新操作'));
+        $info = $this->infoModel->find($id);
+        $this->ajaxReturn(syncData(0, '获取数据成功', $info));
     }
 
 }

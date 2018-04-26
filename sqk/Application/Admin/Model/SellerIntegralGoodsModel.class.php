@@ -15,5 +15,14 @@ class SellerIntegralGoodsModel extends BaseModel {
 
     protected $patchValidate = true;
 
+    public function getIntegralGoodsCount($isAll = true) {
+        //未发布商品后台管理员看不到
+        $where['status'] = ['neq', 0];
+        if($isAll == false && !empty(session('address_id'))) {
+            $where['address_id'] = session('address_id');
+        }
+        return $this->where($where)->count();
+    }
+
 
 }
