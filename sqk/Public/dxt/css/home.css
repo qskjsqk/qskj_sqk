@@ -1,7 +1,25 @@
-/*评论列表*/
+/*导向台首页*/
 .area{
     background-color: red;
     width:800px;
     height:500px;
     background: url(../img/bg_home.png);
+}
+.logo{
+    width:26px;
+    height: 24px;
+    background: url(../img/logo.png) no-repeat;
+    position: absolute;
+    left: 310px;
+    top:100px;
+}
+.system_name{
+    font-family: "微软雅黑";
+    font-size: 40px;
+    color:#d7edff;
+    width:26px;
+    height: 24px;
+    position: absolute;
+    left: 340px;
+    top:100px;
 }

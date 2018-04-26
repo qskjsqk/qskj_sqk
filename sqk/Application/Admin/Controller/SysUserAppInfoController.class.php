@@ -33,7 +33,7 @@ class SysUserAppInfoController extends BaseDBController {
         }
 
         $fieldStr = parent::madField('sys_userapp_info.*', 'sys_community_info.com_name');
-        $joinStr = parent::madJoin('sys_userapp_info.address_id', 'sys_community_info.address_id');
+        $joinStr = parent::madJoin('sys_userapp_info.address_id', 'sys_community_info.id');
         parent::showData($this->userappInfoModel, $where, $pageCondition, $joinStr, $fieldStr);
     }
 
@@ -168,7 +168,7 @@ class SysUserAppInfoController extends BaseDBController {
      */
     public function getComInfoByCid($address_id) {
         $model = M('sys_community_info');
-        $comArr = $model->where('address_id=' . $address_id)->find();
+        $comArr = $model->where('id=' . $address_id)->find();
         if (empty($comArr)) {
             return 0;
         } else {

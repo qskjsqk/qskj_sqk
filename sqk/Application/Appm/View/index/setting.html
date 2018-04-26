@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>公益排行榜单</title>
+        <title>我的信息</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <style type="text/css">
-
+            .mui-table-view{
+                margin: 10px 0;
+            }
         </style>
 
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
@@ -36,53 +38,75 @@
         <header class="mui-bar mui-bar-nav">
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')"></a>
             <h1 class="mui-title header-a-l">我的信息</h1>	
-            <a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="openSelect()"></a>
+            <a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="aHref('__MODULE__/index/my_notice')"></a>
         </header>
+        
+        <!--底部tabbar-->
+        <nav class="mui-bar mui-bar-tab">
+            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/notice/notice_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">通知</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/activity/activity_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-class">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">活动</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">积分</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-map">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
+                <span class="mui-tab-label">榜单</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-map">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
+                <span class="mui-tab-label">我的</span>
+            </a>
+        </nav>
 
         <!--主体部分-->
         <div class="mui-content">
-
-            <!--页面部分-->
-            <div class="mui-row">
-
-                 <div class="mui-card">
-                        <div class="mui-card-content">
-                            <ul class="mui-table-view mui-table-view-chevron">
-                                <li class="mui-table-view-cell">
-                                    <a class="mui-navigate-right" onclick="about()">关于APP <i class="mui-pull-right update">V1.0.0</i></a>
-                                </li>
-                            </ul>
+            
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell mui-media">
+                    <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/setinfo')">
+                        <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
+                        <div class="mui-media-body">
+                            张晓炜&#12288;[云景东里]
+                            <p class='mui-ellipsis'>可消费积分：3000</p>
                         </div>
-                    </div>
-
-                    <div class="mui-card">
-                        <div class="mui-card-content">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell" style="text-align: center;border-radius: 0px;">
-                                    <a href="javascript:void(0)" onclick="saveUserInfo()" style="background-color: #4cd964;color:#fff;">保存资料</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="mui-card">
-                        <div class="mui-card-content">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell" style="text-align: center;border-radius: 0px;">
-                                    <a href="__CONTROLLER__/logout" style="background-color: #dd524d;color:#fff;">退出</a>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-            </div>
-            <!--页面部分end-->
-
-
-
+                    </a>
+                </li>
+            </ul>
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell">
+                    <a onclick="aHref('__MODULE__/index/activ_list')" class="mui-navigate-right">我的活动</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a onclick="aHref('__MODULE__/index/signin_list')" class="mui-navigate-right">我的签到</a>
+                </li>
+            </ul>
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell">
+                    <a onclick="aHref('__MODULE__/index/order_list')" class="mui-navigate-right">积分消费记录</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a onclick="aHref('__MODULE__/index/litem_list')" class="mui-navigate-right">已兑换券码</a>
+                </li>
+            </ul>
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell">
+                    <a onclick="aHref('__MODULE__/index/my_card')" class="mui-navigate-right">我的实体卡</a>
+                </li>
+            </ul>
+            <!--页面主内容区结束-->
         </div>
     </body>
 

@@ -45,16 +45,13 @@
 
     <body>
         <!--头栏-->
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')"></a>
+        <header class="mui-bar mui-bar-nav header-a-l">
             <div class="mui-title mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
             <a  class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a" onclick="openSelect()"></a>
-
-
         </header>
         <!--底部tabbar-->
         <nav class="mui-bar mui-bar-tab">
-            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/notice/notice_list')">
+            <a class="mui-tab-item " onclick="aHref('__MODULE__/notice/notice_list')">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
                     <span class="mui-badge">9</span>
                 </span>
@@ -66,7 +63,7 @@
                 </span>
                 <span class="mui-tab-label">活动</span>
             </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
+            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/seller/item_list')">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
                     <span class="mui-badge">9</span>
                 </span>
@@ -112,149 +109,162 @@
                 </div>
             </div>
 
-            <div id="slider" class="mui-slider">
-                <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted bgfff">
-                    <a class="mui-control-item bgfff" href="#item1mobile">
-                        最受欢迎
-                    </a>
-                    <a class="mui-control-item bgfff" href="#item2mobile">
-                        距离最近
-                    </a>
-                </div>
-                <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
-                <div class="mui-slider-group">
-                    <div id="item1mobile" class="mui-slider-item mui-control-content">
-                        <div class="mui-content-padded">
-                            <button type="button" class="mui-btn mui-btn-warning mui-btn-block">剩余积分：2000分</button>
-                        </div>
-                        <div class="mui-card">
-                            <div class="mui-card-header">
-                                <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                                <p class="mui-card-link">距离1.5km</p>
-                            </div>
-                            <div class="mui-card-content">
-                                <div class="item_list">
-                                    <div class="item_list_img"></div>
-                                    <div class="item_list_word">
-                                        <span class="">礼品卡券面值30元</span>
-                                    </div>
-                                    <div class="item_list_word">
-                                        <span class="fontred">￥30元+300积分</span>
-                                        <span class="font888">原价：￥45</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mui-card">
-                            <div class="mui-card-header">
-                                <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                                <p class="mui-card-link">距离1.5km</p>
-                            </div>
-                            <div class="mui-card-content">
-                                <div class="item_list">
-                                    <div class="item_list_img"></div>
-                                    <div class="item_list_word">
-                                        <span class="">礼品卡券面值30元</span>
-                                    </div>
-                                    <div class="item_list_word">
-                                        <span class="fontred">￥30元+300积分</span>
-                                        <span class="font888">原价：￥45</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mui-card">
-                            <div class="mui-card-header">
-                                <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                                <p class="mui-card-link">距离1.5km</p>
-                            </div>
-                            <div class="mui-card-content">
-                                <div class="item_list">
-                                    <div class="item_list_img"></div>
-                                    <div class="item_list_word">
-                                        <span class="">礼品卡券面值30元</span>
-                                    </div>
-                                    <div class="item_list_word">
-                                        <span class="fontred">￥30元+300积分</span>
-                                        <span class="font888">原价：￥45</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mui-card">
-                            <div class="mui-card-header">
-                                <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                                <p class="mui-card-link">距离1.5km</p>
-                            </div>
-                            <div class="mui-card-content">
-                                <div class="item_list">
-                                    <div class="item_list_img"></div>
-                                    <div class="item_list_word">
-                                        <span class="">礼品卡券面值30元</span>
-                                    </div>
-                                    <div class="item_list_word">
-                                        <span class="fontred">￥30元+300积分</span>
-                                        <span class="font888">原价：￥45</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="item2mobile" class="mui-slider-item mui-control-content">
 
-                    </div>
-                </div>
+            <div class="mui-content-padded">
+                <button type="button" class="mui-btn mui-btn-warning mui-btn-block">剩余积分：2000分</button>
             </div>
-
-            <!--模态框-->
-            <div class="m-modal"></div>
-            <div class="m-modal-content" style="width:100%;margin-left: -50%;">
-                <div class="mui-card">
-                    <div class="mui-card-header">
-                        <a class="mui-card-link" onclick="closeModal()">取消</a>
-                        <span class="mui-card-link font666">筛选</span>
-                        <a class="mui-card-link" onclick="subForm()">保存</a>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="mui-card-content-inner">
-                            <!--form-->
-                            <form id="form">
-                                <h5 class="mui-content-padded font333">活动地点</h5>
-                                <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
-                                    <div class="mui-input-row mui-radio">
-                                        <label>本社区</label>
-                                        <input name="address_id" type="radio" value="{$address_id}" id="local_address" checked>
-                                    </div>
-                                    <div class="mui-input-row mui-radio" >
-                                        <label>全体社区</label>
-                                        <input name="address_id" type="radio" value="0" id="0_address">
-                                    </div>
-                                </div>
-                                <h5 class="mui-content-padded font333">活动类型</h5>
-                                <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
-                                    <select style="margin: 0;" name="cat_id" id="cat_id">
-                                        <foreach name="catData" item="cat">
-                                            <option value="{$cat.id}">{$cat.cat_name}</option>
-                                        </foreach>
-                                    </select>
-                                </div>
-                                <h5 class="mui-content-padded font333">积分等级</h5>
-                                <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
-                                    <select style="margin: 0;" name="integral" id="integral">
-                                        <option value="100">100分</option>
-                                        <option value="200">200分</option>
-                                        <option value="300">300分</option>
-                                        <option value="400">400分</option>
-                                        <option value="500">500分</option>
-                                    </select>
-                                </div>
-                            </form>
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
+                    <p class="mui-card-link">距离1.5km</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="item_list">
+                        <div class="item_list_img"></div>
+                        <div class="item_list_word">
+                            <span class="">礼品卡券面值30元</span>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">￥30元+300积分</span>
+                            <span class="font888">原价：￥45</span>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
+                    <p class="mui-card-link">距离1.5km</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="item_list">
+                        <div class="item_list_img"></div>
+                        <div class="item_list_word">
+                            <span class="">礼品卡券面值30元</span>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">￥30元+300积分</span>
+                            <span class="font888">原价：￥45</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
+                    <p class="mui-card-link">距离1.5km</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="item_list">
+                        <div class="item_list_img"></div>
+                        <div class="item_list_word">
+                            <span class="">礼品卡券面值30元</span>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">￥30元+300积分</span>
+                            <span class="font888">原价：￥45</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
+                    <p class="mui-card-link">距离1.5km</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="item_list">
+                        <div class="item_list_img"></div>
+                        <div class="item_list_word">
+                            <span class="">礼品卡券面值30元</span>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">￥30元+300积分</span>
+                            <span class="font888">原价：￥45</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+
+
+        <!--模态框-->
+        <div class="m-modal"></div>
+        <div class="m-modal-content" style="width:100%;margin-left: -50%;">
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <a class="mui-card-link" onclick="closeModal()">取消</a>
+                    <span class="mui-card-link font666">筛选</span>
+                    <a class="mui-card-link" onclick="subForm()">保存</a>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner">
+                        <!--form-->
+                        <form id="form">
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>最受欢迎</label>
+                                            <input name="orderBy" type="radio" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>离我最近</label>
+                                            <input name="orderBy" type="radio" value="1" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mui-content-padded font333">商家地点</h5>
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>本社区</label>
+                                            <input name="address_id" type="radio" value="{$address_id}" id="local_address" checked>
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>全体社区</label>
+                                            <input name="address_id" type="radio" value="0" id="0_address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mui-content-padded font333">类&#12288;&#12288;型</h5>
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>加购</label>
+                                            <input name="cat_type" type="radio" value="{$address_id}" id="local_address" checked>
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>兑换</label>
+                                            <input name="cat_type" type="radio" value="0" id="0_address">
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>券码</label>
+                                            <input name="cat_type" type="radio" value="0" id="0_address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
 
 </html>
