@@ -42,51 +42,52 @@
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/setting')"></a>
             <h1 class="mui-title header-a-l">我的活动</h1>	
         </header>
+    <include file="./Application/Appm/View/tabnav.html" />
 
-        <!--主体部分-->
-        <div class="mui-content">
-            <div class="mui-row">
-                <ul class="mui-table-view mui-table-view-chevron">
-                    <li class="mui-table-view-cell mui-media">
-                        <a class="mui-navigate-right" >
-                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
-                            <div class="mui-media-body">
-                                张晓炜&#12288;[云景东里]
-                                <p class='mui-ellipsis'>收藏：10&#12288;参加：20&#12288;积分：6100</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="mui-row">
-                <div class="tab-div" id="tabWuye">
-                    <button id="wuye1" type="button" class="mui-btn row_btn6" onclick="changeTab(1, 0, 2, '报修')">收藏的活动</button>
-                    <button id="wuye2" type="button" class="mui-btn row_btn6" onclick="changeTab(2, 0, 1, '反馈')">参加的活动</button>
-                </div>
-            </div>
-
-            <div class="mui-row">
-                <ul class="mui-table-view" id="activityList">
-                    <div class="mui-card">
-                        <div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(/Public/Upload/activity/2018-04-11/5acd833d494d2.PNG)" onclick="getActivDetail(' + data.data[i]['id'] + ')">
-                            <div class="p-modal"><div class="p-modal-div"><h4><i>已结束</i></h4></div></div>
+    <!--主体部分-->
+    <div class="mui-content">
+        <div class="mui-row">
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell mui-media">
+                    <a class="mui-navigate-right" >
+                        <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
+                        <div class="mui-media-body">
+                            张晓炜&#12288;[云景东里]
+                            <p class='mui-ellipsis'>收藏：10&#12288;参加：20&#12288;积分：6100</p>
                         </div>
-                        <div class="mui-card-content">
-                            <div class="mui-card-content-inner">
-                                <p style="color: #000;font-size:1.1em;" onclick="getActivDetail()">【公益】放假啊看了电视剧分开拉就是打飞机阿斯利的空间看来飞机阿斯利的空间</p>
-                                <div>
-                                    <span class="mui-badge mui-badge-primary" style="float: left;">300分</span>
-                                    <span>&#12288;云景东里/2018.09.12</span>
-                                    <span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span><span id="like_num">0</span>人收藏</span>
-                                </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mui-row">
+            <div class="tab-div" id="tabWuye">
+                <button id="wuye1" type="button" class="mui-btn row_btn6" onclick="changeTab(1, 0, 2, '报修')">收藏的活动</button>
+                <button id="wuye2" type="button" class="mui-btn row_btn6" onclick="changeTab(2, 0, 1, '反馈')">参加的活动</button>
+            </div>
+        </div>
+
+        <div class="mui-row">
+            <ul class="mui-table-view" id="activityList">
+                <div class="mui-card">
+                    <div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(/Public/Upload/activity/2018-04-11/5acd833d494d2.PNG)" onclick="getActivDetail(' + data.data[i]['id'] + ')">
+                        <div class="p-modal"><div class="p-modal-div"><h4><i>已结束</i></h4></div></div>
+                    </div>
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            <p style="color: #000;font-size:1.1em;" onclick="getActivDetail()">【公益】放假啊看了电视剧分开拉就是打飞机阿斯利的空间看来飞机阿斯利的空间</p>
+                            <div>
+                                <span class="mui-badge mui-badge-primary" style="float: left;">300分</span>
+                                <span>&#12288;云景东里/2018.09.12</span>
+                                <span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span><span id="like_num">0</span>人收藏</span>
                             </div>
                         </div>
                     </div>
-                </ul>
-            </div>
+                </div>
+            </ul>
         </div>
-        <!--页面主内容区结束-->
-    </body>
+    </div>
+    <!--页面主内容区结束-->
+</body>
 
 </html>
