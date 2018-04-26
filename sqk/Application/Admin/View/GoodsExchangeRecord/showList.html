@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/Public/admin/css/common.css">
+        <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/common.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/seller/sellerntegralGoods.js"></script>
+    </head>
+    <style>
+        .field-group{width:100%;margin-top: 20px;height: 30px;}
+        .field-name,.field-value{float:left;line-height: 30px;}
+        .field-name{width:30%;font-size: 18px;font-weight: normal;}
+        .field-value{width:60%;font-size: 16px;}
+        .field-btn{width:33%;float: left;}
+        .score-group{width:100%;border:1px darkgray solid;height: 100px;}
+        .score-left,.score-center,.score-right{float: left;height: 98px;}
+        .score-left{width:20%;}
+        .score-center{width:60%;}
+        .score-right{width:20%;}
+        .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
+    </style>
+    <body>
+        <div class="option_search">
+
+            <div class="score-group">
+                <div class="score-left"></div>
+                <div class="score-center">
+                    <div class="score-item">
+                        <div class="score-field">梨园镇积分商品数量:&nbsp;&nbsp;{$data.allGoodsCount}</div>
+                    </div>
+                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                        <div class="score-item">
+                            <div class="score-field">本社区积分商品数量:&nbsp;&nbsp;{$data.currentGoodsCount}</div>
+                        </div>
+                    </if>
+                </div>
+            </div>
+
+            <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
+                <div class="form-group">
+                    <div class="col-sm-3" style="min-width: 300px;">
+                        <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                            <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <if condition="$Think.session.sys_name eq 'sysAdmin'">
+                        <div class="col-sm-2">
+                            <select class="form-control" name="address_id">
+                                <option value="">社区</option>
+                                <foreach name="data.communitys" item="val" >
+                                    <option value='{$val.id}' <if condition="$val.id eq $data['searchInfo']['address_id']"> selected </if> >
+                                    {$val.com_name}
+                                    </option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </if>
+                    <div class="col-sm-2" style="min-width: 300px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" name="name" value="{$data.searchInfo.name}" placeholder="请输入积分商品名称/商家名称/用户名">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
+                                    <span class="glyphicon glyphicon-search"></span> 搜索
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="table_content">
+            <table class="table table-hover">
+                <tr>
+                    <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
+                    <th>&nbsp;交易商品</th>
+                    <th>&nbsp;交易时间</th>
+                    <th>积分接收商家</th>
+                    <th>积分支出用户</th>
+                    <th>积分接收值</th>
+                    <th>操作</th>
+                </tr>
+                <notempty name="data.infoList">
+                    <foreach name="data.infoList" item="v" key="k">
+                        <tr class="tr">
+                            <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
+                            <td>{$v.goods_name}</td>
+                            <td>{$v.exchange_time}</td>
+                            <td>{$v.seller_name}</td>
+                            <td>{$v.usr}</td>
+                            <td>{$v.exchange_integral}</td>
+                            <td>
+                            <div>
+                                <button class="btn btn-success" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
+                                    查看详情
+                                </button>
+                            </div>
+                        </td>
+                        </tr>
+                    </foreach>
+                </notempty>
+                <empty name="infoList">
+                    <tr><td colspan="9">暂无数据</td></tr>
+                </empty>
+            </table>
+            <div style="text-align: center;">{$data.page}</div>
+
+            <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                显示全部积分商品
+            </button>
+
+        </div>
+    </body>
+
+    <div class="catLayer" style="display: none;">
+        <div class="container" style="width: 500px;">
+            <div class="row">
+                    <div class="form-group" style="width:500px;">
+                        <label for="goods_pic" class="col-sm-3 control-label">商品图片</label>
+                        <div class="col-sm-7">
+                            <img src="" class="goods_pic" width="200"/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="width:500px;">
+                        <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
+                        <div class="col-sm-7">
+                            <p class="goods_name"></p>
+                            <p class="required_integral"></p>
+                        </div>
+                    </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="goods_detail" class="col-sm-3 control-label">商品详情</label>
+                    <div class="col-sm-7">
+                        <p class="goods_detail"></p>
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="seller_name" class="col-sm-3 control-label">适用门店</label>
+                    <div class="col-sm-7">
+                        <p class="seller_name"></p>
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;">
+                    <label for="use_of_knowledge" class="col-sm-3 control-label">适用须知</label>
+                    <div class="col-sm-7">
+                        <p class="use_of_knowledge">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("select[name='is_checked']").find("option[value='{$searchInfo.is_checked}']").prop("selected", 'selected');
+        });
+    </script>
+</html>

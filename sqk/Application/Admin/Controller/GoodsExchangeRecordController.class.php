@@ -1,28 +1,32 @@
 <?php
 
 /**
- * @name SellerIntegralGoodsController
- * @info 描述：积分商品控制器
+ * @name GoodsExchangeRecordController
+ * @info 描述：积分商品兑换记录控制器
  * @author xiaohuihui <2768083386@qq.com>
- * @datetime 2018-4-24 17:38:13
+ * @datetime 2018-4-26 18:54:13
  */
 
 namespace Admin\Controller;
 
 use Think\Controller;
 
-class SellerIntegralGoodsController extends BaseDBController {
+class GoodsExchangeRecordController extends BaseDBController {
 
     protected $infoModel;
     protected $communityInfoModel;
     protected $sellerInfoModel;
+    protected $appUserModel;
+    protected $goodsModel;
 
     public function _initialize() {
         parent::_initialize();
 
-        $this->infoModel = D('SellerIntegralGoods');
+        $this->infoModel = D('GoodsExchangeRecord');
         $this->communityInfoModel = D('SysCommunityInfo');
         $this->sellerInfoModel = D('SellerInfo');
+        $this->appUserModel = D('SysUserappInfo');
+        $this->goodsModel = D('SellerIntegralGoods');
     }
 
     /**
@@ -31,18 +35,16 @@ class SellerIntegralGoodsController extends BaseDBController {
     private static function createJoinAndField()
     {
         $join = [
-            /*['sys_community_info', 'id', 'address_id'],
-            ['seller_integral_goods_cat', 'id', 'cat_id'],
-            ['seller_info', 'id', 'seller_id'],*/
-            ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
-            ['seller_integral_goods_cat', 'id', 'seller_integral_goods', 'cat_id'],
-            ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
+            ['seller_integral_goods', 'id', 'goods_exchange_record', 'goods_id'],
+            ['seller_info', 'id', 'goods_exchange_record', 'seller_id'],
+            ['sys_userapp_info', 'id', 'goods_exchange_record', 'user_id'],
+            ['sys_community_info', 'id', 'seller_info', 'address_id'],
         ];
         $field = [
-            'seller_integral_goods.*',
-            'sys_community_info.com_name',
-            'seller_integral_goods_cat.cat_name',
+            'goods_exchange_record.*',
             'seller_info.name as seller_name',
+            'sys_userapp_info.usr',
+            'seller_integral_goods.goods_name',
         ];
         return [$join, $field];
     }
@@ -55,18 +57,19 @@ class SellerIntegralGoodsController extends BaseDBController {
             if (!empty(I('name'))) {
                 $map[$this->dbFix . 'seller_info.name'] = array('LIKE', '%' . urldecode(I('name')) . '%');
                 $map[$this->dbFix . 'seller_integral_goods.goods_name'] = array('LIKE', '%' . urldecode(I('name')) . '%');
+                $map[$this->dbFix . 'sys_userapp_info.usr'] = array('LIKE', '%' . urldecode(I('name')) . '%');
                 $map['_logic'] = 'or';
                 $pageCondition['name'] = urldecode(I('name'));
                 $where['_complex'] = $map;
             }
             if (!empty(I('address_id'))) {
-                $where[$this->dbFix . 'seller_integral_goods.address_id'] = intval(I('address_id'));
+                $where[$this->dbFix . 'seller_info.address_id'] = intval(I('address_id'));
                 $pageCondition['address_id'] = intval(I('address_id'));
             }
         }
 
         if (session('sys_name') == 'sqAdmin') {
-            $where[$this->dbFix . 'seller_integral_goods.address_id'] = session('address_id');
+            $where[$this->dbFix . 'seller_info.address_id'] = session('address_id');
         }
 
         //管理员不能看到未发布的积分商品
@@ -79,10 +82,9 @@ class SellerIntegralGoodsController extends BaseDBController {
             'searchInfo' => $pageCondition,
             'infoList' => $infoList,
             'communitys' => $this->communityInfoModel->getLists(),
-            'allGoodsCount' => $this->infoModel->getIntegralGoodsCount(true),
-            'currentGoodsCount' => session('sys_name') == 'sqAdmin' ? $this->infoModel->getIntegralGoodsCount(false) : null,
         ];
         $this->assign('data', $data);
+        //dd($data, false);
         $this->display();
     }
 

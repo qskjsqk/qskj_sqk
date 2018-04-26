@@ -30,6 +30,28 @@ class SellerComplaintController extends BaseDBController {
     }
 
     /**
+     * 返回列表页查询时连表信息和查询字段
+     */
+    public static function createJoinAndField() {
+        $join = [
+            ['sys_community_info', 'id', 'seller_complaint', 'address_id'],
+            ['seller_complaint_cat', 'id', 'seller_complaint', 'cat_id'],
+            ['sys_userapp_info', 'id', 'seller_complaint', 'user_id'],
+            ['seller_info', 'id', 'seller_complaint', 'seller_id'],
+        ];
+        $field = [
+            'seller_complaint.*',
+            'sys_community_info.com_name',
+            'seller_complaint_cat.cat_name',
+            'sys_userapp_info.usr',
+            'seller_info.name',
+            'seller_info.contacts',
+            'seller_info.tel',
+        ];
+        return [$join, $field];
+    }
+
+    /**
      * 显示投诉信息列表
      */
     public function showList() {
@@ -124,28 +146,6 @@ class SellerComplaintController extends BaseDBController {
         ];
         $this->assign('data', $data);
         $this->display();
-    }
-
-    /**
-     * 返回列表页查询时连表信息和查询字段
-     */
-    public static function createJoinAndField() {
-            $join = [
-                ['sys_community_info', 'id', 'address_id'],
-                ['seller_complaint_cat', 'id', 'cat_id'],
-                ['sys_userapp_info', 'id', 'user_id'],
-                ['seller_info', 'id', 'seller_id'],
-            ];
-            $field = [
-                'seller_complaint.*',
-                'sys_community_info.com_name',
-                'seller_complaint_cat.cat_name',
-                'sys_userapp_info.usr',
-                'seller_info.name',
-                'seller_info.contacts',
-                'seller_info.tel',
-            ];
-        return [$join, $field];
     }
 
 

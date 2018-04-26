@@ -30,7 +30,8 @@ class BaseModel extends Model {
         $infoList = $this;
         if(!empty($join) && is_array($join)) {
             foreach($join as $val) {
-                $infoList->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $this->tableName . '.' . $val[2], LEFT);
+                //$infoList->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $this->tableName . '.' . $val[2], LEFT);
+                $infoList->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $val[2] . '.' . $val[3], LEFT);
             }
         }
         $infoList = $infoList->where($where);
@@ -67,7 +68,8 @@ class BaseModel extends Model {
         $count = $m;
         if(!empty($join) && is_array($join)) {
             foreach($join as $val) {
-                $count->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $this->tableName . '.' . $val[2], LEFT);
+                //$count->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $this->tableName . '.' . $val[2], LEFT);
+                $count->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $val[2] . '.' . $val[3], LEFT);
             }
         }
         $count = $count->where($where)->count();
