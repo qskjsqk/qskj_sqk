@@ -45,16 +45,13 @@
 
     <body>
         <!--头栏-->
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')"></a>
+        <header class="mui-bar mui-bar-nav header-a-l">
             <div class="mui-title mui-input-search header-ss-div"><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
             <a  class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a" onclick="openSelect()"></a>
-
-
         </header>
         <!--底部tabbar-->
         <nav class="mui-bar mui-bar-tab">
-            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/notice/notice_list')">
+            <a class="mui-tab-item " onclick="aHref('__MODULE__/notice/notice_list')">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
                     <span class="mui-badge">9</span>
                 </span>
@@ -66,7 +63,7 @@
                 </span>
                 <span class="mui-tab-label">活动</span>
             </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
+            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/seller/item_list')">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
                     <span class="mui-badge">9</span>
                 </span>

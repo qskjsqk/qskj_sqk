@@ -23,7 +23,7 @@ class IndexController extends Controller {
         if ($_COOKIE['user_id'] == null) {
             $this->redirect('Login/index');
         } else {
-            $this->redirect('Index/main');
+            $this->redirect('Activity/activity_list');
         }
     }
 

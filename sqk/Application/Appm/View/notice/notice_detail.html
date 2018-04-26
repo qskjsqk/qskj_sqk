@@ -8,9 +8,9 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
         <link rel="stylesheet" href="__PUBLIC__/appm/css/notice_detail.css">
-
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script src="__PUBLIC__/appm/js/mui.min.js"></script>
         <script type="text/javascript">
@@ -27,15 +27,35 @@
     </head>
 
     <body>
-        <!--头栏-->
-<!--                <header class="mui-bar mui-bar-nav">
-                    <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="back()">
-                    </a>
-                    <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">格瑞雅居健康生活</h1>
-                    <div class="mui-title .mui-input-search header-ss-div"><input class="mui-input-clear" placeholder="请输入关键字搜索查询" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
-                    <a class="mui-icon  mui-icon-help mui-pull-right header-a" onclick="about()"></a>
-                </header>-->
-        <!--主体部分-->
+        <!--底部-->
+        <nav class="mui-bar mui-bar-tab mui-active">
+            <a class="mui-tab-item " onclick="aHref('__MODULE__/notice/notice_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">通知</span>
+            </a>
+            <a class="mui-tab-item " onclick="aHref('__MODULE__/activity/activity_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-class">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">活动</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
+                    <span class="mui-badge">9</span>
+                </span>
+                <span class="mui-tab-label">积分</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/top/top_home')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
+                <span class="mui-tab-label">榜单</span>
+            </a>
+            <a class="mui-tab-item" onclick="aHref('__MODULE__/index/setting')">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
+                <span class="mui-tab-label">我的</span>
+            </a>
+        </nav>
         <div class="mui-content">
             <!--顶部banner图 开始-->
             <div id="kr-article-banner" class="kr-article-banner">
