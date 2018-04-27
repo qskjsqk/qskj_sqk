@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
+        
         <style type="text/css">
             .mui-table-view{
                 margin: 10px 0;
@@ -29,8 +29,9 @@
             });
         </script>
         {$Assigndata}
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/setting.js"></script>
     </head>
 
     <body>
@@ -52,8 +53,8 @@
                 <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/my_info')">
                     <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
                     <div class="mui-media-body">
-                        张晓炜&#12288;[云景东里]
-                        <p class='mui-ellipsis'>可消费积分：3000</p>
+                        {$myInfo.realname}&#12288;[{$myInfo.address_name}]
+                        <p class='mui-ellipsis'>可消费积分：{$myInfo.integral_num}</p>
                     </div>
                 </a>
             </li>

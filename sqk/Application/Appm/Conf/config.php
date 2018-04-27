@@ -15,6 +15,7 @@ return array(
     'DB_DB_BACKUP' => 'Sys_db_backup', //配置数据备份数据库
     'BACKUP_MYSQL_PATH' => 'E:/wamp/www/gryj/Public/admin/db_backup/', //配置数据备份数据库
     'DB_USER_INFO' => 'Sys_user_info', //配置用户信息数据库
+    'DB_USERAPP_INFO' => 'Sys_userapp_info', //配置用户信息数据库
     'DB_USER_GROUP' => 'Sys_user_group', //配置用户组数据库
     //附件处理模块
     'UPLOAD_SIZE' => 3145728, //上传文件大小限制
@@ -27,18 +28,17 @@ return array(
         'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2', 'pdf'),
         'excel' => array('xls', 'xlsx')
     ), //上传类型
-	
     'PAGE_NUM' => array(
-        'notice' => 7,//通知公告
-        'prop' => 4,//物业管理
-        'activity' => 4,//活动管理
-        'health' => 7,//体检记录
-        'healthn' => 6,//健康知识
-        'seller' => 2,//商家信息
-        'ad' => 2,//商家促销
-        'order' => 4,//订单消息
+        'notice' => 7, //通知公告
+        'prop' => 4, //物业管理
+        'activity' => 4, //活动管理
+        'health' => 7, //体检记录
+        'healthn' => 6, //健康知识
+        'seller' => 2, //商家信息
+        'ad' => 2, //商家促销
+        'order' => 4, //订单消息
+        'signin' => 6, //签到消息
     ), //app分页条数
-	
     // 配置邮件发送服务器
     'THINK_EMAIL' => array(
         'SMTP_HOST' => 'smtp.163.com', //SMTP服务器
