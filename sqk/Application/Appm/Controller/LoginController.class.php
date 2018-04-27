@@ -115,9 +115,15 @@ class LoginController extends Controller {
         if ($user_id == null) {
             $returnData['flag'] = 0;
         } else {
+            //通知条数
             $noticeC = A('Notice');
-            $isEnable = $noticeC->getEnableCatIds();
-            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnable . ')')->count();
+            $isEnableNoticeCat = $noticeC->getEnableCatIds();
+            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ')')->count();
+            //活动条数
+            $activityC = A('Activity');
+            $isEnableActivityCat = $activityC->getEnableCatIds();
+            $data['activity_num'] = M('ActivInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableActivityCat . ')')->count();
+            
             $returnData['data'] = $data;
             $returnData['flag'] = $user_id;
         }

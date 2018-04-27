@@ -16,35 +16,7 @@
     </head>
 
     <body id="body">
-        <!--底部-->
-        <nav class="mui-bar mui-bar-tab">
-            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/notice/notice_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">通知</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/activity/activity_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-class">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">活动</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">积分</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/top/top_home')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
-                <span class="mui-tab-label">榜单</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/index/setting')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
-                <span class="mui-tab-label">我的</span>
-            </a>
-        </nav>
+       <include file="./Application/Appm/View/tabnav.html" />
         <!--主体部分-->
         <div class="mui-content" style="background-color: #fff;">
 
