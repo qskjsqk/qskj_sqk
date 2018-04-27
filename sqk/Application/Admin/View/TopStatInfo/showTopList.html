@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <!--自定义样式及脚本放于此处-->
+        <link rel="stylesheet" href="__PUBLIC__/admin/css/index.css">
+        <link rel="stylesheet" href="__PUBLIC__/admin/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/admin/css/top.css">
+
+        <script type="text/javascript">
+            $(function () {
+                $('#tabBtn').find('button').removeClass('btn-success');
+                $('#btn_' + assignData.data.type).addClass('btn-success');
+            });
+            function showTopList(type) {
+                location.href = a_path + '?type=' + type;
+            }
+        </script>
+        {$Think.const.ANIMATION}
+        <title>{$config['system_name']}</title>
+    </head>
+    <body>
+        <div class="container" style="width: 100%;background-color: #e9ecf3;">
+            <div class="option_search">
+                <div class="btn-group btn-group-lg" id='tabBtn'>
+                    <button type="button" id='btn_0' class="btn btn-default btn-success" onclick="showTopList(0)">
+                        本社区用户榜单
+                    </button>
+                    <button type="button" id='btn_1' class="btn btn-default" onclick="showTopList(1)">
+                        梨园镇用户榜单
+                    </button>
+                    <button type="button" id='btn_2' class="btn btn-default" onclick="showTopList(2)">
+                        梨园镇商家榜单
+                    </button>
+                    <button type="button" id='btn_3' class="btn btn-default" onclick="showTopList(3)">
+                        梨园镇社区榜单
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="b-tip-div col-xs-6 col-sm-4">
+                    <div class="panel b-color-tip2">
+                        <div class="panel-heading">
+                            <div class="b-tip-body">
+                                <div class="b-tip-left">
+                                    <i class="glyphicon glyphicon-stats"></i>
+                                </div>
+                                <div class="b-tip-right">
+                                    <div class="b-tip-titleb">{$data.type_name}</div>
+                                    <div class="b-tip-titlel">本季度</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <foreach name="data.nowList" item="v" key="k">
+                                <div class="row_list">
+                                    <div class="row_list_jp jp0{$k+1}"></div>
+                                    <div class="row_list_tx">
+                                        {$v.tx_icon}
+                                    </div>
+                                    <span class="row_list_title">{$v.realname}</br><p>{$v.address_name}</p></span>
+                                    <span class="row_list_integral">{$v.sign_integral}分</span>
+                                </div>
+                            </foreach>
+                            <empty name="data.nowList">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        暂时没有数据
+                                    </div>
+                                </div>
+                            </empty>
+
+                            <!--                            <div class="row_list">
+                                                            <div class="row_list_jp jp01"></div>
+                                                            <div class="row_list_tx">
+                                                                <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
+                                                            </div>
+                                                            <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
+                                                            <span class="row_list_integral">累计签到900人次</span>
+                                                        </div>-->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="b-tip-div col-xs-6 col-sm-4">
+                    <div class="panel  b-color-tip1">
+                        <div class="panel-heading">
+                            <div class="b-tip-body">
+                                <div class="b-tip-left">
+                                    <i class="glyphicon glyphicon-stats"></i>
+                                </div>
+                                <div class="b-tip-right">
+                                    <div class="b-tip-titleb">本社区用户榜单</div>
+                                    <div class="b-tip-titlel">上季度</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <!--                            <div class="row_list">
+                                                            <div class="row_list_jp jp01"></div>
+                                                            <div class="row_list_tx">
+                                                                <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
+                                                            </div>
+                                                            <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
+                                                            <span class="row_list_integral">累计签到900人次</span>
+                                                        </div>
+                            -->
+                            <empty name="data.lastList">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        暂时没有数据
+                                    </div>
+                                </div>
+                            </empty>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="b-tip-div col-xs-6 col-sm-4">
+                    <div class="panel  b-color-tip3">
+                        <div class="panel-heading">
+                            <div class="b-tip-body">
+                                <div class="b-tip-left">
+                                    <i class="glyphicon glyphicon-stats"></i>
+                                </div>
+                                <div class="b-tip-right">
+                                    <div class="b-tip-titleb">本社区用户榜单</div>
+                                    <div class="b-tip-titlel">总榜单</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row_list">
+                                <div class="row_list_jp jp01"></div>
+                                <div class="row_list_tx">
+                                    <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
+                                </div>
+                                <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
+                                <span class="row_list_integral">累计签到900人次</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+</html> 

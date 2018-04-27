@@ -270,6 +270,37 @@ function getConameById($id) {
     }
 }
 
+/**
+ * 计算季度
+ * @return string
+ */
+function getQuarter() {
+    $year = date('Y', time());
+    $month = date('m', time());
+    if ($month > 9) {
+        $data['nstart'] = $year . '-' . '10-01 00:00:00';
+        $data['nend'] = $year . '-' . '12-31 23:59:59';
+        $data['lstart'] = $year . '-' . '07-01 00:00:00';
+        $data['lend'] = $year . '-' . '09-30 23:59:59';
+    } elseif ($month > 7 && $month < 9) {
+        $data['nstart'] = $year . '-' . '07-01 00:00:00';
+        $data['nend'] = $year . '-' . '09-30 23:59:59';
+        $data['lstart'] = $year . '-' . '04-01 00:00:00';
+        $data['lend'] = $year . '-' . '06-30 23:59:59';
+    } elseif ($month > 3 && $month < 7) {
+        $data['nstart'] = $year . '-' . '04-01 00:00:00';
+        $data['nend'] = $year . '-' . '06-30 23:59:59';
+        $data['lstart'] = $year . '-' . '01-01 00:00:00';
+        $data['lend'] = $year . '-' . '03-31 23:59:59';
+    } else {
+        $data['nstart'] = $year . '-' . '01-01 00:00:00';
+        $data['nend'] = $year . '-' . '03-31 23:59:59';
+        $data['lstart'] = ((int) $year - 1) . '-' . '10-01 00:00:00';
+        $data['lend'] = ((int) $year - 1) . '-' . '12-31 23:59:59';
+    }
+    return $data;
+}
+
 function dd($data, $is_exist = true) {
     echo "<pre>";
     print_r($data);
@@ -279,16 +310,13 @@ function dd($data, $is_exist = true) {
     }
 }
 
-function syncData($ret = 0, $msg = '操作成功', $data = [])
-{
+function syncData($ret = 0, $msg = '操作成功', $data = []) {
     $returnData = [
         'ret' => $ret,
         'msg' => $msg,
     ];
-    if(!empty($data)) {
+    if (!empty($data)) {
         $returnData['data'] = $data;
     }
     return $returnData;
 }
-
-

@@ -165,6 +165,23 @@ class BaseDBController extends Controller {
         return $returnData;
     }
 
+    /**
+     * function:获取某一条数据By ID
+     * @param $model
+     * @param $id
+     * @return mixed
+     */
+    public function getDataKey($model, $id, $key) {
+        $condition['id'] = array('EQ', $id);
+        $result = $model->where($condition)->find();
+        if (isset($result)) {
+            $returnData = $result[$key];
+        } else {
+            $returnData = '502';
+        }
+        return $returnData;
+    }
+
     public function madField($field0, $field1) {
         return $this->dbFix . $field0 . ',' . $this->dbFix . $field1;
     }
