@@ -35,3 +35,7 @@
 -keep public class * extends android.support.v4.app.Fragment
 #忽略警告
 -ignorewarning
+#  fastjson
+-keep class com.alibaba.fastjson.** { *; }
+-dontwarn com.alibaba.fastjson.**
+#  fastjson
