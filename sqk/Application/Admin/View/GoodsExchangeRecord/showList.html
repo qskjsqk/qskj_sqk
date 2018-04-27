@@ -7,7 +7,7 @@
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/admin/js/common.js"></script>
-        <script type="text/javascript" src="/Public/admin/js/seller/sellerntegralGoods.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/seller/GoodsExchangeRecord.js"></script>
     </head>
     <style>
         .field-group{width:100%;margin-top: 20px;height: 30px;}
@@ -18,8 +18,8 @@
         .score-group{width:100%;border:1px darkgray solid;height: 100px;}
         .score-left,.score-center,.score-right{float: left;height: 98px;}
         .score-left{width:20%;}
-        .score-center{width:60%;}
-        .score-right{width:20%;}
+        .score-center{width:40%;}
+        .score-right{width:40%;}
         .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
     </style>
     <body>
@@ -29,14 +29,22 @@
                 <div class="score-left"></div>
                 <div class="score-center">
                     <div class="score-item">
-                        <div class="score-field">梨园镇积分商品数量:&nbsp;&nbsp;{$data.allGoodsCount}</div>
+                        <div class="score-field">全镇消费兑换次数:&nbsp;&nbsp;{$data.exchangeIntegral.count}</div>
                     </div>
-                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
                         <div class="score-item">
-                            <div class="score-field">本社区积分商品数量:&nbsp;&nbsp;{$data.currentGoodsCount}</div>
+                            <div class="score-field">累计交易积分值:&nbsp;&nbsp;{$data.exchangeIntegral.integral}</div>
                         </div>
-                    </if>
                 </div>
+                <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                <div class="score-right">
+                    <div class="score-item">
+                        <div class="score-field">本社区消费兑换次数:&nbsp;&nbsp;{$data.currentExchangeIntegral.count}</div>
+                    </div>
+                        <div class="score-item">
+                            <div class="score-field">累计交易积分值:&nbsp;&nbsp;{$data.currentExchangeIntegral.integral}</div>
+                        </div>
+                </div>
+                </if>
             </div>
 
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
@@ -61,7 +69,7 @@
                     </if>
                     <div class="col-sm-2" style="min-width: 300px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="name" name="name" value="{$data.searchInfo.name}" placeholder="积分商品名称/商家名称">
+                            <input type="text" class="form-control" id="name" name="name" value="{$data.searchInfo.name}" placeholder="商品名称/商家名称/用户名">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-success" id="searchInfo-btn" style="height: 34px;">
                                     <span class="glyphicon glyphicon-search"></span> 搜索
@@ -78,51 +86,27 @@
             <table class="table table-hover">
                 <tr>
                     <th><input type="checkbox" name="allChecked" onclick="setAllChecked(this);"/></th>
-                    <th>序号</th>
-                    <th>&nbsp;名称</th>
-                    <th>&nbsp;类型</th>
-                    <th>发布商家</th>
-                    <th>发布时间</th>
-                    <th>兑换次数</th>
-                    <th>所需积分</th>
-                    <th>状态</th>
+                    <th>&nbsp;交易商品</th>
+                    <th>&nbsp;交易时间</th>
+                    <th>积分接收商家</th>
+                    <th>积分支出用户</th>
+                    <th>积分接收值</th>
                     <th>操作</th>
                 </tr>
                 <notempty name="data.infoList">
                     <foreach name="data.infoList" item="v" key="k">
                         <tr class="tr">
                             <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
-                            <td>{$v.id}</td>
                             <td>{$v.goods_name}</td>
-                            <td>{$v.cat_name}</td>
+                            <td>{$v.exchange_time}</td>
                             <td>{$v.seller_name}</td>
-                            <td>{$v.public_time}</td>
-                            <td>兑换次数</td>
-                            <td>{$v.required_integral}</td>
+                            <td>{$v.usr}</td>
+                            <td>{$v.exchange_integral}</td>
                             <td>
-                                <if condition="$v.status eq 1">
-                                    已发布
-                                <elseif condition="$v.status eq 2"/>
-                                    已下架
-                                </if>
-                            </td>
-                        <td>
                             <div>
-                                <button class="btn btn-success" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
+                                <button class="btn btn-success" onclick="showExchangeInfo({$v.id});">
                                     查看详情
                                 </button>
-                                <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__MODULE__/GoodsExchangeRecord/showListById/goods_id/{$v.id}')">
-                                     兑换记录
-                                </button>
-                                <if condition="$v.status eq 1">
-                                    <button class="btn btn-danger delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
-                                        下架
-                                    </button>
-                                <elseif condition="$v.status eq 2"/>
-                                    <button class="btn btn-success delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
-                                        上架
-                                    </button>
-                                </if>
                             </div>
                         </td>
                         </tr>
@@ -135,7 +119,7 @@
             <div style="text-align: center;">{$data.page}</div>
 
             <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
-                显示全部积分商品
+                显示全部
             </button>
 
         </div>
@@ -145,37 +129,55 @@
         <div class="container" style="width: 500px;">
             <div class="row">
                     <div class="form-group" style="width:500px;">
-                        <label for="goods_pic" class="col-sm-3 control-label">商品图片</label>
-                        <div class="col-sm-7">
-                            <img src="" class="goods_pic" width="200"/>
-                        </div>
-                    </div>
-                    <div class="form-group" style="width:500px;">
                         <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
                         <div class="col-sm-7">
                             <p class="goods_name"></p>
-                            <p class="required_integral"></p>
                         </div>
                     </div>
                 <div class="form-group" style="width:500px;">
-                    <label for="goods_detail" class="col-sm-3 control-label">商品详情</label>
+                    <label for="exchange_time" class="col-sm-3 control-label">交易时间</label>
                     <div class="col-sm-7">
-                        <p class="goods_detail"></p>
+                        <p class="exchange_time"></p>
                     </div>
                 </div>
                 <div class="form-group" style="width:500px;">
-                    <label for="seller_name" class="col-sm-3 control-label">适用门店</label>
+                    <label for="seller_name" class="col-sm-3 control-label">交易店铺</label>
                     <div class="col-sm-7">
                         <p class="seller_name"></p>
                     </div>
                 </div>
                 <div class="form-group" style="width:500px;">
-                    <label for="use_of_knowledge" class="col-sm-3 control-label">适用须知</label>
+                    <label for="usr" class="col-sm-3 control-label">交易人</label>
                     <div class="col-sm-7">
-                        <p class="use_of_knowledge">
+                        <p class="usr">
                         </p>
                     </div>
                 </div>
+
+                <div class="form-group" style="width:500px;">
+                    <label for="realname" class="col-sm-3 control-label">交易人姓名</label>
+                    <div class="col-sm-7">
+                        <p class="realname">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" style="width:500px;">
+                    <label for="com_name" class="col-sm-3 control-label">交易人社区</label>
+                    <div class="col-sm-7">
+                        <p class="com_name">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" style="width:500px;">
+                    <label for="exchange_number" class="col-sm-3 control-label">交易单号</label>
+                    <div class="col-sm-7">
+                        <p class="exchange_number">
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

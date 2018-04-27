@@ -102,7 +102,7 @@ function showGoodsInfo(id, seller_name) {
                     $("p[class='goods_detail']").html(data.goods_detail);
                     $("p[class='use_of_knowledge']").html(data.use_of_knowledge);
                 } else {
-                    console.log(result.msg);
+                    alert(result.msg);
                 }
             },'json');
         }
