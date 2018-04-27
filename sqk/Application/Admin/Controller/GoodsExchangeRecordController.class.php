@@ -50,7 +50,7 @@ class GoodsExchangeRecordController extends BaseDBController {
     }
 
     /**
-     * 显示积分商品列表
+     * 显示兑换记录列表
      */
     public function showList() {
         if (GET) {
@@ -82,24 +82,11 @@ class GoodsExchangeRecordController extends BaseDBController {
             'searchInfo' => $pageCondition,
             'infoList' => $infoList,
             'communitys' => $this->communityInfoModel->getLists(),
+            'exchangeIntegral' => $this->infoModel->getExchangeCount(true),
         ];
+        if(session('sys_name') == 'sqAdmin') $data['currentExchangeIntegral'] = $this->infoModel->getExchangeCount(false);
         $this->assign('data', $data);
-        //dd($data, false);
         $this->display();
-    }
-
-    /**
-     * 异步上/下架商品
-     */
-    public function goodsFrame() {
-        $id = I('id');
-        if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-2, '操作失败,请重新操作'));
-        $toStatus = I('status') == 1 ? 2: 1;
-        if($this->infoModel->where(['id' => $id])->save(['status' => $toStatus]) == true) {
-            $this->ajaxReturn(syncData(0, '操作成功'));
-        } else {
-            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
-        }
     }
 
     /**
@@ -117,11 +104,58 @@ class GoodsExchangeRecordController extends BaseDBController {
     /**
      * 积分商品详情页
      */
-    public function getGoodsInfoSync() {
+    public function getExchangeInfoSync() {
         $id = I('id');
         if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-1, '获取失败,请重新操作'));
-        $info = $this->infoModel->find($id);
-        $this->ajaxReturn(syncData(0, '获取数据成功', $info));
+
+        $join = [
+            ['seller_integral_goods', 'id', 'goods_exchange_record', 'goods_id'],
+            ['seller_info', 'id', 'goods_exchange_record', 'seller_id'],
+            ['sys_userapp_info', 'id', 'goods_exchange_record', 'user_id'],
+            ['sys_community_info', 'id', 'sys_userapp_info', 'address_id'],
+        ];
+        $field = [
+            'goods_exchange_record.*',
+            'seller_info.name as seller_name',
+            'sys_userapp_info.usr',
+            'sys_userapp_info.realname',
+            'seller_integral_goods.goods_name',
+            'sys_community_info.com_name',
+        ];
+
+        $where = [$this->dbFix . 'goods_exchange_record.id' => $id];
+        $info = $this->infoModel->joinFieldDB($join, $field, $where)->find();
+        if(!empty($info)) {
+            $this->ajaxReturn(syncData(0, '获取数据成功', $info));
+        } else {
+            $this->ajaxReturn(syncData(-2, '获取失败,请重新操作'));
+        }
+    }
+
+    /**
+     * 显示某一积分商品下的积分兑换列表
+     */
+    public function showListById() {
+        $goods_id = I('goods_id');
+        if(!isset($goods_id) || empty($goods_id)) $this->redirect('/Admin/SellerIntegralGoods/showList');
+
+        $where = [
+            $this->dbFix . 'seller_integral_goods.status' => ['neq', 0],     //管理员不能看到未发布的积分商品(本条件可以不设置)
+            $this->dbFix . 'goods_exchange_record.goods_id' => $goods_id,
+        ];
+
+        list($join, $field) = self::createJoinAndField();
+        list($page, $pageCondition, $infoList) = $this->infoModel->listPage($where, [], $join, $field);
+        $data = [
+            'page' => $page,
+            'searchInfo' => $pageCondition,
+            'infoList' => $infoList,
+            'communitys' => $this->communityInfoModel->getLists(),
+            'exchangeIntegral' => $this->infoModel->getExchangeCount(true),
+        ];
+        if(session('sys_name') == 'sqAdmin') $data['currentExchangeIntegral'] = $this->infoModel->getExchangeCount(false);
+        $this->assign('data', $data);
+        $this->display();
     }
 
 }

@@ -31,9 +31,6 @@ class SellerIntegralGoodsController extends BaseDBController {
     private static function createJoinAndField()
     {
         $join = [
-            /*['sys_community_info', 'id', 'address_id'],
-            ['seller_integral_goods_cat', 'id', 'cat_id'],
-            ['seller_info', 'id', 'seller_id'],*/
             ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
             ['seller_integral_goods_cat', 'id', 'seller_integral_goods', 'cat_id'],
             ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
@@ -113,13 +110,43 @@ class SellerIntegralGoodsController extends BaseDBController {
     }
 
     /**
-     * 积分商品详情页
+     * 异步获取积分商品详情
      */
     public function getGoodsInfoSync() {
         $id = I('id');
         if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-1, '获取失败,请重新操作'));
         $info = $this->infoModel->find($id);
-        $this->ajaxReturn(syncData(0, '获取数据成功', $info));
+        if(!empty($info)) {
+            $this->ajaxReturn(syncData(0, '获取数据成功', $info));
+        } else {
+            $this->ajaxReturn(syncData(-2, '获取失败,请重新操作'));
+        }
+    }
+
+    /**
+     * 显示某一商家下的积分商品列表
+     */
+    public function showListById() {
+        $seller_id = I('seller_id');
+        if(!isset($seller_id) || empty($seller_id)) $this->redirect('/Admin/SellerInfo/showList');
+
+        $where = [
+            $this->dbFix . 'seller_integral_goods.status' => ['neq', 0],     //管理员不能看到未发布的积分商品(本条件可以不设置)
+            $this->dbFix . 'seller_integral_goods.seller_id' => $seller_id,
+        ];
+
+        list($join, $field) = self::createJoinAndField();
+        list($page, $pageCondition, $infoList) = $this->infoModel->listPage($where, [], $join, $field);
+        $data = [
+            'page' => $page,
+            'searchInfo' => $pageCondition,
+            'infoList' => $infoList,
+            'communitys' => $this->communityInfoModel->getLists(),
+            'allGoodsCount' => $this->infoModel->getIntegralGoodsCount(true),
+            'currentGoodsCount' => session('sys_name') == 'sqAdmin' ? $this->infoModel->getIntegralGoodsCount(false) : null,
+        ];
+        $this->assign('data', $data);
+        $this->display();
     }
 
 }
