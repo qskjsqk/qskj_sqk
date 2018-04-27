@@ -5,13 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.zhcd.lysqk.module.home.HomeActivity;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
 import com.zhcd.lysqk.view.CustomizeKeyboard;
 import com.zhcd.lysqk.view.PasswordInputView;
-import com.zhcd.utils.T;
 
 
 public class LoginActivity extends BaseActivity {
@@ -66,9 +65,10 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.iv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPreCondition()) {
-                    T.showShort("登录");
-                }
+//                if (checkPreCondition()) {
+                HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
+                finish();
+//                }
             }
         });
         findViewById(R.id.ll_root).setOnClickListener(new View.OnClickListener() {

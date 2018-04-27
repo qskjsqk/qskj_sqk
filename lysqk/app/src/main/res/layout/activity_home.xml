@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/wh_55">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/home_tab_bg" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_home"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wh_50"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_action_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/margin_5dp"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="已发布活动"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_integral_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:paddingTop="@dimen/margin_5dp"
+                android:gravity="center"
+                android:text="社区积分兑换"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radio_group_home">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_action_tab"
+                    android:layout_width="@dimen/wh_80"
+                    android:layout_height="@dimen/wh_2"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/home_tab_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_integral_tab"
+                    android:layout_width="@dimen/wh_80"
+                    android:layout_height="@dimen/wh_2"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/home_tab_line"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@color/white"></RelativeLayout>
+</LinearLayout>

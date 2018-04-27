@@ -2,8 +2,8 @@ package com.zjinv.uilibrary.recyclerview.adapter;
 
 import android.content.Context;
 
+import com.zhcd.utils.DensityUtil;
 import com.zjinv.uilibrary.R;
-import com.zjinv.utils.DensityUtil;
 
 public class HSItemDecoration extends CommonItemDecoration {
 
