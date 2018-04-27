@@ -145,5 +145,15 @@ class LinkmanController extends Controller {
         }
         $this->ajaxReturn($returnData);
     }
+    
+        /**
+     * 获取个人信息
+     */
+    public function getUserInfo() {
+        $userModel = M(C('DB_USERAPP_INFO'));
+        $user_id = cookie('user_id');
+        $result = $userModel->where(array('id' => $user_id))->find();
+        $this->ajaxReturn($result);
+    }
 
 }

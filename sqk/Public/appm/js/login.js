@@ -28,7 +28,7 @@ function subLogin() {
         } else if (data.is_success != '' && data.is_success != null) {
             mui.toast(data.is_success);
         } else {
-            aHref(m_path + '/index/main');
+            aHref(m_path + '/activity/activity_list');
         }
     }, 'json');
 }

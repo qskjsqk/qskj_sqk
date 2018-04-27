@@ -90,6 +90,8 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
+//    console.log(controller);
+    $('#'+controller+'_btn').addClass('mui-active');
     $.post(m_path + "/login/checkIsLogin", function (data) {
         if (data.flag == 0) {
             mui.alert('您的登录信息已失效，请重新登录', '提示', '马上登录', function () {
@@ -98,6 +100,8 @@ function checkIsLogin() {
         } else {
             //tabbar 通知公告
             data.data.notice_num == 0 ? $('#notice_num').html('') : $('#notice_num').html('<span class="mui-badge">' + data.data.notice_num + '</span>');
+            //tabbar 活动
+            data.data.activity_num == 0 ? $('#activity_num').html('') : $('#activity_num').html('<span class="mui-badge">' + data.data.activity_num + '</span>');
         }
     }, 'json');
 

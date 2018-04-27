@@ -372,7 +372,7 @@ class ActivityController extends Controller {
      * @return string
      */
     public function getEnableCatIds() {
-        $selectArr = M('ActivCat')->where('is_enable=1 and sys_name<>"slider"')->select();
+        $selectArr = M('ActivCat')->where('is_enable=1')->select();
         if (empty($selectArr)) {
             return '0,0';
         } else {

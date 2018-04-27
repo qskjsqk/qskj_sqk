@@ -11,7 +11,6 @@
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <style type="text/css">
             .mui-table-view{
                 margin: 10px 0;
@@ -36,6 +35,7 @@
         {$Assigndata}
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
         <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/my_card.js"></script>
     </head>
 
     <body>
@@ -44,9 +44,11 @@
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/setting')"></a>
             <h1 class="mui-title header-a-l">我的实体卡</h1>	
         </header>
+    <include file="./Application/Appm/View/tabnav.html" />
 
-        <!--主体部分-->
-        <div class="mui-content">
+    <!--主体部分-->
+    <div class="mui-content">
+        <if condition="$myInfo.iccard_num eq 0">
             <div class="mui-row">
                 <div class="mui-card">
                     <div class="mui-card-content">
@@ -56,26 +58,29 @@
                     </div>
                 </div>
             </div>
-            <div class="mui-row">
-                <div class="mui-card">
-                    <div class="mui-card-header">请展示此二维码进行消费</div>
-                    <div class="mui-card-content">
-                        <div class="mui-card-content-inner">
-                            <p>
-                                <img src="/Public/appm/img/card.jpg">
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mui-card-footer">
-                        卡号：2374892739847298
+        </if>
+        <div class="mui-row">
+            <div class="mui-card">
+                <div class="mui-card-header">请展示此二维码进行消费</div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner">
+                        <p>
+                            <img src="/Public/appm/img/card.jpg">
+                        </p>
                     </div>
                 </div>
+                <if condition="$myInfo.iccard_num neq 0">
+                    <div class="mui-card-footer">
+                        卡号：{$myInfo.iccard_num}
+                    </div>
+                </if>
             </div>
-
-
-
         </div>
-        <!--页面主内容区结束-->
-    </body>
+
+
+
+    </div>
+    <!--页面主内容区结束-->
+</body>
 
 </html>

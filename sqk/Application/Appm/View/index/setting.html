@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
+        
         <style type="text/css">
             .mui-table-view{
                 margin: 10px 0;
@@ -29,85 +29,59 @@
             });
         </script>
         {$Assigndata}
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/setting.js"></script>
     </head>
 
     <body>
         <!--头栏-->
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')"></a>
+        <header class="mui-bar mui-bar-nav header-a-l">
             <h1 class="mui-title header-a-l">我的信息</h1>	
             <a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="aHref('__MODULE__/index/my_notice')"></a>
         </header>
-        
-        <!--底部tabbar-->
-        <nav class="mui-bar mui-bar-tab">
-            <a class="mui-tab-item mui-active" onclick="aHref('__MODULE__/notice/notice_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">通知</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/activity/activity_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-class">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">活动</span>
-            </a>
-            <a class="mui-tab-item" onclick="aHref('__MODULE__/seller/item_list')">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-gift">
-                    <span class="mui-badge">9</span>
-                </span>
-                <span class="mui-tab-label">积分</span>
-            </a>
-            <a class="mui-tab-item" href="#tabbar-with-map">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
-                <span class="mui-tab-label">榜单</span>
-            </a>
-            <a class="mui-tab-item" href="#tabbar-with-map">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
-                <span class="mui-tab-label">我的</span>
-            </a>
-        </nav>
 
-        <!--主体部分-->
-        <div class="mui-content">
-            
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell mui-media">
-                    <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/setinfo')">
-                        <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
-                        <div class="mui-media-body">
-                            张晓炜&#12288;[云景东里]
-                            <p class='mui-ellipsis'>可消费积分：3000</p>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell">
-                    <a onclick="aHref('__MODULE__/index/activ_list')" class="mui-navigate-right">我的活动</a>
-                </li>
-                <li class="mui-table-view-cell">
-                    <a onclick="aHref('__MODULE__/index/signin_list')" class="mui-navigate-right">我的签到</a>
-                </li>
-            </ul>
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell">
-                    <a onclick="aHref('__MODULE__/index/order_list')" class="mui-navigate-right">积分消费记录</a>
-                </li>
-                <li class="mui-table-view-cell">
-                    <a onclick="aHref('__MODULE__/index/litem_list')" class="mui-navigate-right">已兑换券码</a>
-                </li>
-            </ul>
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell">
-                    <a onclick="aHref('__MODULE__/index/my_card')" class="mui-navigate-right">我的实体卡</a>
-                </li>
-            </ul>
-            <!--页面主内容区结束-->
-        </div>
-    </body>
+        <!--底部tabbar-->
+    <include file="./Application/Appm/View/tabnav.html" />
+
+
+    <!--主体部分-->
+    <div class="mui-content">
+
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/my_info')">
+                    <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
+                    <div class="mui-media-body">
+                        {$myInfo.realname}&#12288;[{$myInfo.address_name}]
+                        <p class='mui-ellipsis'>可消费积分：{$myInfo.integral_num}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell">
+                <a onclick="aHref('__MODULE__/index/activ_list')" class="mui-navigate-right">我的活动</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a onclick="aHref('__MODULE__/index/signin_list')" class="mui-navigate-right">我的签到</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell">
+                <a onclick="aHref('__MODULE__/index/order_list')" class="mui-navigate-right">积分消费记录</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a onclick="aHref('__MODULE__/index/litem_list')" class="mui-navigate-right">已兑换券码</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell">
+                <a onclick="aHref('__MODULE__/index/my_card')" class="mui-navigate-right">我的实体卡</a>
+            </li>
+        </ul>
+        <!--页面主内容区结束-->
+    </div>
+</body>
 
 </html>
