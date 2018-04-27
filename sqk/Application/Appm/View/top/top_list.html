@@ -30,12 +30,13 @@
         {$Assigndata}
 
         <script src="__PUBLIC__/appm/js/common.js"></script>
-        <script src="__PUBLIC__/appm/js/top_home.js"></script>
+        <script src="__PUBLIC__/appm/js/top_list.js"></script>
     </head>
 
     <body>
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/top/top_home')"></a>
             <h1 class="mui-title header-a-l">本社区用户榜</h1>	
             <a  class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a" ></a>
         </header>
@@ -48,19 +49,19 @@
         <div class="mui-row">
             <div class="mui-card">
                 <div class="mui-card-header mui-card-media top_card_hearder_bg">
-                    <div class="mui-card-link">
+                    <div class="mui-card-link" id="topName">
                         <b>①</b>&nbsp;本社区用户榜
                     </div>
                     <div class="mui-card-link">
                         <div id="tab" class="mui-segmented-control1">
-                            <a class="mui-control-item mui-active">本季度</a>
-                            <a class="mui-control-item">上季度</a>
-                            <a class="mui-control-item">总榜单</a>
+                            <a id="tab0" class="mui-control-item mui-active">本季度</a>
+                            <a id="tab1"  class="mui-control-item">上季度</a>
+                            <a id="tab2"  class="mui-control-item">总榜单</a>
                         </div>
                     </div>
                 </div>
                 <div class="mui-card-content">
-                    <div class="mui-card-content-inner">
+                    <div class="mui-card-content-inner" id="topList">
                         <div class="mui-row row_list">
                             <div class="row_list_jp jp01"></div>
                             <div class="row_list_tx">

@@ -59,8 +59,8 @@
                                     <div class="row_list_tx">
                                         {$v.tx_icon}
                                     </div>
-                                    <span class="row_list_title">{$v.realname}</br><p>{$v.address_name}</p></span>
-                                    <span class="row_list_integral">{$v.sign_integral}分</span>
+                                    <span class="row_list_title">{$v.top}</br><p>{$v.bottom}</p></span>
+                                    <span class="row_list_integral">{$v.right}</span>
                                 </div>
                             </foreach>
                             <empty name="data.nowList">
@@ -70,16 +70,6 @@
                                     </div>
                                 </div>
                             </empty>
-
-                            <!--                            <div class="row_list">
-                                                            <div class="row_list_jp jp01"></div>
-                                                            <div class="row_list_tx">
-                                                                <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
-                                                            </div>
-                                                            <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
-                                                            <span class="row_list_integral">累计签到900人次</span>
-                                                        </div>-->
-
                         </div>
                     </div>
                 </div>
@@ -98,15 +88,16 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <!--                            <div class="row_list">
-                                                            <div class="row_list_jp jp01"></div>
-                                                            <div class="row_list_tx">
-                                                                <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
-                                                            </div>
-                                                            <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
-                                                            <span class="row_list_integral">累计签到900人次</span>
-                                                        </div>
-                            -->
+                            <foreach name="data.lastList" item="v" key="k">
+                                <div class="row_list">
+                                    <div class="row_list_jp jp0{$k+1}"></div>
+                                    <div class="row_list_tx">
+                                        {$v.tx_icon}
+                                    </div>
+                                    <span class="row_list_title">{$v.top}</br><p>{$v.bottom}</p></span>
+                                    <span class="row_list_integral">{$v.right}</span>
+                                </div>
+                            </foreach>
                             <empty name="data.lastList">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
@@ -133,14 +124,23 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="row_list">
-                                <div class="row_list_jp jp01"></div>
-                                <div class="row_list_tx">
-                                    <span class="glyphicon glyphicon-home" style="font-size: 34px;"></span>
+                            <foreach name="data.allList" item="v" key="k">
+                                <div class="row_list">
+                                    <div class="row_list_jp jp0{$k+1}"></div>
+                                    <div class="row_list_tx">
+                                        {$v.tx_icon}
+                                    </div>
+                                    <span class="row_list_title">{$v.top}</br><p>{$v.bottom}</p></span>
+                                    <span class="row_list_integral">{$v.right}</span>
                                 </div>
-                                <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
-                                <span class="row_list_integral">累计签到900人次</span>
-                            </div>
+                            </foreach>
+                            <empty name="data.allList">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        暂时没有数据
+                                    </div>
+                                </div>
+                            </empty>
                         </div>
                     </div>
                 </div>
