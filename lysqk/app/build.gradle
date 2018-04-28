@@ -41,6 +41,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        develop {
+            manifestPlaceholders = [
+                    BUILD_TYPE   : "DEVELOP",
+            ]
+        }
+
+        online {
+            manifestPlaceholders = [
+                    BUILD_TYPE   : "Online",
+            ]
+        }
+    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']

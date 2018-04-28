@@ -5,21 +5,21 @@ package com.sanjieke.datarequest.neworkWrapper;
  */
 public class BaseData<T> {
 
-    private int code = -1;
+    private int status = -1;
 
     private String msg;
 
     private T data;
     private String tag;
-    private int total;
+    private long timestamp;
     private boolean intermediate = false;//是否是中间数据
 
-    public int getCode() {
-        return code;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMsg() {
@@ -46,13 +46,6 @@ public class BaseData<T> {
         this.tag = tag;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
 
     public boolean isIntermediate() {
         return intermediate;
@@ -60,5 +53,13 @@ public class BaseData<T> {
 
     public void setIntermediate(boolean intermediate) {
         this.intermediate = intermediate;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

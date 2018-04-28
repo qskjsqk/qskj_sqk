@@ -6,6 +6,6 @@ package com.zhcd.lysqk.net;
  */
 
 public class ServiceCode {
-    public static final int SUCCESS = 20000;
+    public static final int SUCCESS = 1;
 
 }

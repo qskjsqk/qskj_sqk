@@ -259,7 +259,7 @@ public class DataRequestWrapper {
 
             Logger.d(Constants.NetworkTag, "url response error: " + error.toString());
             BaseData res = new BaseData();
-            res.setCode(-1);
+            res.setStatus(-1);
             res.setMsg("网络异常");
             if (mTag instanceof String) {
                 res.setTag((String) mTag);//临时用于判断回传值用的tag
@@ -289,13 +289,10 @@ public class DataRequestWrapper {
             try {
                 JSONObject root = JSONTools.buildJsonObject(response.toString());
                 if (root != null) {
-                    int code = root.getInt("code");
+                    int code = root.getInt("status");
                     String msg = root.getString("msg");
-                    if (root.has("total")) {
-                        int total = root.getInt("total");
-                        res.setTotal(total);
-                    }
-                    res.setCode(code);
+
+                    res.setStatus(code);
                     if (TextUtils.isEmpty(msg)) {
                         res.setMsg(Errors.BASE_NO_MSG);
                     } else {
@@ -328,7 +325,7 @@ public class DataRequestWrapper {
 //                res.setCode(Errors.BASE_PARSER_ERROR);
                 res.setMsg(e.toString());
             } finally {
-                Logger.d(Constants.NetworkTag, String.format(" response builder : code = %d, msg = %s", res.getCode(), res.getMsg()));
+                Logger.d(Constants.NetworkTag, String.format(" response builder : code = %d, msg = %s", res.getStatus(), res.getMsg()));
 
                 if (mDataResponse != null) {
                     if (RequestManager.isDebug()) {

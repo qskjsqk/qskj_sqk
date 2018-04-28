@@ -108,7 +108,7 @@ public class DataRequestTool {
     public static boolean noError(BaseData res) {
         boolean correct = false;
         if (res != null) {
-            if ((res.getCode() >= 0 && res.getCode() <= REQUEST_SUCC) || res.getCode() == REQUEST_NO_DATA) {
+            if ((res.getStatus() >= 0 && res.getStatus() <= REQUEST_SUCC) || res.getStatus() == REQUEST_NO_DATA) {
                 correct = true;
             }
         }

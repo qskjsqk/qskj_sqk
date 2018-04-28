@@ -4,13 +4,19 @@ package com.zhcd.lysqk.module.login;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.sanjieke.datarequest.network.RequestManager;
+import com.sanjieke.datarequest.neworkWrapper.BaseData;
+import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
 import com.zhcd.lysqk.module.home.HomeActivity;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
+import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.view.CustomizeKeyboard;
 import com.zhcd.lysqk.view.PasswordInputView;
+import com.zhcd.utils.T;
 
 
 public class LoginActivity extends BaseActivity {
@@ -65,10 +71,12 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.iv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (checkPreCondition()) {
-                HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
-                finish();
-//                }
+                if (checkPreCondition()) {
+                    String input = inputPwd.getTextString();
+                    input = "252699";
+                    checkLoginPos(input);
+
+                }
             }
         });
         findViewById(R.id.ll_root).setOnClickListener(new View.OnClickListener() {
@@ -82,11 +90,36 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    private void checkLoginPos(String token_num) {
+        if (TextUtils.isEmpty(token_num))
+            return;
+        ServiceProvider.checkLoginPos(token_num, new IDataResponse() {
+            @Override
+            public void onResponse(BaseData obj) {
+                if (ServiceProvider.errorFilter(obj)) {
+                    HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
+                    finish();
+                } else {
+                    if (obj != null)
+                        T.showShort(obj.getMsg());
+                }
+            }
+        }, LoginActivity.class.getSimpleName());
+
+    }
+
     private boolean checkPreCondition() {
         String input = inputPwd.getTextString();
+        input = "252699";
         if (input.length() < 6) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        RequestManager.cancelAll(LoginActivity.class.getSimpleName());
+        super.onDestroy();
     }
 }
