@@ -35,6 +35,11 @@ class SysUserInfoController extends BaseDBController {
      * 显示管理员用户列表
      */
     public function showList() {
+        $address_id = $_SESSION['address_id'];
+        if ($_SESSION['address_id'] != 0) {
+            $where['address_id'] = array('EQ', $_SESSION['address_id']);
+            $pageCondition['address_id'] = urldecode($_SESSION['address_id']);
+        }
         if (!empty($_GET['usr'])) {
             $where['usr'] = array('LIKE', '%' . urldecode($_GET['usr']) . '%');
             $pageCondition['usr'] = urldecode($_GET['usr']);
@@ -59,6 +64,7 @@ class SysUserInfoController extends BaseDBController {
             parse_str($form_data, $param_arr); //转换数组
             $param_arr['pwd'] = R('Login/EncriptPWD', array($param_arr['pwd'])); //密码加密
             $param_arr['repwd'] = R('Login/EncriptPWD', array($param_arr['repwd'])); //密码加密
+            $param_arr['token_num'] = make_char('m');
             $returnData = parent::saveData($this->userInfoModel, $param_arr);
             $logC = A('Actionlog')->addLog('SysUserInfo', 'saveUserInfo', '添加/编辑用户信息');
             $this->ajaxReturn($returnData, 'JSON');
@@ -89,6 +95,16 @@ class SysUserInfoController extends BaseDBController {
             $this->assign('userInfo', $userInfo);
             $this->display();
         }
+    }
+
+    /**
+     * 生成设备识别码
+     */
+    public function updateTokenNum() {
+        $arr['id'] = $_GET['id'];
+        $arr['token_num'] = make_char('m');
+        $returnData = parent::saveData($this->userInfoModel, $arr);
+        $this->redirect('showList');
     }
 
     /**

@@ -133,9 +133,11 @@ function tranTime($time) {
  * @return type
  */
 function tranTimeToCom($time) {
-    $time = strtotime($time);
-    $str['ymd'] = date("Y年m月d日", $time);
-    $str['his'] = date("H:i:s", $time);
+    $ctime = strtotime($time);
+    $str['ymdz'] = date("Y年m月d日", $ctime);
+    $str['ymd'] = date("Y.m.d", $ctime);
+    $str['his'] = date("H:i:s", $ctime);
+    $str['time'] = $time;
     return $str;
 }
 

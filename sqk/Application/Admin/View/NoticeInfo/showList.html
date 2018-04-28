@@ -82,7 +82,7 @@
                         <td>{$v.add_time}</td>
                         <td>
                             <div>
-                                <if condition="$v.address_id eq $address_id||$address_id eq 0">
+                                <if condition="$v.address_id eq $address_id">
                                     <button class="btn btn-default edit-btn editNoticeInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$v.id}')">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
                                     </button>
