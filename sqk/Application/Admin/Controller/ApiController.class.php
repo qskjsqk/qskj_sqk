@@ -83,7 +83,7 @@ class ApiController extends BaseDBController {
                 for ($i = 0; $i < count($selectArr); $i++) {
                     $selectArr[$i]['cat_name'] = parent::getDataKey(M('activ_cat'), $selectArr[$i]['cat_id'], 'cat_name');
                     $selectArr[$i]['address_name'] = getConameById($selectArr[$i]['address_id']);
-                    $selectArr[$i]['start_time'] = tranTimeToCom($selectArr[$i]['start_time']);
+                    $selectArr[$i]['start_time'] = strtotime($selectArr[$i]['start_time']);
                     $condition['module_info_id'] = $selectArr[$i]['id'];
                     $condition['module_name'] = array('EQ', 'activity');
                     $imgArr = M('sys_all_attach')->where($condition)->order('id desc')->find();
@@ -125,11 +125,15 @@ class ApiController extends BaseDBController {
                 unset($activInfo['join_ids']);
                 unset($activInfo['join_num']);
 
-                $activInfo['add_time'] = tranTimeToCom($activInfo['add_time']);
-                $activInfo['start_time'] = tranTimeToCom($activInfo['start_time']);
-                $activInfo['end_time'] = tranTimeToCom($activInfo['end_time']);
+                $activInfo['add_time'] = strtotime($activInfo['add_time']);
+                $activInfo['start_time'] = strtotime($activInfo['start_time']);
+                $activInfo['end_time'] = strtotime($activInfo['end_time']);
 
                 $activInfo['user_name'] = parent::getDataKey(M('sys_user_info'), $activInfo['user_id'], 'realname');
+
+                $preg = '/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?>/i'; //匹配img标签的正则表达式
+                preg_match_all($preg, $activInfo['content'], $allImg); //这里匹配所有的img
+                $activInfo['content_pics'] = $allImg[1];
 
                 $condition['module_info_id'] = $activInfo['id'];
                 $condition['module_name'] = array('EQ', 'activity');
@@ -196,8 +200,8 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 for ($i = 0; $i < count($signinInfoList); $i++) {
-                    $signinInfoList[$i]['add_time'] = tranTimeToCom($signinInfoList[$i]['add_time']);
-                    $signinInfoList[$i]['tx_icon'] = "Public/admin/img/" . ($signinInfoList[$i]['id'] % 13 + 1) . ".jpg";
+                    $signinInfoList[$i]['add_time'] = strtotime($signinInfoList[$i]['add_time']);
+                    $signinInfoList[$i]['tx_icon'] = "Public/admin/img/tx_icon/" . ($signinInfoList[$i]['id'] % 13 + 1) . ".jpg";
                 }
 
                 $returnData['data'] = $signinInfoList;
@@ -283,7 +287,7 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 for ($i = 0; $i < count($signInfoList); $i++) {
-                    $signInfoList[$i]['add_time']= tranTimeToCom($signInfoList[$i]['add_time']);
+                    $signInfoList[$i]['add_time'] = strtotime($signInfoList[$i]['add_time']);
                 }
                 $returnData['data'] = $signInfoList;
                 $returnData['new_id'] = $signInfoList[0]['id'];
