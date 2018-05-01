@@ -39,3 +39,17 @@
 -keep class com.alibaba.fastjson.** { *; }
 -dontwarn com.alibaba.fastjson.**
 #  fastjson
+#所有实体类所在包
+-keep class com.zhcd.lysqk.**.entity.**{ *; }
+
+-libraryjars libs/hf1.3.jar
+
+#zxing
+-keep class com.google.zxing.** {*;}
+-dontwarn com.google.zxing.**
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

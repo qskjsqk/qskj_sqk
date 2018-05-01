@@ -10,9 +10,11 @@ import android.view.View;
 import com.sanjieke.datarequest.network.RequestManager;
 import com.sanjieke.datarequest.neworkWrapper.BaseData;
 import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
+import com.zhcd.lysqk.manager.LoginInfoManager;
 import com.zhcd.lysqk.module.home.HomeActivity;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
+import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.view.CustomizeKeyboard;
 import com.zhcd.lysqk.view.PasswordInputView;
@@ -72,9 +74,11 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (checkPreCondition()) {
-                    String input = inputPwd.getTextString();
-                    input = "252699";
-                    checkLoginPos(input);
+                    HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
+                    finish();
+//                    String input = inputPwd.getTextString();
+//                    input = "252699";
+//                    checkLoginPos(input);
 
                 }
             }
@@ -97,16 +101,20 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(BaseData obj) {
                 if (ServiceProvider.errorFilter(obj)) {
-                    HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
-                    finish();
+                    LoginEntity entity = (LoginEntity) obj.getData();
+                    if (entity != null) {
+                        LoginInfoManager.getInstance().loginSuccess(entity);
+                        HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
+                        finish();
+                    }
                 } else {
                     if (obj != null)
                         T.showShort(obj.getMsg());
                 }
             }
         }, LoginActivity.class.getSimpleName());
-
     }
+
 
     private boolean checkPreCondition() {
         String input = inputPwd.getTextString();

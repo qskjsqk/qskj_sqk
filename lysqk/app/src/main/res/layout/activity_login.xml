@@ -14,7 +14,7 @@
         android:layout_width="340dp"
         android:layout_height="365dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_50dp"
+        android:layout_marginTop="@dimen/margin_70dp"
         android:background="@mipmap/login_view_bg"
         android:orientation="vertical">
 

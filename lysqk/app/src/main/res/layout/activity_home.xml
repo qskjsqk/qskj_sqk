@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="已发布活动"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_16sp" />
+                android:textSize="@dimen/text_18sp" />
 
             <RadioButton
                 android:id="@+id/rb_integral_tab"
@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:text="社区积分兑换"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_16sp" />
+                android:textSize="@dimen/text_18sp" />
         </RadioGroup>
 
         <LinearLayout
@@ -86,6 +86,5 @@
         android:id="@+id/home_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:background="@color/white"></RelativeLayout>
+        android:layout_marginTop="@dimen/margin_8dp"></RelativeLayout>
 </LinearLayout>

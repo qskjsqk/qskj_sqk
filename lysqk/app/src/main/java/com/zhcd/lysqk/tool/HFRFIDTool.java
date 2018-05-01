@@ -1,6 +1,8 @@
 package com.zhcd.lysqk.tool;
 
 
+import com.pda.hf.HFReader;
+
 public class HFRFIDTool {
     /**
      * 十六进制UID转为 十进制
@@ -18,5 +20,13 @@ public class HFRFIDTool {
             return Integer.valueOf(builder.toString(), 16);
         }
         return 0;
+    }
+    private static HFReader hfReader = null;
+
+    public static HFReader getHfReader() {
+        if (hfReader == null) {
+            hfReader = new HFReader(14, 115200, HFReader.POWER_PSAM);
+        }
+        return hfReader;
     }
 }

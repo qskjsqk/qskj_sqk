@@ -12,14 +12,4 @@ public class ApiPostParams extends HashMap<String, Object> {
         put(key, value);
         return this;
     }
-
-    public ApiPostParams with(String key, double value) {
-        put(key, value);
-        return this;
-    }
-    public ApiPostParams with(String key, List value) {
-        put(key, value);
-        return this;
-    }
-
 }

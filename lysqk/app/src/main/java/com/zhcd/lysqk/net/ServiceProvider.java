@@ -4,6 +4,13 @@ package com.zhcd.lysqk.net;
 import com.sanjieke.datarequest.network.RequestManager;
 import com.sanjieke.datarequest.neworkWrapper.BaseData;
 import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
+import com.zhcd.lysqk.module.action.entity.ActionDetailEntity;
+import com.zhcd.lysqk.module.home.entity.ActionListEntity;
+import com.zhcd.lysqk.module.login.entity.LoginEntity;
+import com.zhcd.lysqk.module.sign.entity.ActionSignInfoEntity;
+import com.zhcd.lysqk.module.sign.entity.NewestSignUserInfoEntity;
+import com.zhcd.lysqk.module.sign.entity.SigninInfoLisEntity;
+import com.zhcd.lysqk.module.sign.entity.UserSignEntity;
 
 
 /**
@@ -44,7 +51,64 @@ public class ServiceProvider {
     public static void checkLoginPos(String token_num, IDataResponse iHttpResponse, String flag) {
         ApiPostParams apiParams = new ApiPostParams();
         apiParams.with(Constants.token_num, token_num);
-        DataRequestTool.post(REQUEST_URL, Namespace.checkLoginPos, apiParams, iHttpResponse, String.class, flag);
+        DataRequestTool.post(REQUEST_URL, Namespace.checkLoginPos, apiParams, iHttpResponse, LoginEntity.class, flag);
+    }
+
+    /**
+     * 获取本社区活动列表
+     */
+    public static void getActivListPos(String address_id, int page, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.address_id, address_id);
+        apiParams.with(Constants.page, String.valueOf(page));
+        DataRequestTool.post(REQUEST_URL, Namespace.getActivListPos, apiParams, iHttpResponse, ActionListEntity.class, flag);
+    }
+
+    /**
+     * 查看活动详情
+     */
+    public static void getActivDetailPos(String id, IDataResponse iHttpResponse, String flag) {
+        ApiParams apiParams = new ApiParams();
+        apiParams.with(Constants.id, id);
+        DataRequestTool.get(REQUEST_URL, Namespace.getActivDetailPos, apiParams, iHttpResponse, ActionDetailEntity.class, flag);
+    }
+
+    /**
+     * 获取活动签到信息
+     */
+    public static void getActivSigninPos(String id, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.id, id);
+        DataRequestTool.post(REQUEST_URL, Namespace.getActivSigninPos, apiParams, iHttpResponse, ActionSignInfoEntity.class, flag);
+    }
+
+    /**
+     * 获取某一次签到的签到记录
+     */
+    public static void getSigninInfoListPos(String sign_id, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.sign_id, sign_id);
+        DataRequestTool.post(REQUEST_URL, Namespace.getSigninInfoListPos, apiParams, iHttpResponse, SigninInfoLisEntity.class, flag);
+    }
+
+    /**
+     * 用户签到
+     */
+    public static void setUserSigninPos(String activity_id, String sign_id, String iccard_num, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.activity_id, activity_id);
+        apiParams.with(Constants.sign_id, sign_id);
+        apiParams.with(Constants.iccard_num, iccard_num);
+        DataRequestTool.post(REQUEST_URL, Namespace.setUserSigninPos, apiParams, iHttpResponse, UserSignEntity.class, flag);
+    }
+
+    /**
+     * 获取最新用户签到信息
+     */
+    public static void getNewUserSigninPos(String activity_id, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.activity_id, activity_id);
+        DataRequestTool.post(REQUEST_URL, Namespace.getNewUserSigninPos, apiParams, iHttpResponse, NewestSignUserInfoEntity.class, flag);
     }
 
     public static boolean errorFilter(BaseData res) {
@@ -54,7 +118,6 @@ public class ServiceProvider {
                 correct = true;
             }
         }
-
         return correct;
     }
 }

@@ -291,7 +291,6 @@ public class DataRequestWrapper {
                 if (root != null) {
                     int code = root.getInt("status");
                     String msg = root.getString("msg");
-
                     res.setStatus(code);
                     if (TextUtils.isEmpty(msg)) {
                         res.setMsg(Errors.BASE_NO_MSG);
@@ -301,32 +300,30 @@ public class DataRequestWrapper {
                     if (mRequest.getTag() != null && mRequest.getTag() instanceof String) {
                         res.setTag(mRequest.getTag().toString());
                     }
-                    String data = root.get("data").toString();
-                    if (mType != null) {
-
-                        if (data.length() > 2) {
-                            String str = data.substring(0, 2);
-                            if (str.contains("[{") || str.contains("[")) {
-                                res.setData(JSON.parseArray(data, (Class<Object>) mType));
-                            } else if (str.contains("{")) {
-                                res.setData(JSON.parseObject(data, mType));
+                    if (root.has("data")) {
+                        String data = root.get("data").toString();
+                        if (mType != null) {
+                            if (data.length() > 2) {
+                                String str = data.substring(0, 2);
+                                if (str.contains("[{") || str.contains("[")) {
+                                    res.setData(JSON.parseArray(data, (Class<Object>) mType));
+                                } else if (str.contains("{")) {
+                                    res.setData(JSON.parseObject(data, mType));
+                                }
                             }
+                        } else {
+                            res.setData(response.toString());
                         }
-                    } else {
-                        res.setData(response.toString());
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-//                res.setCode(Errors.BASE_PARSER_ERROR);
                 res.setMsg(e.toString());
             } catch (Exception e) {
                 e.printStackTrace();
-//                res.setCode(Errors.BASE_PARSER_ERROR);
                 res.setMsg(e.toString());
             } finally {
                 Logger.d(Constants.NetworkTag, String.format(" response builder : code = %d, msg = %s", res.getStatus(), res.getMsg()));
-
                 if (mDataResponse != null) {
                     if (RequestManager.isDebug()) {
                         mDataResponse.onResponse(res);
