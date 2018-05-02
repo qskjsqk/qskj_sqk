@@ -26,6 +26,15 @@ class IndexController extends Controller {
         $this->assign('config', $this->config);
     }
 
+//    --------------------------------------------------------------------------
+    public function seller_home() {
+        $this->display();
+    }
+
+    public function item_manage() {
+        $this->display();
+    }
+
 //    视图
 //------------------------------------------------------------------------------    
     public function index() {
