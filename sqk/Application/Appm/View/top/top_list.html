@@ -6,17 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="format-detection" content="telephone=no">
-        <meta http-equiv="x-rim-auto-match" content="none">
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/top.css" type="text/css"/>
-        <style type="text/css">
-
-        </style>
-
+        
+        
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script src="__PUBLIC__/appm/js/mui.min.js"></script>
         <script type="text/javascript">
@@ -28,7 +24,6 @@
             });
         </script>
         {$Assigndata}
-
         <script src="__PUBLIC__/appm/js/common.js"></script>
         <script src="__PUBLIC__/appm/js/top_list.js"></script>
     </head>
@@ -38,10 +33,9 @@
         <header class="mui-bar mui-bar-nav header-a-l">
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/top/top_home')"></a>
             <h1 class="mui-title header-a-l">本社区用户榜</h1>	
-            <a  class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a" ></a>
         </header>
         <!--底部-->
-    <include file="./Application/Appm/View/tabnav.html" />
+    <!--<include file="./Application/Appm/View/tabnav.html" />-->
     <!--主体部分-->
     <div class="mui-content">
 
@@ -54,9 +48,9 @@
                     </div>
                     <div class="mui-card-link">
                         <div id="tab" class="mui-segmented-control1">
-                            <a id="tab0" class="mui-control-item mui-active">本季度</a>
-                            <a id="tab1"  class="mui-control-item">上季度</a>
-                            <a id="tab2"  class="mui-control-item">总榜单</a>
+                            <div id="tab0" class="mui-control-item" onclick="changeTab(0)">本季度</div>
+                            <div id="tab1"  class="mui-control-item" onclick="changeTab(1)">上季度</div>
+                            <div id="tab2"  class="mui-control-item" onclick="changeTab(2)">总榜单</div>
                         </div>
                     </div>
                 </div>
@@ -111,9 +105,6 @@
 
         </div>
         <!--页面部分end-->
-
-
-
     </div>
 </body>
 

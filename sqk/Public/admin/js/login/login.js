@@ -38,9 +38,6 @@ $(function () {
 
 
 //函数--------------------------------------------------------------------------------------------
-function aHref(url) {
-    window.location.href = url;
-}
 function aHrefNew(sys_name) {
     window.open(sys_name);
 }

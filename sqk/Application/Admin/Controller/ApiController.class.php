@@ -12,7 +12,7 @@ namespace Admin\Controller;
 use Think\Controller;
 
 header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
-header('Access-Control-Allow-Methods:GET,POST'); //支持的http动作
+header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
 header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
 
 class ApiController extends BaseDBController {
@@ -25,8 +25,11 @@ class ApiController extends BaseDBController {
      * 检测管理员登录
      */
     public function checkLoginPos() {
-        $token_num = $_POST['token_num'];
-        $where['token_num'] = ['EQ', $token_num];
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $token_num = $inputArr['token_num'];
+        $where['token_num'] = ['EQ', "".$token_num.""];
         $where['is_enable'] = ['EQ', 1];
         $findArr = M('sys_user_info')->field('id,realname,address_id')->where($where)->find();
         if (empty($findArr)) {
@@ -48,8 +51,11 @@ class ApiController extends BaseDBController {
      * 获取本社区活动列表
      */
     public function getActivListPos() {
-        $page = $_POST['page'];
-        $address_id = $_POST['address_id'];
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+        
+        $page = $inputArr['page'];
+        $address_id = $inputArr['address_id'];
 
         $pageNum = 8;
         $first = ($page - 1) * $pageNum;
@@ -59,7 +65,7 @@ class ApiController extends BaseDBController {
         $where['is_open'] = ['EQ', 1];
 
 
-        if (empty($_POST['page']) || empty($_POST['address_id'])) {
+        if (empty($page) || empty($address_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
@@ -134,6 +140,9 @@ class ApiController extends BaseDBController {
                 $preg = '/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?>/i'; //匹配img标签的正则表达式
                 preg_match_all($preg, $activInfo['content'], $allImg); //这里匹配所有的img
                 $activInfo['content_pics'] = $allImg[1];
+                
+                $activInfo['content']=strip_tags($activInfo['content'],'<br>');
+                $activInfo['content']= str_replace('<br/>', "\n", $activInfo['content']);
 
                 $condition['module_info_id'] = $activInfo['id'];
                 $condition['module_name'] = array('EQ', 'activity');
@@ -214,11 +223,14 @@ class ApiController extends BaseDBController {
      * 用户签到
      */
     public function setUserSigninPos() {
-        $iccard_num = $_POST['iccard_num'];
-        $activity_id = $_POST['activity_id'];
-        $sign_id = $_POST['sign_id'];
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+        
+        $iccard_num = $inputArr['iccard_num'];
+        $activity_id = $inputArr['activity_id'];
+        $sign_id = $inputArr['sign_id'];
 
-        if (empty($_POST['iccard_num']) || empty($_POST['sign_id']) || empty($activity_id = $_POST['activity_id'])) {
+        if (empty($iccard_num) || empty($activity_id) || empty($sign_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
@@ -266,10 +278,14 @@ class ApiController extends BaseDBController {
     }
 
     public function getNewUserSigninPos() {
-        $activity_id = $_POST['activity_id'];
-        $sign_id = $_POST['sign_id'];
-        $new_id = $_POST['new_id'];
-        if (empty($_POST['new_id']) || empty($_POST['sign_id']) || empty($_POST['activity_id'])) {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+        
+        $activity_id = $inputArr['activity_id'];
+        $sign_id = $inputArr['sign_id'];
+        $new_id = $inputArr['new_id'];
+        
+        if (empty($activity_id) || empty($sign_id) || empty($new_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
