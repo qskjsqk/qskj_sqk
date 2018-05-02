@@ -10,6 +10,7 @@ import com.sanjieke.datarequest.network.RequestManager;
 import com.sanjieke.datarequest.neworkWrapper.BaseData;
 import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
 import com.zhcd.lysqk.R;
+import com.zhcd.lysqk.SConstant;
 import com.zhcd.lysqk.base.BaseFragment;
 import com.zhcd.lysqk.manager.LoginInfoManager;
 import com.zhcd.lysqk.module.action.ActionDetailActivity;
@@ -87,7 +88,7 @@ public class ActionFragment extends BaseFragment {
                 if (isLoadEnd) {
                     mLoadMoreWrapper.setmFinish(true);
                     mLoadMoreWrapper.setLoadingState(true);
-                } else if (actionList != null && actionList.size() > 0) {
+                } else if (actionList != null && actionList.size() > 0 && !mLoadMoreWrapper.ismFinish()) {
                     getData(false);
                 }
             }
@@ -99,9 +100,11 @@ public class ActionFragment extends BaseFragment {
             mLoadMoreWrapper.setLoadingState(false);
             if (isRefresh) {
                 isLoadEnd = false;
-                page = 0;
+                page = 1;
             }
-            ServiceProvider.getActivListPos(loginEntity.getAddress_id(), page, new IDataResponse() {
+            String address_id = loginEntity.getAddress_id();
+            address_id = "1";
+            ServiceProvider.getActivListPos(address_id, page, new IDataResponse() {
                 @Override
                 public void onResponse(BaseData obj) {
                     if (ServiceProvider.errorFilter(obj)) {
@@ -110,14 +113,23 @@ public class ActionFragment extends BaseFragment {
                             actionList.clear();
                         if (list != null && list.size() > 0) {
                             actionList.addAll(list);
-                            page++;
+//                            actionList.addAll(list);
+//                            actionList.addAll(list);
+//                            actionList.addAll(list);
+//                            actionList.addAll(list);
+//                            actionList.addAll(list);
                             listAdapter.setData(actionList);
                             mLoadMoreWrapper.notifyDataSetChanged();
+                            if (list.size() < SConstant.PAGE_NUM) {
+                                isLoadEnd = true;
+                            } else {
+                                page++;
+                            }
                         } else {
                             mLoadMoreWrapper.setLoadingState(true);
                             mLoadMoreWrapper.setmFinish(true);
-                            isLoadEnd = true;
                         }
+
                     } else {
                         if (obj != null)
                             T.showShort(obj.getMsg());

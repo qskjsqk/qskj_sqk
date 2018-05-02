@@ -18,6 +18,7 @@ public class ActionListEntity {
     private String cat_name;
     //活动社区
     private String address_name;
+    private String pic_path;
 
     public String getId() {
         return id;
@@ -89,5 +90,13 @@ public class ActionListEntity {
 
     public void setAddress_name(String address_name) {
         this.address_name = address_name;
+    }
+
+    public String getPic_path() {
+        return pic_path;
+    }
+
+    public void setPic_path(String pic_path) {
+        this.pic_path = pic_path;
     }
 }

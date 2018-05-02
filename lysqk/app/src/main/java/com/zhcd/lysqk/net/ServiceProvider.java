@@ -20,29 +20,35 @@ public class ServiceProvider {
     public static final int DEVELOP = 0;
     public static final int ONLINE = 2;
 
-    public static final String REQUEST_URL_ONLINE = "";
-    public static final String REQUEST_URL_DEVELOP = "http://111.204.78.45:9100/index.php/admin/api";
+    private static final String REQUEST_URL_ONLINE = "http://111.204.78.45:9100/index.php/admin/api";
+    private static final String REQUEST_URL_DEVELOP = "http://111.204.78.45:9100/index.php/admin/api";
+    private static final String IMAGE_URL_ONLINE = "http://111.204.78.45:9100/";
+    private static final String IMAGE_URL_DEVELOP = "http://111.204.78.45:9100/";
     //    public static final String REQUEST_URL_DEVELOP = "http://api_m.pre.sanjieke.cn/app";
     private static int mIsDevelopEnv = 0;
     private static int mIsOnlineEnv = 1;
     private static String REQUEST_URL = "";
+    private static String IMAGE_BASE_URL = "";
+
 
     public static void setDevEnv() {
         if (DEVELOP == mIsDevelopEnv) {
             RequestManager.setDebug(true);
             REQUEST_URL = REQUEST_URL_DEVELOP;
+            IMAGE_BASE_URL = IMAGE_URL_DEVELOP;
         } else {
             RequestManager.setDebug(false);
             REQUEST_URL = REQUEST_URL_ONLINE;
+            IMAGE_BASE_URL = IMAGE_URL_ONLINE;
         }
+    }
+
+    public static String getImageBaseUrl() {
+        return IMAGE_BASE_URL;
     }
 
     public static void setIsDevelopEnv(int mIsDevelopEnv) {
         ServiceProvider.mIsDevelopEnv = mIsDevelopEnv;
-    }
-
-    public static String getH5Url() {
-        return REQUEST_URL;
     }
 
     /**

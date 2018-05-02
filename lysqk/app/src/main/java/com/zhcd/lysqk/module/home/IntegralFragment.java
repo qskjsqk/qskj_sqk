@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.pda.hf.HFReader;
 import com.pda.hf.ISO15693CardInfo;
 import com.pda.hf.demo.Tools;
-import com.zhcd.lysqk.LYApplication;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseFragment;
 import com.zhcd.lysqk.module.record.ReceivePointsActivity;
@@ -20,7 +19,6 @@ import com.zhcd.lysqk.module.record.TransactionRecordsActivity;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ZXingUtils;
 import com.zhcd.utils.DensityUtil;
-import com.zhcd.utils.L;
 
 import java.util.List;
 
@@ -51,12 +49,6 @@ public class IntegralFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     TransactionRecordsActivity.start(getActivity());
-                }
-            });
-            ivQR.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
                 }
             });
             setQR("https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_70736499:1524820216_243_614827073");
@@ -99,7 +91,7 @@ public class IntegralFragment extends BaseFragment {
                     }
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1500);
                 } catch (Exception e) {
 
                 }

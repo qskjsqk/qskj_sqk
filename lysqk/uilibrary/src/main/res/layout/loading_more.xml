@@ -9,20 +9,11 @@
     <LinearLayout
         android:id="@+id/loading_more"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="visible">
-
-        <com.zjinv.uilibrary.progressbar.CircleProgressBar
-            android:id="@+id/pb_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            app:mlpb_enable_circle_background="false"
-            app:mlpb_progress_stoke_width="2dp" />
 
         <TextView
             android:id="@+id/tv_more"
@@ -32,7 +23,7 @@
             android:clickable="false"
             android:focusable="false"
             android:gravity="center_vertical"
-            android:text="加载中..."
+            android:text="加载中...."
             android:textColor="#333333"
             android:textSize="14sp" />
 
@@ -41,7 +32,7 @@
     <TextView
         android:id="@+id/no_more_data"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:focusable="false"
         android:gravity="center"
         android:text="暂无更多数据"

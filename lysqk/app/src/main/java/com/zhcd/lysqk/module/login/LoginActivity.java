@@ -74,11 +74,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (checkPreCondition()) {
-                    HomeActivity.start(LoginActivity.this, HomeActivity.ACTION_TAB);
-                    finish();
-//                    String input = inputPwd.getTextString();
-//                    input = "252699";
-//                    checkLoginPos(input);
+                    String input = inputPwd.getTextString();
+                    input = "090381";
+                    checkLoginPos(input);
 
                 }
             }
@@ -118,7 +116,7 @@ public class LoginActivity extends BaseActivity {
 
     private boolean checkPreCondition() {
         String input = inputPwd.getTextString();
-        input = "252699";
+        input = "090381";
         if (input.length() < 6) {
             return false;
         }

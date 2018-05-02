@@ -42,8 +42,6 @@
 #所有实体类所在包
 -keep class com.zhcd.lysqk.**.entity.**{ *; }
 
--libraryjars libs/hf1.3.jar
-
 #zxing
 -keep class com.google.zxing.** {*;}
 -dontwarn com.google.zxing.**
