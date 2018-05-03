@@ -29,7 +29,7 @@ class ApiController extends BaseDBController {
         $inputArr = json_decode($input, true);
 
         $token_num = $inputArr['token_num'];
-        $where['token_num'] = ['EQ', "".$token_num.""];
+        $where['token_num'] = ['EQ', "" . $token_num . ""];
         $where['is_enable'] = ['EQ', 1];
         $findArr = M('sys_user_info')->field('id,realname,address_id')->where($where)->find();
         if (empty($findArr)) {
@@ -53,7 +53,7 @@ class ApiController extends BaseDBController {
     public function getActivListPos() {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
-        
+
         $page = $inputArr['page'];
         $address_id = $inputArr['address_id'];
 
@@ -135,14 +135,17 @@ class ApiController extends BaseDBController {
                 $activInfo['start_time'] = strtotime($activInfo['start_time']);
                 $activInfo['end_time'] = strtotime($activInfo['end_time']);
 
+                $activInfo['cat_name'] = parent::getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
+                $activInfo['address_name'] = getConameById($activInfo['address_id']);
+
                 $activInfo['user_name'] = parent::getDataKey(M('sys_user_info'), $activInfo['user_id'], 'realname');
 
                 $preg = '/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?>/i'; //匹配img标签的正则表达式
                 preg_match_all($preg, $activInfo['content'], $allImg); //这里匹配所有的img
                 $activInfo['content_pics'] = $allImg[1];
-                
-                $activInfo['content']=strip_tags($activInfo['content'],'<br>');
-                $activInfo['content']= str_replace('<br/>', "\n", $activInfo['content']);
+
+                $activInfo['content'] = strip_tags($activInfo['content'], '<br>');
+                $activInfo['content'] = str_replace('<br/>', "\n", $activInfo['content']);
 
                 $condition['module_info_id'] = $activInfo['id'];
                 $condition['module_name'] = array('EQ', 'activity');
@@ -225,7 +228,7 @@ class ApiController extends BaseDBController {
     public function setUserSigninPos() {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
-        
+
         $iccard_num = $inputArr['iccard_num'];
         $activity_id = $inputArr['activity_id'];
         $sign_id = $inputArr['sign_id'];
@@ -280,11 +283,11 @@ class ApiController extends BaseDBController {
     public function getNewUserSigninPos() {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
-        
+
         $activity_id = $inputArr['activity_id'];
         $sign_id = $inputArr['sign_id'];
         $new_id = $inputArr['new_id'];
-        
+
         if (empty($activity_id) || empty($sign_id) || empty($new_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';

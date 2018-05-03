@@ -25,10 +25,12 @@ html{overflow-x:hidden;}
 .detail_div .list_content{margin-right:2%; line-height:26px; border-bottom:1px solid #ccc}
 .detail_div .comment_list ul li:last-child div{ border-bottom:0px;}
 
+
 .b-icon-style{
     margin-right: 5px;
     padding: 2px;
     color: #fff;
+    
 }
 .b-icon-title0{
     background-color: #3cc051;

@@ -115,3 +115,22 @@ function callPhone(phone) {
     });
 }
 
+/**
+ * 打开模态框
+ */
+function openModal() {
+    $(".m-modal-content").fadeIn(200);
+    $(".m-modal").fadeIn(200);
+
+    $(".m-modal").bind('click', function () {
+        closeModal();
+    });
+}
+/**
+ * 关闭模态框
+ */
+function closeModal() {
+    $(".m-modal-content").fadeOut(200);
+    $(".m-modal").fadeOut(200);
+}
+

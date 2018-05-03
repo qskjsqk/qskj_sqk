@@ -136,15 +136,7 @@ function loadMore() {
  * 打开筛选
  */
 function openSelect() {
-    $('#realname').val('').removeAttr('readonly');
-    $('#department').val('').removeAttr('readonly');
-    $('#tel').val('').removeAttr('readonly');
-    $('#phone').val('').removeAttr('readonly');
-    $('#comment').val('').removeAttr('readonly');
-    $('#detailBtn').css('display', 'block');
     openModal();
-    $('#id').val(0);
-    $('#aType').val('add');
 }
 /**
  * 打开模态框
