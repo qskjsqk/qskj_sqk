@@ -86,6 +86,21 @@ class IndexController extends Controller {
 //        }
     }
 
+    public function getwxinfo() {
+//        dump($_GET['code']);
+        $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx7e5a0f04c993739e&secret=510fd7ca5fb268fc06502e9861e00b69&code=" . $_GET['code'] . "&grant_type=authorization_code";
+        $a = $this->httpRequest($a, '');
+        $wxInfo = json_decode($a, true);
+//        dump($wxInfo);
+
+        $b = "https://api.weixin.qq.com/sns/userinfo?access_token=".$wxInfo['access_token']."&openid=".$wxInfo['openid'];
+        $b = $this->httpRequest($b, '');
+        $userInfo = json_decode($b, true);
+        
+        echo "<img src='".$userInfo['headimgurl']."'></br><h2>".$userInfo['nickname']."</h2></br><h2>".$userInfo['province'].$userInfo['city']."</h2>";
+//        dump($userInfo);
+    }
+
     /**
      * 我的
      */
