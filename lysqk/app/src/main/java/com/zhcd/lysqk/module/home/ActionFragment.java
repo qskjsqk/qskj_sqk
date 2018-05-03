@@ -74,7 +74,10 @@ public class ActionFragment extends BaseFragment {
         listAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                ActionDetailActivity.start(getActivity());
+                if (actionList != null && actionList.size() > position) {
+                    ActionListEntity listEntity = actionList.get(position);
+                    ActionDetailActivity.start(getActivity(), listEntity.getId());
+                }
             }
 
             @Override

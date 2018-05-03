@@ -36,7 +36,7 @@ public class ActionListDelegate implements ItemViewDelegate<ActionListEntity> {
 
         GlidePieceRoundTransform transformation = new GlidePieceRoundTransform(context, 8, GlidePieceRoundTransform.CornerType.TOP);
         Glide.with(context).load(imgUrl).bitmapTransform(transformation).into(actionLogo);
-        ((TextView) holder.getView(R.id.tv_action_name)).setText(item.getCat_name());
+        ((TextView) holder.getView(R.id.tv_action_name)).setText("【"+item.getCat_name()+"】" + item.getTitle());
         ((TextView) holder.getView(R.id.tv_action_value)).setText(item.getIntegral() + "分");
         String content = item.getLike_num() + "人收藏 / " + item.getAddress_name() + " / " + TimeUtils.getDateYMD(item.getStart_time());
         ((TextView) holder.getView(R.id.tv_action_content)).setText(content);
