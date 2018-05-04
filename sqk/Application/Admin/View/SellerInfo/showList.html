@@ -30,27 +30,29 @@
     <body>
         <div class="option_search">
 
-            <div class="score-group">
-                <div class="score-left"></div>
-                <div class="score-center">
-                    <div class="score-item">
-                        <div class="score-field">梨园镇注册商家数:{$data.allSellerCount}</div>
+            <div class="panel panel-info">
+
+                <div class="panel-body">
+                    <div class="col-sm-4 text-left" >
+                        梨园镇注册商家数:{$data.allSellerCount}
                     </div>
-                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
-                    <div class="score-item">
-                        <div class="score-field">本社区注册商家数:{$data.currentComSellerCount}</div>
-                    </div>
-                    </if>
-                </div>
-                <div class="score-right">
-                    <button class="score-right-btn btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">
-                        反馈信息
-                        <if condition="$data.complaintCount gt 0">
-                            <span class="badge alert-danger">{$data.complaintCount}</span>
+                    <div class="col-sm-4 text-center" >
+                        <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                            本社区注册商家数:{$data.currentComSellerCount}
                         </if>
-                    </button>
+                    </div>
+                    <div class="col-sm-4 text-right" >
+                        <button class="btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">
+                            反馈信息
+                            <if condition="$data.complaintCount gt 0">
+                                <span class="badge alert-danger">{$data.complaintCount}</span>
+                            </if>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+
 
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
@@ -60,6 +62,9 @@
                         </button>
                         <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                        <button type="button" class="btn btn-info" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                            显示全部商家
                         </button>
                         <!--<button type="button" class="btn btn-warning checkSellerInfo" id="checkArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-check"></span> 批量审核
@@ -126,14 +131,14 @@
                             <td>{$v.tel}</td>
                             <td>{$v.contacts}</td>
                             <td>
-                                <if condition="$v.status eq 0">
-                                    待审核
-                                <elseif condition="$v.status eq 1"/>
-                                    正常
-                                <elseif condition="$v.status eq 2"/>
-                                    暂停账号
-                                </if>
-                            </td>
+                        <if condition="$v.status eq 0">
+                            待审核
+                            <elseif condition="$v.status eq 1"/>
+                            正常
+                            <elseif condition="$v.status eq 2"/>
+                            暂停账号
+                        </if>
+                        </td>
                         <td>
                             <div>
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}')">
@@ -150,9 +155,7 @@
             </table>
             <div style="text-align: center;">{$page}</div>
 
-            <button type="button" class="btn btn-success" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
-                显示全部商家
-            </button>
+
 
         </div>
     </body>

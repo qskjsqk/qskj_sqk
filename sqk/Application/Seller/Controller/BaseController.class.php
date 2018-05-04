@@ -19,14 +19,51 @@ class BaseController extends Controller {
 
 //------------------------------------------------------------------------------
     protected $config;
-
     protected $dbFix;
 
     public function _initialize() {
         //配置字典信息
-        $configdefC = A('Admin/Configdef');
+        $configdefC = A('Configdef');
         $this->config = $configdefC->getAllDef();
         $this->dbFix = $this->config['db_fix'];
         $this->assign('config', $this->config);
     }
+
+    /**
+     * function:获取某一条数据By ID
+     * @param $model
+     * @param $id
+     * @return mixed
+     */
+    public function getDataKey($model, $id, $key) {
+        $condition['id'] = array('EQ', $id);
+        $result = $model->where($condition)->find();
+        if (isset($result)) {
+            $returnData = $result[$key];
+        } else {
+            $returnData = 'error';
+        }
+        return $returnData;
+    }
+    
+    /**
+     * 获取附件
+     * @param type $activ_id
+     * @return type
+     */
+    public function getAttachArr($key,$id) {
+        $model = M(C('DB_ALL_ATTACH'));
+        $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $id)->select();
+        if (empty($selectArr)) {
+            $returnData['flag'] = 0;
+        } else {
+            $returnData['flag'] = 1;
+            for ($i = 0; $i < count($selectArr); $i++) {
+                $data[$i]['url'] = $selectArr[$i]['file_path'];
+            }
+            $returnData['data'] = $data;
+        }
+        return $returnData;
+    }
+
 }

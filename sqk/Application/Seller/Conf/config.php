@@ -38,6 +38,7 @@ return array(
         'ad' => 2, //商家促销
         'order' => 4, //订单消息
         'signin' => 6, //签到消息
+        'prom' => 6, //广告消息
     ), //app分页条数
     // 配置邮件发送服务器
     'THINK_EMAIL' => array(

@@ -19,7 +19,6 @@ class BaseController extends Controller {
 
 //------------------------------------------------------------------------------
     protected $config;
-
     protected $dbFix;
 
     public function _initialize() {
@@ -29,4 +28,25 @@ class BaseController extends Controller {
         $this->dbFix = $this->config['db_fix'];
         $this->assign('config', $this->config);
     }
+
+    /**
+     * 获取附件
+     * @param type $activ_id
+     * @return type
+     */
+    public function getAttachArr($key,$id) {
+        $model = M(C('DB_ALL_ATTACH'));
+        $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $prom_id)->select();
+        if (empty($selectArr)) {
+            $returnData['flag'] = 0;
+        } else {
+            $returnData['flag'] = 1;
+            for ($i = 0; $i < count($selectArr); $i++) {
+                $data[$i]['url'] = $selectArr[$i]['file_path'];
+            }
+            $returnData['data'] = $data;
+        }
+        return $returnData;
+    }
+
 }
