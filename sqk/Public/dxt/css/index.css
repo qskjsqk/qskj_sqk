@@ -1,0 +1,17 @@
+/*导向台首页*/
+.area{
+    background-color: red;
+    width:800px;
+    height:500px;
+    background: url(../img/bg_index.png);
+}
+.showArea{
+    width:380px;
+    height: 900px;
+    background-color: red;
+    position: absolute;
+    left: 310px;
+    top:0px;
+    overflow: hidden;
+    
+}

@@ -7,35 +7,23 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-<!--        <link href="__PUBLIC__/appm/css/mui.min.css" rel="stylesheet" />
+        <link href="__PUBLIC__/appm/css/mui.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
 
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
-        <script src="__PUBLIC__/appm/js/mui.min.js"></script>-->
-        <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
 
         <script type="text/javascript">
             //启用双击监听
-//            mui.init({
-//                gestureConfig: {
-//                    doubletap: true
-//                },
-//            });
-
-            var obj = new WxLogin({
-                self_redirect: true,
-                id: "login_container",
-                appid: "wx7e5a0f04c993739e",
-                scope: "snsapi_login",
-                redirect_uri: "http://lyznsq.qmtsc.com/index.php/appm",
-                state: "123",
-                style: "white",
-                href: ""
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
             });
         </script>
         {$Assigndata}
-<!--        <script src="__PUBLIC__/appm/js/common.js"></script>
-        <script src="__PUBLIC__/appm/js/login.js"></script>-->
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/login.js"></script>
     </head>
 
     <body>
@@ -47,7 +35,7 @@
             <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx542ee14049aa74e0&redirect_uri=http://lyznsq.qmtsc.com/index.php/appm/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect" target="_blank">点击登陆</a>
             <!--<img src="__PUBLIC__/appm/img/logo.png">-->
         </div>
-<!--        <div class="logo-form">
+        <div class="logo-form">
             <div class="login-ts"></div>
             <div class="login-user login-icon-user">
                 <input type="text" class="login-input" id="tel" placeholder="请输入您的手机号" style="margin: 0px;background-color: #faffd7;border: 0;border-left: 2px solid #a7bf23;padding-top:0px;padding-bottom:0px;height: 30px;">
@@ -59,7 +47,7 @@
 
             <div class="mui-button-row">
                 <div class="login-btn" onclick="subLogin()">登录</div>
-            </div>
+            </div><!--
 
             <div class="login-bz">
                 <a href="javascript:void(0)" style="float: left;" onclick="aHref('__CONTROLLER__/register')">注册</a>
@@ -76,7 +64,7 @@
         </nav>
         <div class="mui-content-padded oauth-area">
 
-        </div>-->
+            -->        </div>
     </body>
 
 </html>

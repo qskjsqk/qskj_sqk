@@ -15,11 +15,11 @@
 }
 .system_name{
     font-family: "微软雅黑";
-    font-size: 40px;
+    font-size: 20px;
     color:#d7edff;
-    width:26px;
+    width:120px;
     height: 24px;
     position: absolute;
-    left: 340px;
+    left: 360px;
     top:100px;
 }
