@@ -94,7 +94,7 @@ class SellerIntegralGoodsController extends BaseController {
             $ajaxLoad = '已加载全部';
             $isEnd = 1;
         }
-        $lists = self::arrayUniqueErwei($lists);
+        $lists = arrayUniqueErwei($lists);
         $data = [
             'ajaxLoad' => $ajaxLoad,
             'is_end' => $isEnd,

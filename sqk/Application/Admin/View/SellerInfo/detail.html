@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}{$Think.const.DATEPICKER}
-        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css">
-        <link rel="stylesheet" type="text/css" href="/Public/admin/plugin/webuploader/webuploader.css">
-        <link rel="stylesheet" href="/Public/admin/css/common.css">
+        <link rel="stylesheet" href="/Public/Plugin/bootstrap/css/bootstrap-treeview.css"/>
+        <link rel="stylesheet" type="text/css" href="/Public/admin/plugin/webuploader/webuploader.css"/>
+        <link rel="stylesheet" href="/Public/admin/css/common.css"/>
         <script type="text/javascript" src="/Public/Plugin/bootstrap/js/bootstrap-treeview.js"></script>
         <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
         <script type="text/javascript" src="/Public/Plugin/ueditor1.4.3.3/ueditor.config.js" charset="UTF-8"></script>
@@ -15,114 +15,77 @@
         <script type="text/javascript" src="/Public/admin/js/seller/sellerInfo.js"></script>
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3&ak=woXSx1cEZqVgwpMkc8bgVzQZ4xHq1IU8"></script>
     </head>
-    <style>
-        .field-group{width:100%;margin-top: 20px;height: 30px;}
-        .field-name,.field-value{float:left;line-height: 30px;}
-        .field-name{width:20%;font-size: 18px;font-weight: normal;}
-        .field-value{width:80%;font-size: 16px;}
-        .field-btn{width:33%;float: left;}
-        .score-group{width:100%;border:1px darkgray solid;height: 100px;}
-        .score-left,.score-center,.score-right,.score-last{float: left;height: 98px;}
-        .score-left{width:15%;}
-        .score-center{width:65%;}
-        .score-right{width:10%;}
-        .score-last{width:10%;}
-        .score-field{width: 50%;float:left;height: 33px;line-height: 30px;}
-        .score-right-btn {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-    </style>
     <body>
-
-        <div class="score-group">
-            <div class="score-left"></div>
-            <div class="score-center">
-                <div class="score-item">
-                    <div class="score-field">积分商品数:100</div>
-                    <div class="score-field">本季度积分与排名:2</div>
-                </div>
-                <div class="score-item">
-                    <div class="score-field">积分兑换次数:12</div>
-                    <div class="score-field">本季度积分与排名:23</div>
-                </div>
-                <div class="score-item">
-                    <div class="score-field">已获得积分:300</div>
-                    <div class="score-field">总积分与排名:1</div>
-                </div>
-            </div>
-            <div class="score-right">
-                <button class="score-right-btn btn btn-warning" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showListById/seller_id/{$data.sellerInfo.id}')">
-                    反馈信息
-                    <if condition="$data.sellerComplaintCount gt 0">
-                        <span class="badge alert-danger">{$data.sellerComplaintCount}</span>
-                    </if>
-                </button>
-            </div>
-            <div class="score-last">
-                <button class="score-right-btn btn btn-warning" onclick="javascript:void(window.location.href = '__MODULE__/SellerIntegralGoods/showListById/seller_id/{$data.sellerInfo.id}')">查看积分商品</button>
-            </div>
-        </div>
-
-        <div class="container" >
-            <input type="hidden" name="address_api_url" value="{$data.sellerInfo.address_api_url}"/>
-            <div class="field-group">
-                <div class="field-name">营业执照号</div>
-                <div class="field-value">{$data.sellerInfo.business_license}</div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">商家名称</div>
-                <div class="field-value">{$data.sellerInfo.name}</div>
-            </div>
-
-            <div class="field-group" style="height: 150px;">
-                <div class="field-name">照片</div>
-                <div class="field-value">
-                    <if condition="$data['attachList'] neq NULL">
-                        <foreach name="data.attachList" item="val">
-                            <div style="height:140px;float: left;margin-right: 20px;">
-                                <img src="/{$val.file_path}" width="200px"/>
+        <div class="table_content col-xs-12 col-sm-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="btn-group btn-group">
+                                        <button class="score-right-btn btn btn-warning" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showListById/seller_id/{$data.sellerInfo.id}')">
+                                            反馈信息
+                                            <if condition="$data.sellerComplaintCount gt 0">
+                                                <span class="badge alert-danger">{$data.sellerComplaintCount}</span>
+                                            </if>
+                                        </button>
+                                        <button class="score-right-btn btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerIntegralGoods/showListById/seller_id/{$data.sellerInfo.id}')">查看积分商品</button>
+                                    </div>
+                                </div>
                             </div>
-                        </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>营业执照号</th>
+                        <td>{$data.sellerInfo.business_license}</td>
+                    </tr>
+                    <tr>
+                        <th>商家名称</th>
+                        <td>{$data.sellerInfo.name}</td>
+                    </tr>
+                    <tr>
+                        <th>照片</th>
+                        <td>
+                <if condition="$data['attachList'] neq NULL">
+                    <foreach name="data.attachList" item="val">
+                        <div style="height:140px;float: left;margin-right: 20px;">
+                            <img src="/{$val.file_path}" width="200px"/>
+                        </div>
+                    </foreach>
                     <else/>
-                        <span style="color:red;font-size: 14px;">暂无图片</span>
-                    </if>
-                </div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">所在社区</div>
-                <div class="field-value">{$data.sellerInfo.com_name}</div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">所在位置</div>
-                <div class="field-value">
-                    <div id="allmap" style="width: 700px;height: 250px;"></div>
-                </div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">地址</div>
-                <div class="field-value">{$data.sellerInfo.address}</div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">联系人</div>
-                <div class="field-value">{$data.sellerInfo.contacts}</div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">注册手机</div>
-                <div class="field-value">{$data.sellerInfo.tel}</div>
-            </div>
-
-            <div class="field-group">
-                <div class="field-name">绑定微信</div>
-                <div class="field-value">
-                    <if condition="$data['sellerWechat'] neq NULL">
+                    <span style="color:red;font-size: 14px;">暂无图片</span>
+                </if>
+                </td>
+                </tr>
+                <tr>
+                    <th>所在社区</th>
+                    <td>{$data.sellerInfo.com_name}</td>
+                </tr>
+                <tr>
+                    <th>所在位置</th>
+                    <td>
+                        <input type="hidden" name="address_api_url" value="{$data.sellerInfo.address_api_url}"/>
+                        <div id="allmap" style="width: 700px;height: 250px;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>商家地址</th>
+                    <td>{$data.sellerInfo.address}</td>
+                </tr>
+                <tr>
+                    <th>联系人</th>
+                    <td>{$data.sellerInfo.contacts}</td>
+                </tr>
+                <tr>
+                    <th>注册手机</th>
+                    <td>{$data.sellerInfo.tel}</td>
+                </tr>
+                <tr>
+                    <th>绑定微信</th>
+                    <td>
+                <if condition="$data['sellerWechat'] neq NULL">
                     <foreach name="data.sellerWechat" item="val">
                         <p class="wechat-{$val.id}">
                             <label style="width: 150px;">{$val.open_id}</label>
@@ -130,34 +93,33 @@
                         </p>
                     </foreach>
                     <else/>
-                        <span style="color:red;font-size: 14px;">暂无微信绑定</span>
-                    </if>
-                </div>
-            </div>
-
-            <div class="field-group" style="margin-bottom: 50px;">
-                <div class="field-btn">
-                    <button type="button" class="btn btn-warning" onclick="checkSellerState('{$data.sellerInfo.status}', '{$data.sellerInfo.id}')">
-                       <if condition="$data['sellerInfo']['status'] eq 1">
-                           暂停商家账号
-                       <else/>
-                           审核通过并上线
-                       </if>
-                    </button>
-
-                </div>
-                <div class="field-btn">
-                    <button type="button" class="btn btn-warning" onclick="delSeller('{$data.sellerInfo.id}')">删除商家账号</button>
-                </div>
-                <div class="field-btn">
-                    <button type="button" class="btn btn-warning" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$data.sellerInfo.id}')">修改资料</button>
-                </div>
-            </div>
+                    <span style="color:red;font-size: 14px;">暂无微信绑定</span>
+                </if>
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="btn-group btn-group">
+                            <button type="button" class="btn btn-warning fright" onclick="checkSellerState('{$data.sellerInfo.status}', '{$data.sellerInfo.id}')">
+                                <if condition="$data['sellerInfo']['status'] eq 1">
+                                    暂停商家账号
+                                    <else/>
+                                    审核通过并上线
+                                </if>
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="delSeller('{$data.sellerInfo.id}')">删除商家账号</button>
+                            <button type="button" class="btn btn-info" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$data.sellerInfo.id}')">修改资料</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
     </body>
     <script type="text/javascript" src="/Public/admin/js/seller/baiduMap.js"></script>
     <script type="text/javascript">
-        //百度地图
-        baiduMap($("input[name='address_api_url']").val());
+                                //百度地图
+                                baiduMap($("input[name='address_api_url']").val());
     </script>
 </html>

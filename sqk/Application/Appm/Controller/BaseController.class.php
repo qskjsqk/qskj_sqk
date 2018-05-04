@@ -19,7 +19,6 @@ class BaseController extends Controller {
 
 //------------------------------------------------------------------------------
     protected $config;
-
     protected $dbFix;
 
     public function _initialize() {
@@ -31,31 +30,23 @@ class BaseController extends Controller {
     }
 
     /**
-     * 去除二维数组中的重复元素
-     * @param  array $arr
-     * @return array
+     * 获取附件
+     * @param type $activ_id
+     * @return type
      */
-    protected static function arrayUniqueErwei($arr) {
-        $keys = [];
-        foreach($arr as $k => $v) {
-            if($k == 0) {
-                $keys = array_keys($v);
+    public function getAttachArr($key,$id) {
+        $model = M(C('DB_ALL_ATTACH'));
+        $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $prom_id)->select();
+        if (empty($selectArr)) {
+            $returnData['flag'] = 0;
+        } else {
+            $returnData['flag'] = 1;
+            for ($i = 0; $i < count($selectArr); $i++) {
+                $data[$i]['url'] = $selectArr[$i]['file_path'];
             }
-            //降维,也可以用implode,将一维数组转换为用逗号连接的字符串
-            $v = join(',', $v);
-            $temp[$k] = $v;
+            $returnData['data'] = $data;
         }
-        //去掉重复的字符串,也就是重复的一维数组
-        $temp = array_values(array_unique($temp));
-        foreach($temp as $k => $v) {
-            //再将拆开的数组重新组装
-            $array = explode(',', $v);
-            //重新配置索引
-            for($i = 0; $i < count($array); $i++) {
-                $temp2[$k][$keys[$i]] = $array[$i];
-            }
-        }
-        return $temp2;
+        return $returnData;
     }
 
 }

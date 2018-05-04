@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <!--自定义样式及脚本放于此处-->
+        <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+        {$Think.const.ANIMATION}
+        <title>{$config['system_name']}</title>
+        <script type="text/javascript">
+//iframe窗
+
+            layer.open({
+                type: 2,
+                title: '梨园社区卡',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['800px', '500px'],
+                content: '//localhost:9014/index.php/dxt/index/home/'
+            });
+        </script>
+    </head>
+    <body>
+
+
+
+    </body> 
+</html>

@@ -53,7 +53,7 @@ class View {
                 . 'var a_path="' . __ROOT__ . '/index.php/' . MODULE_NAME . '/' . CONTROLLER_NAME . '/' . ACTION_NAME . '";'
                 . 'var root="' . __ROOT__ . '";'
                 . 'var public="' . __ROOT__ . '/Public";'
-                . 'if("'.MODULE_NAME.'"!="App"&&"'.MODULE_NAME.'"!="Appm"){$.post("' . __ROOT__ . '/index.php/admin/login/checkIsLogin",{"c_name":controller,"a_name":action},function (data) {'
+                . 'if("'.MODULE_NAME.'"!="Seller"&&"'.MODULE_NAME.'"!="Appm"&&"'.MODULE_NAME.'"!="Dxt"){$.post("' . __ROOT__ . '/index.php/admin/login/checkIsLogin",{"c_name":controller,"a_name":action},function (data) {'
                 .'if(data.flog==0){window.location.href ="' . __ROOT__ . '/index.php/admin/login/login";parent.location.href ="' . __ROOT__ . '/index.php/admin/login/login"}'
                 . '},"json");}'//地址访问过滤
                 . 'if("'.MODULE_NAME.'"=="Admin"){$.post("' . __ROOT__ . '/index.php/admin/SysPrivInfo/getPriviledges", function (data) {'

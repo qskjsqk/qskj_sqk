@@ -1,0 +1,132 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2018-4-25, 13:54:54
+    Author     : zzz
+*/
+
+
+/*top_home页面*/
+.top_card_hearder{
+    height:54px;color:#fff;
+}
+.top_xh{
+    width:38px;height:38px;border: 3px solid #fff;border-radius: 19px;text-align: center;line-height: 38px;
+}
+.color01{
+    background-color: #ff9eb1;
+}
+.color02{
+    background-color: #eacc2c;
+}
+.color03{
+    background-color: #6fbcf2;
+}
+.color04{
+    background-color: #daacf7;
+}
+
+/*top_list页面*/
+.top_card_hearder_bg{
+    height:70px;
+    background-image:url(../img/card_header_bg.png);
+}
+.top_list_xh{
+    width:24px;
+    height:24px;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    text-align: center;
+    line-height: 20px;
+}
+.mui-segmented-control1 {
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    display: table;
+    overflow: hidden;
+    width: 100%;
+    table-layout: fixed;
+    border-radius: 3px;
+    background-color: transparent;
+    -webkit-touch-callout: none;
+}
+.btn_active{
+    color: #fff;
+    border-bottom: 3px solid #D75A7B;
+}
+.mui-segmented-control1 .mui-control-item {
+    line-height: 25px;
+    display: table-cell;
+    overflow: hidden;
+    width: 1%;
+    -webkit-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #fff;
+}
+
+
+.row_list{
+    background-color: #fee4e9;
+    height:50px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.row_list_jp{
+    background-size: 20px 30px;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 50px;
+    float: left;
+}
+.row_list_tx{
+    float: left;
+    background-color: #fff;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border:2px solid #fca1b3;
+    border-radius: 4px;
+    color:#f04a6b;
+    
+}
+.row_list_tx img{
+    background-size: 34px 34px;
+    background-repeat: no-repeat;
+    width:34px;
+    height:34px;
+    margin: 1px;
+    border-radius: 2px;
+}
+.jp01{
+    background-image:url(../img/jp01.png);
+}
+.jp02{
+    background-image:url(../img/jp02.png);
+}
+.jp03{
+    background-image:url(../img/jp03.png);
+}
+
+.row_list_title{
+    float:left;
+    line-height: 20px;
+    margin-top: 5px;
+    color:#f04a6b;
+    font-size: 16px;
+}
+.row_list_integral{
+    float:right;
+    line-height: 50px;
+    padding-right: 10px;
+    color:#fe748d;
+}
+
+
