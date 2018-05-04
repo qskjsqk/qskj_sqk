@@ -53,7 +53,7 @@ class SellerController extends Controller {
     /**
      * 获取商家列表
      */
-    public function getList() {
+    public function getSellerList() {
 
         $keyword = $_GET['keyword'];
         $num = C('PAGE_NUM')['seller'] * $_GET['page'];

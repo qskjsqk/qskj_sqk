@@ -2,7 +2,7 @@
 
 /**
  * @name config
- * @info 描述：APPm模块配置文件
+ * @info 描述：Seller商家移动端模块配置文件
  * @author Hellbao <1036157505@qq.com>
  * @datetime 2017-2-7 14:35:19
  */
@@ -38,7 +38,6 @@ return array(
         'ad' => 2, //商家促销
         'order' => 4, //订单消息
         'signin' => 6, //签到消息
-        'goods' => 4, //积分商品
     ), //app分页条数
     // 配置邮件发送服务器
     'THINK_EMAIL' => array(
