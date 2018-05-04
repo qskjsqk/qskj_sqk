@@ -71,7 +71,7 @@ class ApiController extends BaseDBController {
             $returnData['timestamp'] = time();
         } else {
             $model = M('activ_info');
-            $selectArr = $model->field('id,cat_id,title,address_id,start_time,integral,like_num')->where($where)->order('id desc')->limit($first . ',' . $page)->select();
+            $selectArr = $model->field('id,cat_id,title,address_id,start_time,integral,like_num')->where($where)->order('id desc')->limit($first . ',' . $pageNum)->select();
             $count = $model->field('id,cat_id,title,address_id,start_time,integral,like_num')->where($where)->count();
 
             if (empty($selectArr)) {
