@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/activity.css">
+
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/setting.js"></script>
+    </head>
+
+    <body>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav" style="background-color: #9edee9;">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/main')">
+                <!--<sapn class="comfont">设置</span>-->
+            </a>
+            <h1 id="title" class="mui-title" style="background-color: #9edee9;color: #FFFFFF;">个人中心</h1>
+            <a id="openPopover" class="mui-icon mui-icon-help mui-pull-right header-a" onclick="about()"></a>
+        </header>
+        <!--tab-->
+        <div class="mui-slider" style="margin-top: 50px;">
+            <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                <a class="mui-control-item" href="#item1">个人资料</a>
+                <a class="mui-control-item" href="#item2">修改密码</a>
+                <!--<a class="mui-control-item" href="#item3">选项卡3</a>-->
+            </div>
+            <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+            <div class="mui-slider-group">
+                <!--tab第一个页-->
+                <div id="item1" class="mui-slider-item mui-control-content mui-active">
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <form class="mui-input-group">
+                                <div class="mui-input-row">
+                                    <label>手机号码</label>
+                                    <input type="text" id="tel" style="text-align: right;" placeholder="请输入手机号码" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
+                                </div>
+                                <div class="mui-input-row">
+                                    <label>座机号码</label>
+                                    <input type="text" id="phone" style="text-align: right;" placeholder="请输入座机号码" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
+                                </div>
+                                <div class="mui-input-row">
+                                    <label>QQ号码</label>
+                                    <input type="text" id="qq" style="text-align: right;" placeholder="请输入QQ号码" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
+                                </div>
+                                <div class="mui-input-row">
+                                    <label>邮箱地址</label>
+                                    <input type="text" id="email" style="text-align: right;" placeholder="请输入邮箱地址">
+                                </div>
+                                 <div class="mui-input-row">
+                                    <label>收货地址</label>
+                                    <input type="text" id="address" style="text-align: right;" placeholder="请输入收货地址">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell mui-collapse">
+                                    <a class="mui-navigate-right" href="#">
+                                        <span class="fontred">实名认证</span><span class="fontblack" id="rns_type">（审核中）</span>
+                                        <input type="hidden" name="check" id="check" value="0">
+                                    </a>
+                                    <div class="mui-collapse-content">
+                                        <form class="mui-input-group">
+                                            <div class="mui-input-row">
+                                                <label>真实姓名</label>
+                                                <input type="text" id="realname" style="text-align: right;" placeholder="请输入真实姓名">
+                                            </div>
+                                            <div class="mui-input-row">
+                                                <label>身份证号</label>
+                                                <input type="text" id="idcard_num" style="text-align: right;" placeholder="请输入身份证号" onkeyup="value=value.replace(/[^1234567890xX]+/g,'')">
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <ul class="mui-table-view mui-table-view-chevron">
+                                <li class="mui-table-view-cell">
+                                    <a class="mui-navigate-right" onclick="about()">关于APP <i class="mui-pull-right update">V1.0.0</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell" style="text-align: center;border-radius: 0px;">
+                                    <a href="javascript:void(0)" onclick="saveUserInfo()" style="background-color: #4cd964;color:#fff;">保存资料</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell" style="text-align: center;border-radius: 0px;">
+                                    <a href="__CONTROLLER__/logout" style="background-color: #dd524d;color:#fff;">退出</a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <!--tab第一个页-->
+                <div id="item2" class="mui-slider-item mui-control-content">
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <div class="mui-input-group">
+                                <div class="mui-input-row">
+                                    <label>原密码</label>
+                                    <input type="password"  style="text-align: right;" id="oldPwd" placeholder="请输入原密码">
+                                </div>
+                                <div class="mui-input-row">
+                                    <label>新密码</label>
+                                    <input type="password"  style="text-align: right;" id="newPwd" placeholder="请输入新密码">
+                                </div>
+                                <div class="mui-input-row">
+                                    <label>确认密码</label>
+                                    <input type="password"  style="text-align: right;" id="confirmPwd" placeholder="请再次输入新密码">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mui-card">
+                        <div class="mui-card-content">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell" style="text-align: center;">
+                                    <a href="javascript:void(0)" onclick="subEditPwd()">提交</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

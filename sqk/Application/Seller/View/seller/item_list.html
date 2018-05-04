@@ -173,18 +173,19 @@
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
                         <!--form-->
+                        <form id="form">
                             <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
                                 <div class="mui-row">
                                     <div class="mui-col-sm-6 mui-col-xs-6">
                                         <div class="mui-input-row mui-radio mui-left">
                                             <label>最受欢迎</label>
-                                            <input name="orderBy" type="radio" value="welcome">
+                                            <input name="orderBy" type="radio" value="0">
                                         </div>
                                     </div>
                                     <div class="mui-col-sm-6 mui-col-xs-6">
                                         <div class="mui-input-row mui-radio mui-left" >
                                             <label>离我最近</label>
-                                            <input name="orderBy" type="radio" value="distance" checked>
+                                            <input name="orderBy" type="radio" value="1" checked>
                                         </div>
                                     </div>
                                 </div>
@@ -195,13 +196,13 @@
                                     <div class="mui-col-sm-6 mui-col-xs-6">
                                         <div class="mui-input-row mui-radio mui-left">
                                             <label>本社区</label>
-                                            <input name="address" type="radio" value="current" checked/>
+                                            <input name="address_id" type="radio" value="{$address_id}" id="local_address" checked>
                                         </div>
                                     </div>
                                     <div class="mui-col-sm-6 mui-col-xs-6">
                                         <div class="mui-input-row mui-radio mui-left" >
                                             <label>全体社区</label>
-                                            <input name="address" type="radio" value="all"/>
+                                            <input name="address_id" type="radio" value="0" id="0_address">
                                         </div>
                                     </div>
                                 </div>
@@ -212,24 +213,25 @@
                                     <div class="mui-col-sm-4 mui-col-xs-4">
                                         <div class="mui-input-row mui-radio mui-left">
                                             <label>加购</label>
-                                            <input name="cat_type" type="radio" value="1" checked/>
+                                            <input name="cat_type" type="radio" value="{$address_id}" id="local_address" checked>
                                         </div>
                                     </div>
                                     <div class="mui-col-sm-4 mui-col-xs-4">
                                         <div class="mui-input-row mui-radio mui-left" >
                                             <label>兑换</label>
-                                            <input name="cat_type" type="radio" value="2"/>
+                                            <input name="cat_type" type="radio" value="0" id="0_address">
                                         </div>
                                     </div>
                                     <div class="mui-col-sm-4 mui-col-xs-4">
                                         <div class="mui-input-row mui-radio mui-left" >
                                             <label>券码</label>
-                                            <input name="cat_type" type="radio" value="3"/>
+                                            <input name="cat_type" type="radio" value="0" id="0_address">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                        </form>
                     </div>
                 </div>
             </div>
