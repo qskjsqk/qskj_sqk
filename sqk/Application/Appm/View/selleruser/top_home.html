@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>公益排行榜单</title>
+        <title>排行榜</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -51,15 +51,14 @@
     <body>
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
-            <h1 class="mui-title header-a-l">公益排行榜单</h1>	
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/selleruser/seller_home')"></a>
+            <h1 class="mui-title header-a-l">排行榜</h1>	
         </header>
-        <include file="./Application/Appm/View/tabnav.html" />
-
     <!--主体部分-->
     <div class="mui-content">
         <!--页面部分-->
         <div class="mui-row">
-            <div class="mui-card" onclick="aHref('__MODULE__/top/top_list?type=0')">
+            <div class="mui-card" onclick="aHref('__MODULE__/selleruser/top_list?type=0')">
                 <div class="mui-card-header top_card_hearder color01">
                     <div class="mui-card-link">
                         <div class="top_xh">
@@ -107,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mui-card" onclick="aHref('__MODULE__/top/top_list?type=1')">
+            <div class="mui-card" onclick="aHref('__MODULE__/selleruser/top_list?type=1')">
                 <div class="mui-card-header top_card_hearder color02">
                     <div class="mui-card-link">
                         <div class="top_xh">
@@ -125,7 +124,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mui-card" onclick="aHref('__MODULE__/top/top_list?type=2')">
+            <div class="mui-card" onclick="aHref('__MODULE__/selleruser/top_list?type=2')">
                 <div class="mui-card-header top_card_hearder color03">
                     <div class="mui-card-link">
                         <div class="top_xh">
@@ -141,7 +140,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mui-card" onclick="aHref('__MODULE__/top/top_list?type=3')">
+            <div class="mui-card" onclick="aHref('__MODULE__/selleruser/top_list?type=3')">
                 <div class="mui-card-header top_card_hearder color04">
                     <div class="mui-card-link">
                         <div class="top_xh">

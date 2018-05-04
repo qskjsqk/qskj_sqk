@@ -50,8 +50,8 @@
                     <th>角色</th>
                     <th>用户名</th>
                     <th>电话</th>
-                    <th>添加时间</th>
-                    <th>最后登录时间</th>
+                    <th>pos机识别码</th>
+                    <th>最后登录</th>
                     <th>操作</th>
                 </tr>
                 <notempty name="infoList">
@@ -68,7 +68,12 @@
                         <td>{$v.cat_name}</td>
                         <td>{$v.usr}</td>
                         <td>{$v.tel}</td>
-                        <td>{$v.add_time}</td>
+                        <td>
+                            
+                            <button class="btn btn-default edit-btn" onclick="javascript:void(window.location.href = '__CONTROLLER__/updateTokenNum/id/{$v.id}');">
+                                <span class="glyphicon glyphicon-retweet"></span> 生成【{$v.token_num}】
+                            </button>
+                        </td>
                         <td title="登录IP:{$v.last_ip}">{$v.last_login_time}</td>
                         <td>
                             <div>

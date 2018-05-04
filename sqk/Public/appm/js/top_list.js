@@ -6,23 +6,18 @@
 //初始化------------------------------------------------------------------------
 $(function () {
     checkIsLogin();
-    var type = getUrl('type');
-
-    $('#tab0').attr('onclick', 'changeTab(' + type + ',0)');
-    $('#tab1').attr('onclick', 'changeTab(' + type + ',1)');
-    $('#tab2').attr('onclick', 'changeTab(' + type + ',2)');
-
-    changeTab(type, 0);
+//    changeTab(0);
 
 });
 //函数--------------------------------------------------------------------------
-function changeTab(type, nla) {
-    $('#tab').find('a').removeClass('mui-active');
+function changeTab(nla) {
+    $('#tab').find('div').removeClass('mui-active');
     $('#tab' + nla).addClass('mui-active');
-    getTopList(type, nla);
+    getTopList(nla);
 }
 
-function getTopList(type, nla) {
+function getTopList(nla) {
+    var type = getUrl('type');
     switch (type) {
         case '0':
             $('#topName').html('<b>①</b>&nbsp;本社区用户榜');
@@ -37,7 +32,7 @@ function getTopList(type, nla) {
             $('#topName').html('<b>④</b>&nbsp;梨园镇社区榜');
             break;
     }
-    mui.post(c_path + "/getTopList", {'type': type, 'nla': nla}, function (data) {
+    $.post(c_path + "/getTopList", {'type': type, 'nla': nla}, function (data) {
 
         var str = '';
         if (data.topList.length == 0) {

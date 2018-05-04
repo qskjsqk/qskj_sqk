@@ -11,6 +11,7 @@
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
 
         <style type="text/css">
             .mui-table-view{
@@ -18,8 +19,8 @@
             }
         </style>
 
-        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
-        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/mui.min.js"></script>
         <script type="text/javascript">
             //启用双击监听
             mui.init({
@@ -29,24 +30,22 @@
             });
         </script>
         {$Assigndata}
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
-        <script src="__PUBLIC__/appm/js/common.js"></script>
-        <script src="__PUBLIC__/appm/js/setting.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/setting.js"></script>
     </head>
 
     <body>
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
             <h1 class="mui-title header-a-l">我的信息</h1>	
-            <a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="aHref('__MODULE__/index/my_notice')"></a>
+            <!--<a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="aHref('__MODULE__/index/my_notice')"></a>-->
         </header>
 
         <!--底部tabbar-->
     <include file="./Application/Appm/View/tabnav.html" />
     <!--主体部分-->
     <div class="mui-content">
-
-        <ul class="mui-table-view mui-table-view-chevron">
+<!--        <ul class="mui-table-view mui-table-view-chevron">
             <li class="mui-table-view-cell mui-media">
                 <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/my_info')">
                     <img class="mui-media-object mui-pull-left head-img" id="head-img" src="__PUBLIC__/appm/img/tx_icon/4.jpg">
@@ -77,7 +76,7 @@
             <li class="mui-table-view-cell">
                 <a onclick="aHref('__MODULE__/index/my_card')" class="mui-navigate-right">我的实体卡</a>
             </li>
-        </ul>
+        </ul>-->
         <!--页面主内容区结束-->
     </div>
 </body>

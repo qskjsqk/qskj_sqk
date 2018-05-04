@@ -10,19 +10,6 @@ root_path = '';
  */
 function aHref(sys_name) {
     window.location.href = sys_name;
-//    mui.openWindow({
-//        url: sys_name + '.html',
-//        extras: {
-//            //传递参数
-//        },
-//        show: {
-//            autoShow: true, //页面loaded事件发生后自动显示，默认为true  
-//            aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；  
-//            duration: 1000, //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；  
-//        },
-//    });
-
-
 }
 /**
  * 返回首页 （弃用）
@@ -126,5 +113,24 @@ function callPhone(phone) {
             plus.device.dial(phone, false);
         }
     });
+}
+
+/**
+ * 打开模态框
+ */
+function openModal() {
+    $(".m-modal-content").fadeIn(200);
+    $(".m-modal").fadeIn(200);
+
+    $(".m-modal").bind('click', function () {
+        closeModal();
+    });
+}
+/**
+ * 关闭模态框
+ */
+function closeModal() {
+    $(".m-modal-content").fadeOut(200);
+    $(".m-modal").fadeOut(200);
 }
 

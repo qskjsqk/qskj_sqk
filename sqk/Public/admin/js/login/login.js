@@ -38,9 +38,6 @@ $(function () {
 
 
 //函数--------------------------------------------------------------------------------------------
-function aHref(url) {
-    window.location.href = url;
-}
 function aHrefNew(sys_name) {
     window.open(sys_name);
 }
@@ -59,13 +56,7 @@ function subLogin() {
             $('#warnMsg').html(data.msg);
             $('#warning').css('display', 'block');
         } else {
-            if (data.userGroup == 'sqAdmin' || data.userGroup == 'sysAdmin') {
-                window.location.href = c_path + "/main";
-            } else {
-                window.location.href = m_path + "/index/index";
-
-            }
-
+            window.location.href = m_path + "/index/index";
         }
     }, 'json');
 }

@@ -177,7 +177,7 @@ class BaseDBController extends Controller {
         if (isset($result)) {
             $returnData = $result[$key];
         } else {
-            $returnData = '502';
+            $returnData = 'error';
         }
         return $returnData;
     }
