@@ -29,4 +29,33 @@ class BaseController extends Controller {
         $this->dbFix = $this->config['db_fix'];
         $this->assign('config', $this->config);
     }
+
+    /**
+     * 去除二维数组中的重复元素
+     * @param  array $arr
+     * @return array
+     */
+    protected static function arrayUniqueErwei($arr) {
+        $keys = [];
+        foreach($arr as $k => $v) {
+            if($k == 0) {
+                $keys = array_keys($v);
+            }
+            //降维,也可以用implode,将一维数组转换为用逗号连接的字符串
+            $v = join(',', $v);
+            $temp[$k] = $v;
+        }
+        //去掉重复的字符串,也就是重复的一维数组
+        $temp = array_values(array_unique($temp));
+        foreach($temp as $k => $v) {
+            //再将拆开的数组重新组装
+            $array = explode(',', $v);
+            //重新配置索引
+            for($i = 0; $i < count($array); $i++) {
+                $temp2[$k][$keys[$i]] = $array[$i];
+            }
+        }
+        return $temp2;
+    }
+
 }
