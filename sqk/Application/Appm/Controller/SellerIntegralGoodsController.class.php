@@ -23,6 +23,9 @@ class SellerIntegralGoodsController extends BaseController {
 
     public function item_list() {
         $this->assign('address_id', cookie('address_id'));
+        $promC = A('Seller');
+        $sliderData = $promC->getSlider();
+        $this->assign('sliderData', $sliderData);
         $this->display();
     }
 

@@ -29,8 +29,8 @@ class ActivityController extends Controller {
     public function activity_list() {
         $this->assign('address_id', cookie('address_id'));
         $catArr = M('ActivCat')->where('is_enable=1')->select();
-        $noticeC = A('Seller');
-        $sliderData = $noticeC->getSlider();
+        $promC = A('Seller');
+        $sliderData = $promC->getSlider();
         $this->assign('sliderData', $sliderData);
         $this->assign('catData', $catArr);
         $this->display();
