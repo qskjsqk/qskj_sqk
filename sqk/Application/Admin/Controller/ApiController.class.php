@@ -144,9 +144,13 @@ class ApiController extends BaseDBController {
                 preg_match_all($preg, $activInfo['content'], $allImg); //这里匹配所有的img
                 $activInfo['content_pics'] = $allImg[1];
 
-                $activInfo['content'] = strip_tags($activInfo['content'], '<br>');
-                $activInfo['content'] = str_replace('<br/>', "\n", $activInfo['content']);
-
+                $activInfo['content'] = strip_tags($activInfo['content'], '<p>');
+                $activInfo['content'] = str_replace('</p>', "\n", $activInfo['content']);
+                $activInfo['content'] = strip_tags($activInfo['content']);
+				$activInfo['content'] = str_replace('&nbsp;&nbsp;', "\x20", $activInfo['content']);
+				$activInfo['content'] = str_replace('&nbsp;', "", $activInfo['content']);
+				
+				
                 $condition['module_info_id'] = $activInfo['id'];
                 $condition['module_name'] = array('EQ', 'activity');
                 $imgInfoList = M('sys_all_attach')->where($condition)->order('id desc')->select();

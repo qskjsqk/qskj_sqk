@@ -77,7 +77,7 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
-//    console.log(controller);
+    console.log(controller);
     $('#'+controller+'_btn').addClass('mui-active');
     $.post(m_path + "/login/checkIsLogin", function (data) {
         if (data.flag == 0) {
