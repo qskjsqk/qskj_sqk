@@ -246,7 +246,9 @@ public abstract class ZHBaseFragment extends Fragment {
         }
         progressDialog.showProgersssDialog();
     }
-
+    public void showProgressDialog() {
+        showProgressDialog("");
+    }
     /**
      * 隐藏进度dialog
      */

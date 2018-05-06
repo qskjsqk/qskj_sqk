@@ -42,9 +42,6 @@
 #所有实体类所在包
 -keep class com.zhcd.lysqk.**.entity.**{ *; }
 
-#zxing
--keep class com.google.zxing.** {*;}
--dontwarn com.google.zxing.**
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {

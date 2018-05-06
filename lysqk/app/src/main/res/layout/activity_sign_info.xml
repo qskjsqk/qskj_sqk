@@ -5,14 +5,17 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="327dp"
+        android:layout_width="match_parent"
         android:layout_height="211dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:src="@mipmap/rectangle_larger_bg" />
 
         <LinearLayout
@@ -20,30 +23,44 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_sign_info"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_13dp"
-                android:gravity="center_horizontal"
-                android:lineSpacingMultiplier="1.2"
-                android:text="第2次签到   已签到人数：20人"
-                android:textColor="@color/color_1b" />
+                android:layout_marginTop="@dimen/margin_15dp">
+
+                <TextView
+                    android:id="@+id/tv_sign_num_dec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:textColor="@color/color_1b"
+                    android:textSize="@dimen/text_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_signed_num_dec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_1b"
+                    android:textSize="@dimen/text_16sp" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_QR"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_20dp" />
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="327dp"
+        android:layout_width="match_parent"
         android:layout_height="83dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_7dp">
 
         <ImageView
@@ -102,9 +119,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="327dp"
+        android:layout_width="match_parent"
         android:layout_height="83dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_7dp">
 
         <ImageView
@@ -139,15 +158,38 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_all_sign_records"
-        android:layout_width="332dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_30dp"
-        android:background="@mipmap/default_btn"
-        android:gravity="center"
-        android:text="查看所有签到记录"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_16sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_30dp">
+
+        <TextView
+            android:id="@+id/tv_all_sign_records"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:background="@mipmap/default_small_btn"
+            android:gravity="center"
+            android:text="查看签到记录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18sp" />
+
+        <TextView
+            android:id="@+id/tv_take_sign_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@mipmap/default_small_btn"
+            android:gravity="center"
+            android:text="开启"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18sp" />
+    </LinearLayout>
+
+
 </LinearLayout>

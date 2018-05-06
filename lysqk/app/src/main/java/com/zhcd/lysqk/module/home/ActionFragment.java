@@ -13,7 +13,7 @@ import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.SConstant;
 import com.zhcd.lysqk.base.BaseFragment;
 import com.zhcd.lysqk.manager.LoginInfoManager;
-import com.zhcd.lysqk.module.action.ActionDetailActivity;
+import com.zhcd.lysqk.module.action.ActionDetailSignActivity;
 import com.zhcd.lysqk.module.home.entity.ActionListEntity;
 import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
@@ -76,7 +76,7 @@ public class ActionFragment extends BaseFragment {
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 if (actionList != null && actionList.size() > position) {
                     ActionListEntity listEntity = actionList.get(position);
-                    ActionDetailActivity.start(getActivity(), listEntity.getId());
+                    ActionDetailSignActivity.start(getActivity(), listEntity);
                 }
             }
 
@@ -107,9 +107,11 @@ public class ActionFragment extends BaseFragment {
             }
             String address_id = loginEntity.getAddress_id();
             address_id = "1";
+            showProgressDialog();
             ServiceProvider.getActivListPos(address_id, page, new IDataResponse() {
                 @Override
                 public void onResponse(BaseData obj) {
+                    hideProgressDialog();
                     if (ServiceProvider.errorFilter(obj)) {
                         List<ActionListEntity> list = (List<ActionListEntity>) obj.getData();
                         if (isRefresh)

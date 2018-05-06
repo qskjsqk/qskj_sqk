@@ -26,7 +26,8 @@
                 android:layout_height="73dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_37dp"
-                android:src="@mipmap/receive_success_mark" />
+                android:src="@mipmap/receive_success_mark"
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/tv_point_info"

@@ -17,7 +17,7 @@ import com.zhcd.lysqk.base.BaseFragment;
 import com.zhcd.lysqk.module.record.ReceivePointsActivity;
 import com.zhcd.lysqk.module.record.TransactionRecordsActivity;
 import com.zhcd.lysqk.tool.HFRFIDTool;
-import com.zhcd.lysqk.tool.ZXingUtils;
+import com.zhcd.lysqk.tool.ImageLoaderUtils;
 import com.zhcd.utils.DensityUtil;
 
 import java.util.List;
@@ -59,8 +59,7 @@ public class IntegralFragment extends BaseFragment {
 
     private void setQR(String url) {
         if (!TextUtils.isEmpty(url) && ivQR != null) {
-            Bitmap bitmap = ZXingUtils.createQRImage(url, DensityUtil.dip2px(120), DensityUtil.dip2px(120));
-            ivQR.setImageBitmap(bitmap);
+            ImageLoaderUtils.displayImage(getActivity(), url, ivQR);
         }
     }
 

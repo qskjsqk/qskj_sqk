@@ -33,7 +33,7 @@ public class ProgressDialog extends Dialog {
         txt = (TextView) view.findViewById(R.id.progress_dialog_txt);
         setTitleTxt(content);
         // dialog添加视图
-        getWindow().setBackgroundDrawableResource(R.drawable.loading_bg);
+//        getWindow().setBackgroundDrawableResource(R.drawable.loading_bg);
         setContentView(view);
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(false);

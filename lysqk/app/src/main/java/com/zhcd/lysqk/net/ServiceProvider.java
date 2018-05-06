@@ -83,9 +83,9 @@ public class ServiceProvider {
      * 获取活动签到信息
      */
     public static void getActivSigninPos(String id, IDataResponse iHttpResponse, String flag) {
-        ApiPostParams apiParams = new ApiPostParams();
+        ApiParams apiParams = new ApiParams();
         apiParams.with(Constants.id, id);
-        DataRequestTool.post(REQUEST_URL, Namespace.getActivSigninPos, apiParams, iHttpResponse, ActionSignInfoEntity.class, flag);
+        DataRequestTool.get(REQUEST_URL, Namespace.getActivSigninPos, apiParams, iHttpResponse, ActionSignInfoEntity.class, flag);
     }
 
     /**

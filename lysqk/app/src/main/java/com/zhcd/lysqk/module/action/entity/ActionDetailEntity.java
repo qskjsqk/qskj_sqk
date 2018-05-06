@@ -24,6 +24,9 @@ public class ActionDetailEntity {
     private String integral_sum;
     private String user_name;
     private List<String> pic_list;
+    private String cat_name;
+    private String address_name;
+    private List<String> content_pics;
 
     public String getId() {
         return id;
@@ -191,5 +194,29 @@ public class ActionDetailEntity {
 
     public void setPic_list(List<String> pic_list) {
         this.pic_list = pic_list;
+    }
+
+    public String getCat_name() {
+        return cat_name;
+    }
+
+    public void setCat_name(String cat_name) {
+        this.cat_name = cat_name;
+    }
+
+    public String getAddress_name() {
+        return address_name;
+    }
+
+    public void setAddress_name(String address_name) {
+        this.address_name = address_name;
+    }
+
+    public List<String> getContent_pics() {
+        return content_pics;
+    }
+
+    public void setContent_pics(List<String> content_pics) {
+        this.content_pics = content_pics;
     }
 }

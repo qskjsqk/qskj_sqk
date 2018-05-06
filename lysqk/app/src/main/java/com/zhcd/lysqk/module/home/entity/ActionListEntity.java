@@ -1,6 +1,8 @@
 package com.zhcd.lysqk.module.home.entity;
 
-public class ActionListEntity {
+import java.io.Serializable;
+
+public class ActionListEntity implements Serializable{
 
     private String id;
     //（活动分类编号）

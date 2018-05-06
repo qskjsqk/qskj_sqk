@@ -56,8 +56,8 @@ public class LoadMoreWrapper<T> extends LinearRVLoadMoreWrapper<T> {
         setLoadingState(mLoadMoreView, isNoMoreData);
     }
 
-    public void setLoadingState(boolean isNoMoreData, boolean isShowLadMore) {
-        setLoadingState(mLoadMoreView, isNoMoreData, isShowLadMore);
+    public void setLoadingState(boolean isNoMoreData, boolean isHideLadMore) {
+        setLoadingState(mLoadMoreView, isNoMoreData, isHideLadMore);
     }
 
     private void setLoadingState(View mLoadMoreView, boolean isNoMoreData) {
@@ -74,12 +74,12 @@ public class LoadMoreWrapper<T> extends LinearRVLoadMoreWrapper<T> {
         }
     }
 
-    private void setLoadingState(View mLoadMoreView, boolean isNoMoreData, boolean isShowLadMore) {
+    private void setLoadingState(View mLoadMoreView, boolean isNoMoreData, boolean isHideLadMore) {
         View loadingmore = mLoadMoreView.findViewById(R.id.loading_more);
         View noMore = mLoadMoreView.findViewById(R.id.no_more_data);
         mLoadMoreView.setVisibility(View.VISIBLE);
         if (isNoMoreData) {
-            if (isShowLadMore)
+            if (isHideLadMore)
                 mLoadMoreView.setVisibility(View.GONE);
 
             loadingmore.setVisibility(View.GONE);

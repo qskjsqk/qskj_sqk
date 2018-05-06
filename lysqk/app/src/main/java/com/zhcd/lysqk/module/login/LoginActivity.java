@@ -95,9 +95,11 @@ public class LoginActivity extends BaseActivity {
     private void checkLoginPos(String token_num) {
         if (TextUtils.isEmpty(token_num))
             return;
+        showProgressDialog();
         ServiceProvider.checkLoginPos(token_num, new IDataResponse() {
             @Override
             public void onResponse(BaseData obj) {
+                hideProgressDialog();
                 if (ServiceProvider.errorFilter(obj)) {
                     LoginEntity entity = (LoginEntity) obj.getData();
                     if (entity != null) {

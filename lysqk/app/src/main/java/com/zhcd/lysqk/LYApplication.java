@@ -13,12 +13,11 @@ public class LYApplication extends ZHBaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        RequestManager.init(LYApplication.getAppContext(), false);
+        RequestManager.init(LYApplication.getAppContext());
         checkEnvironment();
     }
 
     private void checkEnvironment() {
-
         if (SConstant.BuildTypeOnline.equals(BuildConfig.FLAVOR)) {
             ServiceProvider.setIsDevelopEnv(1);
         } else {

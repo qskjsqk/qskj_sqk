@@ -11,16 +11,18 @@
         android:src="@mipmap/login_bg" />
 
     <LinearLayout
-        android:layout_width="340dp"
-        android:layout_height="365dp"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_70dp"
         android:background="@mipmap/login_view_bg"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="85dp"
-            android:layout_height="85dp"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_30dp"
             android:src="@mipmap/default_head" />
@@ -44,10 +46,12 @@
 
         <ImageView
             android:id="@+id/iv_login"
-            android:layout_width="295dp"
-            android:layout_height="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_30dp"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_37dp"
             android:scaleType="fitXY"
             android:src="@mipmap/login_btn" />
     </LinearLayout>

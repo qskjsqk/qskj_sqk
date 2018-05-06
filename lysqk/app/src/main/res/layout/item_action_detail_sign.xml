@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_15dp">
+
+        <TextView
+            android:id="@+id/tv_sign_num_dec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:text="第1次签到"
+            android:textColor="@color/color_1b"
+            android:textSize="@dimen/text_16sp" />
+
+        <TextView
+            android:id="@+id/tv_signed_num_dec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已签到30人"
+            android:textColor="@color/color_1b"
+            android:textSize="@dimen/text_16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_open_sign"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@mipmap/default_btn"
+        android:gravity="center"
+        android:text="打开签到界面"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_18sp" />
+
+</LinearLayout>

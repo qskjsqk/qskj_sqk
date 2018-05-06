@@ -5,14 +5,17 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="327dp"
-        android:layout_height="211dp"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:src="@mipmap/rectangle_larger_bg" />
 
         <LinearLayout
@@ -25,13 +28,14 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_20dp" />
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:scaleType="fitXY" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_13dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:gravity="center_horizontal"
                 android:lineSpacingMultiplier="1.2"
                 android:text="用户扫描二维码进行交易\n实体卡用户将卡片放置于此"
@@ -42,9 +46,11 @@
 
     <TextView
         android:id="@+id/tv_all_transaction_records"
-        android:layout_width="332dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_30dp"
         android:background="@mipmap/default_btn"
         android:gravity="center"

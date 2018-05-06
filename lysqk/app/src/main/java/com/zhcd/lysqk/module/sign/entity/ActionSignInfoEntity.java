@@ -1,6 +1,8 @@
 package com.zhcd.lysqk.module.sign.entity;
 
-public class ActionSignInfoEntity {
+import java.io.Serializable;
+
+public class ActionSignInfoEntity implements Serializable{
     //    "id": "14",（签到编号）
 //     "activity_id": "5",（活动编号）
 //     "add_time": "2018-04-18 14:08:23",

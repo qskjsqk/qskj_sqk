@@ -32,7 +32,7 @@ public class PasswordInputView extends LinearLayout implements View.OnClickListe
     private List<View> viewList;
     private TextView[] indicatorText;
     private int itemBackground = R.mipmap.login_input_pwd_item_bg;
-    private float margin = 8;
+    private float margin = 15;
     private IPWClickListener ipwClickListener;
 
 
@@ -78,18 +78,18 @@ public class PasswordInputView extends LinearLayout implements View.OnClickListe
             indicatorText[i] = new TextView(context);
             if (i == 0) {
                 indicatorText[i].setBackgroundResource(itemBackground);
-                LayoutParams layoutParams = new LayoutParams(DensityUtil.dip2px(36), DensityUtil.dip2px(36));
+                LayoutParams layoutParams = new LayoutParams(DensityUtil.dip2px(45), DensityUtil.dip2px(45));
                 indicatorText[i].setLayoutParams(layoutParams);
             } else {
                 indicatorText[i].setBackgroundResource(itemBackground);
-                LayoutParams layoutParams = new LayoutParams(DensityUtil.dip2px(36), DensityUtil.dip2px(36));
+                LayoutParams layoutParams = new LayoutParams(DensityUtil.dip2px(45), DensityUtil.dip2px(45));
                 layoutParams.setMargins(DensityUtil.dip2px(margin), 0, 0, 0);
                 indicatorText[i].setLayoutParams(layoutParams);
             }
 
             indicatorText[i].setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-            indicatorText[i].setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_30sp));
+            indicatorText[i].setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_34sp));
             indicatorText[i].setGravity(Gravity.CENTER);
             indicatorText[i].setOnClickListener(this);
             indicatorText[i].addTextChangedListener(this);
