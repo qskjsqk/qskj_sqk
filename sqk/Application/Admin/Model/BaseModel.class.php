@@ -86,7 +86,8 @@ class BaseModel extends Model {
      * @param array $join   连表信息
      * @return object       模型实例
      */
-    private function joinDB($object, $join = []) {
+    public function joinDB($object, $join = []) {
+        $this->dbFix = C('DB_PREFIX');
         if(!empty($join) && is_array($join)) {
             foreach($join as $val) {
                 $object->join($this->dbFix . $val[0] . ' ON ' . $this->dbFix . $val[0] . '.' . $val[1] . '=' . $this->dbFix . $val[2] . '.' . $val[3], LEFT);
@@ -102,7 +103,8 @@ class BaseModel extends Model {
      * @param array $field  查询字段
      * @return object       模型实例
      */
-    private function fieldDB($object, $field = []) {
+    public function fieldDB($object, $field = []) {
+        $this->dbFix = C('DB_PREFIX');
         if(!empty($field) && is_array($field)) {
             $fieldStr = '';
             foreach($field as $k => $val) {
@@ -124,14 +126,13 @@ class BaseModel extends Model {
      * @param array $where  查询条件
      * @return object       模型实例
      */
-    private function whereDB($object, $where = []) {
+    public function whereDB($object, $where = []) {
+        $this->dbFix = C('DB_PREFIX');
         if(!empty($where) && is_array($where)) {
             return $object->where($where);
         }
         return $object;
     }
-
-
 
 
 }

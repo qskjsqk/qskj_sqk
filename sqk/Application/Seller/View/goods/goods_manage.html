@@ -87,22 +87,22 @@
             <div class="mui-card" style="margin-left:0;margin-right:0;">
                 <div class="mui-card-header">
                     <div class="mui-card-link"><div class="seller_s"></div>商品</div>
-                    <p class="mui-card-link">券码（1）</p>
-                    <p class="mui-card-link">加价购（1）</p>
-                    <p class="mui-card-link">积分换（1）</p>
+                    <p class="mui-card-link">券码（{$data.goodsCount.juanMaCount}）</p>
+                    <p class="mui-card-link">加价购（{$data.goodsCount.jiajiaGouCount}）</p>
+                    <p class="mui-card-link">积分换（{$data.goodsCount.jiajiaGouCount}）</p>
                 </div>
                 <div class="mui-card-header">
                     <div class="mui-card-link"><div class="seller_s"></div>统计</div>
-                    <p class="mui-card-link">总量（2）</p>
-                    <p class="mui-card-link">兑换（3）</p>
-                    <p class="mui-card-link">总积分：3000</p>
+                    <p class="mui-card-link">总量（{$data.goodsCount.allCount}）</p>
+                    <p class="mui-card-link">兑换（{$data.exchangeCount}）</p>
+                    <p class="mui-card-link">总积分：{$data.sellerInfo.integral_num}</p>
                 </div>
             </div>
             <div class="mui-content-padded">
                 <button type="button" class="mui-btn mui-btn-warning mui-btn-block" onclick="aHref('__MODULE__/goods/goods_add')">新增积分商品</button>
             </div>
-            <div class="mui-row">
-                <div class="mui-card" onclick="aHref('__MODULE__/goods/goods_detail')">
+            <div class="mui-row" id="goods-lists">
+                <!--<div class="mui-card" onclick="aHref('__MODULE__/goods/goods_detail/id/1')">
                     <div class="mui-card-header">
                         <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
                         <p class="mui-card-link">距离1.5km</p>
@@ -119,43 +119,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mui-card">
-                    <div class="mui-card-header">
-                        <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                        <p class="mui-card-link">距离1.5km</p>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="item_list">
-                            <div class="item_list_img"></div>
-                            <div class="item_list_word">
-                                <span class="">礼品卡券面值30元</span>
-                            </div>
-                            <div class="item_list_word">
-                                <span class="fontred">￥30元+300积分</span>
-                                <span class="font888">原价：￥45</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mui-card">
-                    <div class="mui-card-header">
-                        <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
-                        <p class="mui-card-link">距离1.5km</p>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="item_list">
-                            <div class="item_list_img"></div>
-                            <div class="item_list_word">
-                                <span class="">礼品卡券面值30元</span>
-                            </div>
-                            <div class="item_list_word">
-                                <span class="fontred">￥30元+300积分</span>
-                                <span class="font888">原价：￥45</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>-->
             </div>
 
         </div>

@@ -1,36 +1,32 @@
 <?php
 /**
- * @name SellerIntegralGoodsModel
- * @info 描述：商家积分 Model
+ * @name ExchangeRecordModel
+ * @info 描述：积分商品兑换记录 Model
  * @author xiaohuihui <2568514154@qq.com>
- * @datetime 2018-04-28 10:59:00
+ * @datetime 2018-05-05 16:02:00
  */
 
 namespace Seller\Model;
 use Think\Model;
 use Admin\Model\BaseModel;
 
-class SellerIntegralGoodsModel extends BaseModel {
+class ExchangeRecordModel extends BaseModel {
 
-    public $tableName  = 'seller_integral_goods';
+    public $tableName  = 'goods_exchange_record';
 
-    protected $_validate = [
-
+    protected static $exchangeMethodMap = [
+        ['method_id' => 1, 'name' => '商家扫码兑换' , 'desc' => '用户扫码商家二维码，进到商家，展示商家发布的积分商品，用户点击兑换，商家接到消息，交易成功'],
+        ['method_id' => 2, 'name' => '用户扫码扣分' , 'desc' => '商家扫码用户二维码，跳转到输入扣分金额，点击扣分，用户接到消息，交易完成'],
+        ['method_id' => 3, 'name' => '用户扫码兑换' , 'desc' => '商家扫码用户二维码，扣分框下面 有本商家的积分商品，点击兑换，用户接到消息，交易成功'],
     ];
 
-    /**
-     * 获取商家积分商品数量
-     * @param integer   $seller_id  商家id
-     * @param integer   $cat_type   积分商品类型id
-     * @return integer
-     */
-    public function getGoodsCount($seller_id, $cat_type = 0) {
-        $where = ['seller_id' => $seller_id];
-        if(!empty($cat_type)) {
-            $where['cat_id'] = $cat_type;
+    //根据数据库存的交易方式id字段获取交易方式
+    public static function getExchangeMethodById($exchangeMethodId) {
+        foreach(self::$exchangeMethodMap as $val) {
+            if($val['method_id'] == $exchangeMethodId) {
+                return $val['name'];
+            }
         }
-        return $this->where($where)->count();
-
     }
 
 }

@@ -38,6 +38,7 @@ class SellerIntegralGoodsController extends BaseController {
      * 获取列表
      */
     public function getList() {
+        $model = D('SellerIntegralGoods');
         $user_id = cookie('user_id');
         $address_id = cookie('address_id');
         $request = Request::all();
@@ -51,8 +52,12 @@ class SellerIntegralGoodsController extends BaseController {
         ];
         $field = ['seller_integral_goods.*', 'seller_info.name as seller_name', 'sys_community_info.com_name'];
 
-        $model = D('SellerIntegralGoods');
         $lists = $where = $data = [];
+        //用户只能看到已发布的商品
+        $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
+
+        //设置连表,查询信息
+        $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
 
         //关键字搜索:商家名称或者积分商品名称模糊搜索
         if(!empty($request['keyword'])) {
@@ -73,20 +78,20 @@ class SellerIntegralGoodsController extends BaseController {
             //离我最近(默认本社区)和商家地点(本社区)同时选中
             if($request['orderBy'] == 'distance') {
                 $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
-                $lists = $model->joinFieldDB($join, $field, $where)->limit($num)->select();
-            } elseif($request['orderBy'] == 'welcome') {
+            } elseif($request['orderBy'] == 'welcome') {    //选中最受欢迎
                 if($request['address'] == 'current') {
                     //当前社区最受欢迎(兑换次数最多的商品)
                     $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
                 }
-                $lists = $model->joinFieldDB($join, $field, $where)->order($this->dbFix .'seller_integral_goods.exchange_times desc')->limit($num)->select();
+                $lists = $lists->order($this->dbFix .'seller_integral_goods.exchange_times desc');
             }
-        } else {
-            //没有任何条件:页面载入
-            $lists = $model->joinFieldDB($join, $field, $where)->limit($num)->select();
         }
+
+        //没有任何条件:页面载入
+        $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix .'seller_integral_goods.id');
+        $lists = $listsObj->limit($num)->select();
         //echo $model->getLastSql();
-        $count = $model->joinFieldDB($join, $field, $where)->count();
+        $count = $listsObj->count();
         if($num < $count) {
             $ajaxLoad = '点击加载更多';
             $isEnd = 0;
@@ -94,7 +99,6 @@ class SellerIntegralGoodsController extends BaseController {
             $ajaxLoad = '已加载全部';
             $isEnd = 1;
         }
-        $lists = arrayUniqueErwei($lists);
         $data = [
             'ajaxLoad' => $ajaxLoad,
             'is_end' => $isEnd,
@@ -102,8 +106,8 @@ class SellerIntegralGoodsController extends BaseController {
             'lists' => $lists,
             'isEmpty' => !empty($lists) ? 1 : 0,
         ];
-
         $this->ajaxReturn(syncData(0, 'success', $data));
     }
+
 
 }

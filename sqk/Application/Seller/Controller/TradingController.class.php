@@ -10,17 +10,31 @@
 namespace Seller\Controller;
 
 use Think\Controller;
-use Seller\Controller\BaseController; 
-
-header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
-header('Access-Control-Allow-Methods:POST,GET'); //支持的http 动作
-header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
+use Seller\Controller\BaseController;
+use Think\Tool\Request;
+use Seller\Model\ExchangeRecordModel;
 
 class TradingController extends BaseController {
 
-    //put your code here
     public function _initialize() {
         parent::_initialize();
+    }
+
+    public function trading_detail() {
+        $request = Request::all();
+        $exchangeModel = new ExchangeRecordModel();
+        $join = [
+            ['sys_userapp_info', 'id', 'goods_exchange_record', 'user_id'],
+            ['seller_integral_goods', 'id', 'goods_exchange_record', 'goods_id'],
+        ];
+        $field = ['goods_exchange_record.*', 'sys_userapp_info.realname', 'sys_userapp_info.usr', 'seller_integral_goods.goods_name'];
+        $where[$this->dbFix . 'goods_exchange_record.id'] = $request['exchange_id'];
+
+        $exchangeLists = $exchangeModel->joinFieldDB($join, $field, $where)->find();
+        $exchangeLists['exchange_method'] = ExchangeRecordModel::getExchangeMethodById($exchangeLists['exchange_method_id']);
+        $this->assign('data', $exchangeLists);
+        //dd($exchangeLists);
+        $this->display();
     }
 
 }

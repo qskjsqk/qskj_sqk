@@ -64,7 +64,7 @@
                         <h4>收取积分</h4>
                     </div>
                     <div class="mui-card-link">
-                        <h4>+50</h4>
+                        <h4>+{$data.exchange_integral}</h4>
                     </div>
                 </div>
                 <div class="mui-card-content">
@@ -75,7 +75,13 @@
                                 <p class="mui-h5 mui-ellipsis">当前状态</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">交易成功</span>
+                                <span class="mui-h5">
+                                    <if condition="$data.status eq 1">
+                                       交易成功
+                                    <else/>
+                                        交易失败
+                                    </if>
+                                </span>
                             </div>
                         </div>
                         <div class="mui-row">
@@ -83,7 +89,7 @@
                                 <p class="mui-h5 mui-ellipsis">商&#12288;&#12288;品</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">礼品卡面值30元</span>
+                                <span class="mui-h5">{$data.goods_name}</span>
                             </div>
                         </div>
                         <div class="mui-row">
@@ -91,7 +97,7 @@
                                 <p class="mui-h5 mui-ellipsis">客户名称</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">张晓炜(13521447599)</span>
+                                <span class="mui-h5">{$data.realname}({$data.usr})</span>
                             </div>
                         </div>
                         <div class="mui-row">
@@ -99,7 +105,7 @@
                                 <p class="mui-h5 mui-ellipsis">交易时间</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">2018-05-02 12:34:34</span>
+                                <span class="mui-h5">{$data.exchange_time}</span>
 
                             </div>
                         </div>
@@ -108,7 +114,7 @@
                                 <p class="mui-h5 mui-ellipsis">交易方式</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">扫码支付</span>
+                                <span class="mui-h5">{$data.exchange_method}</span>
 
                             </div>
                         </div>
@@ -117,7 +123,7 @@
                                 <p class="mui-h5 mui-ellipsis">交易单号</p>
                             </div>
                             <div class="mui-col-xs-6 mui-text-right">
-                                <span class="mui-h5">2018464561215646545</span>
+                                <span class="mui-h5">{$data.exchange_number}</span>
 
                             </div>
                         </div>

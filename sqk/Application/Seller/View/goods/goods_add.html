@@ -62,7 +62,8 @@
                 <div class="mui-card">
                     <!--内容区-->
                     <div class="mui-card-content">
-                        <form id="form">
+                        <form id="form" method="post" action="__CONTROLLER__/addGoods">
+                            <input type="hidden" name="goods_pic" id="input-title"/>
                             <div class="mui-input-row" id="formStr">
                                 <div class="m-inputheader">商品名称</div>
                                 <div class="m-inputframe">
@@ -72,45 +73,62 @@
                                 <div class="m-inputframe">
                                     <div class="m-select">
                                         <select style="margin:0px 0px; text-indent: 12px;" name="cat_id">
-                                            <option value="1">全积分兑换</option>
-                                            <option value="2">积分加价购</option>
-                                            <option value="3">第三方卡券</option>
+                                            <foreach name="data.catLists" item="val">
+                                                <option value="{$val.id}">{$val.cat_name}</option>
+                                            </foreach>
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="m-inputheader" id="goods-number-title" style="display: none;">商品编号</div>
+                                <div class="m-inputframe"id="goods-number-input" style="display: none;">
+                                    <input type="text" style="margin:0px 0px;" placeholder="请输入商品编号" class="mui-input-clear" name="goods_number" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                                </div>
+
+                                <div class="m-inputheader">库存数量</div>
+                                <div class="m-inputframe">
+                                    <input type="text" style="margin:0px 0px;" placeholder="请输入库存数量" class="mui-input-clear" name="stock" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                                </div>
+
                                 <div class="m-inputheader">所需积分值</div>
                                 <div class="m-inputframe">
                                     <input type="text" style="margin:0px 0px;" placeholder="请输入0-500积分值" class="mui-input-clear" name="required_integral" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                                 </div>
                                 
-                                <div class="m-inputheader">所需支付价</div>
-                                <div class="m-inputframe">
-                                    <input type="text" style="margin:0px 0px;" placeholder="请输入实际所要支付的金额" class="mui-input-clear" name="" onkeyup="value = value.replace(/[^1234567890.]+/g, '')">
+                                <div class="m-inputheader" id="payment-amount-title">所需支付价</div>
+                                <div class="m-inputframe" id="payment-amount-input">
+                                    <input type="text" style="margin:0px 0px;" placeholder="请输入实际所要支付的金额" class="mui-input-clear" name="payment_amount" onkeyup="value = value.replace(/[^1234567890.]+/g, '')">
                                 </div>
                                 
                                 <div class="m-inputheader">声明原价</div>
                                 <div class="m-inputframe">
-                                    <input type="text" style="margin:0px 0px;" placeholder="请输入原价" class="mui-input-clear" name="" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                                    <input type="text" style="margin:0px 0px;" placeholder="请输入原价" class="mui-input-clear" name="original_price" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                                 </div>
                                 
                                 <div class="m-inputheader">兑换限量数</div>
                                 <div class="m-inputframe">
-                                    <input type="text" style="margin:0px 0px;" placeholder="空白则不限量" class="mui-input-clear" name="address" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                                    <input type="text" style="margin:0px 0px;" placeholder="空白则不限量" class="mui-input-clear" name="exchange_limit_number" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                                 </div>
                                 
                                 <div class="m-inputheader">每个用户限量数</div>
                                 <div class="m-inputframe">
-                                    <input type="text" style="margin:0px 0px;" placeholder="空白则不限量" class="mui-input-clear" name="address" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                                    <input type="text" style="margin:0px 0px;" placeholder="空白则不限量" class="mui-input-clear" name="user_exchange_limit" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                                 </div>
                                 
                                 <div class="m-inputheader">商品详情</div>
                                 <div class="m-inputframe">
-                                    <textarea placeholder="请输入商品详情" style="margin:0px 0px;" name="content"></textarea>
+                                    <textarea placeholder="请输入商品详情" style="margin:0px 0px;" name="goods_detail"></textarea>
                                 </div>
                                 
                                 <div class="m-inputheader">使用须知</div>
                                 <div class="m-inputframe">
-                                    <textarea placeholder="请输入使用须知" style="margin:0px 0px;" name="content"></textarea>
+                                    <textarea placeholder="请输入使用须知" style="margin:0px 0px;" name="use_of_knowledge"></textarea>
+                                </div>
+
+                                <div class="m-inputheader">是否发布</div>
+                                <div class="m-inputframe">
+                                    发布<input type="radio" style="margin:0px 0px;" class="mui-input-clear mui-radio" name="is_publish" value="yes" checked>
+                                    不发布<input type="radio" style="margin:0px 0px;" class="mui-input-clear mui-radio" name="is_publish" value="no">
                                 </div>
 
                             </div>
@@ -123,7 +141,7 @@
 
                             </div>
                             <div class="mui-button-row" style="margin-bottom: 10px;">
-                                <button type="button" class="mui-btn mui-btn-primary mui-btn-block"  onclick="subForm()">提交</button>
+                                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="addGoods()">提交</button>
                             </div>
                         </form>
 
@@ -136,6 +154,7 @@
 
 </html>
 <script type="text/javascript">
+
     // 初始化Web Uploader
     var uploader = WebUploader.create({
         // 选完文件后，是否自动上传。
@@ -143,7 +162,7 @@
         // swf文件路径
         swf: '__PUBLIC__/seller/plugin/webuploader/Uploader.swf',
         // 文件接收服务端。
-        server: '__MODULE__/allattach/uploadAt',
+        server: '__MODULE__/allattach/uploadAttach/module_name/sellerGoods',
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
         pick: '#filePicker',
@@ -152,7 +171,7 @@
             extensions: 'gif,jpg,jpeg,bmp,png',
             mimeTypes: 'image/*'
         },
-        //可重复上传         
+        //可重复上传
         duplicate: true
     });
     // 当有文件添加进来的时候
@@ -178,7 +197,7 @@
             $file.append('<div style="width:100px;margin-right:10px;"><img src="' + appUpload_path + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
             $file.css('background-img', 'url()');
             if ($('#input-title').val() == '') {
-                $('#input-title').val(file.name);
+                $('#input-title').val(response.att_id);
             }
         } else {
             upload_error(file, response);
