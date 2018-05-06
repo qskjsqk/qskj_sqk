@@ -42,35 +42,14 @@ and open the template in the editor.
     text-align: center;
     line-height: 20px;
 }
-.mui-segmented-control1 {
-    font-size: 15px;
-    font-weight: 400;
-    position: relative;
-    display: table;
-    overflow: hidden;
-    width: 100%;
-    table-layout: fixed;
-    border-radius: 3px;
-    background-color: transparent;
-    -webkit-touch-callout: none;
+.tabbtn{
+    width:33%;
+    text-align: center;
 }
 .btn_active{
     color: #fff;
     border-bottom: 3px solid #D75A7B;
 }
-.mui-segmented-control1 .mui-control-item {
-    line-height: 25px;
-    display: table-cell;
-    overflow: hidden;
-    width: 1%;
-    -webkit-transition: background-color .1s linear;
-    transition: background-color .1s linear;
-    text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #fff;
-}
-
 
 .row_list{
     background-color: #fee4e9;

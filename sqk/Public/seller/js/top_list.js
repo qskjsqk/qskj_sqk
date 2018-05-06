@@ -53,6 +53,7 @@ function getTopList(nla) {
         }
 
         $('#topList').html(str);
+        
 
     }, 'json');
 }

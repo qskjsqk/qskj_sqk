@@ -11,8 +11,8 @@
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/top.css" type="text/css"/>
-        
-        
+
+
         <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script src="__PUBLIC__/appm/js/mui.min.js"></script>
         <script type="text/javascript">
@@ -35,77 +35,75 @@
             <h1 class="mui-title header-a-l">本社区用户榜</h1>	
         </header>
         <!--底部-->
-    <!--<include file="./Application/Appm/View/tabnav.html" />-->
-    <!--主体部分-->
-    <div class="mui-content">
+        <!--<include file="./Application/Appm/View/tabnav.html" />-->
+        <!--主体部分-->
+        <div class="mui-content">
 
-        <!--页面部分-->
-        <div class="mui-row">
-            <div class="mui-card">
-                <div class="mui-card-header mui-card-media top_card_hearder_bg">
-                    <div class="mui-card-link" id="topName">
-                        <b>①</b>&nbsp;本社区用户榜
+            <!--页面部分-->
+            <div class="mui-row">
+                <div class="mui-card">
+                    <div class="mui-card-header mui-card-media top_card_hearder_bg">
+                        <div class="mui-card-link" id="topName">
+                            <b>①</b>&nbsp;本社区用户榜
+                        </div>
+                        <div class="mui-card-link" id="tab">
+                            <div id="tab0" class="tabbtn" onclick="changeTab(0)">本季度</div>
+                            <div id="tab1" class="tabbtn"  onclick="changeTab(1)">上季度</div>
+                            <div id="tab2" class="tabbtn"  onclick="changeTab(2)">总榜单</div>
+                        </div>
                     </div>
-                    <div class="mui-card-link">
-                        <div id="tab" class="mui-segmented-control1">
-                            <div id="tab0" class="mui-control-item" onclick="changeTab(0)">本季度</div>
-                            <div id="tab1"  class="mui-control-item" onclick="changeTab(1)">上季度</div>
-                            <div id="tab2"  class="mui-control-item" onclick="changeTab(2)">总榜单</div>
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner" id="topList">
+                            <div class="mui-row row_list">
+                                <div class="row_list_jp jp01"></div>
+                                <div class="row_list_tx">
+                                    <img src="__PUBLIC__/appm/img/tx_icon/3.jpg">
+                                </div>
+                                <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
+                                <span class="row_list_integral">90000分</span>
+                            </div>
+                            <div class="mui-row row_list">
+                                <div class="row_list_jp jp02"></div>
+                                <div class="row_list_tx">
+                                    <img src="__PUBLIC__/appm/img/tx_icon/4.jpg">
+                                </div>
+                                <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
+                                <span class="row_list_integral">90000分</span>
+                            </div>
+                            <div class="mui-row row_list">
+                                <div class="row_list_jp jp03"></div>
+                                <div class="row_list_tx">
+                                    <img src="__PUBLIC__/appm/img/tx_icon/5.jpg">
+                                </div>
+                                <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
+                                <span class="row_list_integral">90000分</span>
+                            </div>
+                            <div class="mui-row row_list">
+                                <div class="row_list_jp"></div>
+                                <div class="row_list_tx">
+                                    <img src="__PUBLIC__/appm/img/tx_icon/5.jpg">
+                                </div>
+                                <span class="row_list_title">张晓炜</br><p>13521447599</p></span>
+                                <span class="row_list_integral">9000积分</span>
+                            </div>
+
+                            <div class="mui-row row_list">
+                                <div class="row_list_jp jp01"></div>
+                                <div class="row_list_tx">
+                                    <span class="mui-icon mui-icon-extra mui-icon-extra-hotel" style="font-size: 36px;"></span>
+                                </div>
+                                <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
+                                <span class="row_list_integral">累计签到900人次</span>
+                            </div>
+
+
                         </div>
                     </div>
-                </div>
-                <div class="mui-card-content">
-                    <div class="mui-card-content-inner" id="topList">
-                        <div class="mui-row row_list">
-                            <div class="row_list_jp jp01"></div>
-                            <div class="row_list_tx">
-                                <img src="__PUBLIC__/appm/img/tx_icon/3.jpg">
-                            </div>
-                            <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
-                            <span class="row_list_integral">90000分</span>
-                        </div>
-                        <div class="mui-row row_list">
-                            <div class="row_list_jp jp02"></div>
-                            <div class="row_list_tx">
-                                <img src="__PUBLIC__/appm/img/tx_icon/4.jpg">
-                            </div>
-                            <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
-                            <span class="row_list_integral">90000分</span>
-                        </div>
-                        <div class="mui-row row_list">
-                            <div class="row_list_jp jp03"></div>
-                            <div class="row_list_tx">
-                                <img src="__PUBLIC__/appm/img/tx_icon/5.jpg">
-                            </div>
-                            <span class="row_list_title">京客隆超市</br><p>云景东里社区</p></span>
-                            <span class="row_list_integral">90000分</span>
-                        </div>
-                        <div class="mui-row row_list">
-                            <div class="row_list_jp"></div>
-                            <div class="row_list_tx">
-                                <img src="__PUBLIC__/appm/img/tx_icon/5.jpg">
-                            </div>
-                            <span class="row_list_title">张晓炜</br><p>13521447599</p></span>
-                            <span class="row_list_integral">9000积分</span>
-                        </div>
+                </div>          
 
-                        <div class="mui-row row_list">
-                            <div class="row_list_jp jp01"></div>
-                            <div class="row_list_tx">
-                                <span class="mui-icon mui-icon-extra mui-icon-extra-hotel" style="font-size: 36px;"></span>
-                            </div>
-                            <span class="row_list_title">云景东里社区</br><p>举办活动35场</p></span>
-                            <span class="row_list_integral">累计签到900人次</span>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>          
-
+            </div>
+            <!--页面部分end-->
         </div>
-        <!--页面部分end-->
-    </div>
-</body>
+    </body>
 
 </html>

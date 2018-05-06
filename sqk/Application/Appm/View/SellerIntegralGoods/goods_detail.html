@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>智慧社区积分商城</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css">
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
+        <style type="text/css">
+            .mui-card{
+                background-color: #fff;
+            }
+            .seller_s{
+                height:50%;width:4px;margin-right: 2px;background-color: #7cacff;
+            }
+            .item_list{
+                margin: 4px 3%;background-color:none;width:94%;
+            }
+            .item_list_img{
+                margin-bottom:4px; background-color: red;float: right;width: 70px;height:70px;
+            }
+            .item_list_word{
+                height: 35px;;line-height: 35px;
+            }
+        </style>
+
+
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <script type="text/javascript" src="__PUBLIC__/appm/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/goods_detail.js"></script>
+    </head>
+
+    <body>
+
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav header-a-l">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/SellerIntegralGoods/item_list')"></a>
+            <div class="mui-title mui-input-search header-ss-div "><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+            <a class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a">3423</a>
+        </header>
+
+        <!--主体部分-->
+
+        <div class="mui-content" style="padding-top: 45px;background-color: #fefefe;">
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>{$data.goodsInfo.goods_name}</div>
+                    <p class="mui-card-link">距离1.5km</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="item_list">
+                        <div class="item_list_img">
+                            <img src="/{$data.goodsInfo.goods_pic}"/>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">
+                                <if condition="$data['goodsInfo']['cat_id'] eq 2">
+                                   {$data.goodsInfo.required_integral}积分
+                                <else/>
+                                    ￥{$data.goodsInfo.payment_amount}元+{$data.goodsInfo.required_integral}积分
+                                </if>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>兑换记录</div>
+                    <p class="mui-card-link">共兑换{$data.exchangeCount}次</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-row">
+                        <ul class="mui-table-view">
+                            <foreach name="data.exchangeLists" item="exchange">
+                            <li class="mui-table-view-cell" onclick="aHref('__MODULE__/trading/trading_detail/exchange_id/{$exchange.id}')">
+                                <a class="mui-navigate-right">
+                                    <span class="mui-badge mui-badge-danger">消费：{$exchange.exchange_integral}分</span>
+                                    {$exchange.realname}
+                                </a>
+                            </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -29,6 +29,23 @@ class BaseController extends Controller {
         $this->assign('config', $this->config);
     }
 
+   /**
+     * function:获取某一条数据By ID
+     * @param $model
+     * @param $id
+     * @return mixed
+     */
+    public function getDataKey($model, $id, $key) {
+        $condition['id'] = array('EQ', $id);
+        $result = $model->where($condition)->find();
+        if (isset($result)) {
+            $returnData = $result[$key];
+        } else {
+            $returnData = 'error';
+        }
+        return $returnData;
+    }
+    
     /**
      * 获取附件
      * @param type $activ_id
@@ -36,7 +53,7 @@ class BaseController extends Controller {
      */
     public function getAttachArr($key,$id) {
         $model = M(C('DB_ALL_ATTACH'));
-        $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $prom_id)->select();
+        $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $id)->select();
         if (empty($selectArr)) {
             $returnData['flag'] = 0;
         } else {

@@ -147,10 +147,10 @@ class ApiController extends BaseDBController {
                 $activInfo['content'] = strip_tags($activInfo['content'], '<p>');
                 $activInfo['content'] = str_replace('</p>', "\n", $activInfo['content']);
                 $activInfo['content'] = strip_tags($activInfo['content']);
-				$activInfo['content'] = str_replace('&nbsp;&nbsp;', "\x20", $activInfo['content']);
-				$activInfo['content'] = str_replace('&nbsp;', "", $activInfo['content']);
-				
-				
+                $activInfo['content'] = str_replace('&nbsp;&nbsp;', "\x20", $activInfo['content']);
+                $activInfo['content'] = str_replace('&nbsp;', "", $activInfo['content']);
+
+
                 $condition['module_info_id'] = $activInfo['id'];
                 $condition['module_name'] = array('EQ', 'activity');
                 $imgInfoList = M('sys_all_attach')->where($condition)->order('id desc')->select();
@@ -189,6 +189,31 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 $returnData['data'] = $signinList;
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    public function setSigninStatusPos() {
+        $sign_id = $_GET['sign_id'];
+        $status = $_GET['status'];
+        if (empty($_GET['sign_id']) || empty($_GET['status'])) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+            $where['id'] = ['EQ', $sign_id];
+            $data['status'] = $status;
+            $signinFlag = M('activ_signin')->where($where)->setField($data);
+            
+            if ($signinFlag) {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '状态置位错误！';
+                $returnData['timestamp'] = time();
+            } else {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '成功状态置位！';
+                $returnData['timestamp'] = time();
             }
         }
         $this->ajaxReturn($returnData, 'JSON');

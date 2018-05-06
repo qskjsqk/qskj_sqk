@@ -6,13 +6,15 @@
 //初始化------------------------------------------------------------------------
 $(function () {
     checkIsLogin();
-//    changeTab(0);
+    changeTab(0);
 
 });
 //函数--------------------------------------------------------------------------
 function changeTab(nla) {
-    $('#tab').find('div').removeClass('mui-active');
-    $('#tab' + nla).addClass('mui-active');
+    $('#tab0').removeClass('btn_active');
+    $('#tab1').removeClass('btn_active');
+    $('#tab2').removeClass('btn_active');
+    $('#tab' + nla).addClass('btn_active');
     getTopList(nla);
 }
 
