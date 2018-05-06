@@ -42,7 +42,7 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
                     str += '<div class="mui-card">';
                     str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link">' + shuju[i]['com_name'] + '</p></div>';
                     str += '<div class="mui-card-content"><div class="item_list">';
-                    str += '<div class="item_list_img"><img src="/'+ shuju[i]['goods_pic'] +'"></div>';
+                    str += '<div class="item_list_img"><img src="/'+ shuju[i]['goods_pic'] +'" style="width:70px;height:70px;"></div>';
                     str += '<div class="item_list_word"><span class="">' + shuju[i]['goods_name'] + '</span></div>';
                     var price = '';
                     if(shuju[i]['cat_id'] == 1 || shuju[i]['cat_id'] == 3) {

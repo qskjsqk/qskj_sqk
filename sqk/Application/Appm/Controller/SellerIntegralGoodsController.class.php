@@ -24,13 +24,18 @@ class SellerIntegralGoodsController extends BaseController {
 
     public function item_list() {
         $this->assign('address_id', cookie('address_id'));
+        //广告轮播图
+        $promC = A('Seller');
+        $sliderData = $promC->getSlider();
+        $this->assign('sliderData', $sliderData);
+        
         $appUserModel = new SysUserappInfoModel;
         $this->assign('userIntegralNum', $appUserModel->where(['id' => cookie('user_id')])->getField('integral_num'));
 
         $this->display();
     }
 
-    public function activity_detail() {
+    public function item_detail() {
         $this->display();
     }
 
