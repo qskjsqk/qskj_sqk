@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>智慧社区积分商城</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css"/>
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css"/>
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css"/>
+        <style type="text/css">
+            .mui-card{
+                background-color: #fff;
+            }
+            .seller_s{
+                height:50%;width:4px;margin-right: 2px;background-color: #7cacff;
+            }
+            .item_list{
+                margin: 4px 3%;background-color:none;width:94%;
+            }
+            .item_list_word{
+                height: 35px;;line-height: 35px;text-align:center;
+            }
+        </style>
+
+
+        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
+        <script type="text/javascript" src="__PUBLIC__/appm/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/goods_detail.js"></script>
+    </head>
+
+    <body>
+
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav header-a-l">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/SellerIntegralGoods/item_list')"></a>
+            <h1 id="title" class="mui-title header-a-l">商品详情</h1>
+        </header>
+
+        <!--主体部分-->
+
+        <div class="mui-content" style="padding-top: 45px;background-color: #fefefe;">
+
+            <div class="mui-card">
+                <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(__PUBLIC__/seller/img/logo.png)"></div>
+                <div class="mui-card-header" onclick="aHref('__MODULE__/SellerIntegralGoods/seller_detail')">
+                    <div class="mui-card-link"><div class="seller_s"></div>店铺名称</div>
+                    <p class="mui-card-link">距离1.5km翠屏北里</p>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner">
+                        <div class="item_list">
+                            <div class="item_list_word">
+                                <span class="font16">礼品卡券面值30元</span>
+                            </div>
+                            <div class="item_list_word">
+                                <span class="fontred">￥30元+300积分</span>
+                                <span class="font888">原价：￥45</span>
+                            </div>
+                        </div>
+                        <!--第三类-->
+                        <button type="button" class="mui-btn-primary mui-btn-block" onclick="openExchange()">立即兑换券码</button>
+                        <!--前两类-->
+                        <button type="button" class="mui-btn mui-btn-block">本商品进店消费即可</button>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>商品详情</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>使用门店</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        北京市通州区万达广场圣诞快乐附近
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>使用须知</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--模态框-->
+        <div class="m-modal"></div>
+        <div class="m-modal-content" style="width:100%;margin-left: -50%;">
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <span class="mui-card-link font666">兑换券码</span>
+                    <a class="mui-card-link" href="#" onclick="closeModal()">取消</a>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner">
+                        <div class="item_list">
+                            <div class="item_list_word">
+                                <span class="font16">礼品卡券面值30元</span>
+                            </div>
+                            <div class="item_list_word">
+                                <span class="fontred">￥30元+300积分</span>
+                                <span class="font888">原价：￥45</span>
+                            </div>
+                        </div>
+                        <span>该券限量10个，剩余3个</span>
+                    </div>
+                </div>
+                <div class="mui-card-footer">
+                    <div class="mui-card-link fontred">
+                        ￥30元+300积分
+                    </div>
+                    <div class="mui-card-link font666">
+                        <div class="mui-numbox">
+                            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                            <input class="mui-input-numbox" type="number"/>
+                            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-card-footer">
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="openExchange()">立即兑换券码</button>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+

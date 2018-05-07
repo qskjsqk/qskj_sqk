@@ -48,6 +48,7 @@ class TopController extends BaseController {
             $Arr[$i]['right'] = '累计' . $Arr[$i]['sign_integral'] . '分';
             $Arr[$i]['tx_icon'] = '<img src="../../../Public/admin/img/tx_icon/' . ($Arr[$i]['user_id'] % 13 + 1) . '.jpg">';
         }
+//        $Arr['dd']=M('ActivSigninInfo')->getLastSql();
         return $Arr;
     }
 

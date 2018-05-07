@@ -12,14 +12,9 @@ namespace Appm\Controller;
 use Think\Controller;
 use Think\Upload;
 
-header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
-header('Access-Control-Allow-Methods:POST,GET'); //支持的http 动作
-header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
-
 class AllattachController extends Controller {
 
     public function index() {
-        $this->assign();
         $this->display();
     }
 
@@ -100,14 +95,10 @@ class AllattachController extends Controller {
         }
     }
 
-    /**
-     * 上传附件
-     * @return string
-     */
-    public function uploadAt() {
+    public function uploadAttach() {
         $model = M(C('DB_ALL_ATTACH'));
         $fileExt = 'image';
-        $moduleName = "prop";
+        $moduleName = $_GET['module_name']; //"prop";
         //以模块名作为附件的子目录
         $filePath = C('UPLOAD_ROOT') . '/' . $moduleName . '/';
         // 检查目录是否存在
@@ -146,6 +137,40 @@ class AllattachController extends Controller {
             }
         }
         $this->ajaxReturn($returnData);
+    }
+
+    /**
+     * 清除未绑定数据的图片数据和源文件
+     */
+    public function delAttachs() {
+        $model = M(C('DB_ALL_ATTACH'));
+        $selectArr = $model->where('module_info_id=0')->select();
+        foreach ($selectArr as $v) {
+            $path = C('UPLOAD_PATH') . $v['file_path'];
+            if (unlink($path)) {
+                $delFlag = $model->delete($v['id']);
+                if ($delFlag > 0) {
+                    echo $path . '<font color="green">-------删除成功！</font></br></br>';
+                } else {
+                    echo $path . '<font color="red">-------删除失败！</font></br></br>';
+                }
+            };
+        }
+        $this->success('删除成功', U('index/main'), 3);
+    }
+
+    /**
+     * function:删除附件
+     */
+    public function delAttach() {
+        $model = M(C('DB_ALL_ATTACH'));
+        $condition['id'] = array('EQ', $_POST['id']);
+        if ($model->where($condition)->delete() !== false) {
+            $returnData['code'] = '500';
+        } else {
+            $returnData['code'] = '502';
+        }
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
 }

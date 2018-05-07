@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link href="__PUBLIC__/seller/css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
+
+        <script src="__PUBLIC__/seller/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/seller/js/mui.min.js"></script>
+
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <script src="__PUBLIC__/seller/js/common.js"></script>
+        <script src="__PUBLIC__/seller/js/login.js"></script>
+    </head>
+
+    <body>
+
+        <div class="mui-content">
+            <!--            <div id="login_container">
+                            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx542ee14049aa74e0&redirect_uri=http://lyznsq.qmtsc.com/index.php/appm/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect" target="_blank">点击登陆</a>
+                            <img src="__PUBLIC__/appm/img/logo.png">
+                        </div>-->
+            <!--页面部分-->
+            <div class="mui-card">
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner" style="text-align: center;">
+                        <img src="__PUBLIC__/seller/img/logo.png" style="height:100px;width:100px; margin: 0 auto;">
+                        <p>您还不是梨园智能商圈社区卡商家用户</p>
+                        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="aHref('__CONTROLLER__/apply')">快速申请</button>
+                        <button type="button" class="mui-btn mui-btn-block" onclick="aHref('__CONTROLLER__/wechat_binding')">已有商家账户，立即绑定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

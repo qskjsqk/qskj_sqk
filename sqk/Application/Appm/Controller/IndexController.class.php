@@ -15,15 +15,10 @@ header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
 header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
 
-class IndexController extends Controller {
-
-    protected $config;
+class IndexController extends BaseController {
 
     public function _initialize() {
-        //配置字典信息
-        $configdefC = A('Admin/Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
+        parent::_initialize();
     }
 
     public function httpRequest($pUrl, $pData) {
@@ -93,11 +88,11 @@ class IndexController extends Controller {
         $wxInfo = json_decode($a, true);
 //        dump($wxInfo);
 
-        $b = "https://api.weixin.qq.com/sns/userinfo?access_token=".$wxInfo['access_token']."&openid=".$wxInfo['openid'];
+        $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
         $b = $this->httpRequest($b, '');
         $userInfo = json_decode($b, true);
-        
-        echo "<img src='".$userInfo['headimgurl']."'></br><h2>".$userInfo['nickname']."</h2></br><h2>".$userInfo['province'].$userInfo['city']."</h2>";
+
+        echo "<img src='" . $userInfo['headimgurl'] . "'></br><h2>" . $userInfo['nickname'] . "</h2></br><h2>" . $userInfo['province'] . $userInfo['city'] . "</h2>";
 //        dump($userInfo);
     }
 
@@ -164,6 +159,14 @@ class IndexController extends Controller {
     }
 
     /**
+     * 商家版我的资料
+     */
+    public function tx_upload() {
+        $this->assign('myInfo', $this->getUserappInfo());
+        $this->display();
+    }
+
+    /**
      * 获取个人信息
      */
     public function getUserappInfo() {
@@ -176,6 +179,29 @@ class IndexController extends Controller {
         } else {
             return $result;
         }
+    }
+
+    /**
+     * 保存商家头像
+     */
+    public function saveTxInfo() {
+        $param_arr = array();
+        $form_data = $_POST['form_data'];
+        parse_str($form_data, $param_arr); //转换数组
+        $condition['id'] = array('EQ', $param_arr['files'][0]);
+        $data = array('module_info_id' => cookie('user_id'));
+        M('sys_all_attach')->where($condition)->setField($data);
+        $txPath = parent::getDataKey(M('sys_all_attach'), $param_arr['files'][0], 'file_path');
+        $addData = array('tx_path' => $txPath);
+        $result = M('sys_userapp_info')->where('id=' . cookie('user_id'))->setField($addData);
+
+        if ($result === FALSE) {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => '修改头像失败!');
+        } else {
+            $returnData['is_success'] = array('flag' => 1, 'msg' => '修改头像成功!');
+        }
+
+        $this->ajaxReturn($returnData);
     }
 
     public function getMyActivList() {

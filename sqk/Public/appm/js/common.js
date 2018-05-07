@@ -77,7 +77,7 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
-    console.log(controller);
+    console.log('====正在访问【'+module+'】【'+controller+'】【'+action+'】');
     $('#'+controller+'_btn').addClass('mui-active');
     $.post(m_path + "/login/checkIsLogin", function (data) {
         if (data.flag == 0) {
@@ -85,6 +85,7 @@ function checkIsLogin() {
                 aHref(m_path + "/login/index");
             });
         } else {
+            console.log('====检测用户已登录！');
             //tabbar 通知公告
             data.data.notice_num == 0 ? $('#notice_num').html('') : $('#notice_num').html('<span class="mui-badge">' + data.data.notice_num + '</span>');
             //tabbar 活动
