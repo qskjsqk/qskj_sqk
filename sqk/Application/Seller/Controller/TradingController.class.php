@@ -31,9 +31,8 @@ class TradingController extends BaseController {
         $where[$this->dbFix . 'goods_exchange_record.id'] = $request['exchange_id'];
 
         $exchangeLists = $exchangeModel->joinFieldDB($join, $field, $where)->find();
-        $exchangeLists['exchange_method'] = ExchangeRecordModel::getExchangeMethodById($exchangeLists['exchange_method_id']);
+        $exchangeLists['exchange_method'] = getExchangeMethodById($exchangeLists['exchange_method_id'])['name'];
         $this->assign('data', $exchangeLists);
-        //dd($exchangeLists);
         $this->display();
     }
 

@@ -312,6 +312,13 @@ function dd($data, $is_exist = true) {
     }
 }
 
+/**
+ * 异步返回数据
+ * @param   integer  $ret   状态码: 成功为0;其他自定义
+ * @param   string   $msg   返回信息说明
+ * @param   array    $data  返回数据
+ * @return  array
+ */
 function syncData($ret = 0, $msg = '操作成功', $data = []) {
     $returnData = [
         'ret' => $ret,
@@ -324,31 +331,16 @@ function syncData($ret = 0, $msg = '操作成功', $data = []) {
 }
 
 /**
- * 去除二维数组中的重复元素
- * @param  array $arr
+ * 根据交易类型id获取交易详情
+ * @param  integer $methodId  交易类型id
  * @return array
  */
-function arrayUniqueErwei($arr)
+function getExchangeMethodById($methodId)
 {
-    $keys = [];
-    foreach ($arr as $k => $v) {
-        if ($k == 0) {
-            $keys = array_keys($v);
-        }
-        //降维,也可以用implode,将一维数组转换为用逗号连接的字符串
-        $v = join(',', $v);
-        $temp[$k] = $v;
-    }
-    //去掉重复的字符串,也就是重复的一维数组
-    $temp = array_values(array_unique($temp));
-    foreach ($temp as $k => $v) {
-        //再将拆开的数组重新组装
-        $array = explode(',', $v);
-        //重新配置索引
-        for ($i = 0; $i < count($array); $i++) {
-            $temp2[$k][$keys[$i]] = $array[$i];
+    $exchangeMethod = C('EXCHANGE_METHOD');
+    foreach($exchangeMethod as $val) {
+        if($val['method_id'] == $methodId) {
+            return $val;
         }
     }
-    return $temp2;
-
 }
