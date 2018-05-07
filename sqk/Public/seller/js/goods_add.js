@@ -49,6 +49,14 @@ function checkAddGoods() {
         }
     }
 
+    if($("input[name='stock']").val() == '') {
+        mui.alert('请输入库存数量');
+        return false;
+    } else if(isNaN($("input[name='stock']").val())) {
+        mui.alert('库存数量必须是数字');
+        return false;
+    }
+
     if($("input[name='required_integral']").val() == '') {
         mui.alert('请输入所需积分');
         return false;
@@ -104,6 +112,7 @@ function addGoods() {
             type : 'post',
             async: false,
             success : function (res) {
+                console.log(res);
                 if(res.ret == 0 ) {
                     mui.alert('添加成功', '提示', '已添加', function () {
                         aHref(c_path + "/goods_manage");

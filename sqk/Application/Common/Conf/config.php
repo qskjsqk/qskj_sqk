@@ -33,4 +33,10 @@ return array(
     'SYSTEM_TOKEN'=>'qs_sqk',//识别码
 
     'SHOW_PAGE_TRACE' => true, //开发过程中开启页面Trace
+
+    //加载扩展配置文件
+    'LOAD_EXT_CONFIG' => array(
+        'EXCHANGE_METHOD' => 'exchange_method',   //积分交易方式配置
+    ),
+
 );
