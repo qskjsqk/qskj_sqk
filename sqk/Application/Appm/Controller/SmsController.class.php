@@ -7,7 +7,7 @@
  * @datetime 2017-2-7 14:02:04
  */
 
-namespace Admin\Controller;
+namespace Appm\Controller;
 
 use Think\Controller;
 
@@ -22,7 +22,6 @@ class SmsController extends Controller {
     protected $tpl_id;
 
     public function _initialize() {
-        parent::_initialize();
 
         $this->sdkappid = '1400084969';
         $this->appkey = '30e2429df6664b38403c44018ddeb6b3';
