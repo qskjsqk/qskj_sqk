@@ -56,26 +56,37 @@
         <div class="mui-content" style="padding-top: 45px;background-color: #fefefe;">
 
             <div class="mui-card">
-                <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(__PUBLIC__/seller/img/logo.png)"></div>
+                <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(../../../{$goodInfo.goods_pic})"></div>
                 <div class="mui-card-header" onclick="aHref('__MODULE__/SellerIntegralGoods/seller_detail')">
-                    <div class="mui-card-link"><div class="seller_s"></div>店铺名称</div>
-                    <p class="mui-card-link">距离1.5km翠屏北里</p>
+                    <div class="mui-card-link"><div class="seller_s"></div>{$sellerInfo.name}</div>
+                    <p class="mui-card-link">{$sellerInfo.address_name}</p>
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
                         <div class="item_list">
                             <div class="item_list_word">
-                                <span class="font16">礼品卡券面值30元</span>
+                                <span class="font16">{$goodInfo.goods_name}</span>
                             </div>
                             <div class="item_list_word">
-                                <span class="fontred">￥30元+300积分</span>
-                                <span class="font888">原价：￥45</span>
+                                <span class="fontred">
+                                    <if condition="$goodInfo.payment_amount eq 0.00">
+                                        {$goodInfo.required_integral}积分
+                                        <else/>
+                                        ￥{$goodInfo.payment_amount}元+{$goodInfo.required_integral}积分
+                                    </if>
+
+                                </span>
+                                <span class="font888">原价：￥{$goodInfo.original_price}</span>
                             </div>
                         </div>
-                        <!--第三类-->
-                        <button type="button" class="mui-btn-primary mui-btn-block" onclick="openExchange()">立即兑换券码</button>
-                        <!--前两类-->
-                        <button type="button" class="mui-btn mui-btn-block">本商品进店消费即可</button>
+                        <if condition="$goodInfo.cat_id eq 3">
+                            <!--第三类-->
+                            <button type="button" class="mui-btn-primary mui-btn-block" onclick="openExchange()">立即兑换券码</button>
+                            <else/>
+                            <!--前两类-->
+                            <button type="button" class="mui-btn mui-btn-block">本商品进店消费即可</button>
+                        </if>
+
                     </div>
 
 
@@ -88,18 +99,18 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner font666">
-                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                        {$goodInfo.goods_detail}
                     </div>
                 </div>
             </div>
 
             <div class="mui-card">
                 <div class="mui-card-header">
-                    <div class="mui-card-link"><div class="seller_s"></div>使用门店</div>
+                    <div class="mui-card-link"><div class="seller_s"></div>兑换规则</div>
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner font666">
-                        北京市通州区万达广场圣诞快乐附近
+                        兑换总量：{$goodInfo.exchange_limit_number}
                     </div>
                 </div>
             </div>
@@ -110,7 +121,7 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner font666">
-                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                        {$goodInfo.use_of_knowledge}
                     </div>
                 </div>
             </div>
@@ -127,14 +138,19 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <div class="item_list">
-                            <div class="item_list_word">
-                                <span class="font16">礼品卡券面值30元</span>
-                            </div>
-                            <div class="item_list_word">
-                                <span class="fontred">￥30元+300积分</span>
-                                <span class="font888">原价：￥45</span>
-                            </div>
+                        <div class="item_list_word">
+                            <span class="font16">{$goodInfo.goods_name}</span>
+                        </div>
+                        <div class="item_list_word">
+                            <span class="fontred">
+                                <if condition="$goodInfo.payment_amount eq 0.00">
+                                    {$goodInfo.required_integral}积分
+                                    <else/>
+                                    ￥{$goodInfo.payment_amount}元+{$goodInfo.required_integral}积分
+                                </if>
+
+                            </span>
+                            <span class="font888">原价：￥{$goodInfo.original_price}</span>
                         </div>
                         <span>该券限量10个，剩余3个</span>
                     </div>
@@ -153,7 +169,7 @@
                 </div>
                 <div class="mui-card-footer">
                     <button type="button" class="mui-btn-primary mui-btn-block" onclick="openExchange()">立即兑换券码</button>
-                    
+
                 </div>
             </div>
         </div>

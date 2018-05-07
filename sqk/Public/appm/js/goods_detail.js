@@ -7,26 +7,19 @@
 
 $(function () {
     checkIsLogin();
-    $('#keyword').val('');
-    getGoodsList(1, '', '', '', '');
-
-    document.onkeydown = function (event_e) {
-        if (window.event) {
-            event_e = window.event;
-        }
-        console.log(event_e);
-        var int_keycode = event_e.key || event_e.code;
-        if (int_keycode == 'Enter') {
-            getGoodsList(1, $('#keyword').val(), '', '', '');
-            return false;
-        }
-    }
-
+    var id = getUrl('id');
+    
+    getGoodsDetail(id);
 
 });
 
 
-//函数--------------------------------------------------------------------------------------------
+//函数--------------------------------------------------------------------------
+function getGoodsDetail(id){
+    $.post(c_path + "/getGoodsInfoSync",{'id':id},function(data){
+        console.log(data);
+    },'json');
+}
 /**
  * 打开筛选
  */

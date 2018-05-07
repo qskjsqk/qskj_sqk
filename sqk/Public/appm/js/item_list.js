@@ -77,7 +77,7 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
 
 
         //动态加载--------------------------------------------------------------
-        $("#page").val(res.data.page);
+        $("#page").val(res.data.where.page);
         if (res.data.is_end == 1) {
             $("#loadMore").removeAttr('onclick');
         } else {
@@ -96,7 +96,7 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
 function loadMore() {
     mui("#loadMore").button('loading');
     var page = parseInt($("#page").val()) + 1;
-    getGoodsList(page, $('#keyword').val());
+    getGoodsList(page, $('#keyword').val(), '', '', '');
 }
 
 /**
