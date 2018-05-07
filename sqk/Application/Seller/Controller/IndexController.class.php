@@ -23,17 +23,15 @@ class IndexController extends BaseController {
     }
     
     public function login() {
-        $this->redirect('index/index');
-    }
-
-    public function index() {
         cookie('pwd', '123', 3600 * 24 * 30);
         cookie('cookie_user', '商家5', 3600 * 24 * 30);
         cookie('seller_id', 38, 3600 * 24 * 30);
         cookie('address_id', 8, 3600 * 24 * 30);
-        
-        dump($_COOKIE);
         $this->redirect('seller/seller_home');
+    }
+
+    public function index() {
+        $this->display();
     }
 
     /**
