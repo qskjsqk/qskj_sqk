@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="format-detection" content="telephone=no">
-        <meta http-equiv="x-rim-auto-match" content="none">
+
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
@@ -51,7 +50,7 @@
                     <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../../../{$myInfo.tx_path}">
                     <div class="mui-media-body">
                         {$myInfo.realname}&#12288;[{$myInfo.address_name}]
-                        <p class='mui-ellipsis'>可消费积分：{$myInfo.integral_num}</p>
+                        <p class='mui-ellipsis'>可消费积分：{$myInfo.integral_num}&#12288;经验值：{$myInfo.exp_num}</p>
                     </div>
                 </a>
             </li>
@@ -75,6 +74,11 @@
         <ul class="mui-table-view mui-table-view-chevron">
             <li class="mui-table-view-cell">
                 <a onclick="aHref('__MODULE__/index/my_card')" class="mui-navigate-right">我的实体卡</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell">
+                </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br>
             </li>
         </ul>
         <!--页面主内容区结束-->

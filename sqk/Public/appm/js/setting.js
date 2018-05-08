@@ -6,4 +6,3 @@
 $(function () {
     checkIsLogin();
 });
-
