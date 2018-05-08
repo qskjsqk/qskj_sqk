@@ -50,9 +50,9 @@
 
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
-            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/seller/seller_home')"></a>
-            <div class="mui-title mui-input-search header-ss-div "><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
-            <a class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a">3423</a>
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/goods/goods_manage')"></a>
+            <!--<div class="mui-title mui-input-search header-ss-div "><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+            <a class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a">3423</a>-->
         </header>
 
         <!--主体部分-->
@@ -91,7 +91,7 @@
                     <div class="mui-row">
                         <ul class="mui-table-view">
                             <foreach name="data.exchangeLists" item="exchange">
-                            <li class="mui-table-view-cell" onclick="aHref('__MODULE__/trading/trading_detail/exchange_id/{$exchange.id}')">
+                            <li class="mui-table-view-cell" onclick="aHref('__MODULE__/trading/trading_detail/exchange_id/{$exchange.id}/fromUrl/goodsDetail')">
                                 <a class="mui-navigate-right">
                                     <span class="mui-badge mui-badge-danger">消费：{$exchange.exchange_integral}分</span>
                                     {$exchange.realname}

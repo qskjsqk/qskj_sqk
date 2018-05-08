@@ -33,21 +33,21 @@ $(function () {
  */
 function getGoodsList(page, keyword, orderBy, address, cat_type) {
     $.post(c_path + "/getList", {'page': page, 'keyword': keyword, 'address': address, 'orderBy': orderBy, 'cat_type': cat_type}, function (res) {
-        if(res.ret == 0) {
+        if (res.ret == 0) {
             $("#goods-lists").html('');
             var str = '';
-            if(res.data.isEmpty == 1) {
+            if (res.data.isEmpty == 1) {
                 var shuju = res.data.lists;
-                for(var i = 0; i < shuju.length; i++) {
+                for (var i = 0; i < shuju.length; i++) {
                     str += '<div class="mui-card">';
                     str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link">' + shuju[i]['com_name'] + '</p></div>';
-                    str += '<div class="mui-card-content"><div class="item_list">';
-                    str += '<div class="item_list_img"><img src="/'+ shuju[i]['goods_pic'] +'" style="width:70px;height:70px;"></div>';
+                    str += '<div class="mui-card-content" onclick="getDetail(' + shuju[i]['id'] + ')"><div class="item_list">';
+                    str += '<div class="item_list_img"><img src="/' + shuju[i]['goods_pic'] + '" style="width:70px;height:70px;"></div>';
                     str += '<div class="item_list_word"><span class="">' + shuju[i]['goods_name'] + '</span></div>';
                     var price = '';
-                    if(shuju[i]['cat_id'] == 1 || shuju[i]['cat_id'] == 3) {
+                    if (shuju[i]['cat_id'] == 1 || shuju[i]['cat_id'] == 3) {
                         price = '￥' + shuju[i]['payment_amount'] + '元+' + shuju[i]['required_integral'] + '积分';
-                    } else if(shuju[i]['cat_id'] == 2) {
+                    } else if (shuju[i]['cat_id'] == 2) {
                         price = shuju[i]['required_integral'] + '积分';
                     }
                     str += '<div class="item_list_word"><span class="fontred">' + price + '</span> <span class="font888">原价：￥' + shuju[i]['original_price'] + '</span> </div>';
@@ -77,7 +77,7 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
 
 
         //动态加载--------------------------------------------------------------
-        $("#page").val(res.data.page);
+        $("#page").val(res.data.where.page);
         if (res.data.is_end == 1) {
             $("#loadMore").removeAttr('onclick');
         } else {
@@ -96,7 +96,7 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
 function loadMore() {
     mui("#loadMore").button('loading');
     var page = parseInt($("#page").val()) + 1;
-    getGoodsList(page, $('#keyword').val());
+    getGoodsList(page, $('#keyword').val(), '', '', '');
 }
 
 /**
@@ -141,4 +141,8 @@ function subForm() {
 
     getGoodsList(1, '', orderBy, address, cat_type);
     closeModal();
+}
+
+function getDetail(id) {
+    aHref(c_path + '/goods_detail?id=' + id);
 }

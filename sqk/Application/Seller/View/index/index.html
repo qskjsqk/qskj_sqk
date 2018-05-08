@@ -37,10 +37,13 @@
             <div class="mui-card">
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner" style="text-align: center;">
-                        <img src="__PUBLIC__/seller/img/logo.png" style="height:100px;width:100px; margin: 0 auto;">
+                        <img src="{$headimgurl}" style="height:100px;width:100px; margin: 0 auto;">
+                        <p>欢迎【{$nickname}】进入</p>
                         <p>您还不是梨园智能商圈社区卡商家用户</p>
                         <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="aHref('__CONTROLLER__/apply')">快速申请</button>
                         <button type="button" class="mui-btn mui-btn-block" onclick="aHref('__CONTROLLER__/wechat_binding')">已有商家账户，立即绑定</button>
+                        
+                        <button type="button" class="mui-btn-danger mui-btn-block" onclick="aHref('__CONTROLLER__/login')">开发直接登录</button>
                     </div>
                 </div>
             </div>

@@ -31,6 +31,17 @@ class IndexController extends BaseController {
     }
 
     public function index() {
+        //        模拟微信授权数据
+        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
+        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
+        $wx['nickname'] = "忘忧草";
+        cookie('wxInfo', $wx, 3600 * 24 * 30);
+        
+        
+        
+        $mxInfo = cookie('wxInfo');
+        $this->assign('headimgurl', $mxInfo['headimgurl']);
+        $this->assign('nickname', $mxInfo['nickname']);
         $this->display();
     }
 

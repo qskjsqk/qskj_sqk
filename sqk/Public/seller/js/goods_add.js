@@ -83,6 +83,11 @@ function checkAddGoods() {
         return false;
     }
 
+    if($("input[name='goods_pic']").val() == '') {
+        mui.alert('上传一张商品图');
+        return false;
+    }
+
     return true;
 }
 
@@ -112,7 +117,6 @@ function addGoods() {
             type : 'post',
             async: false,
             success : function (res) {
-                console.log(res);
                 if(res.ret == 0 ) {
                     mui.alert('添加成功', '提示', '已添加', function () {
                         aHref(c_path + "/goods_manage");
@@ -123,6 +127,7 @@ function addGoods() {
             }
         })
     }
+
 }
 
 

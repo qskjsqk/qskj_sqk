@@ -28,14 +28,10 @@ class SellerIntegralGoodsController extends BaseController {
         $promC = A('Seller');
         $sliderData = $promC->getSlider();
         $this->assign('sliderData', $sliderData);
-        
+
         $appUserModel = new SysUserappInfoModel;
         $this->assign('userIntegralNum', $appUserModel->where(['id' => cookie('user_id')])->getField('integral_num'));
 
-        $this->display();
-    }
-
-    public function item_detail() {
         $this->display();
     }
 
@@ -47,6 +43,8 @@ class SellerIntegralGoodsController extends BaseController {
         $user_id = cookie('user_id');
         $address_id = cookie('address_id');
         $request = Request::all();
+
+
 
         $num = C('PAGE_NUM')['goods'] * $request['page'];
 
@@ -65,7 +63,7 @@ class SellerIntegralGoodsController extends BaseController {
         $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
 
         //关键字搜索:商家名称或者积分商品名称模糊搜索
-        if(!empty($request['keyword'])) {
+        if (!empty($request['keyword'])) {
             $map[$this->dbFix . 'seller_info.name'] = array('LIKE', '%' . urldecode($request['keyword']) . '%');
             $map[$this->dbFix . 'seller_integral_goods.goods_name'] = array('LIKE', '%' . urldecode($request['keyword']) . '%');
             $map['_logic'] = 'or';
@@ -73,31 +71,31 @@ class SellerIntegralGoodsController extends BaseController {
         }
 
         //有筛选条件
-        if(!empty($request['orderBy']) || !empty($request['address']) || !empty($request['cat_type'])) {
+        if (!empty($request['orderBy']) || !empty($request['address']) || !empty($request['cat_type'])) {
 
             //积分商品类型
-            if(!empty($request['cat_type'])) {
+            if (!empty($request['cat_type'])) {
                 $where[$this->dbFix . 'seller_integral_goods.cat_id'] = $request['cat_type'];
             }
 
             //离我最近(默认本社区)和商家地点(本社区)同时选中
-            if($request['orderBy'] == 'distance') {
+            if ($request['orderBy'] == 'distance') {
                 $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
-            } elseif($request['orderBy'] == 'welcome') {    //选中最受欢迎
-                if($request['address'] == 'current') {
+            } elseif ($request['orderBy'] == 'welcome') {    //选中最受欢迎
+                if ($request['address'] == 'current') {
                     //当前社区最受欢迎(兑换次数最多的商品)
                     $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
                 }
-                $lists = $lists->order($this->dbFix .'seller_integral_goods.exchange_times desc');
+                $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
             }
         }
 
         //没有任何条件:页面载入
-        $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix .'seller_integral_goods.id');
-        $lists = $listsObj->limit($num)->select();
+        $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix . 'seller_integral_goods.id');
+        $lists = $listsObj->order($this->dbFix . 'seller_integral_goods.id desc')->limit($num)->select();
         //echo $model->getLastSql();
         $count = $listsObj->count();
-        if($num < $count) {
+        if ($num < $count) {
             $ajaxLoad = '点击加载更多';
             $isEnd = 0;
         } else {
@@ -110,9 +108,21 @@ class SellerIntegralGoodsController extends BaseController {
             'where' => $request,
             'lists' => $lists,
             'isEmpty' => !empty($lists) ? 1 : 0,
+            'dd' => $num
         ];
         $this->ajaxReturn(syncData(0, 'success', $data));
     }
 
+    public function goods_detail() {
+        $id = $_GET['id'];
+        $where['id'] = ['EQ', $id];
+        $goodInfo = M('seller_integral_goods')->where($where)->find();
+        $sellerInfo = M('seller_info')->where('id=' . $goodInfo['seller_id'])->find();
+        $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
+        $this->assign('goodInfo', $goodInfo);
+        $this->assign('sellerInfo', $sellerInfo);
+//        dump($sellerInfo);
+        $this->display();
+    }
 
 }

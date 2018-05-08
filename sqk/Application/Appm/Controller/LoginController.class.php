@@ -31,28 +31,26 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
-//        dump($_COOKIE);
+//        模拟微信授权数据
+        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
+        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
+        $wx['nickname'] = "忘忧草";
+        cookie('wxInfo', $wx, 3600 * 24 * 30);
+        
+        
+        
+        $mxInfo = cookie('wxInfo');
+        $this->assign('headimgurl', $mxInfo['headimgurl']);
+        $this->assign('nickname', $mxInfo['nickname']);
         $this->display();
     }
 
-    /**
-     * 个人中心页面
-     */
-    public function setting() {
+    public function apply() {
         $this->display();
     }
 
-    /**
-     * 注册页面
-     */
-    public function register() {
-        $this->display();
-    }
-
-    /**
-     * 找回密码
-     */
-    public function findpwd() {
+    public function perfect_info() {
+        $this->assign('tel', $_GET['tel']);
         $this->display();
     }
 
@@ -107,6 +105,25 @@ class LoginController extends Controller {
         $this->ajaxReturn($errorMsg);
     }
 
+    public function getApplyKeyCode() {
+        $tel = $_POST['tel'];
+        $keycode = make_char('m');
+        $smsC = A('Sms');
+        $flag = $smsC->sendCode($tel, $keycode);
+        $flag = json_decode($flag, TRUE);
+        if ($flag['errmsg'] == "OK") {
+            $returnData['status'] = 1;
+            $returnData['msg'] = "成功获取验证码!";
+            $returnData['keycode'] = $keycode;
+        } else {
+            $returnData['status'] = 0;
+            $returnData['msg'] = "获取验证码失败，请30秒后重试!";
+            $returnData['keycode'] = 0;
+        }
+        $returnData['dd'] = $flag;
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
     /**
      * 检测用户是否登录
      */
@@ -123,7 +140,7 @@ class LoginController extends Controller {
             $activityC = A('Activity');
             $isEnableActivityCat = $activityC->getEnableCatIds();
             $data['activity_num'] = M('ActivInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableActivityCat . ')')->count();
-            
+
             $returnData['data'] = $data;
             $returnData['flag'] = $user_id;
         }
@@ -131,33 +148,30 @@ class LoginController extends Controller {
     }
 
     /**
-     * 注册用户
+     * 保存用户信息
      */
-    public function registerUser() {
-        if ($_POST['username'] == '') {
-            $errorMsg['username'] = '请输入用户名！';
-        } else if ($_POST['password'] == '') {
-            $errorMsg['password'] = '请输入密码！';
-        } else if ($_POST['passworda'] == '') {
-            $errorMsg['passworda'] = '请再次输入密码！';
-        } else if ($_POST['password'] != $_POST['passworda']) {
-            $errorMsg['checkpwda'] = '两次密码不一致！';
+    public function addUserappInfo() {
+        $userModel = D('SysUserappInfo');
+        $saveArr['tel'] = $_POST['tel'];
+        $saveArr['realname'] = $_POST['realname'];
+        $saveArr['gender'] = $_POST['gender'];
+        $saveArr['birthday'] = $_POST['birthday'];
+        $saveArr['address_id'] = $_POST['address_id'];
+//        dump($saveArr);
+        if (!$userModel->create($saveArr)) {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => $userModel->getError());
         } else {
-            $userModel = M(C('DB_USER_INFO'));
-            $userArr = $userModel->where('binary usr="' . $_POST['username'] . '"')->select();
-            if (empty($userArr)) {
-                $createArr['usr'] = $_POST['username'];
-                $createArr['pwd'] = $this->EncriptPWD($_POST['password']);
-                $createArr['cat_id'] = $this->getInfoBySysName(M(C('DB_USER_GROUP')), 'appUser');
-                $createFlag = $userModel->add($createArr);
-
-                $errorMsg['is_success'] = 1;
+            $saveArr['usr'] = $saveArr['tel'];
+            $encriptTel = R('Login/EncriptPWD', array($saveArr['tel'])); //手机号加密
+            $saveArr['qrcode_path'] = createQrcode($saveArr['tel'] . $encriptTel);
+            $result = $userModel->add($saveArr); //数据更新
+            if ($result === FALSE) {
+                $returnData['is_success'] = array('flag' => 0, 'msg' => '添加用户失败!');
             } else {
-                $errorMsg['is_success'] = 0;
-                $errorMsg['msg'] = '该用户已存在！';
+                $returnData['is_success'] = array('flag' => 1, 'msg' => '添加用户成功!');
             }
         }
-        $this->ajaxReturn($errorMsg);
+        $this->ajaxReturn($returnData);
     }
 
     /**
@@ -186,35 +200,6 @@ class LoginController extends Controller {
     }
 
     /**
-     * 找回密码-用户验证修改密码(通过电子邮箱验证)
-     */
-    public function forget() {
-        $userModel = M(C('DB_USER_INFO'));
-        if (IS_POST) {
-            if ($_POST['usr'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入用户名！');
-            } else if ($_POST['email'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '你还没有输入验证邮箱！');
-            } else {
-                $userInfo = $userModel->where('binary usr="' . $_POST['usr'] . '" and email="' . $_POST['email'] . '"')->find();
-                if (!empty($userInfo)) {
-                    $keycode = make_char('m');
-                    $msg = $this->sendEmail($userInfo['email'], $userInfo['id'], $userInfo['realname'], $keycode);
-                    if ($msg == TRUE) {
-                        $errorMsg['is_success'] = array('flag' => 'success', 'id' => $userInfo['id'], 'msg' => '恭喜您：邮件发送成功，请注意查收！');
-                        $updateFlog = $userModel->where('id=' . $userInfo['id'])->setField('keycode', $keycode);
-                    } else {
-                        $errorMsg['is_success'] = array('flag' => 0, 'msg' => '邮件发送失败，请重新验证邮箱！');
-                    }
-                } else {
-                    $errorMsg['is_success'] = array('flag' => 0, 'msg' => '用户名与邮箱不匹配！');
-                }
-            }
-            $this->ajaxReturn($errorMsg);
-        }
-    }
-
-    /**
      * 找回密码-验证验证码
      */
     public function checkKeyCode() {
@@ -232,67 +217,6 @@ class LoginController extends Controller {
                     $errorMsg['is_success'] = array('flag' => 0, 'msg' => '验证信息不匹配！', 'sql' => $userModel->getLastSql());
                 } else {
                     $errorMsg['is_success'] = array('flag' => 1, 'msg' => '验证信息正确,请修改密码', 'user_id' => $userInfo['id']);
-                }
-            }
-            $this->ajaxReturn($errorMsg);
-        }
-    }
-
-    /**
-     * 外部找回密码---修改密码
-     */
-    public function editPwd() {
-        $userModel = M(C('DB_USER_INFO'));
-        $user_id = $_POST['user_id'];
-        if (IS_POST) {
-            if ($_POST['newPwd'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入新密码！');
-            } else if ($_POST['confirmPwd'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入确认密码！');
-            } else if ($_POST['newPwd'] != $_POST['confirmPwd']) {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '两次密码不一致！');
-            } else {
-                $update['pwd'] = $this->EncriptPWD($_POST['newPwd']);
-                $update['keycode'] = make_char('m');
-                $result = $userModel->where(array('id' => $user_id))->save($update);
-                if ($result !== false) {
-                    $errorMsg['is_success'] = array('flag' => 1, 'msg' => '修改密码成功!');
-                } else {
-                    $errorMsg['is_success'] = array('flag' => 0, 'msg' => '修改密码失败!');
-                }
-            }
-            $this->ajaxReturn($errorMsg);
-        }
-    }
-
-    /**
-     * 内部个人中心---修改密码
-     */
-    public function nEditPwd() {
-        $userModel = M(C('DB_USER_INFO'));
-        $user_id = cookie('user_id');
-        if (IS_POST) {
-            if ($_POST['oldPwd'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入原密码！');
-            } else if ($_POST['newPwd'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入新密码！');
-            } else if ($_POST['confirmPwd'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入确认密码！');
-            } else if ($_POST['newPwd'] != $_POST['confirmPwd']) {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '两次密码不一致！');
-            } else {
-                $findFlag = $userModel->where('id=' . $user_id . ' and pwd="' . $this->EncriptPWD($_POST['oldPwd']) . '"')->find();
-                if (empty($findFlag)) {
-                    $errorMsg['is_success'] = array('flag' => 0, 'msg' => '原密码不正确!');
-                } else {
-                    $update['pwd'] = $this->EncriptPWD($_POST['newPwd']);
-                    $update['keycode'] = make_char('m');
-                    $result = $userModel->where(array('id' => $user_id))->save($update);
-                    if ($result !== false) {
-                        $errorMsg['is_success'] = array('flag' => 1, 'msg' => '修改密码成功!');
-                    } else {
-                        $errorMsg['is_success'] = array('flag' => 0, 'msg' => '修改密码失败!');
-                    }
                 }
             }
             $this->ajaxReturn($errorMsg);
