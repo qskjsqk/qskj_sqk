@@ -13,6 +13,8 @@ use Think\Controller;
 use Seller\Controller\BaseController;
 use Think\Tool\Request;
 use Seller\Model\ExchangeRecordModel;
+use Seller\Model\SellerInfoModel;
+use Admin\Model\SysCommunityInfoModel;
 
 class TradingController extends BaseController {
 
@@ -35,5 +37,28 @@ class TradingController extends BaseController {
         $this->assign('data', $exchangeLists);
         $this->display();
     }
+
+    public function trading_list() {
+        $request = Request::all();
+        $seller_id = cookie('seller_id');
+        $exchangeModel = new ExchangeRecordModel();
+        $sellerInfo = (new SellerInfoModel())->find($seller_id);
+        $sellerInfo['com_name'] = (new SysCommunityInfoModel())->where(['id' => $sellerInfo['address_id']])->getField('com_name');
+
+        $join = [
+            ['sys_userapp_info', 'id', 'goods_exchange_record', 'user_id'],
+        ];
+        $field = ['goods_exchange_record.*', 'sys_userapp_info.realname'];
+        $where[$this->dbFix . 'goods_exchange_record.seller_id'] = $seller_id;
+        $exchangeLists = $exchangeModel->joinFieldDB($join, $field, $where)->select();
+        $data = [
+            'sellerInfo' => $sellerInfo,
+            'exchangeLists' => $exchangeLists,
+        ];
+        $this->assign('data', $data);
+        $this->display();
+
+    }
+
 
 }

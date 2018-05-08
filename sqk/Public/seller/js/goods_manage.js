@@ -36,8 +36,8 @@ function getGoodsList(page, keyword, status) {
             if(res.data.isEmpty == 1) {
                 var shuju = res.data.lists;
                 for(var i = 0; i < shuju.length; i++) {
-                    var detailUrl = c_path + "/goods_detail/id/" + shuju[i]['id'];
-                    str += '<div class="mui-card" onclick="window.location.href = "'+ detailUrl+'">';
+                    var id = shuju[i]['id'];
+                    str += '<div class="mui-card" onclick="toDetail('+ id +')">';
                     str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link">距离1.5KM</p></div>';
                     str += '<div class="mui-card-content"><div class="item_list">';
                     str += '<div class="item_list_img"><img src="/'+ shuju[i]['goods_pic'] +'"></div>';
@@ -55,6 +55,7 @@ function getGoodsList(page, keyword, status) {
             } else {
                 str = '<span><center>暂时没有积分商品</center></span>';
             }
+            //console.log(str);
             $("#goods-lists").html(str);
         } else {
             $("#goods-lists").html('服务器繁忙,请稍后再试');
@@ -85,6 +86,13 @@ function getGoodsList(page, keyword, status) {
         //---------------------------------------------------------------------
 
     }, 'json');
+}
+
+/**
+ * 跳转到积分商品详情页
+ */
+function toDetail(id) {
+    aHref(c_path + "/goods_detail/id/" + id);
 }
 
 /**

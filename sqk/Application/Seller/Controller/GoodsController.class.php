@@ -60,6 +60,7 @@ class GoodsController extends BaseController {
      * 商家积分商品列表页
      */
     public function goods_manage() {
+        $request = Request::all();
         $goodsModel = new SellerIntegralGoodsModel();
         $sellerModel = new SellerInfoModel();
         $seller_id = cookie('seller_id');
