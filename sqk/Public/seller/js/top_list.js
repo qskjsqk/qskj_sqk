@@ -23,15 +23,19 @@ function getTopList(nla) {
     switch (type) {
         case '0':
             $('#topName').html('<b>①</b>&nbsp;本社区用户榜');
+            $('#top_name').html('本社区用户榜');
             break;
         case '1':
             $('#topName').html('<b>②</b>&nbsp;梨园镇用户榜');
+            $('#top_name').html('梨园镇用户榜');
             break;
         case '2':
             $('#topName').html('<b>③</b>&nbsp;梨园镇商家榜');
+            $('#top_name').html('梨园镇商家榜');
             break;
         case '3':
             $('#topName').html('<b>④</b>&nbsp;梨园镇社区榜');
+            $('#top_name').html('梨园镇社区榜');
             break;
     }
     $.post(c_path + "/getTopList", {'type': type, 'nla': nla}, function (data) {

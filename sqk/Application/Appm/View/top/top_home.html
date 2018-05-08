@@ -71,39 +71,22 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                1
+                        <foreach name="data.bUserList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.realname}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.bottom}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-3 mui-text-right">
+                                    {$v.sign_integral}分
+                                </div>
                             </div>
-                            <div class="mui-table-cell mui-col-xs-7 ">
-                                张文秀
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                900分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                2
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 ">
-                                王小刚
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                800分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                3
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 ">
-                                陈天智
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                700分
-                            </div>
-                        </div>
+                        </foreach>
                     </div>
                 </div>
             </div>
@@ -119,39 +102,23 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                1
+                        <foreach name="data.allUserList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.realname}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.bottom}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-3 mui-text-right">
+                                    {$v.sign_integral}分
+                                </div>
                             </div>
-                            <div class="mui-table-cell mui-col-xs-7">
-                                张文秀
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                900分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                2
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 ">
-                                王小刚
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                800分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                3
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 ">
-                                陈天智
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                700分
-                            </div>
-                        </div>
+                        </foreach>
+
                     </div>
                 </div>
             </div>
@@ -167,39 +134,19 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                1
+                        <foreach name="data.sellerList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.name}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-7 mui-text-right">
+                                    商品：10件&#12288;{$v.exchange_integral}分
+                                </div>
                             </div>
-                            <div class="mui-table-cell mui-col-xs-4">
-                                京客隆超市
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                商品：13件&#12288;9000分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                2
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 ">
-                                外婆家盖浇饭
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                商品：10件&#12288;8000分
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                3
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 ">
-                                天之美容美发
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                商品：11件&#12288;7000分
-                            </div>
-                        </div>
+                        </foreach>
                     </div>
                 </div>
             </div>
@@ -214,40 +161,20 @@
                     <div class="mui-card-link">本季度</div>
                 </div>
                 <div class="mui-card-content">
-                   <div class="mui-card-content-inner">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                1
+                    <div class="mui-card-content-inner">
+                        <foreach name="data.commList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4">
+                                    {$v.com_name}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-7 mui-text-right">
+                                    活动：{$v.activNum}场&#12288;签到：{$v.signNum}次
+                                </div>
                             </div>
-                            <div class="mui-table-cell mui-col-xs-4">
-                                翠景北里
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                活动：13场&#12288;商家：20家
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                2
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 ">
-                                京洲园
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                活动：10场&#12288;商家：15家
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-1">
-                                3
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 ">
-                                格瑞雅居
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-7 mui-text-right">
-                                活动：13场&#12288;商家：06家
-                            </div>
-                        </div>
+                        </foreach> 
                     </div>
                 </div>
             </div>
