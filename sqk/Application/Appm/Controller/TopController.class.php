@@ -18,20 +18,34 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应�
 class TopController extends Controller {
 
 //------------------------------------------------------------------------------
+    /**
+     * 初始化函数
+     */
     public function _initialize() {
         $this->dbFix = 'qs_sqk_';
     }
 
+    /**
+     * 排行榜首页
+     */
     public function top_home() {
         $this->assign('address_id', cookie('address_id'));
         $this->display();
     }
 
+    /**
+     * 排行榜列表页
+     */
     public function top_list() {
         $this->assign('address_id', cookie('address_id'));
         $this->display();
     }
 
+    /**
+     * 获取用户排行榜
+     * @param type $where
+     * @return string
+     */
     public function getUserList($where) {
         $Arr = M('ActivSigninInfo')
                 ->field('sum(' . $this->dbFix . 'activ_signin_info.sign_integral) as sign_integral,' . $this->dbFix . 'activ_signin_info.user_id,'
@@ -49,6 +63,9 @@ class TopController extends Controller {
         return $Arr;
     }
 
+    /**
+     * 获取排行榜列表
+     */
     public function getTopList() {
         $type = $_POST['type'];
         $nla = $_POST['nla'];
@@ -97,6 +114,20 @@ class TopController extends Controller {
             case 2:
                 $data['type_name'] = '梨园镇商家榜单';
                 break;
+                switch ($nla) {
+                    //本季度----------------------------------------------------
+                    case 0:
+                        $data['topList'] = $this->getUserList($nWhere);
+                        break;
+                    //上季度----------------------------------------------------
+                    case 1:
+                        $data['topList'] = $this->getUserList($lWhere);
+                        break;
+                    //总榜------------------------------------------------------
+                    case 2:
+                        $data['topList'] = $this->getUserList('1=1');
+                        break;
+                }
             case 3:
                 $data['type_name'] = '梨园镇社区榜单';
                 break;
