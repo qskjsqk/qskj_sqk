@@ -62,7 +62,15 @@
             <div class="mui-card">
                 <div class="mui-card-header">
                     <div class="mui-card-link"><div class="seller_s"></div>{$data.goodsInfo.goods_name}</div>
-                    <p class="mui-card-link">距离1.5km</p>
+                    <p class="mui-card-link">
+                        <if condition="$data['goodsInfo']['status'] eq 1">
+                            <button class="mui-btn mui-btn-primary" onclick="lowerFrame('{$data.goodsInfo.id}', 2)">下线</button>
+                        <elseif condition="$data['goodsInfo']['status'] eq 0"/>
+                            <button class="mui-btn mui-btn-primary" onclick="lowerFrame('{$data.goodsInfo.id}', 1)">发布</button>
+                        <else/>
+                            已下线
+                        </if>
+                    </p>
                 </div>
                 <div class="mui-card-content">
                     <div class="item_list">

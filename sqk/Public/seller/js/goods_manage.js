@@ -47,7 +47,7 @@ function getGoodsList(page, keyword, status) {
                 for(var i = 0; i < shuju.length; i++) {
                     var id = shuju[i]['id'];
                     str += '<div class="mui-card" onclick="toDetail('+ id +')">';
-                    str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link">距离1.5KM</p></div>';
+                    str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link"><a href="'+ c_path +'/goods_edit/goods_id/'+ id +'"><button class="mui-btn mui-btn-primary">修改</button></a></div>';
                     str += '<div class="mui-card-content"><div class="item_list">';
                     str += '<div class="item_list_img"><img src="/' + shuju[i]['goods_pic'] + '"></div>';
                     str += '<div class="item_list_word"><span class="">' + shuju[i]['goods_name'] + '</span></div>';
@@ -64,7 +64,6 @@ function getGoodsList(page, keyword, status) {
             } else {
                 str = '<span><center>暂时没有积分商品</center></span>';
             }
-            //console.log(str);
             $("#goods-lists").html(str);
         } else {
             $("#goods-lists").html('服务器繁忙,请稍后再试');
@@ -93,6 +92,7 @@ function getGoodsList(page, keyword, status) {
 function toDetail(id) {
     aHref(c_path + "/goods_detail/goods_id/" + id);
 }
+
 
 /**
  * 动态加载数据

@@ -54,7 +54,6 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
                     str += ' </div></div>';
                     str += '</div>';
                 }
-                console.log(str);
             } else {
                 str = '<span><center>暂时没有积分商品</center></span>';
             }
