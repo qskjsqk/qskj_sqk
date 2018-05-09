@@ -1,6 +1,5 @@
 package com.zhcd.lysqk.module.home;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +17,6 @@ import com.zhcd.lysqk.module.record.ReceivePointsActivity;
 import com.zhcd.lysqk.module.record.TransactionRecordsActivity;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
-import com.zhcd.utils.DensityUtil;
 
 import java.util.List;
 
@@ -90,7 +88,7 @@ public class IntegralFragment extends BaseFragment {
                     }
                 }
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(6000);
                 } catch (Exception e) {
 
                 }

@@ -14,6 +14,10 @@ public class NewestSignUserInfoEntity {
     private String sign_type;
     //姓名
     private String realname;
+    //    头像
+    private String tx_path;
+    //本次签到已签到人次
+    private String count;
 
     public String getId() {
         return id;
@@ -69,5 +73,20 @@ public class NewestSignUserInfoEntity {
 
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    public String getTx_path() {
+        return tx_path;
+    }
+
+    public void setTx_path(String tx_path) {
+        this.tx_path = tx_path;
+    }
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

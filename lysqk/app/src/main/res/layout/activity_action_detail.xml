@@ -108,7 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="活动开始时间"
+                    android:text="开始"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -116,7 +116,6 @@
                     android:id="@+id/tv_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2018.9.30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -140,7 +139,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="活动结束时间"
+                    android:text="结束"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -148,7 +147,6 @@
                     android:id="@+id/tv_end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2018.9.30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -172,7 +170,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="活动地点"
+                    android:text="地点"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -180,7 +178,6 @@
                     android:id="@+id/tv_action_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2018.9.30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -204,7 +201,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="签到次数"
+                    android:text="签到"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -212,7 +209,6 @@
                     android:id="@+id/tv_sign_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -244,7 +240,6 @@
                     android:id="@+id/tv_action_sponsor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="张三"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -276,7 +271,6 @@
                     android:id="@+id/tv_action_contacts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2018.9.30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
 
@@ -309,7 +303,6 @@
                     android:id="@+id/tv_contact_way"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2018.9.30"
                     android:textColor="@color/color_424040"
                     android:textSize="@dimen/text_16sp" />
             </LinearLayout>

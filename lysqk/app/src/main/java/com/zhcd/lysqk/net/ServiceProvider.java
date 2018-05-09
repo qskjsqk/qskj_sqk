@@ -9,7 +9,7 @@ import com.zhcd.lysqk.module.home.entity.ActionListEntity;
 import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.module.sign.entity.ActionSignInfoEntity;
 import com.zhcd.lysqk.module.sign.entity.NewestSignUserInfoEntity;
-import com.zhcd.lysqk.module.sign.entity.SigninInfoLisEntity;
+import com.zhcd.lysqk.module.sign.entity.SignInfoLisEntity;
 import com.zhcd.lysqk.module.sign.entity.UserSignEntity;
 
 
@@ -92,9 +92,9 @@ public class ServiceProvider {
      * 获取某一次签到的签到记录
      */
     public static void getSigninInfoListPos(String sign_id, IDataResponse iHttpResponse, String flag) {
-        ApiPostParams apiParams = new ApiPostParams();
+        ApiParams apiParams = new ApiParams();
         apiParams.with(Constants.sign_id, sign_id);
-        DataRequestTool.post(REQUEST_URL, Namespace.getSigninInfoListPos, apiParams, iHttpResponse, SigninInfoLisEntity.class, flag);
+        DataRequestTool.get(REQUEST_URL, Namespace.getSigninInfoListPos, apiParams, iHttpResponse, SignInfoLisEntity.class, flag);
     }
 
     /**
@@ -111,10 +111,20 @@ public class ServiceProvider {
     /**
      * 获取最新用户签到信息
      */
-    public static void getNewUserSigninPos(String activity_id, IDataResponse iHttpResponse, String flag) {
+
+
+    public static void getNewUserSigninPos(String activity_id, String sign_id, IDataResponse iHttpResponse, String flag) {
         ApiPostParams apiParams = new ApiPostParams();
         apiParams.with(Constants.activity_id, activity_id);
+        apiParams.with(Constants.sign_id, sign_id);
         DataRequestTool.post(REQUEST_URL, Namespace.getNewUserSigninPos, apiParams, iHttpResponse, NewestSignUserInfoEntity.class, flag);
+    }
+
+    public static void setSignStatus(String sign_id, String status, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.sign_id, sign_id);
+        apiParams.with(Constants.sign_status, status);
+        DataRequestTool.post(REQUEST_URL, Namespace.setSignStatusPos, apiParams, iHttpResponse, ActionSignInfoEntity.class, flag);
     }
 
     public static boolean errorFilter(BaseData res) {

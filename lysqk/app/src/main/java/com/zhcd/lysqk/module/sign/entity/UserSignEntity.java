@@ -1,7 +1,7 @@
 package com.zhcd.lysqk.module.sign.entity;
 
 public class UserSignEntity {
-//    "sign_type": 1,  (签到方式 0扫描二维码  1读卡签到)
+    //    "sign_type": 1,  (签到方式 0扫描二维码  1读卡签到)
 //    "user_id": "116", (用户id)
 //    "sign_id": "15",(签到id)
 //     "realname": "张小依", (姓名)
@@ -19,6 +19,12 @@ public class UserSignEntity {
     private String sign_integral;
     //签到最新id
     private String new_id;
+    //   签到时间
+    private long add_time;
+    //tx_path  头像
+    private String tx_path;
+    //本次签到已签到人次
+    private String count;
 
     public String getSign_type() {
         return sign_type;
@@ -66,5 +72,29 @@ public class UserSignEntity {
 
     public void setNew_id(String new_id) {
         this.new_id = new_id;
+    }
+
+    public long getAdd_time() {
+        return add_time;
+    }
+
+    public void setAdd_time(long add_time) {
+        this.add_time = add_time;
+    }
+
+    public String getTx_path() {
+        return tx_path;
+    }
+
+    public void setTx_path(String tx_path) {
+        this.tx_path = tx_path;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

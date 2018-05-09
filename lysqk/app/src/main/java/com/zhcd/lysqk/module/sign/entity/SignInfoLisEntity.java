@@ -1,9 +1,10 @@
 package com.zhcd.lysqk.module.sign.entity;
 
-public class SigninInfoLisEntity {
+public class SignInfoLisEntity {
+    //  "new_id": "16" （最新至id）和new_id相同
     private String id;
-    //签到时间
     private String sign_id;
+    //签到时间
     private long add_time;
     //用户id
     private String user_id;

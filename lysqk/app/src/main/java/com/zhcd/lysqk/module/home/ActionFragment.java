@@ -118,11 +118,6 @@ public class ActionFragment extends BaseFragment {
                             actionList.clear();
                         if (list != null && list.size() > 0) {
                             actionList.addAll(list);
-//                            actionList.addAll(list);
-//                            actionList.addAll(list);
-//                            actionList.addAll(list);
-//                            actionList.addAll(list);
-//                            actionList.addAll(list);
                             listAdapter.setData(actionList);
                             mLoadMoreWrapper.notifyDataSetChanged();
                             if (list.size() < SConstant.PAGE_NUM) {

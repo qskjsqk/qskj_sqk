@@ -10,4 +10,5 @@ public class Namespace {
     public static final String getSigninInfoListPos = "getSigninInfoListPos";
     public static final String setUserSigninPos = "setUserSigninPos";
     public static final String getNewUserSigninPos = "getNewUserSigninPos";
+    public static final String setSignStatusPos = "setSignStatusPos";
 }

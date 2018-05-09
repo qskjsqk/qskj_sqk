@@ -74,6 +74,11 @@ public class ActionDetailActivity extends BaseActivity {
         getData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void getData() {
         if (TextUtils.isEmpty(actionId))
             return;
@@ -102,11 +107,6 @@ public class ActionDetailActivity extends BaseActivity {
             list.addAll(detailEntity.getContent_pics());
             list.add("");
             list.add("");
-            list.add("");
-            list.add("");
-            list.add("");
-            list.add("");
-            list.add("");
             albumAdapter.setData(list);
         }
     }
@@ -122,8 +122,8 @@ public class ActionDetailActivity extends BaseActivity {
             actionValue.setText(detailEntity.getIntegral() + "分");
             String content = detailEntity.getLike_num() + "人收藏 / " + detailEntity.getAddress_name() + " / " + TimeUtils.getDateYMD(detailEntity.getStart_time());
             actionInfo.setText(content);
-            startTime.setText(TimeUtils.getDateYMDHMS(detailEntity.getStart_time()));
-            endTime.setText(TimeUtils.getDateYMDHMS(detailEntity.getEnd_time()));
+            startTime.setText(TimeUtils.getDateYMDHM(detailEntity.getStart_time()));
+            endTime.setText(TimeUtils.getDateYMDHM(detailEntity.getEnd_time()));
             actionAddress.setText(detailEntity.getAddress());
             signNum.setText(detailEntity.getSignin_time() + "次");
             actionSponsor.setText(detailEntity.getInitiator());

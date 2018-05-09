@@ -70,6 +70,11 @@ public class ActionDetailSignActivity extends BaseActivity {
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper, recyclerView);
         recyclerView.setAdapter(mLoadMoreWrapper);
         setViewData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
