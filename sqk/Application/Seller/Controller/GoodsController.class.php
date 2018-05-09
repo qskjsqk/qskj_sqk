@@ -20,23 +20,8 @@ class GoodsController extends BaseController {
 
     protected $config;
 
-    protected static $statusMap = [
-        'not_publish' => 0,     //未发布
-        'already_publish' => 1, //已发布
-        'lower_frame' => 2,     //已下架
-    ];
-
     public function _initialize() {
         parent::_initialize();
-    }
-
-    private static function getStatusByMap($map) {
-        foreach(self::$statusMap as $key => $val) {
-            if($map == $key) {
-                return $val;
-                break;
-            }
-        }
     }
 
     /**
@@ -141,7 +126,7 @@ class GoodsController extends BaseController {
 
         //积分商品状态
         if(!empty($request['status'])) {
-            $where[$this->dbFix . 'seller_integral_goods.status'] = self::getStatusByMap($request['status']);
+            $where[$this->dbFix . 'seller_integral_goods.status'] = SellerIntegralGoodsModel::getGoodsStatusByName($request['status']);
         }
 
         //没有任何条件:页面载入
@@ -194,6 +179,50 @@ class GoodsController extends BaseController {
             $this->ajaxReturn(syncData(-1, '不存在'));
         }
     }
+
+    /**
+     * 商家积分商品编辑页
+     */
+    public function goods_edit() {
+        $request = Request::all();
+        $goodsInfo = (new SellerIntegralGoodsModel())->find($request['goods_id']);
+        $goodsInfo['statusDesc'] = SellerIntegralGoodsModel::translateGoodsStatus($goodsInfo['status'])['desc'];
+        $data = [
+            'goodsInfo' => $goodsInfo,
+            'catLists' => (new \Admin\Model\SellerIntegralGoodsCatModel())->select(),
+        ];
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    /**
+     * 修改积分商品
+     */
+    public function editGoods() {
+        $goodsModel = new SellerIntegralGoodsModel();
+        $request = Request::all();
+        $param = self::convertUrlPath($request['data']);
+        if($goodsModel->editGoods($param)) {
+            $this->ajaxReturn(syncData(0, '修改成功'));
+        } else {
+            $this->ajaxReturn(syncData(-1, '修改失败'));
+        }
+    }
+
+    /**
+     * 商品下架
+     */
+    public function lowerFrameGoods() {
+        $goodsModel = new SellerIntegralGoodsModel();
+        $request = Request::all();
+        $res = $goodsModel->where(['id' => $request['goods_id']])->save(['status' => $request['type']]);
+        if($res) {
+            $this->ajaxReturn(syncData(0, '操作成功'));
+        } else {
+            $this->ajaxReturn(syncData(-1, '操作失败'));
+        }
+    }
+
 
 
 }
