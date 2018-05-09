@@ -442,10 +442,8 @@ class ApiController extends BaseDBController {
      * @return json
      */
     public function collectionIntegral() {
-        /*$input = file_get_contents("php://input"); //接收POST数据
-        $inputArr = json_decode($input, true);*/
-
-        $inputArr = $_REQUEST;
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
 
         $iccard_num = $inputArr['iccard_num'];
         $trading_integral = $inputArr['trading_integral'];

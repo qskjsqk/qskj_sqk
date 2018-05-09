@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/document/开发文档/接口文档/安卓签到程序接口-zxw180428.docx" afterPath="$PROJECT_DIR$/document/开发文档/接口文档/安卓签到程序接口-zxw180428.docx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +26,8 @@
       <file leaf-file-name="ApiController.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="447" column="17" selection-start-line="447" selection-start-column="8" selection-end-line="447" selection-end-column="17" />
+            <state relative-caret-position="109">
+              <caret line="449" column="0" selection-start-line="449" selection-start-column="0" selection-end-line="449" selection-end-column="0" />
               <folding>
                 <element signature="e#7#126#0#PHP" expanded="true" />
                 <element signature="e#157#178#0#PHP" expanded="true" />
@@ -623,12 +621,12 @@
       <workItem from="1525759667623" duration="395000" />
       <workItem from="1525760496715" duration="15384000" />
       <workItem from="1525831161726" duration="6699000" />
-      <workItem from="1525845726475" duration="10011000" />
+      <workItem from="1525845726475" duration="10338000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85257000" />
+    <option name="totallyTimeSpent" value="85584000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="25" width="1438" height="791" extended-state="0" />
@@ -1072,8 +1070,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="447" column="17" selection-start-line="447" selection-start-column="8" selection-end-line="447" selection-end-column="17" />
+        <state relative-caret-position="109">
+          <caret line="449" column="0" selection-start-line="449" selection-start-column="0" selection-end-line="449" selection-end-column="0" />
           <folding>
             <element signature="e#7#126#0#PHP" expanded="true" />
             <element signature="e#157#178#0#PHP" expanded="true" />
