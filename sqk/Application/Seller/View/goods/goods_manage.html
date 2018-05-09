@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>智慧社区积分商城</title>
+        <title>梨园智能shangqu</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -48,7 +48,7 @@
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/seller/seller_home')"></a>
-            <div class="mui-title mui-input-search header-ss-div "><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
+             <h1 id="title" class="mui-title header-a-l">商品管理</h1>
             <a href="#popover" id="openPopover" class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a"></a>
         </header>
         
@@ -57,23 +57,23 @@
         <div id="popover" class="mui-popover" style="width:100px;">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;" onclick="aHref('__MODULE__/goods/goods_manage?type=0')">全部</span>
+                    <a href="#" class="mui-pull-left" onclick="aHref('__MODULE__/goods/goods_manage')">
+                        <span style="font-size: 14px;padding-left: 5px;" >全部</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;" onclick="aHref('__MODULE__/goods/goods_manage?type=1')">未发布</span>
+                    <a href="#" class="mui-pull-left" onclick="aHref('__MODULE__/goods/goods_manage?type=not_publish')">
+                        <span style="font-size: 14px;padding-left: 5px;" >未发布</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;" onclick="aHref('__MODULE__/goods/goods_manage?type=2')">已发布</span>
+                    <a href="#" class="mui-pull-left" onclick="aHref('__MODULE__/goods/goods_manage?type=already_publish')">
+                        <span style="font-size: 14px;padding-left: 5px;" >已发布</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;" onclick="aHref('__MODULE__/goods/goods_manage?type=3')">已下架</span>
+                    <a href="#" class="mui-pull-left" onclick="aHref('__MODULE__/goods/goods_manage?type=lower_frame')">
+                        <span style="font-size: 14px;padding-left: 5px;" >已下架</span>
                     </a>
                 </li>
             </ul>
@@ -95,7 +95,7 @@
                     <div class="mui-card-link"><div class="seller_s"></div>统计</div>
                     <p class="mui-card-link">总量（{$data.goodsCount.allCount}）</p>
                     <p class="mui-card-link">兑换（{$data.exchangeCount}）</p>
-                    <p class="mui-card-link">总积分：{$data.sellerInfo.integral_num}</p>
+                    <p class="mui-card-link">总积分（{$data.sellerInfo.integral_num}）</p>
                 </div>
             </div>
             <div class="mui-content-padded">

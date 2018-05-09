@@ -101,7 +101,7 @@ class GoodsController extends BaseController {
         $seller_id = cookie('seller_id');
         $request = Request::all();
 
-        $num = C('PAGE_NUM')['goods'] * $request['page'];
+//        $num = C('PAGE_NUM')['goods'] * $request['page'];
 
         $join = [
             ['goods_exchange_record', 'goods_id', 'seller_integral_goods', 'id'],
@@ -131,7 +131,7 @@ class GoodsController extends BaseController {
 
         //没有任何条件:页面载入
         $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix .'seller_integral_goods.id')->order($this->dbFix .'seller_integral_goods.id desc');
-        $lists = $listsObj->limit($num)->select();
+        $lists = $listsObj->select();
         //echo $goodsModel->getLastSql();
         $count = $listsObj->count();
 

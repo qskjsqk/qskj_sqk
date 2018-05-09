@@ -335,7 +335,7 @@ class SellerController extends Controller {
      * @return type
      */
     public function getSlider() {
-        $selectArr = M('SellerPromInfo')->where('1=1')->select();
+        $selectArr = M('SellerPromInfo')->where('status=1')->select();
         if (empty($selectArr)) {
             $returnData = 0;
         } else {

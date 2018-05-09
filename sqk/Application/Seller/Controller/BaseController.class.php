@@ -45,13 +45,29 @@ class BaseController extends Controller {
         }
         return $returnData;
     }
-    
+
+    /**
+     * function:根据条件设置某个字段的值
+     * @param $condition
+     * @param $data
+     * @return mixed
+     */
+    public function setFieldData($model, $id, $data) {
+        $condition['id'] = array('EQ', $id);
+        $result = $model->where($condition)->setField($data);
+        if ($result !== false) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
     /**
      * 获取附件
      * @param type $activ_id
      * @return type
      */
-    public function getAttachArr($key,$id) {
+    public function getAttachArr($key, $id) {
         $model = M(C('DB_ALL_ATTACH'));
         $selectArr = $model->where('module_name="' . $key . '" and module_info_id=' . $id)->select();
         if (empty($selectArr)) {

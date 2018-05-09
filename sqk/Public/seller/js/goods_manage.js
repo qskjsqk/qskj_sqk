@@ -8,26 +8,12 @@ $(function () {
 
     var type = getUrl('type');
     console.log(type);
-    
-    if(type==null){
-        console.log('ajax加载全部');
-    }else{
-        console.log('ajax加载'+type);//辉总修改这里
-    }
 
-    $('#keyword').val('');
-    getGoodsList(1, '', '');
 
-    document.onkeydown = function (event_e) {
-        if (window.event) {
-            event_e = window.event;
-        }
-        console.log(event_e);
-        var int_keycode = event_e.key || event_e.code;
-        if (int_keycode == 'Enter') {
-            getGoodsList(1, $('#keyword').val(), '');
-            return false;
-        }
+    if (type == null) {
+        getGoodsList(1, '', '');
+    } else {
+        getGoodsList(1, '', type);
     }
 
 });
@@ -44,20 +30,30 @@ function getGoodsList(page, keyword, status) {
             var str = '';
             if (res.data.isEmpty == 1) {
                 var shuju = res.data.lists;
-                for(var i = 0; i < shuju.length; i++) {
+                for (var i = 0; i < shuju.length; i++) {
                     var id = shuju[i]['id'];
-                    str += '<div class="mui-card" onclick="toDetail('+ id +')">';
-                    str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['seller_name'] + '</div><p class="mui-card-link"><a href="'+ c_path +'/goods_edit/goods_id/'+ id +'"><button class="mui-btn mui-btn-primary">修改</button></a></div>';
+                    str += '<div class="mui-card" onclick="toDetail(' + id + ')">';
+                    str += '<div class="mui-card-header"><div class="mui-card-link"><div class="seller_s"></div>' + shuju[i]['goods_name'] + '</div><p class="mui-card-link"><a href="' + c_path + '/goods_edit/goods_id/' + id + '"><button style="margin-top:5px;" class="mui-btn mui-btn-primary mui-btn-outlined">修改</button></a></div>';
                     str += '<div class="mui-card-content"><div class="item_list">';
-                    str += '<div class="item_list_img"><img src="/' + shuju[i]['goods_pic'] + '"></div>';
-                    str += '<div class="item_list_word"><span class="">' + shuju[i]['goods_name'] + '</span></div>';
+                    str += '<div class="item_list_img"><img src="/' + shuju[i]['goods_pic'] + '" style="width:70px;height:70px;"></div>';
+//                    str += '<div class="item_list_word"><span class="">' + shuju[i]['status'] + '</span></div>';
                     var price = '';
                     if (shuju[i]['cat_id'] == 1 || shuju[i]['cat_id'] == 3) {
                         price = '￥' + shuju[i]['payment_amount'] + '元+' + shuju[i]['required_integral'] + '积分';
                     } else if (shuju[i]['cat_id'] == 2) {
                         price = shuju[i]['required_integral'] + '积分';
                     }
-                    str += '<div class="item_list_word"><span class="fontred">' + price + '</span> <span class="font888">原价：￥' + shuju[i]['original_price'] + '</span> </div>';
+
+                    var statusStr = '';
+                    if (shuju[i]['status'] == 0) {
+                        statusStr = '[未发布]&nbsp;';
+                    } else if (shuju[i]['status'] == 1) {
+                        statusStr = '<font class="fontgreen">[已发布]</font>&nbsp;';
+                    } else {
+                        statusStr = '<font class="fontred">[已下架]</font>&nbsp;';
+                    }
+                    str += '<div class="item_list_word"><span class="fontred font16">' + price + '</span></div>';
+                    str += '<div class="item_list_word"><span class="font888">' + statusStr + '原价：￥' + shuju[i]['original_price'] + '</span></div>';
                     str += ' </div></div>';
                     str += '</div>';
                 }
@@ -70,17 +66,7 @@ function getGoodsList(page, keyword, status) {
         }
 
         //参数回显--------------------------------------------------------------
-        $('#keyword').val(res.data.where.keyword);
-
-        //动态加载--------------------------------------------------------------
-        $("#page").val(res.data.page);
-        if (res.data.is_end == 1) {
-            $("#loadMore").removeAttr('onclick');
-        } else {
-            $("#loadMore").attr('onclick', 'loadMore()');
-        }
-        mui("#loadMore").button('reset');
-        $("#loadMore").html(res.data.ajaxLoad);
+        $('#type').val(res.data.where.type);
         //---------------------------------------------------------------------
 
     }, 'json');
@@ -93,53 +79,4 @@ function toDetail(id) {
     aHref(c_path + "/goods_detail/goods_id/" + id);
 }
 
-
-/**
- * 动态加载数据
- */
-function loadMore() {
-    mui("#loadMore").button('loading');
-    var page = parseInt($("#page").val()) + 1;
-    getGoodsList(page, $('#keyword').val(), '');
-}
-
-/**
- * 打开筛选
- */
-function openSelect() {
-    $('#realname').val('').removeAttr('readonly');
-    $('#department').val('').removeAttr('readonly');
-    $('#tel').val('').removeAttr('readonly');
-    $('#phone').val('').removeAttr('readonly');
-    $('#comment').val('').removeAttr('readonly');
-    $('#detailBtn').css('display', 'block');
-    openModal();
-    $('#id').val(0);
-    $('#aType').val('add');
-}
-
-
-/**
- * 打开模态框
- */
-function openModal() {
-    $(".m-modal-content").fadeIn(200);
-    $(".m-modal").fadeIn(200);
-
-    $(".m-modal").bind('click', function () {
-        closeModal();
-    });
-}
-/**
- * 关闭模态框
- */
-function closeModal() {
-    $(".m-modal-content").fadeOut(200);
-    $(".m-modal").fadeOut(200);
-}
-
-function subForm() {
-    getGoodsList(1, '', '');
-    closeModal();
-}
 

@@ -66,6 +66,21 @@ class SellerController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家二维码
+     */
+    public function my_qrcode() {
+        $sellerInfo = $this->getSellerInfo();
+        if ($sellerInfo['detail_qrcode_path'] == 0) {
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/seller_detail?id=' . $sellerInfo['id'];
+            $data['detail_qrcode_path'] = createQrcode($url);
+            $this->setFieldData(M('seller_info'), $sellerInfo['id'], $data);
+            $sellerInfo['detail_qrcode_path'] = $data['detail_qrcode_path'];
+        }
+        $this->assign('sellerInfo', $sellerInfo);
+        $this->display();
+    }
+
 //    视图end===================================================================
 //    ==========================================================================
 

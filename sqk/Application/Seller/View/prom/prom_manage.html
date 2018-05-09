@@ -57,18 +57,18 @@
         <div id="popover" class="mui-popover" style="width:100px;">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left" onclick="加载方法">
+                    <a href="javascript:void(0)" class="mui-pull-left" onclick="aHref('__MODULE__/seller/prom_manage')">
                         <span style="font-size: 14px;padding-left: 5px;">全部</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
                     <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;">未发布</span>
+                        <span style="font-size: 14px;padding-left: 5px;">已发布</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
                     <a href="#" class="mui-pull-left">
-                        <span style="font-size: 14px;padding-left: 5px;">已发布</span>
+                        <span style="font-size: 14px;padding-left: 5px;">正在审核</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
@@ -87,18 +87,18 @@
             <div class="mui-card" style="margin-left:0;margin-right:0;">
                 <div class="mui-card-header">
                     <div class="mui-card-link"><div class="seller_s"></div>广告</div>
-                    <p class="mui-card-link">已发布:3</p>
-                    <p class="mui-card-link">正在审核:3</p>
-                    <p class="mui-card-link">未发布:3</p>
+                    <p class="mui-card-link" id="status1">已发布:3</p>
+                    <p class="mui-card-link" id="status02">正在审核:3</p>
+                    <p class="mui-card-link" id="status3">已下架:3</p>
                 </div>
                 <div class="mui-card-header">
                     <div class="mui-card-link"><div class="seller_s"></div>统计</div>
-                    <p class="mui-card-link">数量:3</p>
-                    <p class="mui-card-link">浏览:3000</p>
-                    <p class="mui-card-link">积分:3000</p>
+                    <p class="mui-card-link" id="count">数量:3</p>
+                    <p class="mui-card-link" id="allReadNum">浏览:3000</p>
+                    <p class="mui-card-link" id="integral_num">积分:3000</p>
                 </div>
             </div>
-            <div class="mui-content-padded">
+            <div class="mui-content-padded" id="promBtn">
                 <button type="button" class="mui-btn mui-btn-warning mui-btn-block" onclick="changeConfirm()">兑换广告发布</button>
             </div>
             <div class="mui-row" id="myPromList">
@@ -121,10 +121,6 @@
                     </div>
                 </div>
             </div>
-            <!--动态加载模块-->
-            <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
-            <input type="hidden" id="page" value="1">
-            <input type="hidden" id="type" value="0">
         </div>
     </div>
 </body>
