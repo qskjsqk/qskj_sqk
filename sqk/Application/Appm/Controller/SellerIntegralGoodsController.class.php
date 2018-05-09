@@ -125,4 +125,40 @@ class SellerIntegralGoodsController extends BaseController {
         $this->display();
     }
 
+    public function seller_detail() {
+        
+        $id = $_GET['id'];
+        //查询商家信息
+        $where['id'] = ['EQ', $id];
+        $sellerInfo = M('seller_info')->where($where)->find();
+        $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
+        $this->assign('sellerInfo', $sellerInfo);
+
+        //查询产品信息
+        $model = D('SellerIntegralGoods');
+        $join = [
+            ['goods_exchange_record', 'goods_id', 'seller_integral_goods', 'id'],
+            ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
+            ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
+        ];
+        $field = ['seller_integral_goods.*', 'seller_info.name as seller_name', 'sys_community_info.com_name'];
+
+        $lists = $where = $data = [];
+        //用户只能看到已发布的商品
+        $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
+        //只查询一个店的商品
+        $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $id;
+        
+        //设置连表,查询信息
+        $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
+        
+        $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix . 'seller_integral_goods.id');
+        $lists = $listsObj->order($this->dbFix . 'seller_integral_goods.id desc')->select();
+        
+        $this->assign('goodsList', $lists);
+        
+//        dump($sellerInfo);
+        $this->display();
+    }
+
 }

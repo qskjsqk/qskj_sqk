@@ -26,7 +26,7 @@ class IndexController extends BaseController {
         cookie('pwd', '123', 3600 * 24 * 30);
         cookie('cookie_user', '商家5', 3600 * 24 * 30);
         cookie('seller_id', 38, 3600 * 24 * 30);
-        cookie('address_id', 8, 3600 * 24 * 30);
+        cookie('address_id', 1, 3600 * 24 * 30);
         $this->redirect('seller/seller_home');
     }
 

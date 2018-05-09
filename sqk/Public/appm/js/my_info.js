@@ -19,8 +19,8 @@ function getUserappInfo() {
         $('#realname').val(data.realname);
         $('#tel').val(data.tel);
         $('#birthday').val(data.birthday);
-        $('#headimgurl').attr('src','../../../'+data.tx_path);
-        
+        $('#headimgurl').attr('src', '../../../' + data.tx_path);
+
         $("#gender").find("option[value='" + data.gender + "']").attr("selected", 'selected');
         $("#address_id").find("option[value='" + data.address_id + "']").attr("selected", 'selected');
     }, 'json');
@@ -50,7 +50,6 @@ function saveUserInfo() {
         $.post(c_path + "/saveUserappInfo", {
             'tel': $('#tel').val(),
             'realname': $('#realname').val(),
-            'idcard_num': $('#idcard_num').val(),
             'birthday': $('#birthday').val(),
             'gender': $('#gender').val(),
             'address_id': $('#address_id').val(),

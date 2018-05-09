@@ -53,7 +53,7 @@
         <header class="mui-bar mui-bar-nav header-a-l">
             <h1 class="mui-title header-a-l">公益排行榜单</h1>	
         </header>
-        <include file="./Application/Appm/View/tabnav.html" />
+    <include file="./Application/Appm/View/tabnav.html" />
 
     <!--主体部分-->
     <div class="mui-content">
@@ -71,39 +71,22 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-4">
-                                信息化推
+                        <foreach name="data.bUserList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.realname}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.bottom}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-3 mui-text-right">
+                                    {$v.sign_integral}分
+                                </div>
                             </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-center">
-                                信息化推
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                信息化推
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-4">
-                                信息化推
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-center">
-                                信息化推
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                信息化推
-                            </div>
-                        </div>
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-4">
-                                信息化推
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-center">
-                                信息化推
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-4 mui-text-right">
-                                信息化推
-                            </div>
-                        </div>
+                        </foreach>
                     </div>
                 </div>
             </div>
@@ -119,9 +102,23 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        1.张三 廊坊卡加速度看了几分</br>
-                        1.张三 廊坊卡加速度看了几分</br>
-                        1.张三 廊坊卡加速度看了几分
+                        <foreach name="data.allUserList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.realname}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.bottom}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-3 mui-text-right">
+                                    {$v.sign_integral}分
+                                </div>
+                            </div>
+                        </foreach>
+
                     </div>
                 </div>
             </div>
@@ -137,7 +134,19 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                        <foreach name="data.sellerList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4 ">
+                                    {$v.name}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-7 mui-text-right">
+                                    商品：10件&#12288;{$v.exchange_integral}分
+                                </div>
+                            </div>
+                        </foreach>
                     </div>
                 </div>
             </div>
@@ -153,7 +162,19 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+                        <foreach name="data.commList" item="v" key="k" >
+                            <div class="mui-table">
+                                <div class="mui-table-cell mui-col-xs-1">
+                                    {$k+1}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-4">
+                                    {$v.com_name}
+                                </div>
+                                <div class="mui-table-cell mui-col-xs-7 mui-text-right">
+                                    活动：{$v.activNum}场&#12288;签到：{$v.signNum}次
+                                </div>
+                            </div>
+                        </foreach> 
                     </div>
                 </div>
             </div>

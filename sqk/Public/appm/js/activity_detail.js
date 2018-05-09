@@ -24,6 +24,7 @@ function getDetail(id) {
     $.get(c_path + "/getActivDetail/id/" + id, function (data) {
         console.log(data);
         var picsStr = '';
+        var firstPic = '';
         if (data.flag == 1) {
 
             $('#sendBtn').attr('onclick', 'addComm(' + data.data.id + ')');
@@ -37,8 +38,9 @@ function getDetail(id) {
             } else {
                 $('#joinLikeBtn').html('<button type="button" class="mui-btn mui-btn-block mui-btn-outlined bgfff">已参加</button>');
             }
-            
+
 //基本信息
+
             $("#activ_title").html(data.data.title + "<p>" + data.data.realname + "&nbsp;发表于&nbsp;" + data.data.add_time + "</p>");
             $("#integral").text(data.data.integral + "分");
             $("#address_name_a_start_date").html("&nbsp;" + data.data.address_name + "/" + data.data.start_date);
@@ -54,11 +56,15 @@ function getDetail(id) {
 
             if (data.data.pics == 0) {
                 picsStr = '';
+                firstPic = 'Public/appm/img/card.jpg';
             } else {
                 for (var j = 0; j < data.data.pics.length; j++) {
                     picsStr += '<img src="' + appUpload_path + data.data.pics[j]['url'] + '" style="width:100%;">';
                 }
+                firstPic = appUpload_path + data.data.pics[0]['url'];
             }
+
+            $('#activ_first_pic').css('background-image', 'url('+firstPic+')');
 
             //为增强体验 图片加载完成之前隐藏，加载完成后显示
             $("#activ_content").css('display', 'none');
@@ -83,7 +89,7 @@ function getDetail(id) {
             }
 
 
-            
+
 
 
             $("#read_num").html("浏览" + data.data.read_num + "次");
