@@ -335,12 +335,18 @@ function syncData($ret = 0, $msg = '操作成功', $data = []) {
  * @param  integer $methodId  交易类型id
  * @return array
  */
-function getExchangeMethodById($methodId)
-{
+function getExchangeMethodById($methodId) {
     $exchangeMethod = C('EXCHANGE_METHOD');
-    foreach($exchangeMethod as $val) {
-        if($val['method_id'] == $methodId) {
+    foreach ($exchangeMethod as $val) {
+        if ($val['method_id'] == $methodId) {
             return $val;
         }
     }
+}
+
+function getFormData() {
+    $param_arr = array();
+    $form_data = $_POST['form_data'];
+    parse_str($form_data, $param_arr); //转换数组
+    return $param_arr;
 }

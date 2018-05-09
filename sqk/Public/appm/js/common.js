@@ -96,6 +96,25 @@ function checkIsLogin() {
 }
 
 /**
+ * 检测登录状态
+ * @returns {undefined}
+ */
+function checkIsUser() {
+    console.log('====正在访问【'+module+'】【'+controller+'】【'+action+'】');
+    $('#'+controller+'_btn').addClass('mui-active');
+    $.post(m_path + "/login/checkIsLogin", function (data) {
+        if (data.flag == 0) {
+            mui.alert('非登陆状态您不可以使用该功能', '提示', '确定', function () {
+                closeModal();
+            });
+        } else {
+            console.log('====检测用户已登录！');
+        }
+    }, 'json');
+
+}
+
+/**
  * 关于app介绍
  * @returns {undefined}
  */
