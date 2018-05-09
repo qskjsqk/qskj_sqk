@@ -10,6 +10,8 @@
 namespace Admin\Controller;
 
 use Think\Controller;
+use Admin\Model\IntegralTradingRecordModel;
+use Admin\Model\SysUserappInfoModel;
 
 header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
@@ -344,5 +346,129 @@ class ApiController extends BaseDBController {
 //        $returnData['dd'] = M('activ_signin_info')->getLastSql();
         $this->ajaxReturn($returnData, 'JSON');
     }
+
+    /**
+     * 获取某社区的兑换记录
+     * @accesss public
+     * @return json
+     */
+    public function getTradingRecordList() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $page = $inputArr['page'];
+        $address_id = $inputArr['address_id'];
+
+        if(empty($page) || empty($address_id)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+
+            $pageNum = 10;
+            $first = ($page - 1) * $pageNum;
+
+            $tradingRecordModel = new IntegralTradingRecordModel();
+            $appUserModel = new SysUserappInfoModel();
+            $where['income_id'] = $inputArr['address_id'];
+            $where['exchange_method_id'] = 4;
+            $queryObj = $tradingRecordModel->where($where)
+                ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                ->limit($first . ',' . $pageNum)
+                ->order('id desc');
+            $tradingRecordList = $queryObj->select();
+            $count = $queryObj->count();
+
+            if(!empty($tradingRecordList) && is_array($tradingRecordList)) {
+                foreach($tradingRecordList as $key => $value) {
+                    $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('usr');
+                    $tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
+                }
+
+                $returnData['status'] = 1;
+                $returnData['msg'] = '加载兑换记录列表成功！';
+                $returnData['timestamp'] = time();
+
+                $returnData['page'] = $page;
+                $returnData['count'] = $count;
+
+                $returnData['data'] = $tradingRecordList;
+            } else {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '没有兑换记录';
+                $returnData['timestamp'] = time();
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 社区收取用户积分页面
+     * @accesss public
+     * @return json
+     */
+    public function loadCollectionIntegral() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $iccard_num = $inputArr['iccard_num'];
+        if(empty($iccard_num)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+            $appUserModel = new SysUserappInfoModel();
+            $user = $appUserModel->where(['iccard_num' => $iccard_num])
+                ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix .'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
+                ->field('usr,integral_num,com_name')
+                ->find();
+            if(!empty($user)) {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '获取数据成功！';
+                $returnData['timestamp'] = time();
+                $returnData['data'] = $user;
+            } else {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '数据获取失败';
+                $returnData['timestamp'] = time();
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 社区收取用户积分
+     * @accesss public
+     * @return json
+     */
+    public function collectionIntegral() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $iccard_num = $inputArr['iccard_num'];
+        $trading_integral = $inputArr['trading_integral'];
+
+        if(empty($iccard_num) || empty($trading_integral)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+        } else {
+            $tradingRecordModel = new IntegralTradingRecordModel();
+            $res = $tradingRecordModel->addTradingRecord($iccard_num, $trading_integral);
+            if(is_array($res)) {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '积分收取成功！';
+                $returnData['data'] = $res;
+            } elseif($res == -1) {
+                $returnData['status'] = -1;
+                $returnData['msg'] = '当前交易积分大于用户剩余积分';
+            } elseif($res == -2) {
+                $returnData['status'] = -2;
+                $returnData['msg'] = '积分收取失败';
+            }
+        }
+        $returnData['timestamp'] = time();
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
 
 }
