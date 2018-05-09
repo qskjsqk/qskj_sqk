@@ -299,6 +299,7 @@ class IndexController extends BaseController {
                 $signInfo = M('ActivSignin')->field('qs_sqk_activ_signin.*,qs_sqk_activ_info.title,qs_sqk_activ_info.signin_time')
                                 ->join('left join qs_sqk_activ_info on qs_sqk_activ_signin.activity_id=qs_sqk_activ_info.id')
                                 ->where('qs_sqk_activ_signin.id=' . $signArr[$i]['sign_id'])->find();
+                unset($signInfo['add_time']);
                 foreach ($signInfo as $key => $value) {
                     $data[$i][$key] = $value;
                 }

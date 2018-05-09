@@ -207,7 +207,7 @@ class ApiController extends BaseDBController {
             $where['id'] = ['EQ', $sign_id];
             $data['status'] = $status;
             $signinFlag = M('activ_signin')->where($where)->setField($data);
-            
+
             if ($signinFlag) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '状态置位错误！';
@@ -232,7 +232,7 @@ class ApiController extends BaseDBController {
             $returnData['timestamp'] = time();
         } else {
             $where['sign_id'] = ['EQ', $sign_id];
-            $signinInfoList = M('activ_signin_info')->where($where)->select();
+            $signinInfoList = M('activ_signin_info')->where($where)->order('id desc')->select();
             if (empty($signinInfoList)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '未查到这条数据！';
@@ -271,7 +271,7 @@ class ApiController extends BaseDBController {
         } else {
             $where['iccard_num'] = ['EQ', $iccard_num];
             $where['is_enable'] = ['EQ', 1];
-            $userInfo = M('sys_userapp_info')->field('realname,id')->where($where)->find();
+            $userInfo = M('sys_userapp_info')->field('realname,id,tx_path')->where($where)->find();
             if (empty($userInfo)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '无效卡信息！';
@@ -290,14 +290,19 @@ class ApiController extends BaseDBController {
                     $returnData['msg'] = '成功签到！';
                     $returnData['timestamp'] = time();
 
-                    $addArr['sign_type'] = 1;
+                    $addArr['sign_type'] = '1';
                     $addArr['user_id'] = $userInfo['id'];
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
+                    $addArr['tx_path'] = $userInfo['tx_path'];
+                    
+                    $addArr['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
+
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
 
                     //signinfo表入数据
                     $addFlag = M('activ_signin_info')->add($addArr);
+                    $addArr['add_time'] = time();
                     $addArr['new_id'] = $addFlag;
                     //更新sign表
                     //更新activ_info表
@@ -307,26 +312,27 @@ class ApiController extends BaseDBController {
                 }
             }
         }
-//        $returnData['dd']=$signInfoInfo;
+        $returnData['dd'] = $iccard_num . '--' . $activity_id . '--' . $sign_id;
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 获取最新签到
+     */
     public function getNewUserSigninPos() {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
         $activity_id = $inputArr['activity_id'];
         $sign_id = $inputArr['sign_id'];
-        $new_id = $inputArr['new_id'];
 
-        if (empty($activity_id) || empty($sign_id) || empty($new_id)) {
+        if (empty($activity_id) || empty($sign_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
             $where['sign_id'] = ['EQ', $sign_id];
-            $where['id'] = ['GT', $new_id];
-            $signInfoList = M('activ_signin_info')->where($where)->order('id desc')->select();
+            $signInfoList = M('activ_signin_info')->where($where)->order('id desc')->limit(1)->select();
             if (empty($signInfoList)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '没有新的签到！';
@@ -336,14 +342,49 @@ class ApiController extends BaseDBController {
                 $returnData['msg'] = '获取到新的签到！';
                 $returnData['timestamp'] = time();
 
+                $userInfo = M('sys_userapp_info')->field('realname,id,tx_path')->where('id=' . $signInfoList[0]['user_id'])->find();
+
                 for ($i = 0; $i < count($signInfoList); $i++) {
                     $signInfoList[$i]['add_time'] = strtotime($signInfoList[$i]['add_time']);
+                    $signInfoList[$i]['tx_path'] = $userInfo['tx_path'];
+                    $signInfoList[$i]['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
                 }
                 $returnData['data'] = $signInfoList;
-                $returnData['new_id'] = $signInfoList[0]['id'];
             }
         }
-//        $returnData['dd'] = M('activ_signin_info')->getLastSql();
+        $returnData['dd'] = $inputArr;
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 置位该次签到的状态
+     */
+    public function setSignStatusPos() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $sign_status = $inputArr['sign_status'];
+        $sign_id = $inputArr['sign_id'];
+
+        if (empty($sign_id) || $sign_status===NULL) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+            $where['sign_id'] = ['EQ', $sign_id];
+            $data['sign_status'] = $sign_status;
+            $flag = M('activ_signin')->where($where)->save($data);
+            if ($flag) {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '置位状态失败！';
+                $returnData['timestamp'] = time();
+            } else {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '获取到新的签到！';
+                $returnData['timestamp'] = time();
+            }
+        }
+        $returnData['dd'] = M('activ_signin')->getLastSql();
         $this->ajaxReturn($returnData, 'JSON');
     }
 
@@ -359,7 +400,7 @@ class ApiController extends BaseDBController {
         $page = $inputArr['page'];
         $address_id = $inputArr['address_id'];
 
-        if(empty($page) || empty($address_id)) {
+        if (empty($page) || empty($address_id)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
@@ -373,14 +414,14 @@ class ApiController extends BaseDBController {
             $where['income_id'] = $inputArr['address_id'];
             $where['exchange_method_id'] = 4;
             $queryObj = $tradingRecordModel->where($where)
-                ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
-                ->limit($first . ',' . $pageNum)
-                ->order('id desc');
+                    ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                    ->limit($first . ',' . $pageNum)
+                    ->order('id desc');
             $tradingRecordList = $queryObj->select();
             $count = $queryObj->count();
 
-            if(!empty($tradingRecordList) && is_array($tradingRecordList)) {
-                foreach($tradingRecordList as $key => $value) {
+            if (!empty($tradingRecordList) && is_array($tradingRecordList)) {
+                foreach ($tradingRecordList as $key => $value) {
                     $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('usr');
                     $tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
                 }
@@ -412,17 +453,17 @@ class ApiController extends BaseDBController {
         $inputArr = json_decode($input, true);
 
         $iccard_num = $inputArr['iccard_num'];
-        if(empty($iccard_num)) {
+        if (empty($iccard_num)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
             $appUserModel = new SysUserappInfoModel();
             $user = $appUserModel->where(['iccard_num' => $iccard_num])
-                ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix .'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
-                ->field('usr,integral_num,com_name')
-                ->find();
-            if(!empty($user)) {
+                    ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix . 'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
+                    ->field('usr,integral_num,com_name')
+                    ->find();
+            if (!empty($user)) {
                 $returnData['status'] = 1;
                 $returnData['msg'] = '获取数据成功！';
                 $returnData['timestamp'] = time();
@@ -448,23 +489,23 @@ class ApiController extends BaseDBController {
         $iccard_num = $inputArr['iccard_num'];
         $trading_integral = $inputArr['trading_integral'];
 
-        if(empty($iccard_num) || empty($trading_integral)) {
+        if (empty($iccard_num) || empty($trading_integral)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
         } else {
             $tradingRecordModel = new IntegralTradingRecordModel();
             $res = $tradingRecordModel->addTradingRecord($iccard_num, $trading_integral);
-            if(is_array($res)) {
+            if (is_array($res)) {
                 $returnData['status'] = 1;
                 $returnData['msg'] = '积分收取成功！';
                 $returnData['data'] = $res;
-            } elseif($res == -1) {
+            } elseif ($res == -1) {
                 $returnData['status'] = -1;
                 $returnData['msg'] = '当前交易积分大于用户剩余积分';
-            } elseif($res == -2) {
+            } elseif ($res == -2) {
                 $returnData['status'] = -2;
                 $returnData['msg'] = '积分收取失败';
-            } elseif($res == -3) {
+            } elseif ($res == -3) {
                 $returnData['status'] = -3;
                 $returnData['msg'] = 'IC卡卡号有误';
             }
@@ -472,6 +513,5 @@ class ApiController extends BaseDBController {
         $returnData['timestamp'] = time();
         $this->ajaxReturn($returnData, 'JSON');
     }
-
 
 }
