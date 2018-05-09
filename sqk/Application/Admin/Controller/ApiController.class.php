@@ -398,9 +398,78 @@ class ApiController extends BaseDBController {
                 $returnData['msg'] = '没有兑换记录';
                 $returnData['timestamp'] = time();
             }
-            $this->ajaxReturn($returnData, 'JSON');
         }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
 
+    /**
+     * 社区收取用户积分页面
+     * @accesss public
+     * @return json
+     */
+    public function loadCollectionIntegral() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $iccard_num = $inputArr['iccard_num'];
+        if(empty($iccard_num)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+            $appUserModel = new SysUserappInfoModel();
+            $user = $appUserModel->where(['iccard_num' => $iccard_num])
+                ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix .'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
+                ->field('usr,integral_num,com_name')
+                ->find();
+            if(!empty($user)) {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '获取数据成功！';
+                $returnData['timestamp'] = time();
+                $returnData['data'] = $user;
+            } else {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '数据获取失败';
+                $returnData['timestamp'] = time();
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 社区收取用户积分
+     * @accesss public
+     * @return json
+     */
+    public function collectionIntegral() {
+        /*$input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);*/
+
+        $inputArr = $_REQUEST;
+
+        $iccard_num = $inputArr['iccard_num'];
+        $trading_integral = $inputArr['trading_integral'];
+
+        if(empty($iccard_num) || empty($trading_integral)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+        } else {
+            $tradingRecordModel = new IntegralTradingRecordModel();
+            $res = $tradingRecordModel->addTradingRecord($iccard_num, $trading_integral);
+            if(is_array($res)) {
+                $returnData['status'] = 1;
+                $returnData['msg'] = '积分收取成功！';
+                $returnData['data'] = $res;
+            } elseif($res == -1) {
+                $returnData['status'] = -1;
+                $returnData['msg'] = '当前交易积分大于用户剩余积分';
+            } elseif($res == -2) {
+                $returnData['status'] = -2;
+                $returnData['msg'] = '积分收取失败';
+            }
+        }
+        $returnData['timestamp'] = time();
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
 
