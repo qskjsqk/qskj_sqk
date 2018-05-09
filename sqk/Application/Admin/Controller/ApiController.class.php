@@ -464,6 +464,9 @@ class ApiController extends BaseDBController {
             } elseif($res == -2) {
                 $returnData['status'] = -2;
                 $returnData['msg'] = '积分收取失败';
+            } elseif($res == -3) {
+                $returnData['status'] = -3;
+                $returnData['msg'] = 'IC卡卡号有误';
             }
         }
         $returnData['timestamp'] = time();

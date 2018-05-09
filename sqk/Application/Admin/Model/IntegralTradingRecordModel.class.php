@@ -8,6 +8,7 @@
 namespace Admin\Model;
 use Think\Model;
 use Admin\Model\SysUserappInfoModel;
+use Admin\Model\SysCommunityInfoModel;
 
 class IntegralTradingRecordModel extends Model {
 
@@ -21,11 +22,17 @@ class IntegralTradingRecordModel extends Model {
      * @accesss public
      * @param  string     $iccardNum          卡号
      * @param  integer    $tradingIntegral    交易积分
-     * @return integer
+     * @return mixed
      */
     public function addTradingRecord($iccardNum, $tradingIntegral) {
         $appUserModel = new SysUserappInfoModel();
+        $communityModel = new SysCommunityInfoModel();
         $appUserInfo = $appUserModel->where(['iccard_num' => $iccardNum])->find();
+
+        //ic卡号没有找到对应用户
+        if(empty($appUserInfo)) {
+            return -3;
+        }
 
         //如果当前用户积分比要交易的积分小
         if($appUserInfo['integral_num'] < $tradingIntegral) {
@@ -45,8 +52,10 @@ class IntegralTradingRecordModel extends Model {
         $addTradingRecordRes = $this->add();
         //用户积分减少
         $appUserReduceIntegralRes = $appUserModel->where(['id' => $appUserInfo['id']])->setDec('integral_num', $tradingIntegral);
+        //社区积分增加
+        $communityAddIntegralRes = $communityModel->where(['id' => $appUserInfo['address_id']])->setInc('com_integral', $tradingIntegral);
 
-        if($addTradingRecordRes && $appUserReduceIntegralRes) {
+        if($addTradingRecordRes && $appUserReduceIntegralRes && $communityAddIntegralRes) {
             //修改交易状态为1(交易成功)
             $this->where(['id' => $addTradingRecordRes])->save(['status' => 1]);
             return [
