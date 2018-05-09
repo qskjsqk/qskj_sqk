@@ -51,8 +51,7 @@
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/goods/goods_manage')"></a>
-            <!--<div class="mui-title mui-input-search header-ss-div "><input id="keyword" class="mui-input-clear" placeholder="请输入关键字搜索" type="search" style="width: 70%;height: 30px;margin: 0px;background-color: #fff;"></div>
-            <a class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a">3423</a>-->
+             <h1 class="mui-title header-a-l">积分商品详情</h1>
         </header>
 
         <!--主体部分-->
@@ -64,9 +63,9 @@
                     <div class="mui-card-link"><div class="seller_s"></div>{$data.goodsInfo.goods_name}</div>
                     <p class="mui-card-link">
                         <if condition="$data['goodsInfo']['status'] eq 1">
-                            <button class="mui-btn mui-btn-primary" onclick="lowerFrame('{$data.goodsInfo.id}', 2)">下线</button>
+                            <button class="mui-btn mui-btn-danger mui-btn-outlined" onclick="lowerFrame('{$data.goodsInfo.id}', 2)">下线</button>
                         <elseif condition="$data['goodsInfo']['status'] eq 0"/>
-                            <button class="mui-btn mui-btn-primary" onclick="lowerFrame('{$data.goodsInfo.id}', 1)">发布</button>
+                            <button class="mui-btn mui-btn-success mui-btn-outlined" onclick="lowerFrame('{$data.goodsInfo.id}', 1)">发布</button>
                         <else/>
                             已下线
                         </if>
@@ -75,7 +74,7 @@
                 <div class="mui-card-content">
                     <div class="item_list">
                         <div class="item_list_img">
-                            <img src="/{$data.goodsInfo.goods_pic}"/>
+                            <img src="/{$data.goodsInfo.goods_pic}" style="width:70px;height:70px;"/>
                         </div>
                         <div class="item_list_word">
                             <span class="fontred">
@@ -86,6 +85,44 @@
                                 </if>
                             </span>
                         </div>
+                        <div class="item_list_word">
+                            <span class="font666">
+                                原价：￥{$data.goodsInfo.payment_amount}元
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>商品详情</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        {$data.goodsInfo.goods_detail}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>兑换规则</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        兑换总量：{$data.goodsInfo.exchange_limit_number}，每个用户限兑换：{$data.goodsInfo.user_exchange_limit}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>使用须知</div>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner font666">
+                        {$data.goodsInfo.use_of_knowledge}
                     </div>
                 </div>
             </div>

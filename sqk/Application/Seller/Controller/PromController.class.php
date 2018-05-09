@@ -25,9 +25,10 @@ class PromController extends BaseController {
     }
 
     public function getMyPromList() {
-        $seller_id = cookie('seller_id');
 
-        $num = C('PAGE_NUM')['prom'] * $_POST['page'];
+        $sellerInfo = A('Seller')->getSellerInfo();
+
+        $seller_id = cookie('seller_id');
 
         if ($_POST['type'] != 0) {
             $where['status'] = ['EQ', $_POST['type']];
@@ -35,36 +36,30 @@ class PromController extends BaseController {
 
         $where['seller_id'] = ['EQ', $seller_id];
 
-        $promArr = M('SellerPromInfo')->where($where)->order('id desc')->limit($num)->select();
+        $promArr = M('SellerPromInfo')->where($where)->order('id desc')->select();
         //调试sql
         $returnData['sql'] = M('SellerPromInfo')->getLastSql();
 
         $count = M('SellerPromInfo')->where($where)->count();
         $returnData['count'] = $count;
 
-
-
-        if ($num < $count) {
-            $returnData['ajaxLoad'] = '点击加载更多';
-            $returnData['is_end'] = 0;
-        } else {
-            $returnData['ajaxLoad'] = '已加载全部';
-            $returnData['is_end'] = 1;
-        }
-        $returnData['page'] = $_POST['page'];
-        $returnData['type'] = $_POST['type'];
+        $promStat['status1'] = M('SellerPromInfo')->where('seller_id=' . $seller_id . ' and status=1')->count();
+        $promStat['status3'] = M('SellerPromInfo')->where('seller_id=' . $seller_id . ' and status=3')->count();
+        $promStat['status02'] = M('SellerPromInfo')->where('seller_id=' . $seller_id . ' and (status=0 or status=2)')->count();
 
         if (empty($promArr)) {
             $returnData['flag'] = 0;
         } else {
+            $allReadNum = 0;
             for ($i = 0; $i < count($promArr); $i++) {
                 $data[$i]['id'] = $promArr[$i]['id'];
                 $data[$i]['title'] = $promArr[$i]['title'];
+                $data[$i]['status'] = $promArr[$i]['status'];
 
                 $data[$i]['content'] = strip_tags($promArr[$i]['content']);
 
                 $data[$i]['read_num'] = $promArr[$i]['read_num'];
-
+                $allReadNum += (int) $promArr[$i]['read_num'];
 
                 $picsInfo = parent::getAttachArr('sellerProm', $promArr[$i]['id']);
                 if ($picsInfo['flag'] == 1) {
@@ -75,8 +70,21 @@ class PromController extends BaseController {
             }
             $returnData['flag'] = 1;
             $returnData['data'] = $data;
+            $returnData['promStat'] = $promStat;
+            $returnData['allReadNum'] = $allReadNum;
+            $returnData['sellerInfo'] = $sellerInfo;
         }
         $this->ajaxReturn($returnData);
+    }
+
+    public function prom_detail() {
+        $id = $_GET['id'];
+        $where['id'] = ['EQ', $id];
+        $promInfo = M('seller_prom_info')->where($where)->find();
+        $promInfo['pics']= $this->getAttachArr('sellerProm', $id);
+        $this->assign('promInfo', $promInfo);
+        
+        $this->display();
     }
 
 }
