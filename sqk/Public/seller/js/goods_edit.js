@@ -89,7 +89,7 @@ function editGoods() {
                         aHref(c_path + "/goods_manage");
                     });
                 } else {
-                    mui.alert('修改失败');
+                    mui.alert('您没有修改任何信息');
                 }
             }
         })

@@ -10,6 +10,8 @@
 namespace Admin\Controller;
 
 use Think\Controller;
+use Admin\Model\IntegralTradingRecordModel;
+use Admin\Model\SysUserappInfoModel;
 
 header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
@@ -344,5 +346,62 @@ class ApiController extends BaseDBController {
 //        $returnData['dd'] = M('activ_signin_info')->getLastSql();
         $this->ajaxReturn($returnData, 'JSON');
     }
+
+    /**
+     * 获取某社区的兑换记录
+     * @accesss public
+     * @return json
+     */
+    public function getTradingRecordList() {
+        $input = file_get_contents("php://input"); //接收POST数据
+        $inputArr = json_decode($input, true);
+
+        $page = $inputArr['page'];
+        $address_id = $inputArr['address_id'];
+
+        if(empty($page) || empty($address_id)) {
+            $returnData['status'] = 0;
+            $returnData['msg'] = '参数错误！';
+            $returnData['timestamp'] = time();
+        } else {
+
+            $pageNum = 10;
+            $first = ($page - 1) * $pageNum;
+
+            $tradingRecordModel = new IntegralTradingRecordModel();
+            $appUserModel = new SysUserappInfoModel();
+            $where['income_id'] = $inputArr['address_id'];
+            $where['exchange_method_id'] = 4;
+            $queryObj = $tradingRecordModel->where($where)
+                ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                ->limit($first . ',' . $pageNum)
+                ->order('id desc');
+            $tradingRecordList = $queryObj->select();
+            $count = $queryObj->count();
+
+            if(!empty($tradingRecordList) && is_array($tradingRecordList)) {
+                foreach($tradingRecordList as $key => $value) {
+                    $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('usr');
+                    $tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
+                }
+
+                $returnData['status'] = 1;
+                $returnData['msg'] = '加载兑换记录列表成功！';
+                $returnData['timestamp'] = time();
+
+                $returnData['page'] = $page;
+                $returnData['count'] = $count;
+
+                $returnData['data'] = $tradingRecordList;
+            } else {
+                $returnData['status'] = 2;
+                $returnData['msg'] = '没有兑换记录';
+                $returnData['timestamp'] = time();
+            }
+            $this->ajaxReturn($returnData, 'JSON');
+        }
+
+    }
+
 
 }
