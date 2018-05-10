@@ -76,8 +76,31 @@ class BaseController extends Controller {
             $returnData['flag'] = 1;
             for ($i = 0; $i < count($selectArr); $i++) {
                 $data[$i]['url'] = $selectArr[$i]['file_path'];
+                $data[$i]['id'] = $selectArr[$i]['id'];
             }
             $returnData['data'] = $data;
+        }
+        return $returnData;
+    }
+    
+    public function saveData($model, $Array) {
+        if (!$model->create($Array)) {
+            $returnData['code'] = '501'; //验证未通过
+            $returnData['msgError'] = $model->getError();
+        } else {
+            if (empty($Array['id'])) {
+                $result = $model->add($Array); //数据写入
+                $returnData['dataID'] = $result;
+                $returnData['flag'] = 'add';
+            } else {
+                $result = $model->save($Array); //数据更新
+                $returnData['flag'] = 'edit';
+            }
+            if ($result !== false) {
+                $returnData['code'] = '500';
+            } else {
+                $returnData['code'] = '502';
+            }
         }
         return $returnData;
     }

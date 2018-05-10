@@ -81,10 +81,50 @@ class PromController extends BaseController {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
         $promInfo = M('seller_prom_info')->where($where)->find();
-        $promInfo['pics']= $this->getAttachArr('sellerProm', $id);
+        $promInfo['pics'] = $this->getAttachArr('sellerProm', $id);
         $this->assign('promInfo', $promInfo);
-        
+
         $this->display();
+    }
+
+    public function prom_add() {
+        $this->display();
+    }
+
+    public function prom_edit() {
+        $id = $_GET['id'];
+
+        $where['id'] = ['EQ', $id];
+        $promInfo = M('SellerPromInfo')->where($where)->find();
+        $attachList = $this->getAttachArr('sellerProm', $id);
+        if($attachList['flag']==1){
+            $attachList=$attachList['data'];
+            $this->assign('attachList', json_encode($attachList));
+        }
+        
+        $this->assign('promInfo', $promInfo);
+        $this->display('prom_add');
+    }
+
+    public function savePromInfo() {
+        $post = getFormData();
+
+        $post['seller_id'] = cookie('seller_id');
+        $post['status'] = 0;
+
+        $returnData = parent::saveData(M('SellerPromInfo'), $post);
+        if ($returnData['code'] == '500') {
+            foreach ($post['files'] as $value) {
+                $condition['id'] = array('EQ', $value);
+                if ($returnData['flag'] == 'add') {
+                    $data = array('module_info_id' => $returnData['dataID']);
+                } else {
+                    $data = array('module_info_id' => $post['id']);
+                }
+                M('SysAllAttach')->where($condition)->setField($data);
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
 }

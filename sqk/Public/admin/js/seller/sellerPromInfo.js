@@ -50,7 +50,7 @@ $(function () {
         $.post(c_path + '/saveSellerPromInfo', {"form_data": $('#save-form').serialize()}, function (result) {
             if (result.code == '500') {
                 layer.msg(constants.SUCCESS, {time: 1000, zIndex: 111111111}, function () {
-                    if($('input[name="from"]').val() != '') {
+                    if ($('input[name="from"]').val() != '') {
                         window.location.href = c_path + '/showList/seller_id/' + $('input[name="seller_id"]').val() + '/from/' + $('input[name="from"]').val();
                     } else {
                         window.location.href = c_path + '/showList';
@@ -112,7 +112,7 @@ function saveSellerItems(index) {
 function delSelectItems(obj, value) {
     obj.parent().parent().parent().remove();
     if ($('#item_ids').val().indexOf(',' + value + ',') > -1) {//包含
-        $('#item_ids').val($('#item_ids').val().replace(','+value + ',', ","));
+        $('#item_ids').val($('#item_ids').val().replace(',' + value + ',', ","));
     }
     if ($.trim($('input[name="item_ids"]').val()) == '' || $.trim($('input[name="item_ids"]').val()) == ',') {
         $('.select-items').css('display', 'none');

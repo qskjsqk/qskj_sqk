@@ -142,6 +142,15 @@ function tranTimeToCom($time) {
 }
 
 /**
+ * 生成单号
+ * @param type $order_id
+ * @return type
+ */
+function createOrderNo($str) {
+    return 'D' . number_format(microtime(true), 2, '', '') . $str;
+}
+
+/**
  * 邮件发送函数
  */
 function think_send_mail($to, $name, $subject = '', $body = '', $attachment = null) {

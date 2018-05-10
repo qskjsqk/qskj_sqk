@@ -3,6 +3,8 @@
     <head>
         {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
         <link rel="stylesheet" href="/Public/admin/css/common.css">
+        <script type="text/javascript" src="/Public/Plugin/layer-v3.0.2/layer.js"></script>
+        <script type="text/javascript" src="/Public/admin/js/common.js"></script>
     </head>
     <body>
         <div class="detail_div">
@@ -14,9 +16,38 @@
                 <div>
                     <table class="table table-bordered font14">
                         <tr>
-                            <td>起止时间：</td>
-                            <td>【{$prom.start_time}】&nbsp;至&nbsp;【{$prom.end_time}】</td>
-                            <td>播放次数：6</td>
+                            <td>商家名称：{$prom.seller_name}</td>
+                            <td>展示次数：6</td>
+                            <td>
+                        <if condition="$prom.status eq 0">
+                            未审核
+                            <elseif condition="$prom.status eq 1"/>
+                            通过并发布
+                            <elseif condition="$prom.status eq 2"/>
+                            未通过
+                            <else/>
+                            已下架
+                        </if>
+                        </td>
+                        <td>
+                        <if condition="$prom.status eq 0">
+                            <button class="btn btn-success editPromInfo" onclick="setPromStatus({$prom.id}, 1)">
+                                <span class="glyphicon glyphicon-edit"></span> 审核通过
+                            </button>
+                            <button class="btn btn-warning editPromInfo" onclick="setPromStatus({$prom.id}, 2)">
+                                <span class="glyphicon glyphicon-edit"></span> 审核不通过
+                            </button>
+                            <elseif condition="$prom.status eq 1"/>
+                            <button class="btn btn-danger  editPromInfo" onclick="setPromStatus({$prom.id}, 3)">
+                                <span class="glyphicon glyphicon-edit"></span> 下架
+                            </button>
+                            <elseif condition="$prom.status eq 2"/>
+                            <button class="btn btn-success editPromInfo" onclick="setPromStatus({$prom.id}, 1)">
+                                <span class="glyphicon glyphicon-edit"></span> 审核通过
+                            </button>
+                            <else/>
+                        </if>
+                        </td>
                         </tr>
                     </table>
                 </div>
@@ -30,7 +61,7 @@
                     <notempty name="imgInfo">
                         <foreach name="imgInfo" item="v" key="k">
                             <div class="list_header" style="margin-left: 75px;margin-bottom: 5px;margin-top:20px;float: left;">
-                                <img src="/{$v.file_path}" style="width: 200px; height: 150px; border: 1px solid #ccc;"/>
+                                <img src="/{$v.file_path}" style="width: 100%; height: auto; border: 1px solid #ccc;"/>
                             </div>
                         </foreach>
                     </notempty>
@@ -42,3 +73,24 @@
         </div>
     </body>
 </html>
+
+<script type="text/javascript">
+    
+function setPromStatus(id, status) {
+    layer.confirm('确定要审核该广告嘛？', {
+        icon: 2,
+        title: '提示信息',
+        btn: ['确定', '取消'] //按钮
+    }, function (index) {
+        $.post(c_path + '/setPromStatus', {'id': id, 'status': status}, function (result) {
+            if (result.code == '500') {
+                layer.msg(constants.SUCCESS, {time: 1000}, function () {
+                    location.reload();
+                });
+            } else {
+                layer.msg(constants.FAILD);
+            }
+        }, 'json');
+    });
+}
+</script>

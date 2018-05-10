@@ -63,10 +63,8 @@
                     <p class="mui-card-link">
                         <if condition="$promInfo.status eq 1">
                             <button class="mui-btn mui-btn-danger mui-btn-outlined" onclick="lowerFrame('{$data.goodsInfo.id}', 2)">下线</button>
-                        <elseif condition="($promInfo.status eq 3) or ($promInfo.status eq 2)"/>
-                            <button class="mui-btn mui-btn-primary mui-btn-outlined" onclick="lowerFrame('{$data.goodsInfo.id}', 1)">修改</button>
                         <else/>
-                            审核中
+                            <button class="mui-btn mui-btn-primary mui-btn-outlined" onclick="aHref('__MODULE__/prom/prom_edit?id={$promInfo.id}')">修改</button>
                         </if>
                     </p>
                 </div>

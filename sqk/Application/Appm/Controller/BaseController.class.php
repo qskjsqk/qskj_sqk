@@ -60,6 +60,7 @@ class BaseController extends Controller {
             $returnData['flag'] = 1;
             for ($i = 0; $i < count($selectArr); $i++) {
                 $data[$i]['url'] = $selectArr[$i]['file_path'];
+                $data[$i]['id'] = $selectArr[$i]['id'];
             }
             $returnData['data'] = $data;
         }

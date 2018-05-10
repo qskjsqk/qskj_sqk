@@ -136,12 +136,12 @@ class SellerPromInfoController extends BaseDBController {
      */
     public function edit() {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
-        
+
         $condition['module_info_id'] = array('EQ', $returnData['data']['id']);
         $condition['module_name'] = array('EQ', 'sellerProm');
         $attachList = $this->attachModel->where($condition)->select(); //if(is_array($res) && count($res)>0)
         $this->assign('attachList', json_encode($attachList));
-        
+
         $this->assign('sellerPromInfo', $returnData['data']);
         $this->assign('communitys', $this->communityInfoModel->getLists());
         $this->assign('community', $this->communityInfoModel->where(['id' => session('address_id')])->getField('com_name'));
@@ -156,9 +156,10 @@ class SellerPromInfoController extends BaseDBController {
      * function:广告详情
      */
     public function promDetail() {
-        
+
         $returnData = parent::getData($this->infoModel, $_GET['id']);
         $usrCondition['id'] = array('EQ', $returnData['data']['user_id']);
+        $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
         $usrInfo = $this->userInfoModel->field('realname,usr')->where($usrCondition)->find();
         $returnData['data']['usr'] = (!empty($usrInfo['realname']) ? $usrInfo['realname'] : $usrInfo['usr']);
         $condition['module_info_id'] = $returnData['data']['id'];
@@ -207,6 +208,15 @@ class SellerPromInfoController extends BaseDBController {
         $joinStr = 'LEFT JOIN __SELLER_ITEMS_CAT__ ON __SELLER_ITEMS_INFO__.cat_id=__SELLER_ITEMS_CAT__.id';
         $sellerPromInfoList = $this->sellerItemsModel->join($joinStr)->field($fieldStr)->where($where)->order('id desc')->select();
         echo json_encode($sellerPromInfoList);
+    }
+
+    public function setPromStatus() {
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+        $condition['id'] = ['EQ', $id];
+        $data['status'] = $status;
+        $returnData = $this->setField(M('seller_prom_info'), $condition, $data);
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
 }
