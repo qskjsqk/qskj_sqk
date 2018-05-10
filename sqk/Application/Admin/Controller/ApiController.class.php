@@ -370,14 +370,15 @@ class ApiController extends BaseDBController {
 
             $tradingRecordModel = new IntegralTradingRecordModel();
             $appUserModel = new SysUserappInfoModel();
-            $where['income_id'] = $inputArr['address_id'];
+            $where['income_id'] = $address_id;
             $where['exchange_method_id'] = 4;
-            $queryObj = $tradingRecordModel->where($where)
+            $tradingRecordList = $tradingRecordModel
+                ->where($where)
                 ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                ->order('id desc')
                 ->limit($first . ',' . $pageNum)
-                ->order('id desc');
-            $tradingRecordList = $queryObj->select();
-            $count = $queryObj->count();
+                ->select();
+            $count = $tradingRecordModel->where($where)->count();
 
             if(!empty($tradingRecordList) && is_array($tradingRecordList)) {
                 foreach($tradingRecordList as $key => $value) {
