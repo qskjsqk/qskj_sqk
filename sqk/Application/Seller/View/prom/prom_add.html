@@ -59,16 +59,18 @@
                 <div class="mui-card">
                     <!--内容区-->
                     <div class="mui-card-content">
-                        <form id="form">
-                            <div class="mui-input-row" id="formStr">
+                        <div id="fileJson" name="fileJson" style="display: none;">{$attachList}</div>
+                        <form id="save-form">
+                            <input type="hidden" name="id" value="{$promInfo.id}">
+                            <div class="mui-input-row">
                                 <div class="m-inputheader">广告标题</div>
                                 <div class="m-inputframe">
-                                    <input type="text" style="margin:0px 0px;" placeholder="请输入广告标题" class="mui-input-clear" name="title">
+                                    <input type="text" style="margin:0px 0px;" placeholder="请输入广告标题" class="mui-input-clear" name="title" value="{$promInfo.title}">
                                 </div>
 
                                 <div class="m-inputheader">广告详情</div>
                                 <div class="m-inputframe">
-                                    <textarea placeholder="请输入广告详情" style="margin:0px 0px;" name="content"></textarea>
+                                    <textarea placeholder="请输入广告详情" style="margin:0px 0px;" name="content">{$promInfo.content}</textarea>
                                 </div>
 
 
@@ -95,74 +97,95 @@
 
 </html>
 <script type="text/javascript">
-    // 初始化Web Uploader
-    var uploader = WebUploader.create({
-        // 选完文件后，是否自动上传。
-        auto: true,
-        // swf文件路径
-        swf: '__PUBLIC__/seller/plugin/webuploader/Uploader.swf',
-        // 文件接收服务端。
-        server: '__MODULE__/allattach/uploadAttach/module_name/sellerProm',
-        // 选择文件的按钮。可选。
-        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '#filePicker',
-        accept: {
-            title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
-        },
-        //可重复上传         
-        duplicate: true
-    });
-    // 当有文件添加进来的时候
-    uploader.on('fileQueued', function (file) {
-        var $li = $('<div id="' + file.id + '" class="file-item thumbnail" style="float:left;"></div> ');
-        var $img = $li.find('img');
-        // $list为容器jQuery实例
-        $('#fileList').append($li);
-    });
+    $(document).ready(function () {
 
-    // 文件上传过程中创建进度条实时显示。
-    uploader.on('uploadProgress', function (file, percentage) {
-        var $li = $('#' + file.id);
-        var $percent = $li.find('.progress span');
-        $percent.css('width', percentage * 100 + '%');
-    });
-
-    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-    uploader.on('uploadSuccess', function (file, response) {
-        $file = $('#' + file.id);
-        if (response.flag == 'success') {
-            //			$file.addClass('upload-state-done');
-            $file.append('<div style="width:100px;margin-right:10px;"><img src="' + appUpload_path + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
-            $file.css('background-img', 'url()');
-            if ($('#input-title').val() == '') {
-                $('#input-title').val(file.name);
+        if ($('#fileJson').text().length > 0) {
+            var jsonObj = $.parseJSON($('#fileJson').text());
+            if (jsonObj.length > 0) {
+                console.log(jsonObj.length);
+                var strHtml = '';
+                $.each(jsonObj, function (index, value) {
+                    strHtml += '<div id="WU_FILE_10' + index + '" class="file-item thumbnail" style="float:left;">';
+                    strHtml += '<div style="width:100px;margin-right:10px;">';
+                    strHtml += '<img src="/' + value.url + '" style="width:100px;height:70px;">';
+                    strHtml += '<div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div>';
+                    strHtml += '<input type="hidden" name="files[]" value="' + value.id + '" />';
+                    strHtml += '</div></div>';
+                });
+                $('#fileList').append(strHtml);// $list为容器jQuery实例
             }
-        } else {
-            upload_error(file, response);
         }
-    });
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: '__PUBLIC__/seller/plugin/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: '__MODULE__/allattach/uploadAttach/module_name/sellerProm',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            //可重复上传         
+            duplicate: true
+        });
+        // 当有文件添加进来的时候
+        uploader.on('fileQueued', function (file) {
+            var $li = $('<div id="' + file.id + '" class="file-item thumbnail" style="float:left;"></div> ');
+            var $img = $li.find('img');
+            $('#fileList').append($li);// $list为容器jQuery实例
+        });
 
-    // 完成上传完了，成功或者失败，先删除进度条。
-    uploader.on('uploadComplete', function (file) {
-        $('#' + file.id).find('.progress').remove();
-        uploader.removeFile(file.id);
-    });
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            var $li = $('#' + file.id);
+            var $percent = $li.find('.progress span');
+            $percent.css('width', percentage * 100 + '%');
+        });
 
-    function upload_error(file, response) {
-        var $li = $('#' + file.id);
-        $li.remove();
-        $.messager.alert('上传错误', response.msg);
-    }
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, response) {
+            $file = $('#' + file.id);
+            if (response.flag == 'success') {
+                $file.append('<div style="width:100px;margin-right:10px;"><img src="/' + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
+                $file.css('background-img', 'url()');
+                if ($('#input-title').val() == '') {
+                    $('#input-title').val(file.name);
+                }
+            } else {
+                upload_error(file, response);
+            }
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').remove();
+            uploader.removeFile(file.id);
+        });
 
-    // 删除图片
-    var $filelist = $('#fileList');
-    $filelist.on('click', '.del', function (e) {
-        var id = $(this).parent().attr('id');
-        if (typeof (id) != 'undefined') {
-            uploader.removeFile($(this).parent().attr('id'));
+        function upload_error(file, response) {
+            var $li = $('#' + file.id);
+            $li.remove();
+            $.messager.alert('上传错误', response.msg);
         }
-        $(this).parent().parent().remove();
+
+        // 删除图片
+        var $filelist = $('#fileList');
+        $filelist.on('click', '.del', function (e) {
+            $obj = $(this);
+            $.post('__MODULE__/allattach/delAttach', {'id': $(this).next().val()}, function (result) {
+                if (result.code == '500') {
+                    var id = $obj.parent().attr('id');
+                    if (typeof (id) != 'undefined') {
+                        uploader.removeFile($obj.parent().attr('id'));
+                    }
+                    $obj.parent().parent().remove();
+                }
+            });
+        });
     });
 </script>

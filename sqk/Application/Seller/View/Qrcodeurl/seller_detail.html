@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>梨园智能商圈</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/icons-extra.css">
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
+        <style type="text/css">
+            .mui-card{
+                background-color: #fff;
+            }
+            .seller_s{
+                height:50%;width:4px;margin-right: 2px;background-color: #7cacff;
+            }
+            .item_list{
+                margin: 4px 3%;background-color:none;width:94%;
+            }
+            .item_list_img{
+                background-color: red;float: right;width: 70px;height: 70px;
+            }
+            .item_list_word{
+                height: 35px;;line-height: 35px;
+            }
+        </style>
+
+
+        <script src="__PUBLIC__/seller/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/seller/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
+        <script type="text/javascript" src="__PUBLIC__/seller/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/seller/js/qrcodeurl_seller_detail.js"></script>
+    </head>
+
+    <body>
+
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav header-a-l">
+            <h1 id="title" class="mui-title header-a-l">{$sellerInfo.name}</h1>
+        </header>
+
+        <!--主体部分-->
+
+        <div class="mui-content" style="padding-top: 45px;">
+
+            <div class="mui-row">
+                <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="mui-table-view-cell mui-media">
+                        <a class="mui-navigate-right">
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../../../{$sellerInfo.tx_path}">
+                            <div class="mui-media-body">
+                                居民姓名&#12288;[所属社区]
+                                <p class='mui-ellipsis'>可用积分:99999</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--卡片1-->
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>直接收取积分</div>
+                </div>
+                <div class="mui-card-content">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row" style="width: 100%;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                            <input type="text" placeholder="请输入收取的积分值">
+                        </div>
+                        <div class="mui-button-row" style="height:auto;">
+                            <button type="button" class="mui-btn mui-btn-primary mui-btn-block">收取</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!--卡片1-->
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <div class="mui-card-link"><div class="seller_s"></div>本店积分商品</div>
+                </div>
+                <div class="mui-card-content">
+                    <div id="goods-lists">
+                        <!--列表为空-->
+                        <empty name="goodsList">
+                            <div class="mui-card">
+                                <div class="mui-card-content" style="text-align:center;">
+                                    <span class="font888">暂无数据</span>
+                                </div>
+                            </div>
+                        </empty>
+                        <!--列表非空-->
+                        <notempty name="goodsList">
+                            <foreach name="goodsList" item="v" key="k">
+
+                                <div class="mui-card" onclick="aHref('__MODULE__/Qrcodeurl/goods_detail?id={$v.id}&seller_id={$sellerInfo.id}')">
+                                    <div class="mui-card-content">
+                                        <div class="item_list">
+                                            <div class="item_list_img">
+                                                <img src="../../../{$v.goods_pic}" style="width:70px;height:70px;">
+                                            </div>
+                                            <div class="item_list_word">
+                                                <span class="">{$v.goods_name}</span>
+                                            </div>
+                                            <div class="item_list_word">
+                                                <span class="fontred">
+                                                    <if condition="$v.payment_amount eq 0.00">
+                                                        {$v.required_integral}积分
+                                                        <else/>
+                                                        ￥{$v.payment_amount}元+{$v.required_integral}积分
+                                                    </if>
+                                                </span>
+                                                <span class="font888">原价：￥{$v.original_price}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </foreach>
+                        </notempty>  
+                    </div>
+                </div>
+            </div>
+            <!--卡片1end-->
+        </div>
+
+    </div>
+</body>
+
+</html>

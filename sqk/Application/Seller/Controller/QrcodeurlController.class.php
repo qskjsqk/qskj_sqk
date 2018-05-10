@@ -7,11 +7,11 @@
  * @datetime 2018-04-28 12:07:00
  */
 
-namespace Appm\Controller;
+namespace Seller\Controller;
 
 use Think\Controller;
 use Think\Tool\GenerateUnique;
-use Appm\Controller\BaseController;
+use Seller\Controller\BaseController;
 
 class QrcodeurlController extends BaseController {
 
@@ -24,17 +24,17 @@ class QrcodeurlController extends BaseController {
     /**
      * 扫描商家二维码
      */
-    public function scan_seller() {
-        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
-        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
-        $wx['nickname'] = "忘忧草";
-        cookie('wxInfo', $wx, 3600 * 24 * 30);
+    public function scan_user() {
 
-        //判断用户是否存在
+//        假设这里扫描用户的二维码拿到下面的值
 
-        $seller_id = $_GET['id'];
+        $iccard_num = '1363783069';
 
-        $this->redirect('seller_detail?id=' . $seller_id);
+        //判断用户是否存在----------辉总写这里的逻辑
+
+
+        $seller_id = cookie('seller_id');
+        $this->redirect('seller_detail?seller_id=' . $seller_id . '&iccard_num=' . $iccard_num);
     }
 
     public function goods_detail() {
@@ -53,7 +53,7 @@ class QrcodeurlController extends BaseController {
         //不管有没有分配上
         $this->assign('user_id', cookie('user_id'));
 
-        $id = $_GET['id'];
+        $seller_id = $_GET['seller_id'];
         //查询商家信息
         $where['id'] = ['EQ', $id];
         $sellerInfo = M('seller_info')->where($where)->find();
@@ -76,7 +76,7 @@ class QrcodeurlController extends BaseController {
         //用户只能看到已发布的商品
         $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
         //只查询一个店的商品
-        $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $id;
+        $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $seller_id;
 
         //设置连表,查询信息
         $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
@@ -90,26 +90,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
-    public function InsertComplaint() {
-        $post = getFormData();
-        if ($post['user_id'] != 0) {
-            $returnData['flag'] = 1;
-            $flag = M('seller_complaint')->add($post);
-            if ($flag) {
-                $returnData['flag'] = 1;
-                $returnData['msg'] = '已经收到您的反馈！';
-            } else {
-                $returnData['flag'] = 0;
-                $returnData['msg'] = '提交失败，请重试！';
-            }
-        } else {
-            $returnData['flag'] = 0;
-            $returnData['msg'] = '用户未登录！';
-        }
-//        dump($);
-        $this->ajaxReturn($returnData, 'JSON');
-    }
-
+    /**
+     * 商品交易   方法未写完-----------------------------------------------------
+     */
     public function exchangeGoods() {
         //入库商品交易表
         $addArr = $_POST;
@@ -120,27 +103,27 @@ class QrcodeurlController extends BaseController {
 
         $tranModel = M();
 
-        $Model->startTrans(); // 开启事务  
+        $tranModel->startTrans(); // 开启事务  
 
-        if ('2342') {
-            $Model->commit(); // 成功则提交事务  
+        if ($flag) {
+            $tranModel->commit(); // 成功则提交事务  
         } else {
-            $Model->rollback(); // 否则将事务回滚  
+            $tranModel->rollback(); // 否则将事务回滚  
         }
 
 
 
-        $relation_id = M('goods_exchange_record')->add($addArr);
-        if ($relation_id) {
-            //入库交易总表
-            $trandingData = [
-                'income_id' => $_POST['seller_id'],
-            ];
-            //用户积分减值
-            //商家用户增值
-        } else {
-            
-        }
+//        $relation_id = M('goods_exchange_record')->add($addArr);
+//        if ($relation_id) {
+//            //入库交易总表
+//            $trandingData = [
+//                'income_id' => $_POST['seller_id'],
+//            ];
+//            //用户积分减值
+//            //商家用户增值
+//        } else {
+//            
+//        }
 
 
         $this->ajaxReturn($relation_id, "JSON");
