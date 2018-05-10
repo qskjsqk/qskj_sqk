@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Controller/QrcodeurlController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Controller/QrcodeurlController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Controller/TradingController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Controller/TradingController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Model/ExchangeRecordModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Model/ExchangeRecordModel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/Qrcodeurl/seller_detail.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/Qrcodeurl/seller_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/seller/js/qrcodeurl_seller_detail.js" afterPath="$PROJECT_DIR$/sqk/Public/seller/js/qrcodeurl_seller_detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php" afterPath="$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,8 +64,8 @@
       <file leaf-file-name="TradingRecordModel.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="40" column="79" selection-start-line="40" selection-start-column="79" selection-end-line="40" selection-end-column="79" />
+            <state relative-caret-position="451">
+              <caret line="51" column="110" selection-start-line="51" selection-start-column="110" selection-end-line="51" selection-end-column="110" />
               <folding>
                 <element signature="e#6#141#0#PHP" expanded="true" />
                 <element signature="e#167#183#0#PHP" expanded="true" />
@@ -117,11 +110,11 @@
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/TradingController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/qrcodeurl_goods_detail.js" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/ExchangeRecordModel.class.php" />
-        <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/Qrcodeurl/seller_detail.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/QrcodeurlController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/qrcodeurl_seller_detail.js" />
         <option value="$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php" />
       </list>
     </option>
   </component>
@@ -363,10 +356,6 @@
               <option name="myItemId" value="Seller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -391,28 +380,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qskj" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="qskj" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sqk" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Seller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -561,12 +528,12 @@
       <workItem from="1525831161726" duration="6699000" />
       <workItem from="1525845726475" duration="11922000" />
       <workItem from="1525863747828" duration="1006000" />
-      <workItem from="1525923287706" duration="16655000" />
+      <workItem from="1525923287706" duration="17054000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104829000" />
+    <option name="totallyTimeSpent" value="105228000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1437" height="791" extended-state="0" />
@@ -1033,8 +1000,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="40" column="79" selection-start-line="40" selection-start-column="79" selection-end-line="40" selection-end-column="79" />
+        <state relative-caret-position="451">
+          <caret line="51" column="110" selection-start-line="51" selection-start-column="110" selection-end-line="51" selection-end-column="110" />
           <folding>
             <element signature="e#6#141#0#PHP" expanded="true" />
             <element signature="e#167#183#0#PHP" expanded="true" />

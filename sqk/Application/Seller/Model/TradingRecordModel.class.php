@@ -44,10 +44,12 @@ class TradingRecordModel extends BaseModel {
             //用户扣积分
             $appUserReduceRes = $appUserModel->where(['id' => $param['user_id']])->setDec('integral_num', $param['trading_integral']);
             //商家加积分
-            $sellerAddRes = $sellerModel->where(['id' => $param['seller_id']])->setInc('integral_num', $param['trading_integral']);
+            $sellerAddIntRes = $sellerModel->where(['id' => $param['seller_id']])->setInc('integral_num', $param['trading_integral']);
+            //商家经验值增加
+            $sellerAddNumRes = $sellerModel->where(['id' => $param['seller_id']])->setInc('exp_num', $param['trading_integral']);
             //修改交易状态:成功
             $changeStatusRes = $this->where(['id' => $addTradingRes])->save(['status' => 1]);
-            if($addTradingRes && $appUserReduceRes && $sellerAddRes && $changeStatusRes) {
+            if($addTradingRes && $appUserReduceRes && $sellerAddIntRes && $changeStatusRes && $sellerAddNumRes) {
                 $this->commit(); // 成功则提交事务
                 return syncData(0, '交易成功');
             } else {
