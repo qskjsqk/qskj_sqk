@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php" afterPath="$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,27 +27,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ApiController.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
+      <file leaf-file-name="exchange_method.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="413" column="45" selection-start-line="413" selection-start-column="34" selection-end-line="413" selection-end-column="45" />
+            <state relative-caret-position="235">
+              <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
               <folding>
-                <element signature="e#7#126#0#PHP" expanded="true" />
-                <element signature="e#157#178#0#PHP" expanded="true" />
+                <element signature="e#6#92#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
+      <file leaf-file-name="GoodsController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-251">
-              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+            <state relative-caret-position="-108">
+              <caret line="119" column="26" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
               <folding>
-                <element signature="e#6#120#0#PHP" expanded="true" />
-                <element signature="e#144#160#0#PHP" expanded="true" />
+                <element signature="e#7#135#0#PHP" expanded="true" />
+                <element signature="e#167#188#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,7 +66,6 @@
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerInfoModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/BaseController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Common/Conf/config.php" />
-        <option value="$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/ExchangeRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Common/Common/function.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_manage.html" />
@@ -72,19 +73,20 @@
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/TradingController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/trading/trading_detail.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/trading/trading_list.html" />
-        <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/appm/js/item_list.js" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/AllattachController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/goods_detail.js" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_detail.html" />
-        <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/goods_manage.js" />
-        <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php" />
-        <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/goods_edit.js" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html" />
+        <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html" />
+        <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php" />
       </list>
     </option>
   </component>
@@ -248,14 +250,6 @@
               <option name="myItemId" value="Seller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="View" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="goods" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -278,6 +272,10 @@
               <option name="myItemId" value="Seller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -294,6 +292,90 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Conf" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="document" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="设计原型及UI图" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="document" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="开发文档" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -402,15 +484,15 @@
       <workItem from="1525831161726" duration="6699000" />
       <workItem from="1525845726475" duration="11922000" />
       <workItem from="1525863747828" duration="1006000" />
-      <workItem from="1525923287706" duration="1326000" />
+      <workItem from="1525923287706" duration="4589000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89500000" />
+    <option name="totallyTimeSpent" value="92763000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="23" width="1437" height="791" extended-state="0" />
+    <frame x="2" y="23" width="1437" height="791" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27627" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -467,21 +549,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/BaseModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Public/appm/js/goods_list.js" />
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Public/appm/js/activity_list.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-882">
@@ -538,17 +605,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/ExchangeRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+          <folding>
+            <element signature="e#6#144#0#PHP" expanded="false" />
+            <element signature="e#170#186#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -577,6 +641,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+          <folding>
+            <element signature="e#6#136#0#PHP" expanded="false" />
+            <element signature="e#162#178#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -657,13 +725,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="51" column="116" selection-start-line="51" selection-start-column="116" selection-end-line="51" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Public/Upload./sellerGoods/2018-05-08/5af1174bbffc5.jpg" />
     <entry file="file://$PROJECT_DIR$/sqk/Public/Upload./sellerGoods/2018-05-08/5af116821a849.jpg" />
     <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Controller/AllattachController.class.php">
@@ -680,23 +741,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="70" column="31" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/document/设计原型及UI图/签到程序UI及切图/签到切图/社区卡签到活动列表页和积分兑换页（活动列表）.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="134" column="87" selection-start-line="134" selection-start-column="87" selection-end-line="134" selection-end-column="87" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/document/设计原型及UI图/签到程序UI及切图/签到补切图/社区卡签到积分兑换记录搜索2/社区卡签到积分兑换记录搜索2.jpg">
@@ -708,24 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="164" column="30" selection-start-line="164" selection-start-column="30" selection-end-line="164" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="204" column="27" selection-start-line="204" selection-start-column="27" selection-end-line="204" selection-end-column="27" />
-          <folding>
-            <element signature="e#7#135#0#PHP" expanded="false" />
-            <element signature="e#167#188#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -744,7 +773,7 @@
         <state relative-caret-position="234">
           <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding>
-            <element signature="e#7#137#0#PHP" expanded="true" />
+            <element signature="e#7#137#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -761,13 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -804,8 +826,8 @@
         <state relative-caret-position="-251">
           <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
           <folding>
-            <element signature="e#6#120#0#PHP" expanded="true" />
-            <element signature="e#144#160#0#PHP" expanded="true" />
+            <element signature="e#6#120#0#PHP" expanded="false" />
+            <element signature="e#144#160#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -817,6 +839,97 @@
           <folding>
             <element signature="e#7#126#0#PHP" expanded="true" />
             <element signature="e#157#178#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-701">
+          <caret line="70" column="29" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+          <folding>
+            <element signature="e#6#93#0#PHP" expanded="false" />
+            <element signature="e#118#159#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="112" column="36" selection-start-line="112" selection-start-column="36" selection-end-line="112" selection-end-column="36" />
+          <folding>
+            <marker date="1525925637915" expanded="false" signature="6256:6271" ph="..." />
+            <marker date="1525925637915" expanded="true" signature="10475:10486" ph="..." />
+            <marker date="1525925637915" expanded="true" signature="11118:11148" ph="..." />
+            <marker date="1525925637915" expanded="true" signature="11206:11230" ph="..." />
+            <marker date="1525925637915" expanded="true" signature="11271:11323" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
+          <folding>
+            <marker date="1525925637909" expanded="false" signature="5956:5971" ph="..." />
+            <marker date="1525925637909" expanded="true" signature="9868:9879" ph="..." />
+            <marker date="1525925637909" expanded="true" signature="10511:10541" ph="..." />
+            <marker date="1525925637909" expanded="true" signature="10599:10623" ph="..." />
+            <marker date="1525925637909" expanded="true" signature="10664:10716" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/document/设计原型及UI图/商家移动端UI图 jpg/二维码扫码1/兑换详情.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/document/设计原型及UI图/商家移动端UI图 jpg/二维码扫码1/收取积分.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/document/设计原型及UI图/商家移动端UI图 jpg/二维码扫码1/收取积分成功（商家）.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+          <folding>
+            <element signature="e#6#92#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-108">
+          <caret line="119" column="26" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
+          <folding>
+            <element signature="e#7#135#0#PHP" expanded="true" />
+            <element signature="e#167#188#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

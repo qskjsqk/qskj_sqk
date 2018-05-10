@@ -108,7 +108,7 @@ class SellerIntegralGoodsModel extends BaseModel {
         $this->stock = $param['stock'];
         $this->required_integral = $param['required_integral'];
         $this->original_price = $param['original_price'];
-        $this->exchange_limit_number = !empty($param['exchange_limit_number']) ? $param['exchange_limit_number'] : 0;
+        //$this->exchange_limit_number = !empty($param['exchange_limit_number']) ? $param['exchange_limit_number'] : 0;
         $this->user_exchange_limit = !empty($param['user_exchange_limit']) ? $param['user_exchange_limit'] : 0;
         $this->goods_detail = !empty($param['goods_detail']) ? urldecode($param['goods_detail']) : '';
         $this->use_of_knowledge = !empty($param['use_of_knowledge']) ? urldecode($param['use_of_knowledge']) : '';
@@ -156,7 +156,7 @@ class SellerIntegralGoodsModel extends BaseModel {
         $data['stock'] = $param['stock'];
         $data['required_integral'] = $param['required_integral'];
         $data['original_price'] = $param['original_price'];
-        $data['exchange_limit_number'] = !empty($param['exchange_limit_number']) ? $param['exchange_limit_number'] : 0;
+        //$data['exchange_limit_number'] = !empty($param['exchange_limit_number']) ? $param['exchange_limit_number'] : 0;
         $data['user_exchange_limit'] = !empty($param['user_exchange_limit']) ? $param['user_exchange_limit'] : 0;
         $data['goods_detail'] = !empty($param['goods_detail']) ? urldecode($param['goods_detail']) : '';
         $data['use_of_knowledge'] = !empty($param['use_of_knowledge']) ? urldecode($param['use_of_knowledge']) : '';
