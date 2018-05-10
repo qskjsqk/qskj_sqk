@@ -53,7 +53,9 @@ class TradingController extends BaseController {
         ];
         $field = ['goods_exchange_record.*', 'sys_userapp_info.realname'];
         $where[$this->dbFix . 'goods_exchange_record.seller_id'] = $seller_id;
-        $exchangeLists = $exchangeModel->joinFieldDB($join, $field, $where)->select();
+        $exchangeLists = $exchangeModel->joinFieldDB($join, $field, $where)
+            ->order($this->dbFix . "goods_exchange_record.id desc")
+            ->select();
         $data = [
             'sellerInfo' => $sellerInfo,
             'exchangeLists' => $exchangeLists,

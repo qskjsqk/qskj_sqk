@@ -13,4 +13,6 @@ use Admin\Model\BaseModel;
 class ExchangeRecordModel extends BaseModel {
 
     public $tableName  = 'goods_exchange_record';
+
+
 }

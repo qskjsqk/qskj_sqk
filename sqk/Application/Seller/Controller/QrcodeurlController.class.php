@@ -12,6 +12,13 @@ namespace Seller\Controller;
 use Think\Controller;
 use Think\Tool\GenerateUnique;
 use Seller\Controller\BaseController;
+use Think\Tool\Request;
+use Seller\Model\SellerInfoModel;
+use Seller\Model\SellerIntegralGoodsModel;
+use Seller\Model\ExchangeRecordModel;
+use Seller\Model\TradingRecordModel;
+use Admin\Model\SysUserappInfoModel;
+
 
 class QrcodeurlController extends BaseController {
 
@@ -25,13 +32,16 @@ class QrcodeurlController extends BaseController {
      * 扫描商家二维码
      */
     public function scan_user() {
+        $request = Request::all();
+        //假设这里扫描用户的二维码拿到下面的值
+        $iccard_num = $request['iccard_num'];
+        $iccard_num = '1362913101';
 
-//        假设这里扫描用户的二维码拿到下面的值
-
-        $iccard_num = '1363783069';
-
-        //判断用户是否存在----------辉总写这里的逻辑
-
+        //判断用户是否存在
+        $appUserModel = new SysUserappInfoModel();
+        if(empty($appUserModel->where(['iccard_num' => $iccard_num])->find())) {
+            $this->redirect('goods/goods_manage');
+        }
 
         $seller_id = cookie('seller_id');
         $this->redirect('seller_detail?seller_id=' . $seller_id . '&iccard_num=' . $iccard_num);
@@ -50,44 +60,69 @@ class QrcodeurlController extends BaseController {
     }
 
     public function seller_detail() {
-        //不管有没有分配上
-        $this->assign('user_id', cookie('user_id'));
+        $request = Request::all();
 
-        $seller_id = $_GET['seller_id'];
+        $seller_id = $request['seller_id'];
+        $iccard_num = $request['iccard_num'];
+
+        if(empty($seller_id) || empty($iccard_num)) {
+            $this->redirect('goods/goods_manage');
+        }
+
+        $sellerModel = new SellerInfoModel();
+        $goodsModel = new SellerIntegralGoodsModel();
+        $appUserModel = new SysUserappInfoModel();
+
+        //用户信息
+        $appUserInfo = $appUserModel->where(['iccard_num' => $iccard_num])->find();
+
         //查询商家信息
-        $where['id'] = ['EQ', $id];
-        $sellerInfo = M('seller_info')->where($where)->find();
-        $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
-        $this->assign('sellerInfo', $sellerInfo);
+        $sellerInfo = $sellerModel->where(['id' => $seller_id])->find();
+        $sellerInfo['com_name'] = getConameById($sellerInfo['address_id']);
 
-        //分配反馈类型信息
-        $this->assign('compalintCat', M('seller_complaint_cat')->select());
-
-        //查询产品信息
-        $model = D('SellerIntegralGoods');
+        //查询积分商品信息
         $join = [
-            ['goods_exchange_record', 'goods_id', 'seller_integral_goods', 'id'],
             ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
-            ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
         ];
-        $field = ['seller_integral_goods.*', 'seller_info.name as seller_name', 'sys_community_info.com_name'];
+        $field = ['seller_integral_goods.*', 'seller_info.name as seller_name'];
 
-        $lists = $where = $data = [];
         //用户只能看到已发布的商品
         $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
         //只查询一个店的商品
         $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $seller_id;
 
         //设置连表,查询信息
-        $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
+        $lists = $goodsModel
+            ->joinFieldDB($join, $field, $where)
+            ->group($this->dbFix . 'seller_integral_goods.id')
+            ->order($this->dbFix . 'seller_integral_goods.id desc')
+            ->select();
 
-        $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix . 'seller_integral_goods.id');
-        $lists = $listsObj->order($this->dbFix . 'seller_integral_goods.id desc')->select();
-
-        $this->assign('goodsList', $lists);
-
-//        dump($sellerInfo);
+        $data = [
+            'sellerInfo' => $sellerInfo,
+            'goodsList' => $lists,
+            'appUserInfo' => $appUserInfo,
+        ];
+        $this->assign('data', $data);
         $this->display();
+    }
+
+    public function kouFenExchange() {
+        $request = Request::all();
+        $request['seller_id'] = cookie('seller_id');
+
+        $request['user_id'] = $request['app_user_id'];
+
+        if(empty($request['trading_integral'])|| empty($request['seller_id']) || empty($request['user_id'])) {
+            $this->ajaxReturn(syncData(-1, '提交有误'));
+        }
+
+        //交易方式
+        $request['exchange_method_id'] = 2;
+        $tradingModel = new TradingRecordModel();
+        $res = $tradingModel->addRecord($request);
+        $this->ajaxReturn($res);
+
     }
 
     /**

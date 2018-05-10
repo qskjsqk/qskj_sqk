@@ -11,23 +11,31 @@ $(function () {
 
 
 //函数--------------------------------------------------------------------------
-/**
- * 打开反馈
- */
-function openComplaint() {
-//    checkIsUser();   
-    openModal();
+//直接扣分交易
+koufenExchange = function () {
+    var trading_integral = $("input[name='trading_integral']").val();
+    if(trading_integral == '') {
+        mui.alert('请输入交易积分');
+    }
+    var user_id = assignData.data.appUserInfo.id;
+    var str = "" + trading_integral + '积分';
+    var btnArray = ['取消', '支付'];
+    mui.confirm('您需要支付商家', str, btnArray, function (e) {
+        if (e.index == 1) {
+            $.ajax({
+                url : c_path + '/kouFenExchange',
+                type : 'post',
+                data : {trading_integral : trading_integral, app_user_id : user_id},
+                success : function (res) {
+                    console.log(res);
+                    if(res.ret == 0) {
+                        mui.alert('交易成功');
+                    } else {
+                        mui.alert(res.msg);
+                    }
+                }
+            })
+        }
+    })
 }
 
-function subForm() {
-    $.post(c_path + '/InsertComplaint', {"form_data": $('#save-form').serialize()}, function (data) {
-        console.log(data);
-        if (data.flag == 1) {
-            mui.toast(data.msg, {duration: 'long', type: 'div'});
-             closeModal();
-        } else {
-            mui.toast(data.msg, {duration: 'long', type: 'div'});
-        }
-    }, 'json');
-   
-}
