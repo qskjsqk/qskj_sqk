@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ApiController.class.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ApiController.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="343">
-              <caret line="456" column="51" selection-start-line="456" selection-start-column="51" selection-end-line="456" selection-end-column="51" />
+              <caret line="413" column="45" selection-start-line="413" selection-start-column="34" selection-end-line="413" selection-end-column="45" />
               <folding>
                 <element signature="e#7#126#0#PHP" expanded="true" />
                 <element signature="e#157#178#0#PHP" expanded="true" />
@@ -37,7 +37,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-251">
@@ -402,12 +402,12 @@
       <workItem from="1525831161726" duration="6699000" />
       <workItem from="1525845726475" duration="11922000" />
       <workItem from="1525863747828" duration="1006000" />
-      <workItem from="1525923287706" duration="1207000" />
+      <workItem from="1525923287706" duration="1326000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89381000" />
+    <option name="totallyTimeSpent" value="89500000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1437" height="791" extended-state="0" />
@@ -799,17 +799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="456" column="51" selection-start-line="456" selection-start-column="51" selection-end-line="456" selection-end-column="51" />
-          <folding>
-            <element signature="e#7#126#0#PHP" expanded="true" />
-            <element signature="e#157#178#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-251">
@@ -817,6 +806,17 @@
           <folding>
             <element signature="e#6#120#0#PHP" expanded="true" />
             <element signature="e#144#160#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="413" column="45" selection-start-line="413" selection-start-column="34" selection-end-line="413" selection-end-column="45" />
+          <folding>
+            <element signature="e#7#126#0#PHP" expanded="true" />
+            <element signature="e#157#178#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
