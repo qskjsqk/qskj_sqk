@@ -80,6 +80,21 @@ class SellerController extends BaseController {
         $this->assign('sellerInfo', $sellerInfo);
         $this->display();
     }
+    
+    /**
+     * 收款二维码
+     */
+    public function transfer_qrcode() {
+        $sellerInfo = $this->getSellerInfo();
+        if ($sellerInfo['detail_qrcode_path'] == 0) {
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_qrcode?id=' . $sellerInfo['id'];
+            $data['transfer_qrcode_path'] = createQrcode($url);
+            $this->setFieldData(M('seller_info'), $sellerInfo['id'], $data);
+            $sellerInfo['transfer_qrcode_path'] = $data['transfer_qrcode_path'];
+        }
+        $this->assign('sellerInfo', $sellerInfo);
+        $this->display();
+    }
 
 //    视图end===================================================================
 //    ==========================================================================

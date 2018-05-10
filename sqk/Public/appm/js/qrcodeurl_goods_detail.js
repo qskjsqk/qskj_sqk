@@ -53,11 +53,19 @@ function subExchange() {
                 'exchange_integral': required_integral
             }, function (data) {
                 console.log(data);
-                if (data.code == 500) {
-                    mui.toast('添加成功！', {duration: 'long', type: 'div'});
-                    aHref(c_path + '/prom_manage');
+                if (data.flag == 1) {
+                    var str = '';
+                    str += '<table style="text-align:left;">';
+                    str += '<tr><td>编号：'+data.data.exchange_number+'</td></tr>';
+                    str += '<tr><td>商家：'+data.data.seller_name+'</td></tr>';
+                    str += '<tr><td>买家：'+data.data.user_name+'</td></tr>';
+                    str += '<tr><td>商品：'+data.data.good_name+'</td></tr>';
+                    str += '<tr><td class="fontred">积分：'+data.data.exchange_integral+'</td></tr>';
+                    str += '<tr><td>时间：'+data.data.time+'</td></tr>';
+                    str += '</table>';
+                    mui.alert(str, data.msg);
                 } else {
-                    mui.toast(data.msg, {duration: 'long', type: 'div'});
+                    mui.alert(data.msg, {duration: 'long', type: 'div'});
                 }
             }, 'json');
         }

@@ -90,6 +90,23 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    public function transfer_qrcode() {
+        //不管有没有分配上
+        $this->assign('user_id', cookie('user_id'));
+
+        $id = $_GET['id'];
+        //查询商家信息
+        $where['id'] = ['EQ', $id];
+        $sellerInfo = M('seller_info')->where($where)->find();
+        $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
+        $this->assign('sellerInfo', $sellerInfo);
+
+        //分配反馈类型信息
+        $this->assign('compalintCat', M('seller_complaint_cat')->select());
+
+        $this->display();
+    }
+
     public function InsertComplaint() {
         $post = getFormData();
         if ($post['user_id'] != 0) {
@@ -115,35 +132,104 @@ class QrcodeurlController extends BaseController {
         $addArr = $_POST;
         $addArr['user_id'] = cookie('user_id');
         $addArr['exchange_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
-        $addArr['exchange_method_id'] = 2;
+        $addArr['exchange_method_id'] = 1;
         $addArr['status'] = 1;
 
         $tranModel = M();
 
-        $Model->startTrans(); // 开启事务  
+        $tranModel->startTrans(); // 开启事务  
+        //入库商品交易表
+        $relation_id = $tranModel->table($this->dbFix . 'goods_exchange_record')->add($addArr);
+        //入库交易总表
+        $tradingData = [
+            'income_id' => $_POST['seller_id'],
+            'payment_id' => cookie('user_id'),
+            'income_type' => 2,
+            'payment_type' => 3,
+            'trading_number' => $addArr['exchange_number'],
+            'trading_integral' => $_POST['exchange_integral'],
+            'exchange_method_id' => 1,
+            'relation_id' => $relation_id,
+            'status' => 1,
+        ];
+        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
+        //商家积分增值
+        $sellerIntegralFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('integral_num', $_POST['exchange_integral']);
+        $sellerExpFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('exp_num', $_POST['exchange_integral']);
+        //用户积分减值
+        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
+                ->setDec('integral_num', $_POST['exchange_integral']);
 
-        if ('2342') {
-            $Model->commit(); // 成功则提交事务  
+        $flag = $relation_id && $tradingFlag && $sellerIntegralFlag && $sellerExpFlag && $userFlag;
+
+        if ($flag) {
+            $tranModel->commit(); // 成功则提交事务  
+            $returnData['flag'] = 1;
+            $returnData['msg'] = '交易成功';
+            $returnData['data'] = $addArr;
+            $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
+            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), $returnData['data']['user_id'], 'realname');
+            $returnData['data']['good_name'] = $this->getDataKey(M('seller_integral_goods'), $returnData['data']['goods_id'], 'goods_name');
+            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
         } else {
-            $Model->rollback(); // 否则将事务回滚  
+            $tranModel->rollback(); // 否则将事务回滚  
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，请重试';
         }
 
+        $this->ajaxReturn($returnData, "JSON");
+    }
 
+    public function transrerIntegral() {
+        //入库商品交易表
+        $addArr = $_POST;
 
-        $relation_id = M('goods_exchange_record')->add($addArr);
-        if ($relation_id) {
-            //入库交易总表
-            $trandingData = [
-                'income_id' => $_POST['seller_id'],
-            ];
-            //用户积分减值
-            //商家用户增值
+        $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
+
+        $tranModel = M();
+        //开启事务  
+        $tranModel->startTrans();
+        //入库交易总表
+        $tradingData = [
+            'income_id' => $_POST['seller_id'],
+            'payment_id' => cookie('user_id'),
+            'income_type' => 2,
+            'payment_type' => 3,
+            'trading_integral' => $_POST['exchange_integral'],
+            'trading_number' => $addArr['trading_number'],
+            'exchange_method_id' => 0,
+            'relation_id' => 0,
+            'status' => 1,
+        ];
+        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
+        //商家积分增值
+        $sellerIntegralFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('integral_num', $_POST['exchange_integral']);
+        $sellerExpFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('exp_num', $_POST['exchange_integral']);
+        //用户积分减值
+        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
+                ->setDec('integral_num', $_POST['exchange_integral']);
+
+        $flag = $tradingFlag && $sellerIntegralFlag && $sellerExpFlag && $userFlag;
+
+        if ($flag) {
+            $tranModel->commit(); // 成功则提交事务  
+            $returnData['flag'] = 1;
+            $returnData['msg'] = '交易成功';
+            $returnData['data'] = $addArr;
+            $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
+            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
+            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
         } else {
-            
+            $tranModel->rollback(); // 否则将事务回滚  
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，请重试';
         }
 
-
-        $this->ajaxReturn($relation_id, "JSON");
+        $this->ajaxReturn($returnData, "JSON");
     }
 
 }
