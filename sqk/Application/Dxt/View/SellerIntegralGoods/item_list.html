@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>智慧社区积分商城</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/mui.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/icons-extra.css">
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/common.css">
+        <style type="text/css">
+            .seller_s{
+                height:50%;width:4px;margin-right: 2px;background-color: #7cacff;
+            }
+            .item_list{
+                margin: 4px 3%;background-color:none;width:94%;height:70px;
+            }
+            .item_list_img{
+                background-color: red;float: right;width: 70px;height: 70px;
+            }
+            .item_list_word{
+                height: 35px;;line-height: 35px;
+            }
+        </style>
+
+
+        <script src="__PUBLIC__/dxt/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/dxt/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/common.css">
+        <script src="__PUBLIC__/dxt/js/common.js"></script>
+        <script src="__PUBLIC__/dxt/js/item_list.js"></script>
+    </head>
+
+    <body>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav header-a-l">
+            <h1 class="mui-title header-a-l">积分商城</h1>
+            <a  class="mui-icon mui-icon-extra mui-icon-extra-regist mui-pull-right header-a" onclick="openSelect()"></a>
+        </header>
+        <!--底部tabbar-->
+        <include file="./Application/Dxt/View/tabnav.html" />
+        <!--主体部分-->
+
+        <div class="mui-content" style="padding-top: 45px;background-color: #fefefe;">
+            
+            <div class="mui-content-padded">
+                <button type="button" class="mui-btn mui-btn-warning mui-btn-block">剩余积分：{$userIntegralNum}分</button>
+            </div>
+            <div id="goods-lists">
+                <!--<div class="mui-card">
+                    <div class="mui-card-header">
+                        <div class="mui-card-link"><div class="seller_s"></div>王师傅店铺</div>
+                        <p class="mui-card-link">距离1.5km</p>
+                    </div>
+                    <div class="mui-card-content">
+                        <div class="item_list">
+                            <div class="item_list_img">
+                                <img src="/Public/Upload/sellerInfo/2018-04-16/5ad46d9f1cf52.jpg">
+                            </div>
+                            <div class="item_list_word">
+                                <span class="">礼品卡券面值30元</span>
+                            </div>
+                            <div class="item_list_word">
+                                <span class="fontred">￥30元+300积分</span>
+                                <span class="font888">原价：￥45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <!--动态加载模块-->
+            <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
+            <input type="hidden" id="page" value="1">
+        </div>
+
+
+        <!--模态框-->
+        <div class="m-modal"></div>
+        <div class="m-modal-content" style="width:100%;margin-left: -50%;">
+            <div class="mui-card">
+                <div class="mui-card-header">
+                    <a class="mui-card-link" onclick="closeModal()">取消</a>
+                    <span class="mui-card-link font666">筛选</span>
+                    <a class="mui-card-link" onclick="subForm()">保存</a>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner">
+                        <!--form-->
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>最受欢迎</label>
+                                            <input name="orderBy" type="radio" value="welcome">
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>离我最近</label>
+                                            <input name="orderBy" type="radio" value="distance">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mui-content-padded font333">商家地点</h5>
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>本社区</label>
+                                            <input name="address" type="radio" value="current"/>
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-6 mui-col-xs-6">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>全体社区</label>
+                                            <input name="address" type="radio" value="all"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mui-content-padded font333">类&#12288;&#12288;型</h5>
+                            <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                                <div class="mui-row">
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left">
+                                            <label>加购</label>
+                                            <input name="cat_type" type="radio" value="1"/>
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>兑换</label>
+                                            <input name="cat_type" type="radio" value="2"/>
+                                        </div>
+                                    </div>
+                                    <div class="mui-col-sm-4 mui-col-xs-4">
+                                        <div class="mui-input-row mui-radio mui-left" >
+                                            <label>券码</label>
+                                            <input name="cat_type" type="radio" value="3"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

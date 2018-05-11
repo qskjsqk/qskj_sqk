@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>积分消费记录</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="x-rim-auto-match" content="none">
+
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/mui.min.css" type="text/css"/>
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/icons-extra.css" type="text/css"/>
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/common.css" type="text/css"/>
+        <style type="text/css">
+            .mui-table-view{
+                margin: 10px 0;
+            }
+            .mui-table-view .mui-media-object {
+                line-height: 42px;
+                max-width: 60px;
+                height: 60px;
+            }
+        </style>
+
+        <script src="__PUBLIC__/dxt/js/jquery-1.11.0.js"></script>
+        <script src="__PUBLIC__/dxt/js/mui.min.js"></script>
+        <script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+        </script>
+        {$Assigndata}
+        <link rel="stylesheet" href="__PUBLIC__/dxt/css/common.css">
+        <script src="__PUBLIC__/dxt/js/common.js"></script>
+        <script src="__PUBLIC__/dxt/js/order_list.js"></script>
+    </head>
+
+    <body>
+        <!--头栏-->
+        <header class="mui-bar mui-bar-nav header-a-l">
+            <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/setting')"></a>
+            <h1 class="mui-title header-a-l">积分消费记录</h1>	
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content">
+            <div class="mui-row">
+                <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="mui-table-view-cell mui-media">
+                        <a class="mui-navigate-right" >
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../../../{$myInfo.tx_path}">
+                            <div class="mui-media-body">
+                                张晓炜&#12288;[云景东里]
+                                <p class='mui-ellipsis'>累计兑换：10</p>
+                                <p class='mui-ellipsis'>已消费：1000分&#12288;剩余：2200分</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mui-row">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            <span class="mui-badge mui-badge-danger">消费：200分</span>
+                            王师傅马克杯（任意一款）
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            <span class="mui-badge mui-badge-purple">消费：200分</span>
+                            王师傅马克杯（任意一款）
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            <span class="mui-badge mui-badge-warning">消费：200分</span>
+                            王师傅马克杯（任意一款）
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--页面主内容区结束-->
+    </body>
+
+</html>
