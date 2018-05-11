@@ -44,6 +44,7 @@ class QrcodeurlController extends BaseController {
         }
 
         $seller_id = cookie('seller_id');
+        
         $this->redirect('seller_detail?seller_id=' . $seller_id . '&iccard_num=' . $iccard_num);
     }
 
@@ -129,37 +130,55 @@ class QrcodeurlController extends BaseController {
      * 商品交易   方法未写完-----------------------------------------------------
      */
     public function exchangeGoods() {
-        //入库商品交易表
         $addArr = $_POST;
         $addArr['user_id'] = cookie('user_id');
         $addArr['exchange_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
-        $addArr['exchange_method_id'] = 2;
+        $addArr['exchange_method_id'] = 1;
         $addArr['status'] = 1;
 
         $tranModel = M();
 
         $tranModel->startTrans(); // 开启事务  
+        //入库商品交易表
+        $relation_id = $tranModel->table($this->dbFix . 'goods_exchange_record')->add($addArr);
+        //入库交易总表
+        $tradingData = [
+            'income_id' => $_POST['seller_id'],
+            'payment_id' => cookie('user_id'),
+            'income_type' => 2,
+            'payment_type' => 3,
+            'trading_number' => $addArr['exchange_number'],
+            'trading_integral' => $_POST['exchange_integral'],
+            'exchange_method_id' => 1,
+            'relation_id' => $relation_id,
+            'status' => 1,
+        ];
+        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
+        //商家积分增值
+        $sellerIntegralFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('integral_num', $_POST['exchange_integral']);
+        $sellerExpFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
+                ->setInc('exp_num', $_POST['exchange_integral']);
+        //用户积分减值
+        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
+                ->setDec('integral_num', $_POST['exchange_integral']);
+
+        $flag = $relation_id && $tradingFlag && $sellerIntegralFlag && $sellerExpFlag && $userFlag;
 
         if ($flag) {
             $tranModel->commit(); // 成功则提交事务  
+            $returnData['flag'] = 1;
+            $returnData['msg'] = '交易成功';
+            $returnData['data'] = $addArr;
+            $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
+            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), $returnData['data']['user_id'], 'realname');
+            $returnData['data']['good_name'] = $this->getDataKey(M('seller_integral_goods'), $returnData['data']['goods_id'], 'goods_name');
+            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，请重试';
         }
-
-
-
-//        $relation_id = M('goods_exchange_record')->add($addArr);
-//        if ($relation_id) {
-//            //入库交易总表
-//            $trandingData = [
-//                'income_id' => $_POST['seller_id'],
-//            ];
-//            //用户积分减值
-//            //商家用户增值
-//        } else {
-//            
-//        }
-
 
         $this->ajaxReturn($relation_id, "JSON");
     }

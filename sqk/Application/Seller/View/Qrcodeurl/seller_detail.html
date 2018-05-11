@@ -50,7 +50,7 @@
 
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
-            <h1 id="title" class="mui-title header-a-l">{$sellerInfo.name}</h1>
+            <h1 class="mui-title header-a-l">直接收取积分</h1>
         </header>
 
         <!--主体部分-->
@@ -79,7 +79,7 @@
                 <div class="mui-card-content">
                     <form class="mui-input-group">
                         <div class="mui-input-row" style="width: 100%;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
-                            <input type="text" placeholder="请输入收取的积分值" name="trading_integral">
+                            <input type="text" placeholder="请输入收取的积分值" name="trading_integral"  onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         </div>
                         <div class="mui-button-row" style="height:auto;">
                             <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="koufenExchange()">收取</button>
@@ -108,7 +108,7 @@
                         <notempty name="data.goodsList">
                             <foreach name="data.goodsList" item="v" key="k">
 
-                                <div class="mui-card" onclick="aHref('__MODULE__/Qrcodeurl/goods_detail?id={$v.id}&seller_id={$sellerInfo.id}')">
+                                <div class="mui-card" onclick="aHref('__MODULE__/Qrcodeurl/goods_detail?id={$v.id}&seller_id={$data.sellerInfo.id}&iccard_num={$data.appUserInfo.iccard_num}')">
                                     <div class="mui-card-content">
                                         <div class="item_list">
                                             <div class="item_list_img">
