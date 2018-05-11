@@ -49,23 +49,27 @@ function subExchange() {
     mui.confirm('兑换商品，您收取用户积分', str, btnArray, function (e) {
         if (e.index == 1) {
             $.post(c_path + '/exchangeGoods', {
-                'seller_id': assignData.sellerInfo.id,
+                'app_user_id': assignData.app_user_id,
                 'goods_id': assignData.goodInfo.id,
-                'exchange_integral': required_integral
-            }, function (data) {
-                console.log(data);
-                if (data.code == 500) {
-                    mui.toast('添加成功！', {duration: 'long', type: 'div'});
-                    aHref(c_path + '/prom_manage');
+                'exchange_integral': required_integral,
+                'book_num' : $('#number').html()
+            }, function (res) {
+                if (res.ret == 0) {
+                    var str = '';
+                    str += '<table style="text-align:left;">';
+                    str += '<tr><td>编号：' + res.data.tradingNumber + '</td></tr>';
+                    str += '<tr><td>商家：' + res.data.sellerName + '</td></tr>';
+                    str += '<tr><td>买家：' + res.data.appUserName + '</td></tr>';
+                    str += '<tr><td class="fontred">积分：' + res.data.tradingIntegral + '</td></tr>';
+                    str += '<tr><td>时间：' + res.data.tradingTime + '</td></tr>';
+                    str += '</table>';
+                    mui.alert(str, res.msg);
                 } else {
-                    mui.toast(data.msg, {duration: 'long', type: 'div'});
+                    mui.alert(res.msg);
                 }
             }, 'json');
         }
     })
-
-    console.log(payment_amount);
-
 
 }
 
