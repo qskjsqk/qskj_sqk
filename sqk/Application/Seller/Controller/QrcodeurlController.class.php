@@ -56,6 +56,10 @@ class QrcodeurlController extends BaseController {
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
         $this->assign('goodInfo', $goodInfo);
         $this->assign('sellerInfo', $sellerInfo);
+
+        $appUserModel = new SysUserappInfoModel();
+        $this->assign('app_user_id', $appUserModel->where(['iccard_num' => $_GET['iccard_num']])->getField('id'));
+
 //        dump($sellerInfo);
         $this->display();
     }
@@ -110,77 +114,35 @@ class QrcodeurlController extends BaseController {
 
     public function kouFenExchange() {
         $request = Request::all();
+        $tradingModel = new TradingRecordModel();
         $request['seller_id'] = cookie('seller_id');
-
         $request['user_id'] = $request['app_user_id'];
 
         if(empty($request['trading_integral'])|| empty($request['seller_id']) || empty($request['user_id'])) {
             $this->ajaxReturn(syncData(-1, '提交有误'));
         }
 
-        //交易方式
-        $request['exchange_method_id'] = 2;
-        $tradingModel = new TradingRecordModel();
         $res = $tradingModel->addRecord($request);
         $this->ajaxReturn($res);
 
     }
 
     /**
-     * 商品交易   方法未写完-----------------------------------------------------
+     * 商品交易
      */
     public function exchangeGoods() {
-        $addArr = $_POST;
-        $addArr['user_id'] = cookie('user_id');
-        $addArr['exchange_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
-        $addArr['exchange_method_id'] = 1;
-        $addArr['status'] = 1;
+        $request = Request::all();
+        $exchangeModel = new ExchangeRecordModel();
+        $request['user_id'] = $request['app_user_id'];
+        $request['seller_id'] = cookie('seller_id');
 
-        $tranModel = M();
-
-        $tranModel->startTrans(); // 开启事务  
-        //入库商品交易表
-        $relation_id = $tranModel->table($this->dbFix . 'goods_exchange_record')->add($addArr);
-        //入库交易总表
-        $tradingData = [
-            'income_id' => $_POST['seller_id'],
-            'payment_id' => cookie('user_id'),
-            'income_type' => 2,
-            'payment_type' => 3,
-            'trading_number' => $addArr['exchange_number'],
-            'trading_integral' => $_POST['exchange_integral'],
-            'exchange_method_id' => 1,
-            'relation_id' => $relation_id,
-            'status' => 1,
-        ];
-        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
-        //商家积分增值
-        $sellerIntegralFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
-                ->setInc('integral_num', $_POST['exchange_integral']);
-        $sellerExpFlag = $tranModel->table($this->dbFix . 'seller_info')->where('id=' . $_POST['seller_id'])
-                ->setInc('exp_num', $_POST['exchange_integral']);
-        //用户积分减值
-        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
-                ->setDec('integral_num', $_POST['exchange_integral']);
-
-        $flag = $relation_id && $tradingFlag && $sellerIntegralFlag && $sellerExpFlag && $userFlag;
-
-        if ($flag) {
-            $tranModel->commit(); // 成功则提交事务  
-            $returnData['flag'] = 1;
-            $returnData['msg'] = '交易成功';
-            $returnData['data'] = $addArr;
-            $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
-            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), $returnData['data']['user_id'], 'realname');
-            $returnData['data']['good_name'] = $this->getDataKey(M('seller_integral_goods'), $returnData['data']['goods_id'], 'goods_name');
-            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
-        } else {
-            $tranModel->rollback(); // 否则将事务回滚  
-            $returnData['flag'] = 0;
-            $returnData['msg'] = '兑换失败，请重试';
+        if(empty($request['exchange_integral'])|| empty($request['seller_id']) || empty($request['user_id']) || empty($request['goods_id']) || empty($request['book_num'])) {
+            $this->ajaxReturn(syncData(-1, '提交有误'));
         }
 
-        $this->ajaxReturn($relation_id, "JSON");
+        $res = $exchangeModel->addRecord($request);
+        $this->ajaxReturn($res);
+
     }
 
 }

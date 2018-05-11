@@ -28,15 +28,14 @@ koufenExchange = function () {
                 type: 'post',
                 data: {trading_integral: trading_integral, app_user_id: user_id},
                 success: function (res) {
-                    console.log(res);
                     if (res.ret == 0) {
                         var str = '';
                         str += '<table style="text-align:left;">';
-                        str += '<tr><td>编号：123123123123123</td></tr>';
-                        str += '<tr><td>商家：123123123123123</td></tr>';
-                        str += '<tr><td>买家：123123123131231</td></tr>';
-                        str += '<tr><td class="fontred">积分：3123123123</td></tr>';
-                        str += '<tr><td>时间：1231231</td></tr>';
+                        str += '<tr><td>编号：' + res.data.tradingNumber + '</td></tr>';
+                        str += '<tr><td>商家：' + res.data.sellerName + '</td></tr>';
+                        str += '<tr><td>买家：' + res.data.appUserName + '</td></tr>';
+                        str += '<tr><td class="fontred">积分：' + res.data.tradingIntegral + '</td></tr>';
+                        str += '<tr><td>时间：' + res.data.tradingTime + '</td></tr>';
                         str += '</table>';
                         mui.alert(str, res.msg);
                     } else {
