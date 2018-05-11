@@ -59,7 +59,6 @@ class TradingRecordModel extends BaseModel {
         } else {
             return syncData(-3, '交易失败');
         }
-        return $res;
     }
 
 }
