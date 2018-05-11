@@ -8,8 +8,9 @@
 $(function () {
 //    checkIsLogin();
     var sellerId = getUrl('seller_id');
+    var iccard_num = getUrl('iccard_num');
 
-    $('#backBtn').attr('onclick', 'aHref("' + m_path + '/Qrcodeurl/seller_detail?id=' + sellerId + '")');
+    $('#backBtn').attr('onclick', 'aHref("' + m_path + '/Qrcodeurl/seller_detail?seller_id=' + sellerId + '&iccard_num='+iccard_num+'")');
 
 });
 
@@ -44,8 +45,8 @@ function subExchange() {
         var str = "" + required_integral + '积分,金额' + payment_amount.toFixed(2) + '元';
     }
 
-    var btnArray = ['取消', '支付'];
-    mui.confirm('您需要支付商家', str, btnArray, function (e) {
+    var btnArray = ['取消', '收取'];
+    mui.confirm('兑换商品，您收取用户积分', str, btnArray, function (e) {
         if (e.index == 1) {
             $.post(c_path + '/exchangeGoods', {
                 'seller_id': assignData.sellerInfo.id,

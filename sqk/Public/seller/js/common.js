@@ -60,7 +60,7 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
-    console.log('====正在访问【'+module+'】【'+controller+'】【'+action+'】');
+    console.log('====正在访问【' + module + '】【' + controller + '】【' + action + '】');
     $.post(m_path + "/index/checkIsLogin", function (data) {
         if (data.flag == 0) {
             mui.alert('您的登录信息已失效，请重新登录', '提示', '马上登录', function () {
@@ -76,6 +76,26 @@ function checkIsLogin() {
     }, 'json');
 
 }
+
+/**
+ * 检测登录状态
+ * @returns {undefined}
+ */
+function checkIsUser() {
+    console.log('====正在访问【' + module + '】【' + controller + '】【' + action + '】');
+    $('#' + controller + '_btn').addClass('mui-active');
+    $.post(m_path + "/index/checkIsLogin", function (data) {
+        if (data.flag == 0) {
+            mui.alert('非登陆状态您不可以使用该功能', '提示', '确定', function () {
+                closeModal();
+            });
+        } else {
+            console.log('====检测用户已登录！');
+        }
+    }, 'json');
+
+}
+
 
 /**
  * 关于app介绍
