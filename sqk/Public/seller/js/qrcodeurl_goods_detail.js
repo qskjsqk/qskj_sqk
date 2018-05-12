@@ -99,8 +99,6 @@ function changeNum(type) {
     }
 
 
-
-
 }
 
 /**

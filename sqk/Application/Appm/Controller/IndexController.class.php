@@ -10,6 +10,8 @@
 namespace Appm\Controller;
 
 use Think\Controller;
+use Think\Tool\Request;
+use Appm\Model\TradingRecordModel;
 
 header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
@@ -154,6 +156,11 @@ class IndexController extends BaseController {
      * 积分交易记录
      */
     public function order_list() {
+        $tradingModel = new TradingRecordModel();
+
+        $appUserInfo = $tradingModel->getAppUserInfo(cookie('user_id'));
+        $this->assign('appUserInfo', $appUserInfo);
+
         $this->assign('myInfo', $this->getUserappInfo());
         $this->display();
     }

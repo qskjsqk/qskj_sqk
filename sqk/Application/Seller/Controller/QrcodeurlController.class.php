@@ -112,6 +112,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家扫码直接扣分
+     */
     public function kouFenExchange() {
         $request = Request::all();
         $tradingModel = new TradingRecordModel();

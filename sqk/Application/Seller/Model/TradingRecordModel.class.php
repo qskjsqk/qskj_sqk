@@ -16,7 +16,9 @@ class TradingRecordModel extends BaseModel {
 
     public $tableName  = 'integral_trading_record';
 
-
+    /**
+     * 商家扫码直接扣分交易
+     */
     public function addRecord($param) {
         $appUserModel = new SysUserappInfoModel();
         $sellerModel = new SellerInfoModel();
@@ -72,5 +74,6 @@ class TradingRecordModel extends BaseModel {
             return syncData(-4, '交易失败');
         }
     }
+
 
 }
