@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +26,18 @@
       <file leaf-file-name="ApiController.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="399" column="34" selection-start-line="399" selection-start-column="34" selection-end-line="399" selection-end-column="34" />
+            <state relative-caret-position="109">
+              <caret line="487" column="46" selection-start-line="486" selection-start-column="8" selection-end-line="487" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="613">
+              <caret line="67" column="51" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -64,7 +74,6 @@
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_detail.html" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/goods_manage.js" />
         <option value="$PROJECT_DIR$/sqk/Public/seller/js/goods_edit.js" />
-        <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_add.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_edit.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Model/SellerIntegralGoodsModel.class.php" />
@@ -87,6 +96,7 @@
         <option value="$PROJECT_DIR$/sqk/Application/Appm/View/trading/trading_detail.html" />
         <option value="$PROJECT_DIR$/sqk/Application/Appm/Model/TradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Public/appm/js/order_list.js" />
+        <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
       </list>
     </option>
@@ -161,6 +171,54 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -340,12 +398,12 @@
       <workItem from="1525950829283" duration="121000" />
       <workItem from="1526004344201" duration="11196000" />
       <workItem from="1526028604021" duration="14526000" />
-      <workItem from="1526124006701" duration="1777000" />
+      <workItem from="1526124006701" duration="2648000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133432000" />
+    <option name="totallyTimeSpent" value="134303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1437" height="791" extended-state="6" />
@@ -527,6 +585,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding>
+            <element signature="e#6#93#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -542,6 +603,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-414">
           <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding>
+            <element signature="e#6#103#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -672,13 +736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -743,18 +800,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/Model/TradingRecordModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="35" column="78" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="78" />
+          <folding>
+            <element signature="e#6#141#0#PHP" expanded="true" />
+            <element signature="e#167#183#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        <state relative-caret-position="613">
+          <caret line="67" column="51" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="399" column="34" selection-start-line="399" selection-start-column="34" selection-end-line="399" selection-end-column="34" />
+        <state relative-caret-position="109">
+          <caret line="487" column="46" selection-start-line="486" selection-start-column="8" selection-end-line="487" selection-end-column="46" />
           <folding />
         </state>
       </provider>

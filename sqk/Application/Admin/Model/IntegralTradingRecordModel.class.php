@@ -39,6 +39,7 @@ class IntegralTradingRecordModel extends Model {
             return -1;
         }
 
+        $tradingNumber = \Think\Tool\GenerateUnique::generateExchangeNumber();
         $trading_time = date("Y-m-d H:i:s", time());
         $this->income_id = $appUserInfo['address_id'];
         $this->payment_id = $appUserInfo['id'];
@@ -47,6 +48,7 @@ class IntegralTradingRecordModel extends Model {
         $this->trading_integral = $tradingIntegral;
         $this->trading_time = $trading_time;
         $this->exchange_method_id = 4;
+        $this->trading_number = $tradingNumber;
 
         //交易入库
         $addTradingRecordRes = $this->add();
@@ -60,9 +62,10 @@ class IntegralTradingRecordModel extends Model {
             $this->where(['id' => $addTradingRecordRes])->save(['status' => 1]);
             return [
                 'id' => $addTradingRecordRes,
-                'user' => $appUserInfo['usr'],
+                'user' => $appUserInfo['realname'],
                 'trading_integral' => $tradingIntegral,
                 'trading_time' => $trading_time,
+                'trading_number' => $tradingNumber,
             ];
         } else {
             return -2;
