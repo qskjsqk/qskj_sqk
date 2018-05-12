@@ -11,10 +11,25 @@
     </head>
     <body>
         <div class="area">
-            <div class="showArea">
-                <iframe style="margin-right: 200px;overflow-y:scroll;" name="right" id="rightMain" src="__ROOT__/index.php/appm/index" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"></iframe>
+            <div class="infoArea">
+                <div class="tx_path"><img src="../../../{$myInfo.tx_path}" style="width:69px;height:69px;margin: 5px;"></div>
+                <div class="myInfo">
+                    欢&#12288;&#12288;迎：[{$myInfo.address_name}]&#12288;[{$myInfo.realname}]</br>
+                    可用积分：&nbsp;<b>{$myInfo.integral_num}</b>&nbsp;
+                </div>
+            </div>
+
+            <div class="adArea">
+                
             </div>
             
+            <div class="qrcodeArea"><img src="../../../public/dxt/img/qrcode.png" style="width:100px;height:100px;margin: 5px;"></div>
+
+
+            <div class="showArea">
+                <iframe style="margin-right: 200px;overflow-y:scroll;" name="right" id="rightMain" src="__ROOT__/index.php/Dxt/index/login" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"></iframe>
+            </div>
+            <div class="backBtn">返回</div>
         </div>
     </body> 
 </html>

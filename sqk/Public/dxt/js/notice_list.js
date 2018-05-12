@@ -39,7 +39,7 @@ function getList(page, keyword) {
                         '<a href="#" onclick="getNoticeDetial(' + data.data[i]["id"] + ',1)">' +
                         '<img class="mui-media-object mui-pull-left" src="../../../' + data.data[i]["notice_pic"] + '">' +
                         '<div class="mui-media-body">' +
-                        '<div class="mui-ellipsis-2 ' + readClass + '">' + data.data[i]["title"] + '</div>' +
+                        '<div class="mui-ellipsis ' + readClass + '">' + data.data[i]["title"] + '</div>' +
                         '</div>' +
                         '<div class="meta-info">' +
                         ' <div class="author">[' + data.data[i]["cat_name"] + ']</div>' +
@@ -65,7 +65,6 @@ function getList(page, keyword) {
 
     }, 'json');
 }
-
 /**
  * 获取通知详情
  * @param {type} id

@@ -16,6 +16,7 @@ return array(
     'BACKUP_MYSQL_PATH' => 'E:/wamp/www/gryj/Public/admin/db_backup/', //配置数据备份数据库
     'DB_USER_INFO' => 'Sys_user_info', //配置用户信息数据库
     'DB_USER_GROUP' => 'Sys_user_group', //配置用户组数据库
+    'DB_USERAPP_INFO' => 'Sys_userapp_info', //配置居民用户
     //附件处理模块
     'UPLOAD_SIZE' => 3145728, //上传文件大小限制
     'UPLOAD_ROOT' => 'Public/Upload', //上传文件根目录
