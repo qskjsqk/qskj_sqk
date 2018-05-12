@@ -423,7 +423,7 @@ class ApiController extends BaseDBController {
 
             if (!empty($tradingRecordList) && is_array($tradingRecordList)) {
                 foreach ($tradingRecordList as $key => $value) {
-                    $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('usr');
+                    $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('realname');
                     $tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
                 }
 
@@ -462,7 +462,7 @@ class ApiController extends BaseDBController {
             $appUserModel = new SysUserappInfoModel();
             $user = $appUserModel->where(['iccard_num' => $iccard_num])
                     ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix . 'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
-                    ->field('usr,integral_num,com_name,tx_path')
+                    ->field('realname as user,integral_num,com_name,tx_path')
                     ->find();
             if (!empty($user)) {
                 $returnData['status'] = 1;
