@@ -462,7 +462,7 @@ class ApiController extends BaseDBController {
             $appUserModel = new SysUserappInfoModel();
             $user = $appUserModel->where(['iccard_num' => $iccard_num])
                     ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix . 'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
-                    ->field('usr,integral_num,com_name')
+                    ->field('usr,integral_num,com_name,tx_path')
                     ->find();
             if (!empty($user)) {
                 $returnData['status'] = 1;
