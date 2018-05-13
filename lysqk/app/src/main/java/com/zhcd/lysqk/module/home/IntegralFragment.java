@@ -88,7 +88,7 @@ public class IntegralFragment extends BaseFragment {
                     }
                 }
                 try {
-                    Thread.sleep(6000);
+                    Thread.sleep(5000);
                 } catch (Exception e) {
 
                 }

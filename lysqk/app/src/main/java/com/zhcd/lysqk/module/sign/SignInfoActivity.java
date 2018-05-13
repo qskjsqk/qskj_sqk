@@ -120,23 +120,30 @@ public class SignInfoActivity extends BaseActivity {
     }
 
     private void setSignStatus(String sign_id, final String status) {
-        showProgressDialog();
-        ServiceProvider.setSignStatus(sign_id, status, new IDataResponse() {
-            @Override
-            public void onResponse(BaseData obj) {
-                hideProgressDialog();
-                if (ServiceProvider.errorFilter(obj)) {
-                    if (status.equals("0")) {
-                        initThread();
-                    } else if (status.equals("1")) {
-                        finish();
+        try {
+            int signStatus = Integer.parseInt(status) + 1;
+            if (signStatus > 2)
+                signStatus = 2;
+            showProgressDialog();
+            ServiceProvider.setSignStatus(sign_id, String.valueOf(signStatus), new IDataResponse() {
+                @Override
+                public void onResponse(BaseData obj) {
+                    hideProgressDialog();
+                    if (ServiceProvider.errorFilter(obj)) {
+                        if (status.equals("0")) {
+                            initThread();
+                        } else if (status.equals("1")) {
+                            finish();
+                        }
+                    } else {
+                        if (obj != null)
+                            T.showShort(obj.getMsg());
                     }
-                } else {
-                    if (obj != null)
-                        T.showShort(obj.getMsg());
                 }
-            }
-        }, SignInfoActivity.class.getSimpleName());
+            }, SignInfoActivity.class.getSimpleName());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

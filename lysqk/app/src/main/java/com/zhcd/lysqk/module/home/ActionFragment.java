@@ -99,7 +99,7 @@ public class ActionFragment extends BaseFragment {
     }
 
     private void getData(final boolean isRefresh) {
-        if (LoginInfoManager.getInstance().isLogin() && actionList != null) {
+        if (LoginInfoManager.getInstance().isLogin() && loginEntity != null) {
             mLoadMoreWrapper.setLoadingState(false);
             if (isRefresh) {
                 isLoadEnd = false;

@@ -120,6 +120,7 @@ public class LoginActivity extends BaseActivity {
         String input = inputPwd.getTextString();
         input = "090381";
         if (input.length() < 6) {
+            T.showShort("请输入正确的登录");
             return false;
         }
         return true;

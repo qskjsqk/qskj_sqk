@@ -105,8 +105,6 @@ public class ActionDetailActivity extends BaseActivity {
             List<String> list = new ArrayList<>();
             list.addAll(detailEntity.getPic_list());
             list.addAll(detailEntity.getContent_pics());
-            list.add("");
-            list.add("");
             albumAdapter.setData(list);
         }
     }

@@ -11,6 +11,7 @@ public class Constants {
     public final static String iccard_num = "iccard_num";
     public final static String sign_status = "sign_status";
     public final static String new_id = "new_id";
+    public final static String trading_integral  ="trading_integral";
 
 
 }

@@ -11,4 +11,7 @@ public class Namespace {
     public static final String setUserSigninPos = "setUserSigninPos";
     public static final String getNewUserSigninPos = "getNewUserSigninPos";
     public static final String setSignStatusPos = "setSignStatusPos";
+    public static final String getTradingRecordList  ="getTradingRecordList";
+    public static final String loadCollectionIntegral  ="loadCollectionIntegral";
+    public static final String collectionIntegral  ="collectionIntegral";
 }

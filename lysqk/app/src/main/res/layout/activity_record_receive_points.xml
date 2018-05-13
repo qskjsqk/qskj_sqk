@@ -5,9 +5,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="327dp"
-        android:layout_height="83dp"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_13dp">
 
         <ImageView
@@ -20,19 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_user_heard"
-                android:layout_width="@dimen/wh_60"
-                android:layout_height="@dimen/wh_60"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_16dp"
-                android:background="@color/color999" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_10dp"
+                android:layout_marginLeft="@dimen/margin_16dp"
                 android:layout_marginRight="@dimen/margin_16dp"
                 android:orientation="vertical">
 
@@ -40,17 +34,8 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
-                    android:text="逍遥游"
-                    android:textColor="@color/color_29"
-                    android:textSize="@dimen/text_16sp" />
-
-                <TextView
-                    android:id="@+id/tv_receive_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_3dp"
-                    android:text="时间：2018.4.20"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:text="用户名："
                     android:textColor="@color/color_29"
                     android:textSize="@dimen/text_14sp" />
 
@@ -58,7 +43,7 @@
                     android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="安卓签到成功"
+                    android:text="剩余积分："
                     android:textColor="@color/color_29"
                     android:textSize="@dimen/text_14sp" />
             </LinearLayout>
@@ -66,9 +51,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="327dp"
-        android:layout_height="83dp"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_13dp">
 
         <ImageView
@@ -95,20 +82,22 @@
                 android:id="@+id/et_input_points"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:layout_marginRight="@dimen/margin_16dp"
                 android:layout_marginTop="@dimen/margin_8dp"
-                android:inputType="number"
-                android:layout_marginBottom="@dimen/margin_10dp"/>
+                android:inputType="number" />
         </LinearLayout>
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_confirm_receive"
-        android:layout_width="332dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_3dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:background="@mipmap/default_btn"
         android:gravity="center"
         android:text="确认收取积分"

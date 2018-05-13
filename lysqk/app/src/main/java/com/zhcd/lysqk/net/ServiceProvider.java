@@ -7,6 +7,9 @@ import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
 import com.zhcd.lysqk.module.action.entity.ActionDetailEntity;
 import com.zhcd.lysqk.module.home.entity.ActionListEntity;
 import com.zhcd.lysqk.module.login.entity.LoginEntity;
+import com.zhcd.lysqk.module.record.entity.ReceiveIntegralEntity;
+import com.zhcd.lysqk.module.record.entity.ReceivePointsEntity;
+import com.zhcd.lysqk.module.record.entity.TradingRecordListEntity;
 import com.zhcd.lysqk.module.sign.entity.ActionSignInfoEntity;
 import com.zhcd.lysqk.module.sign.entity.NewestSignUserInfoEntity;
 import com.zhcd.lysqk.module.sign.entity.SignInfoLisEntity;
@@ -125,6 +128,35 @@ public class ServiceProvider {
         apiParams.with(Constants.sign_id, sign_id);
         apiParams.with(Constants.sign_status, status);
         DataRequestTool.post(REQUEST_URL, Namespace.setSignStatusPos, apiParams, iHttpResponse, ActionSignInfoEntity.class, flag);
+    }
+
+    /**
+     * 获取本社区兑换记录列表
+     */
+    public static void getTradingRecordList(String address_id, int page, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.address_id, address_id);
+        apiParams.with(Constants.page, String.valueOf(page));
+        DataRequestTool.post(REQUEST_URL, Namespace.getTradingRecordList, apiParams, iHttpResponse, TradingRecordListEntity.class, flag);
+    }
+
+    /**
+     * 获取收取积分页面数据
+     */
+    public static void loadCollectionIntegral(String iccard_num, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.iccard_num, iccard_num);
+        DataRequestTool.post(REQUEST_URL, Namespace.loadCollectionIntegral, apiParams, iHttpResponse, ReceiveIntegralEntity.class, flag);
+    }
+
+    /**
+     * 社区收取用户积分
+     */
+    public static void collectionIntegral(String iccard_num, int trading_integral, IDataResponse iHttpResponse, String flag) {
+        ApiPostParams apiParams = new ApiPostParams();
+        apiParams.with(Constants.iccard_num, iccard_num);
+        apiParams.with(Constants.trading_integral, String.valueOf(trading_integral));
+        DataRequestTool.post(REQUEST_URL, Namespace.collectionIntegral, apiParams, iHttpResponse, ReceivePointsEntity.class, flag);
     }
 
     public static boolean errorFilter(BaseData res) {
