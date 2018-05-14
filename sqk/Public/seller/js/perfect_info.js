@@ -17,18 +17,34 @@ $(function () {
  */
 function saveUserInfo() {
     var flag = 1;
+    if ($('#realname').val() != '') {
+        flag = 1;
+    } else {
+        flag = 0;
+        msg = '请输入姓名';
+    }
+
+    birthdayCheck = /^[1-2][0-9]{3}-[0-1][1-9]-[0-3][1-9]$/;
+    if ($('#birthday').val() != '') {
+        if (birthdayCheck.test($('#birthday').val())) {
+            flag = 1;
+        } else {
+            flag = 0;
+            msg = '生日格式不正确';
+        }
+    }else {
+        flag = 0;
+        msg = '请输入生日';
+    }
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
     } else {
-        $.post(c_path + "/addSellerInfo", {
+        $.post(c_path + "/addUserappInfo", {
             'tel': $('#tel').html(),
-            
-            'business_license': $('#business_license').val(),
-            'name': $('#name').val(),
+            'realname': $('#realname').val(),
+            'birthday': $('#birthday').val(),
+            'gender': $('#gender').val(),
             'address_id': $('#address_id').val(),
-            'address': $('#address').val(),
-            'address_api_url': $('#address_api_url').val(),
-            'contacts': $('#contacts').val(),
             
             'tx_path': $('#tx_path').val(),
             'wx_num': $('#wx_num').val(),

@@ -16,7 +16,7 @@ $(function () {
  * 获取验证码
  * @returns {undefined}
  */
-function getApplyKeyCode() {
+function getApplyKeyCodeCheckExist() {
     var flag = 1;
     emailCheck = /^1[3|5|7|8|][0-9]{9}$/;
     if ($('#tel').val() != '') {
@@ -35,7 +35,7 @@ function getApplyKeyCode() {
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
     } else {
-        $.post(c_path + "/getApplyKeyCode", {'tel': $('#tel').val()}, function (data) {
+        $.post(c_path + "/getApplyKeyCodeCheckExist", {'tel': $('#tel').val()}, function (data) {
             $('#hiddenKeycode').val(data.keycode);
             if (data.status == 1) {
             } else {
@@ -45,12 +45,23 @@ function getApplyKeyCode() {
     }
 }
 
-
-function checkApplyKeyCode() {
+function subForm() {
     var keycode = $('#keycode').val();
     var hiddenKeycode = $('#hiddenKeycode').val();
     if (keycode == hiddenKeycode) {
-        aHref(c_path + "/perfect_info?tel=" + $('#tel').val());
+        $.post(c_path + "/bindingUserappInfo", {
+            'tel': $('#tel').val(),
+
+            'tx_path': $('#tx_path').val(),
+            'wx_num': $('#wx_num').val(),
+            'nickname': $('#nickname').val(),
+        }, function (data) {
+            if (data.is_success.flag == 1) {
+                aHref(c_path + '/index');
+            } else {
+                mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+            }
+        }, 'json');
     } else {
         mui.toast('验证码错误，请重试', {duration: 'long', type: 'div'});
     }

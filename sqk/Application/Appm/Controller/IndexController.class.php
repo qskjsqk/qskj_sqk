@@ -23,79 +23,30 @@ class IndexController extends BaseController {
         parent::_initialize();
     }
 
-    public function httpRequest($pUrl, $pData) {
-        $tCh = curl_init();
-        if ($pData) {
-            is_array($pData) && $pData = http_build_query($pData);
-            curl_setopt($tCh, CURLOPT_POST, true);
-            curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
-        }
-        curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
-        curl_setopt($tCh, CURLOPT_URL, $pUrl);
-        curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
-        curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
-        $tResult = curl_exec($tCh);
-        curl_close($tCh);
-        return $tResult;
-    }
-
-    public function checkSignature() {
-        $timestamp = $_GET['timestamp'];
-        $nonce = $_GET['nonce'];
-        $token = "123456";
-        $signature = $_GET['signature'];
-        $array = array($timestamp, $nonce, $token);
-        sort($array);
-
-//2.将排序后的三个参数拼接后用sha1加密  
-        $tmpstr = implode('', $array);
-        $tmpstr = sha1($tmpstr);
-
-//3. 将加密后的字符串与 signature 进行对比, 判断该请求是否来自微信  
-        if ($tmpstr == $signature) {
-            echo $_GET['echostr'];
-            exit;
-        }
-    }
-
+    
 //    视图
 //------------------------------------------------------------------------------    
+
     public function index() {
-        //1. 将timestamp , nonce , token 按照字典排序  
-
-
-        $appid = 'wx7e5a0f04c993739e';
-        $secret = '510fd7ca5fb268fc06502e9861e00b69';
-
-        $getAccessToken = $this->httpRequest('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx7e5a0f04c993739e&secret=510fd7ca5fb268fc06502e9861e00b69');
-        $wxInfo = json_decode($getAccessToken, true);
-//        $a = $this->httpRequest('https://api.weixin.qq.com/sns/userinfo?access_token=9_C8iRW2XTIgt_ulUnVP0efjvjWsM98QyO9Oy7EYppWq4-_8VW4wIIyNjgh_pJFC9ovY2LK5DjmO6rbWmt3JcwxQ&openid=ozF060wIC0F5P5GLlrfw0OEMpeGM', '');
-//        $wxInfo = json_decode($a, true);
-        dump($wxInfo);
-        echo "<img src='" . $wxInfo['headimgurl'] . "'>";
-        $this->redirect('Login/index');
-//        if ($_COOKIE['user_id'] == null) {
-//            $this->redirect('Login/index');
-//        } else {
-//            $this->redirect('Activity/activity_list');
-//        }
-    }
-
-    public function getwxinfo() {
-//        dump($_GET['code']);
-        $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx7e5a0f04c993739e&secret=510fd7ca5fb268fc06502e9861e00b69&code=" . $_GET['code'] . "&grant_type=authorization_code";
-        $a = $this->httpRequest($a, '');
+        $appid = WXAPPID;
+        $secret = WXSECRET;
+        $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
+                . "&secret=" . $secret
+                . "&code=" . $_GET['code'] . "&grant_type=authorization_code";
+        $a = httpRequest($a, '');
         $wxInfo = json_decode($a, true);
-//        dump($wxInfo);
 
         $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
-        $b = $this->httpRequest($b, '');
+        $b = httpRequest($b, '');
         $userInfo = json_decode($b, true);
+        
+        $wx['headimgurl'] = $userInfo['headimgurl'];
+        $wx['openid'] = $userInfo['openid'];
+        $wx['nickname'] = $userInfo['nickname'];
+        cookie('wxInfo', $wx, 3600 * 24 * 30);
+        
+        $this->redirect('Login/index');
 
-        echo "<img src='" . $userInfo['headimgurl'] . "'></br><h2>" . $userInfo['nickname'] . "</h2></br><h2>" . $userInfo['province'] . $userInfo['city'] . "</h2>";
-//        dump($userInfo);
     }
 
     /**
@@ -342,13 +293,6 @@ class IndexController extends BaseController {
             }
         }
         $this->ajaxReturn($returnData);
-    }
-
-    /**
-     * 调试代码
-     */
-    public function zxw() {
-        
     }
 
 }

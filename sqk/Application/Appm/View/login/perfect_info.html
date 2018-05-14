@@ -50,6 +50,9 @@
             <div class="mui-card">
                 <div class="mui-card-content">
                     <form class="mui-input-group">
+                        <input type="hidden" name="tx_path" id="tx_path" value="{$wxInfo.headimgurl}"/>
+                        <input type="hidden" name="nickname" id="nickname" value="{$wxInfo.nickname}"/>
+                        <input type="hidden" name="wx_num" id="wx_num" value="{$wxInfo.openid}"/>
                         <div class="mui-input-row">
                             <label>姓名</label>
                             <input type="text" id="realname" style="text-align: left;width: 50%;" placeholder="请输入姓名" >

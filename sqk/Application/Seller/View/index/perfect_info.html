@@ -23,6 +23,7 @@
         </script>
         {$Assigndata}
         <script src="__PUBLIC__/seller/js/common.js"></script>
+        <script src="__PUBLIC__/seller/js/perfect_info.js"></script>
     </head>
 
     <body>
@@ -40,7 +41,7 @@
                     <ul class="mui-table-view mui-table-view-chevron">
                         <li class="mui-table-view-cell">
                             <a id="head" class="mui-navigate-right">
-                                商家机构注册手机号码：13521447599
+                                商家机构注册手机号码：【<span id="tel">{$tel}</span>】
                             </a>
                         </li>
                     </ul>
@@ -49,6 +50,9 @@
             <div class="mui-card">
                 <div class="mui-card-content">
                     <form class="mui-input-group">
+                        <input type="hidden" name="tx_path" id="tx_path" value="{$wxInfo.headimgurl}"/>
+                        <input type="hidden" name="nickname" id="nickname" value="{$wxInfo.nickname}"/>
+                        <input type="hidden" name="wx_num" id="wx_num" value="{$wxInfo.openid}"/>
                         <div class="mui-input-row">
                             <label>营业执照号</label>
                             <input type="text" id="business_license" style="text-align: left;width: 50%;" placeholder="请输入营业执照号" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
@@ -94,33 +98,11 @@
                             <label>联系人</label>
                             <input type="text" id="contacts" style="text-align: left;width: 50%;" placeholder="请输入联系人">
                         </div>
-                        <div class="mui-input-row">
-                            <label>联系方式</label>
-                            <input type="text" id="tel" style="text-align: left;width: 50%;" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
-                        </div>
                     </form>
                 </div>
             </div>
-            <div class="mui-card">
-                <div class="mui-card-content">
-                    <ul class="mui-table-view mui-table-view-chevron">
-                        <li class="mui-table-view-cell">
-                            <a class="mui-navigate-right" onclick="aHref('__MODULE__/seller/tx_upload')">上传头像</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mui-card">
-                <div class="mui-card-content">
-                    <ul class="mui-table-view mui-table-view-chevron">
-                        <li class="mui-table-view-cell">
-                            <a class="mui-navigate-right" onclick="aHref('__MODULE__/seller/zz_upload')">上传资质照片</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="mui-row">
-                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="saveUserInfo()">下一步</button>
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="saveSellerInfo()">下一步</button>
             </div>
         </div>
     </body>
