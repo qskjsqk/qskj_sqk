@@ -15,7 +15,7 @@ $(function () {
  * 修改资料
  * @returns {undefined}
  */
-function saveSellerInfo() {
+function saveUserInfo() {
     var flag = 1;
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
