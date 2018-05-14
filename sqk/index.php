@@ -73,8 +73,12 @@ define('DATEPICKER', '<script type="text/javascript" src="/Public/Plugin/datepic
 define('ANIMATION', '<link rel="stylesheet" href="/Public/Plugin/animation/csshake.min.css">'
         . '<link rel="stylesheet" href="/Public/Plugin/animation/hover-min.css">');
 //定义系统自定义路由
-define('CENTER_CONTROL', 'http://218.241.238.26:9001/'); //集中控制系统地址
-define('HEALTH_CLOUD', 'http://admin.ebelter.com/'); //健康云管理平台地址
+//
+//
+//微信公众号接入
+define('WXAPPID', 'wx542ee14049aa74e0'); //appid
+define('WXSECRET', '44e062595f48e1858dd3363f95d50f56'); //secret
+//
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
 ?>

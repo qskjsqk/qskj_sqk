@@ -359,3 +359,21 @@ function getFormData() {
     parse_str($form_data, $param_arr); //转换数组
     return $param_arr;
 }
+
+function httpRequest($pUrl, $pData) {
+        $tCh = curl_init();
+        if ($pData) {
+            is_array($pData) && $pData = http_build_query($pData);
+            curl_setopt($tCh, CURLOPT_POST, true);
+            curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
+        }
+        curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
+        curl_setopt($tCh, CURLOPT_URL, $pUrl);
+        curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
+        curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
+        $tResult = curl_exec($tCh);
+        curl_close($tCh);
+        return $tResult;
+    }

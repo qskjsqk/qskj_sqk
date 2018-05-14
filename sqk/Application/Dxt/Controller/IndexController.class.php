@@ -25,6 +25,14 @@ class IndexController extends BaseController {
 //------------------------------------------------------------------------------    
     public function index() {
         $this->assign('myInfo', $this->getUserappInfo());
+        //
+        $this->assign('user_id', 106);
+        $this->display();
+    }
+    
+    public function main() {
+        $this->assign('myInfo', $this->getUserappInfo());
+        //
         $this->assign('user_id', 106);
         $this->display();
     }

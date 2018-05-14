@@ -16,7 +16,7 @@ $(function () {
  * 获取验证码
  * @returns {undefined}
  */
-function getApplyKeyCodeCheckExist() {
+function getApplyKeyCode() {
     var flag = 1;
     emailCheck = /^1[3|5|7|8|][0-9]{9}$/;
     if ($('#tel').val() != '') {
@@ -35,7 +35,7 @@ function getApplyKeyCodeCheckExist() {
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
     } else {
-        $.post(c_path + "/getApplyKeyCodeCheckExist", {'tel': $('#tel').val()}, function (data) {
+        $.post(c_path + "/getApplyKeyCode", {'tel': $('#tel').val()}, function (data) {
             $('#hiddenKeycode').val(data.keycode);
             if (data.status == 1) {
             } else {

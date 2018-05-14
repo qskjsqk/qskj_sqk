@@ -3,72 +3,26 @@
     /*background-color: red;*/
     width:900px;
     height:990px;
-    background: url(../img/bg_index.png);
+    background: url(../img/index_bg.png);
 }
-.showArea{
-    border: 1px solid #000;
-    width:415px;
-    height: 720px;
-    /*background-color: red;*/
-    position: absolute;
-    left: 455px;
-    top:165px;
-    overflow: hidden;
-
-}
-
-.backBtn{
-    font-family: "微软雅黑";
-    font-size: 20px;
-    color:#eee;
-    line-height: 40px;
-    text-align: center;
-
-    cursor: pointer;
-
-    width:140px;
-    height: 40px;
-    /*background-color: red;*/
-    position: absolute;
-    left: 592px;
-    top:904px;
-}
-.infoArea{
-    width:auto;
+.titleArea{
+    width:400px;
     height: 80px;
-    /*background-color: red;*/
+    background-color: red;
     position: absolute;
-    left: 20px;
-    top:20px;
+    left: 0px;
+    top:0px;
 }
-
-.tx_path{
-    width:79px;
-    height:79px;
-    border: 1px solid #eee;
+.logo{
     float: left;
-
 }
-
-.myInfo{
-    width:auto;
-    height:79px;
-    border: 1px solid #eee;
-    margin-left: 10px;
+.sysName{
     float: left;
-
-    font-family: "微软雅黑";
-    font-size: 20px;
-    color:#eee;
-    line-height: 34px;
-    padding: 5px;
-
 }
-
 .qrcodeArea{
     width:100px;
     height: 100px;
-    /*background-color: red;*/
+    background-color: red;
     position: absolute;
     left: 24px;
     top:850px;

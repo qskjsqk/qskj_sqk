@@ -23,42 +23,21 @@ class IndexController extends BaseController {
         parent::_initialize();
     }
 
-    public function httpRequest($pUrl, $pData) {
-        $tCh = curl_init();
-        if ($pData) {
-            is_array($pData) && $pData = http_build_query($pData);
-            curl_setopt($tCh, CURLOPT_POST, true);
-            curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
-        }
-        curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
-        curl_setopt($tCh, CURLOPT_URL, $pUrl);
-        curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
-        curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
-        $tResult = curl_exec($tCh);
-        curl_close($tCh);
-        return $tResult;
-    }
+    
 //    视图
 //------------------------------------------------------------------------------    
 
     public function index() {
-        $appid = 'wx542ee14049aa74e0';
-        $secret = '44e062595f48e1858dd3363f95d50f56';
-        $redirect_uri = 'http://lyznsq.qmtsc.com/index.php/Appm/login/index/';
-        $scope = 'snsapi_userinfo';
-        $state = "1234";
-//        dump($_GET['code']);
+        $appid = WXAPPID;
+        $secret = WXSECRET;
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
                 . "&secret=" . $secret
                 . "&code=" . $_GET['code'] . "&grant_type=authorization_code";
-        $a = $this->httpRequest($a, '');
+        $a = httpRequest($a, '');
         $wxInfo = json_decode($a, true);
-//        dump($wxInfo);
 
         $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
-        $b = $this->httpRequest($b, '');
+        $b = httpRequest($b, '');
         $userInfo = json_decode($b, true);
         
         $wx['headimgurl'] = $userInfo['headimgurl'];

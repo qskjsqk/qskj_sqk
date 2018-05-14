@@ -23,6 +23,8 @@
         </script>
         {$Assigndata}
         <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/common.js"></script>
+        <script src="__PUBLIC__/appm/js/wechat_binding.js"></script>
     </head>
 
     <body>
@@ -54,7 +56,7 @@
                             <input type="text" id="tel" style="text-align: right;" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         </div>
                     </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined">发送验证码至手机</button>
+                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined" onclick="getApplyKeyCode()">发送验证码至手机</button>
                     <form class="mui-input-group">
                         <div class="mui-input-row">
                             <label>验证码</label>

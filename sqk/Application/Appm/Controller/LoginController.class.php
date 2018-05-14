@@ -31,16 +31,35 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
+        //获取微信信息
         $mxInfo = cookie('wxInfo');
-        $this->assign('headimgurl', $mxInfo['headimgurl']);
-        $this->assign('nickname', $mxInfo['nickname']);
-        $this->display();
+
+        //验证用户是否存在
+        $where['open_id'] = ['EQ', $mxInfo['open_id']];
+        $userInfo = M('sys_userapp_info')->where($where)->find();
+
+        if ($flag) {
+            cookie('realname', $userInfo['realname'], 3600 * 24 * 30);
+            cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
+            cookie('address_id', $userInfo['address_id'], 3600 * 24 * 30);
+            //直接进入主界面
+        } else {
+            $this->assign('headimgurl', $mxInfo['headimgurl']);
+            $this->assign('nickname', $mxInfo['nickname']);
+            $this->display();
+        }
     }
 
+    /**
+     * 申请页
+     */
     public function apply() {
         $this->display();
     }
-
+    
+    /**
+     * 完善信息页
+     */
     public function perfect_info() {
         $this->assign('tel', $_GET['tel']);
         $this->display();
@@ -66,52 +85,65 @@ class LoginController extends Controller {
         cookie('user_id', 106, 3600 * 24 * 30);
         cookie('address_id', 1, 3600 * 24 * 30);
         $errorMsg['is_success'] = '';
-
-
-
-//        if ($_POST['username'] == '') {
-//            $errorMsg['username'] = '请输入用户名！';
-//        } else if ($_POST['password'] == '') {
-//            $errorMsg['password'] = '请输入密码！';
-//        } else {
-//            $userModel = M(C('DB_USER_INFO'));
-//            $userInfo = $userModel
-//                    ->join('u left join ' . $this->config['db_fix'] . 'sys_user_group g on u.cat_id=g.id')
-//                    ->field('u.id,u.usr,u.pwd,u.pwd,g.sys_name')
-//                    ->where('binary u.usr="' . $_POST['username'] . '" and u.pwd="' . $this->EncriptPWD($_POST['password']) . '" and g.sys_name="appUser"')
-//                    ->find();
-//            if (isset($userInfo)) {
-//                cookie('pwd', $_POST['password'], 3600 * 24 * 30);
-//                cookie('cookie_user', $_POST['username'], 3600 * 24 * 30);
-//                cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
-////                session('usr', $userInfo['usr']);
-////                session('pwd', $userInfo['pwd']);
-////                session('user_id', $userInfo['id']);
-////                session('realname', $userInfo['realname']);
-////                session('user_cat_id', $userInfo['cat_id']);
-//                $errorMsg['is_success'] = '';
-//            } else {
-//                $errorMsg['is_success'] = '用户名或密码错误！';
-//            }
-//        }
         $this->ajaxReturn($errorMsg);
     }
 
-    public function getApplyKeyCode() {
+    /**
+     * 获取手机验证码 验证手机是否存在
+     */
+    public function getApplyKeyCodeCheckExist() {
         $tel = $_POST['tel'];
-        $keycode = make_char('m');
-        $smsC = A('Sms');
-        $flag = $smsC->sendCode($tel, $keycode);
-        $flag = json_decode($flag, TRUE);
-        if ($flag['errmsg'] == "OK") {
-            $returnData['status'] = 1;
-            $returnData['msg'] = "成功获取验证码!";
-            $returnData['keycode'] = $keycode;
+        $findArr = M('sys_userapp_info')->where('tel="' . $tel . '"')->find();
+        if (!empty($findArr)) {
+            $keycode = make_char('m');
+            $smsC = A('Sms');
+            $flag = $smsC->sendCode($tel, $keycode);
+            $flag = json_decode($flag, TRUE);
+            if ($flag['errmsg'] == "OK") {
+                $returnData['status'] = 1;
+                $returnData['msg'] = "成功获取验证码!";
+                $returnData['keycode'] = $keycode;
+            } else {
+                $returnData['status'] = 0;
+                $returnData['msg'] = "获取验证码失败，请30秒后重试!";
+                $returnData['keycode'] = 0;
+            }
         } else {
             $returnData['status'] = 0;
-            $returnData['msg'] = "获取验证码失败，请30秒后重试!";
+            $returnData['msg'] = "该手机号码尚未注册!";
             $returnData['keycode'] = 0;
         }
+
+        $returnData['dd'] = $flag;
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 获取手机验证码 验证手机是否存在
+     */
+    public function getApplyKeyCode() {
+        $tel = $_POST['tel'];
+        $findArr = M('sys_userapp_info')->where('tel="' . $tel . '"')->find();
+        if (empty($findArr)) {
+            $keycode = make_char('m');
+            $smsC = A('Sms');
+            $flag = $smsC->sendCode($tel, $keycode);
+            $flag = json_decode($flag, TRUE);
+            if ($flag['errmsg'] == "OK") {
+                $returnData['status'] = 1;
+                $returnData['msg'] = "成功获取验证码!";
+                $returnData['keycode'] = $keycode;
+            } else {
+                $returnData['status'] = 0;
+                $returnData['msg'] = "获取验证码失败，请30秒后重试!";
+                $returnData['keycode'] = 0;
+            }
+        } else {
+            $returnData['status'] = 0;
+            $returnData['msg'] = "该手机号码已注册!";
+            $returnData['keycode'] = 0;
+        }
+
         $returnData['dd'] = $flag;
         $this->ajaxReturn($returnData, 'JSON');
     }
@@ -191,7 +223,6 @@ class LoginController extends Controller {
         $this->redirect('Appm/login/index');
     }
 
-
     /**
      * 获取个人信息
      */
@@ -201,7 +232,5 @@ class LoginController extends Controller {
         $result = $userModel->where(array('id' => $user_id))->find();
         $this->ajaxReturn($result);
     }
-
-
 
 }
