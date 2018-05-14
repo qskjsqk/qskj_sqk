@@ -396,8 +396,7 @@ class ApiController extends BaseDBController {
      * @return json
      */
     public function getTradingRecordList() {
-        //$input = file_get_contents("php://input"); //接收POST数据
-        $input = Request::all();
+        $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
         $page = $inputArr['page'];
