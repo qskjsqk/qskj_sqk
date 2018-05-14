@@ -9,6 +9,7 @@ namespace Admin\Model;
 use Think\Model;
 use Admin\Model\SysUserappInfoModel;
 use Admin\Model\SysCommunityInfoModel;
+use Admin\Model\SellerIntegralGoodsModel;
 
 class IntegralTradingRecordModel extends Model {
 
@@ -77,4 +78,24 @@ class IntegralTradingRecordModel extends Model {
         }
 
     }
+
+    public function getTradingCountGroupByAddress() {
+        $goodsModel = new SellerIntegralGoodsModel();
+        $this->dbFix = C('DB_PREFIX');
+
+        //用户支付,社区收取,以收取方id分组查询
+        $where = [
+            'income_type' => 1,
+            'payment_type' => 3,
+        ];
+        $userToAddressList = $userToSellerList = $this->where($where)->field("count(id) as count,income_id as address_id")->group("income_id")->select();
+
+        //用户支付,商家收取,
+        $goodsExchageTimes = $goodsModel->field("sum(exchange_times) as count,address_id")->group("address_id")->select();
+        return $userToAddressList;
+
+    }
+
+
+
 }
