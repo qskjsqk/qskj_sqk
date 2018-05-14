@@ -31,14 +31,6 @@ class LoginController extends Controller {
      * 入口页面
      */
     public function index() {
-//        模拟微信授权数据
-        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
-        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
-        $wx['nickname'] = "忘忧草";
-        cookie('wxInfo', $wx, 3600 * 24 * 30);
-        
-        
-        
         $mxInfo = cookie('wxInfo');
         $this->assign('headimgurl', $mxInfo['headimgurl']);
         $this->assign('nickname', $mxInfo['nickname']);
@@ -199,29 +191,6 @@ class LoginController extends Controller {
         $this->redirect('Appm/login/index');
     }
 
-    /**
-     * 找回密码-验证验证码
-     */
-    public function checkKeyCode() {
-        $userModel = M(C('DB_USER_INFO'));
-        if (IS_POST) {
-            if ($_POST['usr'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '请输入用户名！');
-            } else if ($_POST['email'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '你还没有输入验证邮箱！');
-            } else if ($_POST['keycode'] == '') {
-                $errorMsg['is_success'] = array('flag' => 0, 'msg' => '你还没有输入验证码！');
-            } else {
-                $userInfo = $userModel->where('binary usr="' . $_POST['usr'] . '" and email="' . $_POST['email'] . '" and keycode="' . $_POST['keycode'] . '"')->find();
-                if (empty($userInfo)) {
-                    $errorMsg['is_success'] = array('flag' => 0, 'msg' => '验证信息不匹配！', 'sql' => $userModel->getLastSql());
-                } else {
-                    $errorMsg['is_success'] = array('flag' => 1, 'msg' => '验证信息正确,请修改密码', 'user_id' => $userInfo['id']);
-                }
-            }
-            $this->ajaxReturn($errorMsg);
-        }
-    }
 
     /**
      * 获取个人信息
@@ -233,56 +202,6 @@ class LoginController extends Controller {
         $this->ajaxReturn($result);
     }
 
-    /**
-     * 保存用户信息
-     */
-    public function saveUserInfo() {
-        $userModel = D('SysUserInfo');
-        $user_id = cookie('user_id');
-        $userInfo = $userModel->where(array('id' => $user_id))->find();
-        $saveArr['tel'] = $_POST['tel'];
-        $saveArr['phone'] = $_POST['phone'];
-        $saveArr['qq'] = $_POST['qq'];
-        $saveArr['email'] = $_POST['email'];
-        $saveArr['address'] = $_POST['address'];
-        if ($userInfo['rns_type'] == 0) {
-            $userModel->where(array('id' => $user_id))->save(array('idcard_num' => ''));
-            $saveArr['realname'] = $_POST['realname'];
-            $saveArr['idcard_num'] = $_POST['idcard_num'];
-        } elseif ($userInfo['rns_type'] == 1) {
-            
-        } else {
-            $userModel->where(array('id' => $user_id))->save(array('idcard_num' => ''));
-            $saveArr['realname'] = $_POST['realname'];
-            $saveArr['idcard_num'] = $_POST['idcard_num'];
-            $saveArr['rns_type'] = 0;
-        }
-        if ($saveArr['idcard_num'] == '') {
-            unset($saveArr['idcard_num']);
-        }
-//        dump($saveArr);
-        if (!$userModel->create($saveArr)) {
-            $returnData['is_success'] = array('flag' => 0, 'msg' => $userModel->getError());
-        } else {
-            $result = $userModel->where('id=' . $user_id)->save($saveArr); //数据更新
-            if ($result === FALSE) {
-                $returnData['is_success'] = array('flag' => 0, 'msg' => '修改资料失败!');
-            } else {
-                $returnData['is_success'] = array('flag' => 1, 'msg' => '修改资料成功!');
-            }
-        }
-        $this->ajaxReturn($returnData);
-    }
 
-    /**
-     * 发送邮件
-     * @param type $emailAddress
-     * @param type $userName
-     * @param type $keycode
-     */
-    public function sendEmail($emailAddress, $user_id, $userName, $keycode) {
-        $msg = think_send_mail($emailAddress, $userName, '找回密码', '尊敬的' . $userName . ',您的验证码是' . $keycode . ',有效期为一个小时请在页面中提交验证码完成验证。');
-        return $msg;
-    }
 
 }

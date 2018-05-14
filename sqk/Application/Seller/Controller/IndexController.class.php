@@ -23,22 +23,29 @@ class IndexController extends BaseController {
     }
     
     public function login() {
-        cookie('pwd', '123', 3600 * 24 * 30);
-        cookie('cookie_user', '商家5', 3600 * 24 * 30);
-        cookie('seller_id', 38, 3600 * 24 * 30);
-        cookie('address_id', 1, 3600 * 24 * 30);
-        $this->redirect('seller/seller_home');
+        $appid = 'wx542ee14049aa74e0';
+        $secret = '44e062595f48e1858dd3363f95d50f56';
+//        dump($_GET['code']);
+        $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
+                . "&secret=" . $secret
+                . "&code=" . $_GET['code'] . "&grant_type=authorization_code";
+        $a = $this->httpRequest($a, '');
+        $wxInfo = json_decode($a, true);
+//        dump($wxInfo);
+
+        $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
+        $b = $this->httpRequest($b, '');
+        $userInfo = json_decode($b, true);
+        
+        $wx['headimgurl'] = $userInfo['headimgurl'];
+        $wx['openid'] = $userInfo['openid'];
+        $wx['nickname'] = $userInfo['nickname'];
+        cookie('wxInfo', $wx, 3600 * 24 * 30);
+        
+        $this->redirect('Index/index');
     }
 
     public function index() {
-        //        模拟微信授权数据
-        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
-        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
-        $wx['nickname'] = "忘忧草";
-        cookie('wxInfo', $wx, 3600 * 24 * 30);
-        
-        
-        
         $mxInfo = cookie('wxInfo');
         $this->assign('headimgurl', $mxInfo['headimgurl']);
         $this->assign('nickname', $mxInfo['nickname']);
