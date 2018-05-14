@@ -8,7 +8,6 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <link rel="stylesheet" href="__PUBLIC__/seller/css/mui.min.css">
-        <link rel="stylesheet" href="__PUBLIC__/seller/css/activity.css">
 
         <script src="__PUBLIC__/seller/js/jquery-1.11.0.js"></script>
         <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
@@ -23,6 +22,7 @@
         </script>
         {$Assigndata}
         <script src="__PUBLIC__/seller/js/common.js"></script>
+        <script src="__PUBLIC__/seller/js/apply.js"></script>
     </head>
 
     <body>
@@ -43,14 +43,15 @@
                             <input type="text" id="tel" style="text-align: right;" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         </div>
                     </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined">发送验证码至手机</button>
+                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined" onclick="getApplyKeyCode()">发送验证码至手机</button>
                     <form class="mui-input-group">
                         <div class="mui-input-row">
                             <label>验证码</label>
-                            <input type="text" id="phone" style="text-align: right;" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                            <input type="text" id="keycode" style="text-align: right;" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                            <input type="hidden" id="hiddenKeycode" value="0">
                         </div>
                     </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="aHref('__MODULE__/index/perfect_info')">下一步</button>
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="checkApplyKeyCode()">下一步</button>
                 </div>
             </div>
         </div>

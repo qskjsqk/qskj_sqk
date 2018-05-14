@@ -54,13 +54,39 @@ class LoginController extends Controller {
      * 申请页
      */
     public function apply() {
+
         $this->display();
     }
-    
+
+    /**
+     * 微信绑定页面
+     */
+    public function wechat_binding() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+//        测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
+        $this->assign('wxInfo', $wxInfo);
+        $this->display();
+    }
+
     /**
      * 完善信息页
      */
     public function perfect_info() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+//        //测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
+        $this->assign('wxInfo', $wxInfo);
         $this->assign('tel', $_GET['tel']);
         $this->display();
     }
@@ -181,6 +207,10 @@ class LoginController extends Controller {
         $saveArr['gender'] = $_POST['gender'];
         $saveArr['birthday'] = $_POST['birthday'];
         $saveArr['address_id'] = $_POST['address_id'];
+
+        $saveArr['tx_path'] = $_POST['tx_path'];
+        $saveArr['nickname'] = $_POST['nickname'];
+        $saveArr['wx_num'] = $_POST['wx_num'];
 //        dump($saveArr);
         if (!$userModel->create($saveArr)) {
             $returnData['is_success'] = array('flag' => 0, 'msg' => $userModel->getError());
@@ -195,6 +225,29 @@ class LoginController extends Controller {
                 $returnData['is_success'] = array('flag' => 1, 'msg' => '添加用户成功!');
             }
         }
+        $this->ajaxReturn($returnData);
+    }
+
+    /**
+     * 绑定微信和用户信息
+     */
+    public function bindingUserappInfo() {
+        $userModel = D('SysUserappInfo');
+        $saveArr['tel'] = $_POST['tel'];
+
+        $saveArr['tx_path'] = $_POST['tx_path'];
+        $saveArr['nickname'] = $_POST['nickname'];
+        $saveArr['wx_num'] = $_POST['wx_num'];
+
+        $where['tel'] = ['EQ', $saveArr['tel']];
+        $result = $userModel->where($where)->save($saveArr); //数据更新
+        
+        if ($result === FALSE) {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => '用户绑定失败!');
+        } else {
+            $returnData['is_success'] = array('flag' => 1, 'msg' => '用户绑定成功!');
+        }
+
         $this->ajaxReturn($returnData);
     }
 

@@ -81,7 +81,7 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td rowspan="4" style='width:150px;'><img src='/{$userInfo.qrcode_path}' style="width: 150px; height: 150px; border: 1px solid #ccc;"></td>
+                                <td rowspan="4" style='width:150px;'><img src='{$userInfo.tx_path}' style="width: 150px; height: 150px; border: 1px solid #ccc;"></td>
                                 <th>所在社区</th>
                                 <td>{$userInfo.address_name}</td>
                             </tr>
@@ -157,7 +157,7 @@
                         </tr>
                         <tr>
                             <th>绑定微信号</th>
-                            <td colspan="2"><if condition="$userInfo.wx_num eq 0"><span class="label label-default">未绑定</span><else/>{$userInfo.wx_num}</if></td>
+                            <td colspan="2"><if condition="$userInfo.wx_num eq '000000'"><span class="label label-default">未绑定</span><else/>[{$userInfo.nickname}]&nbsp;{$userInfo.wx_num}</if></td>
                         </tr>
                         </tbody>
                     </table>
