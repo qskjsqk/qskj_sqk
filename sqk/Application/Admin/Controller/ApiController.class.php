@@ -426,7 +426,8 @@ class ApiController extends BaseDBController {
             if (!empty($tradingRecordList) && is_array($tradingRecordList)) {
                 foreach ($tradingRecordList as $key => $value) {
                     $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('realname');
-                    $tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
+                    //$tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
+                    $tradingRecordList[$key]['tradingType'] = '感应卡扣分';
                 }
 
                 $returnData['status'] = 1;

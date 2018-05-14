@@ -41,25 +41,29 @@ class IntegralTradingRecordModel extends Model {
 
         $tradingNumber = \Think\Tool\GenerateUnique::generateExchangeNumber();
         $trading_time = date("Y-m-d H:i:s", time());
-        $this->income_id = $appUserInfo['address_id'];
-        $this->payment_id = $appUserInfo['id'];
-        $this->income_type = 1;     //收款方用户类型  0管理员  1社区  2商家  3用户
-        $this->payment_type = 3;     //付款方用户类型  0管理员  1社区  2商家  3用户
-        $this->trading_integral = $tradingIntegral;
-        $this->trading_time = $trading_time;
-        $this->exchange_method_id = 4;
-        $this->trading_number = $tradingNumber;
+
+        $this->startTrans(); // 开启事务
 
         //交易入库
-        $addTradingRecordRes = $this->add();
+        $addTradingRecordRes = $this->add([
+            'income_id' => $appUserInfo['address_id'],
+            'payment_id' => $appUserInfo['id'],
+            'income_type' => 1,     //收款方用户类型  0管理员  1社区  2商家  3用户
+            'payment_type' => 3,    //付款方用户类型  0管理员  1社区  2商家  3用户
+            'trading_integral' => $tradingIntegral,
+            'trading_time' => $trading_time,
+            'exchange_method_id' => 4,
+            'trading_number' => $tradingNumber,
+            'status' => 1,
+        ]);
+
         //用户积分减少
         $appUserReduceIntegralRes = $appUserModel->where(['id' => $appUserInfo['id']])->setDec('integral_num', $tradingIntegral);
         //社区积分增加
         $communityAddIntegralRes = $communityModel->where(['id' => $appUserInfo['address_id']])->setInc('com_integral', $tradingIntegral);
 
         if($addTradingRecordRes && $appUserReduceIntegralRes && $communityAddIntegralRes) {
-            //修改交易状态为1(交易成功)
-            $this->where(['id' => $addTradingRecordRes])->save(['status' => 1]);
+            $this->commit(); // 成功则提交事务
             return [
                 'id' => $addTradingRecordRes,
                 'user' => $appUserInfo['realname'],
@@ -68,6 +72,7 @@ class IntegralTradingRecordModel extends Model {
                 'trading_number' => $tradingNumber,
             ];
         } else {
+            $this->rollback(); // 否则将事务回滚
             return -2;
         }
 
