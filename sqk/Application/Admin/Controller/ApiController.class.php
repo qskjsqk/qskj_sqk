@@ -12,6 +12,8 @@ namespace Admin\Controller;
 use Think\Controller;
 use Admin\Model\IntegralTradingRecordModel;
 use Admin\Model\SysUserappInfoModel;
+use Seller\Controller\BaseController;
+use Think\Tool\Request;
 
 header('Access-Control-Allow-Origin:*');  //支持全域名访问，不安全，部署后需要固定限制为客户端网址
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); //支持的http 动作
