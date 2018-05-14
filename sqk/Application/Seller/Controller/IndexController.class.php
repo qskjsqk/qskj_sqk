@@ -28,11 +28,11 @@ class IndexController extends BaseController {
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
                 . "&secret=" . $secret
                 . "&code=" . $_GET['code'] . "&grant_type=authorization_code";
-        $a = $this->httpRequest($a, '');
+        $a = httpRequest($a, '');
         $wxInfo = json_decode($a, true);
 
         $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
-        $b = $this->httpRequest($b, '');
+        $b = httpRequest($b, '');
         $userInfo = json_decode($b, true);
 
         $wx['headimgurl'] = $userInfo['headimgurl'];
@@ -48,7 +48,6 @@ class IndexController extends BaseController {
         
         //先检测是否已有帐号
         
-        dump($mxInfo);
         
         $this->assign('headimgurl', $mxInfo['headimgurl']);
         $this->assign('nickname', $mxInfo['nickname']);
