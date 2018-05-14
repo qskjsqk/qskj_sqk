@@ -23,6 +23,50 @@ class LoginController extends Controller {
 //        读取配置menu
     }
 
+    public function checkSignature() {
+        $token = "lysqk";
+
+        //从GET参数中读取三个字段的值
+
+        $signature = $_GET["signature"];
+
+        $timestamp = $_GET["timestamp"];
+
+        $nonce = $_GET["nonce"];
+
+        //对数组进行排序
+
+        $tmpArr = array($token, $timestamp, $nonce);
+
+        sort($tmpArr, SORT_STRING);
+
+        //对三个字段进行sha1运算
+
+        $tmpStr = implode($tmpArr);
+
+        $tmpStr = sha1($tmpStr);
+
+        //判断我方计算的结果是否和微信端计算的结果相符
+        //这样利用只有微信端和我方了解的token作对比,验证访问是否来自微信官方.
+
+        if ($tmpStr == $signature) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public function checkWxToken() {
+        if ($this->checkSignature()) {
+            echo $_GET["echostr"];
+        } else {
+
+            echo 'error';
+        }
+    }
+
     public function index() {
         $this->redirect('login');
     }
@@ -79,7 +123,7 @@ class LoginController extends Controller {
         } else {
             for ($i = 0; $i < count($selectArr); $i++) {
                 $options .= '<li class="b-text-center"><a href="javascript:void(0)" onclick="selectCat(' . $selectArr[$i]['id'] . ',this)">' . $selectArr[$i]['cat_name'] . '</a></li>' .
-                    '<li class="divider"></li>';
+                        '<li class="divider"></li>';
             }
         }
         $this->assign('options', $options);
@@ -133,14 +177,14 @@ class LoginController extends Controller {
         } else if ($_POST['password'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入密码！';
-        } /*else if ($_POST['validate'] == '') {
-            $errorMsg['flag'] = 0;
-            $errorMsg['msg'] = '你还没有输入验证码！';
-        }*/ else {
-            /*if (!$this->check_verify($_POST['validate'])) {
-                $errorMsg['flag'] = 0;
-                $errorMsg['msg'] = '验证码错误！';
-            } else {*/
+        } /* else if ($_POST['validate'] == '') {
+          $errorMsg['flag'] = 0;
+          $errorMsg['msg'] = '你还没有输入验证码！';
+          } */ else {
+            /* if (!$this->check_verify($_POST['validate'])) {
+              $errorMsg['flag'] = 0;
+              $errorMsg['msg'] = '验证码错误！';
+              } else { */
             $userModel = M(C('DB_USER_INFO'));
             $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
             if (!empty($userArr)) {
