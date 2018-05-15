@@ -23,30 +23,21 @@
         .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
     </style>
     <body>
-        <div class="option_search">
-
-            <div class="score-group">
-                <div class="score-left"></div>
-                <div class="score-center">
-                    <div class="score-item">
-                        <div class="score-field">全镇消费兑换次数:&nbsp;&nbsp;{$data.exchangeIntegral.count}</div>
-                    </div>
-                        <div class="score-item">
-                            <div class="score-field">累计交易积分值:&nbsp;&nbsp;{$data.exchangeIntegral.integral}</div>
-                        </div>
+        <div class="panel panel-info">
+            <div class="panel-body">
+                <div class="col-sm-6 text-left" >
+                    全镇消费兑换次数:&nbsp;&nbsp;{$data.exchangeIntegral.count}</br>
+                    累计交易积分值:&nbsp;&nbsp;{$data.exchangeIntegral.integral}
                 </div>
-                <if condition="$Think.session.sys_name eq 'sqAdmin'">
-                <div class="score-right">
-                    <div class="score-item">
-                        <div class="score-field">本社区消费兑换次数:&nbsp;&nbsp;{$data.currentExchangeIntegral.count}</div>
-                    </div>
-                        <div class="score-item">
-                            <div class="score-field">累计交易积分值:&nbsp;&nbsp;{$data.currentExchangeIntegral.integral}</div>
-                        </div>
+                <div class="col-sm-6 text-right" >
+                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                        本社区消费兑换次数:&nbsp;&nbsp;{$data.currentExchangeIntegral.count}</br>
+                        累计交易积分值:&nbsp;&nbsp;{$data.currentExchangeIntegral.integral}
+                    </if>
                 </div>
-                </if>
             </div>
-
+        </div>
+        <div class="option_search">
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-3" style="min-width: 300px;">

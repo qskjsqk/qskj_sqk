@@ -23,6 +23,21 @@
         .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
     </style>
     <body>
+         <div class="panel panel-info">
+            <div class="panel-body">
+                <div class="col-sm-4 text-left" >
+                    梨园镇注册商家数:{$data.allSellerCount}
+                </div>
+                <div class="col-sm-4 text-center" >
+                    梨园镇积分商品数量:&nbsp;&nbsp;{$data.allGoodsCount}
+                </div>
+                <div class="col-sm-4 text-right" >
+                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                        本社区积分商品数量:&nbsp;&nbsp;{$data.currentGoodsCount}
+                    </if>
+                </div>
+            </div>
+        </div>
         <div class="option_search">
 
             <div class="score-group">

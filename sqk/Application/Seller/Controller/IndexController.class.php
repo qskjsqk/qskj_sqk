@@ -79,7 +79,7 @@ class IndexController extends BaseController {
     public function apply() {
         $this->display();
     }
-    
+
     /**
      * 完善信息页
      */
@@ -96,7 +96,7 @@ class IndexController extends BaseController {
         $this->assign('tel', $_GET['tel']);
         $this->display();
     }
-    
+
     /**
      * 获取手机验证码 验证手机是否存在
      */
@@ -161,10 +161,9 @@ class IndexController extends BaseController {
      * 演示帐号
      */
     public function ys() {
-        cookie('seller_name', '', 3600 * 24 * 30);
-        cookie('seller_name', '', 3600 * 24 * 30);
-        cookie('seller_name', '', 3600 * 24 * 30);
-        cookie('seller_name', '', 3600 * 24 * 30);
+        cookie('seller_id', 43, 3600 * 24 * 30);
+        cookie('address_id', 1, 3600 * 24 * 30);
+        $this->redirect('Seller/seller_home');
     }
 
 }

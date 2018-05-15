@@ -28,32 +28,27 @@
         }
     </style>
     <body>
-        <div class="option_search">
-
-            <div class="panel panel-info">
-
-                <div class="panel-body">
-                    <div class="col-sm-4 text-left" >
-                        梨园镇注册商家数:{$data.allSellerCount}
-                    </div>
-                    <div class="col-sm-4 text-center" >
-                        <if condition="$Think.session.sys_name eq 'sqAdmin'">
-                            本社区注册商家数:{$data.currentComSellerCount}
+        <div class="panel panel-info">
+            <div class="panel-body">
+                <div class="col-sm-4 text-left" >
+                    梨园镇注册商家数:{$data.allSellerCount}
+                </div>
+                <div class="col-sm-4 text-center" >
+                    <if condition="$Think.session.sys_name eq 'sqAdmin'">
+                        本社区注册商家数:{$data.currentComSellerCount}
+                    </if>
+                </div>
+                <div class="col-sm-4 text-right" >
+                    <button class="btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">
+                        反馈信息
+                        <if condition="$data.complaintCount gt 0">
+                            <span class="badge alert-danger">{$data.complaintCount}</span>
                         </if>
-                    </div>
-                    <div class="col-sm-4 text-right" >
-                        <button class="btn btn-success" onclick="javascript:void(window.location.href = '__MODULE__/SellerComplaint/showList')">
-                            反馈信息
-                            <if condition="$data.complaintCount gt 0">
-                                <span class="badge alert-danger">{$data.complaintCount}</span>
-                            </if>
-                        </button>
-                    </div>
+                    </button>
                 </div>
             </div>
-
-
-
+        </div>
+        <div class="option_search">
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-4" style="min-width: 300px;">
@@ -66,11 +61,8 @@
                         <button type="button" class="btn btn-info" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
                             显示全部商家
                         </button>
-                        <!--<button type="button" class="btn btn-warning checkSellerInfo" id="checkArrayInfo-btn" style="height: 34px;">
-                            <span class="glyphicon glyphicon-check"></span> 批量审核
-                        </button>-->
                     </div>
-                    <div class="col-sm-2"></div>
+                    <!--<div class="col-sm-2"></div>-->
                     <if condition="$Think.session.sys_name eq 'sysAdmin'">
                         <div class="col-sm-2">
                             <select class="form-control" name="address_id">

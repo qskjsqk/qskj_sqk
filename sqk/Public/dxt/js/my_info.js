@@ -19,7 +19,7 @@ function getUserappInfo() {
         $('#realname').val(data.realname);
         $('#tel').val(data.tel);
         $('#birthday').val(data.birthday);
-        $('#headimgurl').attr('src', '../../../' + data.tx_path);
+        $('#headimgurl').attr('src', data.tx_path);
 
         $("#gender").find("option[value='" + data.gender + "']").attr("selected", 'selected');
         $("#address_id").find("option[value='" + data.address_id + "']").attr("selected", 'selected');

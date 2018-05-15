@@ -22,29 +22,98 @@ class IndexController extends BaseController {
     }
 
 //    视图
-//------------------------------------------------------------------------------    
+//------------------------------------------------------------------------------ 
+    /**
+     * 首页
+     */
     public function index() {
-        $this->assign('myInfo', $this->getUserappInfo());
-        //
-        $this->assign('user_id', 106);
+        if (empty($_GET['address_id'])) {
+            $this->assign('address_id', 0);
+        } else {
+            $this->assign('address_id', $_GET['address_id']);
+        }
+        $this->assign('sys', 'dxt');
         $this->display();
     }
-    
+
+    /**
+     * 详情页
+     */
+    public function detail() {
+        if (empty($_GET['address_id'])) {
+            $this->assign('address_id', 0);
+        } else {
+            $this->assign('address_id', $_GET['address_id']);
+        }
+        $swhere['id'] = ['EQ', $_GET['id']];
+        $sellerInfo = M('seller_info')->where($swhere)->find();
+        $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
+
+        $adList = M('seller_prom_info')->where('seller_id=' . $_GET['id'] . ' and status=1')->order('id desc')->select();
+        for ($i = 0; $i < count($adList); $i++) {
+            $adList[$i]['pics']= $this->getAttachArr('sellerProm', $adList[$i]['id']);
+        }
+//        dump($sellerInfo);
+        $this->assign('sellerInfo', $sellerInfo);
+        $this->assign('adList', $adList);
+        $this->display();
+    }
+
+    /**
+     * 获取卡信息接口
+     */
+    public function getCardUserInfo() {
+        $where['iccard_num'] = ['EQ', trim($_POST['iccard_num'])];
+        $where['is_enable'] = ['EQ', 1];
+        $info = M('sys_userapp_info')->where($where)->find();
+        if (empty($info)) {
+            $return['flag'] = 0;
+            $return['msg'] = "无效的卡，请到管理员处核对！";
+        } else {
+            $return['flag'] = 1;
+            $return['msg'] = "找到这个人！";
+            $return['data'] = $info;
+        }
+        $return['dd'] = M('sys_userapp_info')->getLastSql();
+        $this->ajaxReturn($return, 'JSON');
+    }
+
+    /**
+     * 登录后首页
+     */
     public function main() {
+        $this->assign('user_id', $_GET['user_id']);
+        cookie('user_id', $_GET['user_id'], 3600 * 24 * 3);
         $this->assign('myInfo', $this->getUserappInfo());
         //
-        $this->assign('user_id', 106);
+
         $this->display();
     }
 
     public function home() {
         $this->display();
     }
-    
-    public function login(){
+
+    public function getAdList() {
+        $address_id = $_POST['address_id'];
+        if ($address_id != 0) {
+            $where['address_id'] = ['EQ', $address_id];
+        } else {
+            $where = "1=1";
+        }
+        $adList = M('seller_info')->where($where)->order('RAND()')->limit(5)->select();
+        for ($i = 0; $i < count($adList); $i++) {
+            $adList[$i]['address_name'] = getConameById($adList[$i]['address_id']);
+        }
+        $this->ajaxReturn($adList, 'JSON');
+    }
+
+//    以下为导向台手机内部视图及方法==============================================
+
+    public function login() {
         $this->redirect('Login/login');
     }
-    
+
     /**
      * 我的
      */
@@ -59,7 +128,7 @@ class IndexController extends BaseController {
     public function my_info() {
         $this->display();
     }
-    
+
     /**
      * 我的实体卡
      */
@@ -91,7 +160,7 @@ class IndexController extends BaseController {
         $this->assign('myInfo', $this->getUserappInfo());
         $this->display();
     }
-    
+
     /**
      * 获取个人信息
      */
@@ -106,7 +175,7 @@ class IndexController extends BaseController {
             return $result;
         }
     }
-    
+
     /**
      * 获取个人活动列表
      */

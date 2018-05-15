@@ -80,25 +80,3 @@ function saveUserInfo() {
 
 
 }
-
-/**
- *加密名字 
- * @param {Object} name
- */
-function enctyName(name) {
-    var newName = name.substring(0, 1);
-    for (var i = 0; i < name.length - 1; i++) {
-        newName += '*';
-    }
-    return newName;
-}
-
-/**
- *加密身份证号
- * @param {Object} name
- */
-function enctyIdcard(idcard) {
-    var newidcard = idcard.substring(0, 3);
-    newidcard = newidcard + '**********' + idcard.substr(idcard.length - 4, 4);
-    return newidcard;
-}

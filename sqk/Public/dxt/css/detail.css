@@ -1,9 +1,9 @@
-/*导向台首页*/
+/*导向台详情页*/
 .area{
     /*background-color: red;*/
     width:900px;
     height:990px;
-    background: url(../img/index_bg.png);
+    background: url(../img/detail_bg.png);
 }
 .titleArea{
     width:400px;
@@ -34,25 +34,14 @@
     font-weight: bold;
 
 }
-.qrcodeArea{
-    width:111px;
-    height: 111px;
-    background: url(../img/qrcode.png);
-    background-size: 111px 111px;
-    background-repeat: no-repeat;
-    position: absolute;
-    left: 760px;
-    top:820px;
-}
 
 .adArea{
     width:275px;
     height:580px;
-    /*border: 1px solid #eee;*/
 
     position: absolute;
     left: 20px;
-    top:160px;
+    top:192px;
 }
 
 .adList{
@@ -91,53 +80,46 @@
     background: url(../img/change.png);
     position: absolute;
     left: 85px;
-    top:770px;
+    top:802px;
 }
 
-.tspicArea{
-    width:450px;
-    height:280px;
-    background-color: red;
+.backhomeBtn{
+    width:120px;
+    height:41px;
+    /*background-color: red;*/
+    background: url(../img/back.png);
     position: absolute;
-    left: 362px;
-    top:306px;
+    left: 745px;
+    top:100px;
 }
 
-.tspicArea img{
-    width:450px;
-    height:280px;
-}
-
-.tsArea{
-    width:445px;
-    height:35px;
+.contentArea{ 
+    width:546px;
+    height:745px; 
     /*background-color: red;*/
     position: absolute;
-    left: 365px;
-    top:192px;
+    left: 312px;
+    top:200px;
+    overflow:hidden;
+}
 
+.contentInfo{
+    width:566px; 
+    padding:15px 25px 0 20px; 
+    height:745px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.lineleft{
     font-family: "微软雅黑";
-    font-size: 20px;
-    text-align: center;
-    line-height: 35px;
+    font-size: 16px;
+    line-height: 30px;
     color:#D7EDFF;
-    font-weight: bold;
 }
-
-.inputArea{
-    width:445px;
-    height:35px;
-    /*background-color: red;*/
-    position: absolute;
-    left: 365px;
-    top:668px;
-
-    border:0;
-
+.linecenter{
     font-family: "微软雅黑";
-    font-size: 20px;
+    font-size: 16px;
+    line-height: 30px;
+    color:#D7EDFF;
     text-align: center;
-    line-height: 35px;
-    color:#000;
-    font-weight: bold;
 }

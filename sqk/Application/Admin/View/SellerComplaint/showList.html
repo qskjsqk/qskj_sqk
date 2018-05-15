@@ -16,9 +16,12 @@
 
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
-                    <div class="col-sm-3" style="min-width: 300px;">
+                    <div class="col-sm-4" style="min-width: 300px;">
                         <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                        <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                            显示全部反馈信息
                         </button>
                     </div>
                     <div class="col-sm-2"></div>
@@ -71,12 +74,12 @@
                             <td>{$v.com_name}</td>
                             <td>{$v.cat_name}</td>
                             <td>
-                                <if condition="$v.status eq 0">
-                                    未处理
-                                <else/>
-                                    已处理
-                                </if>
-                            </td>
+                        <if condition="$v.status eq 0">
+                            未处理
+                            <else/>
+                            已处理
+                        </if>
+                        </td>
                         <td>
                             <div>
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/detail/id/{$v.id}')">
@@ -92,15 +95,13 @@
                         </tr>
                     </foreach>
                 </notempty>
-                <empty name="infoList">
+                <empty name="data.infoList">
                     <tr><td colspan="9">暂无数据</td></tr>
                 </empty>
             </table>
             <div style="text-align: center;">{$data.page}</div>
 
-            <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
-                显示全部反馈信息
-            </button>
+
 
         </div>
     </body>

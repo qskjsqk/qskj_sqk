@@ -210,7 +210,7 @@ class SysUserAppInfoController extends BaseDBController {
         $updData['iccard_num'] = $_POST['card_num'];
 //        $updData['iccard_ufnum'] = $_POST['card_ufnum'];
         $returnData = parent::setField($this->userappInfoModel, $where, $updData);
-        $logC = A('Actionlog')->addLog('SysUserInfo', 'setUserAppUfNum', '居民用户绑定实体卡');
+//        $logC = A('Actionlog')->addLog('SysUserInfo', 'setUserAppUfNum', '居民用户绑定实体卡');
         $this->ajaxReturn($returnData, 'JSON');
     }
 

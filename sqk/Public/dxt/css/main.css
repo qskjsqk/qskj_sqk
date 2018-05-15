@@ -66,21 +66,60 @@
 }
 
 .qrcodeArea{
-    width:100px;
-    height: 100px;
-    /*background-color: red;*/
+    width:111px;
+    height: 111px;
+    background: url(../img/qrcode.png);
+    background-size: 111px 111px;
+    background-repeat: no-repeat;
     position: absolute;
-    left: 24px;
-    top:850px;
+    left: 30px;
+    top:760px;
+}
+
+.logoutBtn{
+    width:120px;
+    height: 41px;
+    background: url(../img/back.png);
+    position: absolute;
+    left: 30px;
+    top:900px;
 }
 
 .adArea{
-    width:350px;
-    height:650px;
-    border: 1px solid #eee;
-    
+    width:275px;
+    height:580px;
+    /*border: 1px solid #eee;*/
+
     position: absolute;
     left: 20px;
     top:160px;
-    
+}
+
+.adList{
+    float:left;
+    width:273px;
+    height:110px;
+    border: 1px solid #D7EDFF;
+    /*border-bottom: 1px solid #D7EDFF;*/
+    margin-bottom: 7px;
+    padding: 5px;
+
+}
+.adImg{
+    float:left;
+    width:100px;
+    height:100px;
+    margin-right: 5px;
+}
+.adTitle{
+    float:left;
+    width:155px;
+    height:100px;
+    /*background-color: red;*/
+
+    font-family: "微软雅黑";
+    font-size: 16px;
+    line-height: 30px;
+    color:#D7EDFF;
+    font-weight: bold;
 }

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        <!--自定义样式及脚本放于此处-->
+        <link rel="stylesheet" href="/Public/dxt/css/detail.css">
+        {$Think.const.ANIMATION}
+        <title>{$config['system_name']}</title>
+        <script type="text/javascript" src="__PUBLIC__/dxt/js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/dxt/js/detail.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3&ak=woXSx1cEZqVgwpMkc8bgVzQZ4xHq1IU8"></script>
+    </head>
+    <body>
+        <div class="area">
+            <div class="titleArea">
+                <div class="logo"></div>
+                <div class="sysName">梨园智能商圈</div>
+            </div>
+
+            <div class="backhomeBtn" onclick="backHome({$address_id})"></div>
+
+            <div class="adArea" id="adList">
+
+            </div>
+
+            <div class="changeBtn" onclick="getAdList({$address_id})"></div>
+
+            <div class="contentArea">
+                <div class="contentInfo">
+                    <div class="linecenter">商家名称：{$sellerInfo.name}&#12288;注册社区：{$sellerInfo.address_name}</div>
+                    <hr>
+                    <div class="lineleft">联系方式：{$sellerInfo.tel}</div>
+                    <div class="lineleft">地址：{$sellerInfo.address}</div>
+                    <div id="allmap" style="width:100%;height:200px;background-color: red;"></div>
+                    <notempty name="adList">
+                        <foreach name="adList" item="v" key="k">
+                            <hr>
+                            <div class="linecenter">{$v.title}</div>
+                            <div class="linecenter">&#12288;</div>
+                            <div class="lineleft"><img src="../../../{$v.pics.data.0.url}" style="width:100%;height: auto;"></div>
+                            <div class="lineleft" style="text-indent: 2em;">{$v.content}</div>
+                        </foreach>
+
+                    </notempty>
+                </div>
+            </div>
+
+        </div>
+    </body> 
+</html>
+
+<script type="text/javascript" src="/Public/dxt/js/baiduMap.js"></script>
+<script type="text/javascript">
+                //百度地图
+                baiduMap('{$sellerInfo.address_api_url}');
+</script>

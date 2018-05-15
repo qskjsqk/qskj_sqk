@@ -3,11 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Think.const.ADMIN_COMPATIBLE}{$Think.const.ADMIN_JS}{$Assigndata}
+        {$Think.const.ADMIN_META}{$Think.const.ADMIN_CSS}{$Assigndata}
         <!--自定义样式及脚本放于此处-->
         <link rel="stylesheet" href="/Public/dxt/css/index.css">
         {$Think.const.ANIMATION}
         <title>{$config['system_name']}</title>
+        <script type="text/javascript" src="__PUBLIC__/dxt/js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/dxt/js/index.js"></script>
     </head>
     <body>
         <div class="area">
@@ -15,7 +17,40 @@
                 <div class="logo"></div>
                 <div class="sysName">梨园智能商圈</div>
             </div>
-            <div class="adArea"></div>
+            <div class="adArea" id="adList">
+                <div class="adList">
+                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                </div>
+                <div class="adList">
+                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                </div>
+                <div class="adList">
+                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                </div>
+                <div class="adList">
+                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                </div>
+                <div class="adList">
+                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                </div>
+
+            </div>
+            
+            <div class="changeBtn" onclick="getAdList(0)"></div>
+            
+            <div class="tspicArea">
+                <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132">
+            </div>
+            
+            <div class="tsArea">将社区卡放置于导向台的读卡器上</div>
+            
+            <input type="password" name="card_num" id="card_num" class="inputArea" onkeyup="value = value.replace(/[^1234567890]+/g, '')"/>
+            
             <div class="qrcodeArea"></div>
         </div>
     </body> 

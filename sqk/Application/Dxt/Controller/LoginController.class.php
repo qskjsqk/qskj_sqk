@@ -41,11 +41,10 @@ class LoginController extends Controller {
      * 用户登录
      */
     public function login() {
-
-        cookie('pwd', '123', 3600 * 24 * 30);
-        cookie('cookie_user', '张晓炜', 3600 * 24 * 30);
-        cookie('user_id', 106, 3600 * 24 * 30);
-        cookie('address_id', 1, 3600 * 24 * 30);
+        $user_id = cookie('user_id');
+        $info = M('sys_userapp_info')->field('id,address_id')->where('id=' . $user_id)->find();
+        cookie('user_id', $info['id'], 3600 * 24 * 30);
+        cookie('address_id',$info['address_id'], 3600 * 24 * 30);
         $this->redirect('Activity/activity_list');
     }
 
