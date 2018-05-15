@@ -13,12 +13,12 @@
  * @datetime 2018-5-11 18:34:24
  */
 
-namespace Seller\Controller;
+namespace Dxt\Controller;
 
 use Think\Controller;
 use Appm\Controller\BaseController;
 use Think\Tool\Request;
-use Seller\Model\TradingRecordModel;
+use Dxt\Model\TradingRecordModel;
 
 class TradingController extends BaseController {
 

@@ -39,6 +39,8 @@ return array(
         'order' => 4, //订单消息
         'signin' => 6, //签到消息
         'prom' => 6, //广告消息
+        'goods' => 4, //积分商品
+        'trading' => 4, //交易记录
     ), //app分页条数
     // 配置邮件发送服务器
     'THINK_EMAIL' => array(

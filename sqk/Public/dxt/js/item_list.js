@@ -85,7 +85,6 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
         mui("#loadMore").button('reset');
         $("#loadMore").html(res.data.ajaxLoad);
         //---------------------------------------------------------------------
-
     }, 'json');
 }
 

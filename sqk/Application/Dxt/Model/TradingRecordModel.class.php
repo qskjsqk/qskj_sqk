@@ -59,7 +59,7 @@ class TradingRecordModel extends BaseModel {
         return [
             'userName' => $appUserInfo['realname'],
             'comName' => getConameById($appUserInfo['address_id']),
-            'consumedIntegral' => $this->where(['payment_id' => $user_id])->sum('trading_integral'),
+            'consumedIntegral' => !empty($this->where(['payment_id' => $user_id])->sum('trading_integral')) ? $this->where(['payment_id' => $user_id])->sum('trading_integral') : 0,
             'tradingCount' => $this->where(['payment_id' => $user_id])->count(),
             'currentIntegral' => $appUserInfo['integral_num'],
             'txPath' => $appUserInfo['tx_path'],
