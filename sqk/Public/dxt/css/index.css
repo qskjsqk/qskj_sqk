@@ -15,9 +15,24 @@
 }
 .logo{
     float: left;
+    width:80px;
+    height:80px;
+    background: url(../img/logo.png);
+    background-size: 52px 48px;
+    background-repeat: no-repeat;
+    background-position: center;
+
 }
 .sysName{
     float: left;
+    width:320px;
+    height:80px;
+
+    font-family: "微软雅黑";
+    font-size: 30px;
+    line-height: 80px;
+    color:#fff;
+
 }
 .qrcodeArea{
     width:100px;
@@ -32,9 +47,9 @@
     width:350px;
     height:650px;
     border: 1px solid #eee;
-    
+
     position: absolute;
     left: 20px;
     top:160px;
-    
+
 }
