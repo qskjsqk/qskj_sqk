@@ -38,23 +38,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TopStatInfoController.class.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TopStatInfoController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/TopStatInfoController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="123" column="60" selection-start-line="123" selection-start-column="60" selection-end-line="123" selection-end-column="60" />
+            <state relative-caret-position="507">
+              <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
               <folding>
+                <element signature="e#7#136#0#PHP" expanded="true" />
                 <element signature="e#167#188#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="IntegralTradingRecordModel.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+            <state relative-caret-position="489">
+              <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
               <folding>
                 <element signature="e#6#120#0#PHP" expanded="true" />
                 <element signature="e#144#160#0#PHP" expanded="true" />
@@ -169,7 +170,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -366,11 +366,12 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../huihuitrip" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../demo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -462,12 +463,13 @@
       <workItem from="1526131141031" duration="481000" />
       <workItem from="1526202595166" duration="884000" />
       <workItem from="1526265147202" duration="22701000" />
-      <workItem from="1526349337950" duration="6001000" />
+      <workItem from="1526349337950" duration="7318000" />
+      <workItem from="1526364270901" duration="1790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167287000" />
+    <option name="totallyTimeSpent" value="170394000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1437" height="793" extended-state="6" />
@@ -529,20 +531,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/GenerateUnique.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/SysUserappInfoModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Seller/View/Qrcodeurl/seller_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
@@ -708,7 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -731,10 +718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1818">
           <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
-          <folding>
-            <element signature="e#6#144#0#PHP" expanded="false" />
-            <element signature="e#170#186#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -763,17 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="370" column="53" selection-start-line="370" selection-start-column="53" selection-end-line="370" selection-end-column="53" />
-          <folding>
-            <element signature="e#7#126#0#PHP" expanded="false" />
-            <element signature="e#157#178#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -878,6 +850,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/ActivSigninInfoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+          <folding>
+            <element signature="e#7#140#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/SysCommunityInfoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="500" column="40" selection-start-line="500" selection-start-column="40" selection-end-line="500" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/View/TopStatInfo/userConsumptionList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
@@ -890,33 +888,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/ActivSigninInfoModel.class.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_9.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        <state relative-caret-position="232">
+          <caret line="419" column="9" selection-start-line="419" selection-start-column="9" selection-end-line="419" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/TopStatInfoController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
           <folding>
-            <element signature="e#7#140#0#PHP" expanded="true" />
+            <element signature="e#7#136#0#PHP" expanded="true" />
+            <element signature="e#167#188#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+        <state relative-caret-position="489">
+          <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
           <folding>
             <element signature="e#6#120#0#PHP" expanded="true" />
             <element signature="e#144#160#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/TopStatInfoController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="123" column="60" selection-start-line="123" selection-start-column="60" selection-end-line="123" selection-end-column="60" />
-          <folding>
-            <element signature="e#167#188#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

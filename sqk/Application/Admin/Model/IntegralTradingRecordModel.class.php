@@ -100,109 +100,30 @@ class IntegralTradingRecordModel extends Model {
             'payment_type' => 3,
         ];
         $userToAddressList = $this->where($where)->field("count(id) as count,income_id as address_id")->group("income_id")->select();
-
         //情况二
         $goodsExchageTimes = $goodsModel->field("sum(exchange_times) as count,address_id")->group("address_id")->select();
-
-        //从原始数组中获取address_id列表
-        $userToAddressId = self::getAddressId($userToAddressList);
-        $goodsExchageAddressId = self::getAddressId($goodsExchageTimes);
-
-        //针对二者的address_id列表求交集
-        $arrIntersect = array_intersect($userToAddressId, $goodsExchageAddressId);
-
-        $data = [];
-
-        //如果二者有交集
-        if(!empty($arrIntersect)) {
-            //从原始列表中去除有公共address_id的元素
-            $goodsExchageTimesDiff = self::findAndUnsetItemFromArr($arrIntersect, $goodsExchageTimes);
-            $userToAddressListDiff = self::findAndUnsetItemFromArr($arrIntersect, $userToAddressList);
-
-            //去除有公共address_id后二者合并
-            $listDiffMerge = array_merge($goodsExchageTimesDiff, $userToAddressListDiff);
-
-            //交集部分要分别根据address_id从原始数组中求得count,然后相加得到对应address_id的count
-            $arrIntersectList = self::getIntersectListData($arrIntersect, $userToAddressList, $goodsExchageTimes);
-
-            //合并有公共address_id的数据和没有公共address_id的数据
-            $data = array_merge($listDiffMerge, $arrIntersectList);
-        } else {
-            //如果没有交集,直接合并原始数据
-            $data = array_merge($userToAddressList, $goodsExchageTimes);
-        }
-
+        $data = self::getDataFromArr($userToAddressList, $goodsExchageTimes);
         return $data;
-
     }
 
-    /**
-     * 从原始数组中获取address_id列表
-     * @access private
-     * @param  array $list   原始数组
-     * @return array(一维)
-     */
-    private static function getAddressId($list) {
+    private static function getDataFromArr($arr1 = [], $arr2 = []) {
         $arr = [];
-        foreach($list as $value) {
-            $arr[] = $value['address_id'];
-        }
-        return $arr;
-    }
-
-    /**
-     * 从原始列表中去除有公共address_id的元素
-     * @access private
-     * @param  array $arrIntersect   公共address_id数组
-     * @param  array $data           原始数组
-     * @return array
-     */
-    private function findAndUnsetItemFromArr($arrIntersect, $data) {
-        foreach($arrIntersect as $value) {
-            foreach($data as $key => $item) {
-                if($value == $item['address_id']) {
-                    unset($data[$key]);
+        foreach($arr1 as $key => $value) {
+            $count = 0;
+            $isExist = false;
+            foreach($arr2 as $k => $item) {
+                if($value['address_id'] == $item['address_id']) {
+                    $isExist = true;
+                    $count = $value['count'] + $item['count'];
+                    unset($arr2[$k]);
                 }
             }
-        }
-        return $data;
-    }
-
-    /**
-     * 根据address_id从原始列表中获取count
-     * @access private
-     * @param  integer $addressId    社区id
-     * @param  array   $lists        原始数组
-     * @return integer
-     */
-    private static function getCountFromArr($addressId, $lists) {
-        $count = 0;
-        foreach($lists as $item) {
-            if($addressId == $item['address_id']) {
-                $count = $item['count'];
+            if($isExist == true) {
+                $arr[] = ['count' => $count, 'address_id' => $value['address_id']];
+                unset($arr1[$key]);
             }
         }
-        return $count;
-    }
-
-    /**
-     * 交集部分要分别根据address_id从原始数组中求得count,然后相加得到对应address_id的count,最后返回索要数据
-     * @access private
-     * @param  array   $arrIntersect        address_id交集数据
-     * @param  array   $userToAddressList   原始数组
-     * @param  array   $goodsExchageTimes   原始数组
-     * @return array
-     */
-    private static function getIntersectListData($arrIntersect, $userToAddressList, $goodsExchageTimes) {
-        $arrIntersectList = [];
-        foreach($arrIntersect as $value) {
-            $count = $count1 = $count2 = 0;
-            $count1 = self::getCountFromArr($value, $userToAddressList);
-            $count2 = self::getCountFromArr($value, $goodsExchageTimes);
-            $count = $count1 + $count2;
-            $arrIntersectList[] = ['count' => $count, 'address_id' => $value];
-        }
-        return $arrIntersectList;
+        return array_merge($arr1, $arr2, $arr);
     }
 
 
