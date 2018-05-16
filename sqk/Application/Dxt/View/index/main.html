@@ -31,7 +31,7 @@
             <div class="showArea">
                 <iframe style="margin-right: 200px;overflow-y:scroll;" name="right" id="rightMain" src="__CONTROLLER__/login/user_id/{$user_id}" frameborder="no" scrolling="auto" width="100%" height="100%" allowtransparency="true"></iframe>
             </div>
-            <div class="backBtn">返回</div>
+            <div class="backBtn" onclick="document.frames['rightMain'].history.back()">返回</div>
         </div>
     </body> 
 </html>

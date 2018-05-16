@@ -183,6 +183,9 @@ class ApiController extends BaseDBController {
         } else {
             $where['activity_id'] = ['EQ', $id];
             $signinList = M('activ_signin')->where($where)->select();
+            for ($i = 0; $i < count($signinList); $i++) {
+                $signinList[$i]['signed_num'] = M('activ_signin_info')->where('sign_id='.$signinList[$i]['id'])->count();
+            }
             if (empty($signinList)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '未查到这条数据！';
@@ -198,6 +201,9 @@ class ApiController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 签到状态置位
+     */
     public function setSigninStatusPos() {
         $sign_id = $_GET['sign_id'];
         $status = $_GET['status'];
@@ -297,8 +303,8 @@ class ApiController extends BaseDBController {
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
                     $addArr['tx_path'] = $userInfo['tx_path'];
-                    
-                    $addArr['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
+
+                    $addArr['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
 
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
 
@@ -349,7 +355,7 @@ class ApiController extends BaseDBController {
                 for ($i = 0; $i < count($signInfoList); $i++) {
                     $signInfoList[$i]['add_time'] = strtotime($signInfoList[$i]['add_time']);
                     $signInfoList[$i]['tx_path'] = $userInfo['tx_path'];
-                    $signInfoList[$i]['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
+                    $signInfoList[$i]['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
                 }
                 $returnData['data'] = $signInfoList;
             }
@@ -368,12 +374,12 @@ class ApiController extends BaseDBController {
         $sign_status = $inputArr['sign_status'];
         $sign_id = $inputArr['sign_id'];
 
-        if (empty($sign_id) || $sign_status===NULL) {
+        if (empty($sign_id) || $sign_status === NULL) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
-            $where['sign_id'] = ['EQ', $sign_id];
+            $where['id'] = ['EQ', $sign_id];
             $data['sign_status'] = $sign_status;
             $flag = M('activ_signin')->where($where)->save($data);
             if ($flag) {
@@ -416,11 +422,11 @@ class ApiController extends BaseDBController {
             $where['income_id'] = $address_id;
             $where['exchange_method_id'] = 4;
             $tradingRecordList = $tradingRecordModel
-                ->where($where)
-                ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
-                ->order('id desc')
-                ->limit($first . ',' . $pageNum)
-                ->select();
+                    ->where($where)
+                    ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                    ->order('id desc')
+                    ->limit($first . ',' . $pageNum)
+                    ->select();
             $count = $tradingRecordModel->where($where)->count();
 
             if (!empty($tradingRecordList) && is_array($tradingRecordList)) {

@@ -37,6 +37,9 @@ class QrcodeurlController extends BaseController {
         $this->redirect('seller_detail?id=' . $seller_id);
     }
 
+    /**
+     * 商品详情页
+     */
     public function goods_detail() {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
@@ -49,6 +52,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家详情页
+     */
     public function seller_detail() {
         //不管有没有分配上
         $this->assign('user_id', cookie('user_id'));
@@ -90,6 +96,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 交易二维码
+     */
     public function transfer_qrcode() {
         //不管有没有分配上
         $this->assign('user_id', cookie('user_id'));
@@ -107,6 +116,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 提交入库反馈信息
+     */
     public function InsertComplaint() {
         $post = getFormData();
         if ($post['user_id'] != 0) {
@@ -127,6 +139,9 @@ class QrcodeurlController extends BaseController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 进行商品交易
+     */
     public function exchangeGoods() {
         //入库商品交易表
         $addArr = $_POST;
@@ -182,6 +197,9 @@ class QrcodeurlController extends BaseController {
         $this->ajaxReturn($returnData, "JSON");
     }
 
+    /**
+     * 进行转账交易
+     */
     public function transrerIntegral() {
         //入库商品交易表
         $addArr = $_POST;

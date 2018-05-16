@@ -50,9 +50,15 @@ class IndexController extends BaseController {
         $sellerInfo = M('seller_info')->where($swhere)->find();
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
 
+        if (strpos($sellerInfo['tx_path'], 'http') === FALSE) {
+            $sellerInfo['tx_path'] = '../../../' . $sellerInfo['tx_path'];
+        } else {
+            $sellerInfo['tx_path'] = $sellerInfo['tx_path'];
+        }
+
         $adList = M('seller_prom_info')->where('seller_id=' . $_GET['id'] . ' and status=1')->order('id desc')->select();
         for ($i = 0; $i < count($adList); $i++) {
-            $adList[$i]['pics']= $this->getAttachArr('sellerProm', $adList[$i]['id']);
+            $adList[$i]['pics'] = $this->getAttachArr('sellerProm', $adList[$i]['id']);
         }
 //        dump($sellerInfo);
         $this->assign('sellerInfo', $sellerInfo);
@@ -105,6 +111,12 @@ class IndexController extends BaseController {
         $adList = M('seller_info')->where($where)->order('RAND()')->limit(5)->select();
         for ($i = 0; $i < count($adList); $i++) {
             $adList[$i]['address_name'] = getConameById($adList[$i]['address_id']);
+
+            if (strpos($adList[$i]['tx_path'], 'http') === FALSE) {
+                $adList[$i]['tx_path'] = '../../../' . $adList[$i]['tx_path'];
+            } else {
+                $adList[$i]['tx_path'] = $adList[$i]['tx_path'];
+            }
         }
         $this->ajaxReturn($adList, 'JSON');
     }
@@ -175,6 +187,11 @@ class IndexController extends BaseController {
         $user_id = cookie('user_id');
         $result = $userModel->where(array('id' => $user_id))->find();
         $result['address_name'] = getConameById($result['address_id']);
+        if (strpos($result['tx_path'], 'http') === FALSE) {
+            $result['tx_path'] = '../../../' . $result['tx_path'];
+        } else {
+            $result['tx_path'] = $result['tx_path'];
+        }
         if ($_GET['type'] == 'api') {
             $this->ajaxReturn($result);
         } else {

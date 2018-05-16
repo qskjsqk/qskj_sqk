@@ -132,6 +132,11 @@ class IndexController extends BaseController {
         $user_id = cookie('user_id');
         $result = $userModel->where(array('id' => $user_id))->find();
         $result['address_name'] = getConameById($result['address_id']);
+        if (strpos($result['tx_path'], 'http') === FALSE) {
+            $result['tx_path'] = '../../../' . $result['tx_path'];
+        } else {
+            $result['tx_path'] = $result['tx_path'];
+        }
         if ($_GET['type'] == 'api') {
             $this->ajaxReturn($result);
         } else {

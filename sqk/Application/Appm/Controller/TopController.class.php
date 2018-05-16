@@ -60,7 +60,11 @@ class TopController extends BaseController {
             $Arr[$i]['top'] = $Arr[$i]['realname'];
             $Arr[$i]['bottom'] = getConameById($Arr[$i]['address_id']);
             $Arr[$i]['right'] = '累计' . $Arr[$i]['sign_integral'] . '分';
-            $Arr[$i]['tx_icon'] = '<img src="../../../' . $Arr[$i]['tx_path'] . '">';
+            if (strpos($Arr[$i]['tx_path'], 'http') === FALSE) {
+                $Arr[$i]['tx_icon'] = '<img src="../../../' . $Arr[$i]['tx_path'] . '">';
+            } else {
+                $Arr[$i]['tx_icon'] = '<img src="' . $Arr[$i]['tx_path'] . '">';
+            }
         }
         return $Arr;
     }
@@ -82,7 +86,11 @@ class TopController extends BaseController {
             $Arr[$i]['top'] = $Arr[$i]['name'];
             $Arr[$i]['bottom'] = getConameById($Arr[$i]['address_id']);
             $Arr[$i]['right'] = '累计' . $Arr[$i]['exchange_integral'] . '分';
-            $Arr[$i]['tx_icon'] = '<img src="../../../' . $Arr[$i]['tx_path'] . '">';
+            if(strpos($Arr[$i]['tx_path'],'http')===FALSE){
+                $Arr[$i]['tx_icon'] = '<img src="../../../' . $Arr[$i]['tx_path'] . '">';
+            }else{
+                $Arr[$i]['tx_icon'] = '<img src="' . $Arr[$i]['tx_path'] . '">';
+            }
         }
         return $Arr;
     }
