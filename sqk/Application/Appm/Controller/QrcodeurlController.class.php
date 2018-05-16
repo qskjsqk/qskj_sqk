@@ -97,7 +97,7 @@ class QrcodeurlController extends BaseController {
     }
 
     /**
-     * 交易二维码
+     * 商家收款交易二维码
      */
     public function transfer_qrcode() {
         //不管有没有分配上
@@ -112,6 +112,49 @@ class QrcodeurlController extends BaseController {
 
         //分配反馈类型信息
         $this->assign('compalintCat', M('seller_complaint_cat')->select());
+
+        $this->display();
+    }
+
+    /**
+     * 社区收款交易二维码
+     */
+    public function transfer_comm() {
+        //不管有没有分配上
+        $this->assign('user_id', cookie('user_id'));
+
+        $userInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
+        $this->assign('userInfo', $userInfo);
+
+        $id = $_GET['id'];
+        //查询商家信息
+        $where['id'] = ['EQ', $id];
+        $commInfo = M('sys_community_info')->where($where)->find();
+        $this->assign('commInfo', $commInfo);
+
+        $this->display();
+    }
+
+    /**
+     * 用户扫描签到二维码
+     */
+    public function activ_signin() {
+        //不管有没有分配上
+        $this->assign('user_id', cookie('user_id'));
+
+        $myInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
+        $myInfo['address_name'] = getConameById($myInfo['address_id']);
+        $this->assign('myInfo', $myInfo);
+
+        $id = $_GET['id'];
+        //查询签到信息
+        $where['id'] = ['EQ', $id];
+        $signInfo = M('activ_signin')->where($where)->find();
+        $activInfo = M('activ_info')->where('id=' . $signInfo['activity_id'])->find();
+
+        $this->assign('signInfo', $signInfo);
+        $this->assign('activInfo', $activInfo);
+
 
         $this->display();
     }
@@ -209,6 +252,7 @@ class QrcodeurlController extends BaseController {
         $tranModel = M();
         //开启事务  
         $tranModel->startTrans();
+
         //入库交易总表
         $tradingData = [
             'income_id' => $_POST['seller_id'],
@@ -239,6 +283,57 @@ class QrcodeurlController extends BaseController {
             $returnData['msg'] = '交易成功';
             $returnData['data'] = $addArr;
             $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
+            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
+            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
+        } else {
+            $tranModel->rollback(); // 否则将事务回滚  
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，请重试';
+        }
+
+        $this->ajaxReturn($returnData, "JSON");
+    }
+
+    /**
+     * 用户与社区进行转账交易
+     */
+    public function transrerIntegralComm() {
+        $addArr = $_POST;
+
+        $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
+
+        $tranModel = M();
+        //开启事务  
+        $tranModel->startTrans();
+
+        //入库交易总表
+        $tradingData = [
+            'income_id' => $_POST['comm_id'],
+            'payment_id' => cookie('user_id'),
+            'income_type' => 1,
+            'payment_type' => 3,
+            'trading_integral' => $_POST['exchange_integral'],
+            'trading_number' => $addArr['trading_number'],
+            'exchange_method_id' => 5,
+            'relation_id' => 0,
+            'status' => 1,
+        ];
+        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
+        //商家积分增值
+        $commIntegralFlag = $tranModel->table($this->dbFix . 'sys_community_info')->where('id=' . $_POST['comm_id'])
+                ->setInc('com_integral', $_POST['exchange_integral']);
+        //用户积分减值
+        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
+                ->setDec('integral_num', $_POST['exchange_integral']);
+
+        $flag = $tradingFlag && $commIntegralFlag && $userFlag;
+
+        if ($flag) {
+            $tranModel->commit(); // 成功则提交事务  
+            $returnData['flag'] = 1;
+            $returnData['msg'] = '交易成功';
+            $returnData['data'] = $addArr;
+            $returnData['data']['comm_name'] = $this->getDataKey(M('sys_community_info'), $returnData['data']['comm_id'], 'com_name');
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
         } else {

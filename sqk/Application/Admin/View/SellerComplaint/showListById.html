@@ -43,8 +43,8 @@
             <foreach name="data.infoList" item="v" key="k">
                 <tr class="tr">
                     <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
-                    <td>{$v.id}</td>
-                    <td>{$v.usr}</td>
+                    <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
+                    <td>{$v.realname}({$v.tel})</td>
                     <td>{$v.name}</td>
                     <td>{$v.com_name}</td>
                     <td>{$v.cat_name}</td>

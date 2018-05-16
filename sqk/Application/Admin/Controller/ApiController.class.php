@@ -41,12 +41,21 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '错误的设备识别码！';
             $returnData['timestamp'] = time();
         } else {
-            $findArr['address_name'] = getConameById($findArr['id']);
+            $findArr['address_name'] = getConameById($findArr['address_id']);
+            $commInfo = M('sys_community_info')->field('com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
+            if ($commInfo['qrcode_path'] == 0) {
+                $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_comm/id/' . $commInfo['id'] . '/';
+                $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
+                $data['qrcode_path'] = createQrcode($url);
+                $this->setField(M('sys_community_info'), $commInfo['id'], $data);
+                $commInfo['qrcode_path'] = $data['qrcode_path'];
+            }
+
             $returnData['status'] = 1;
             $returnData['msg'] = '成功登录！';
             $returnData['timestamp'] = time();
 
-            $returnData['data'] = $findArr;
+            $returnData['data'] = array_merge($findArr, $commInfo);
         }
         $this->ajaxReturn($returnData, 'JSON');
     }
@@ -184,7 +193,7 @@ class ApiController extends BaseDBController {
             $where['activity_id'] = ['EQ', $id];
             $signinList = M('activ_signin')->where($where)->select();
             for ($i = 0; $i < count($signinList); $i++) {
-                $signinList[$i]['signed_num'] = M('activ_signin_info')->where('sign_id='.$signinList[$i]['id'])->count();
+                $signinList[$i]['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signinList[$i]['id'])->count();
             }
             if (empty($signinList)) {
                 $returnData['status'] = 2;

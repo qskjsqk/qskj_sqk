@@ -61,6 +61,7 @@
             <div class="row">
                 <div class="col-md-2 b-div-menu" id="menu">
                     <ul id="main-nav" class="nav nav-list nav-stacked">
+                        
                         <li style="border-left-color: #3fb2ac">
                             <div class="li-color-1" onclick="jumpPage('__MODULE__/index/main', 0)">
                                 <i class="glyphicon glyphicon-home"></i>
@@ -88,11 +89,11 @@
                                 <span class="pull-right glyphicon glyphicon-chevron-down"></span>
                             </div>
                             <ul id="div2" class="nav nav-list collapse secondmenu" style="height: 0px;">
-                                <li class="showSellerProm"><div onclick="jumpPage('__MODULE__/SellerPromInfo/showList', this)"  class="li-color-3">广告列表</div></li>
+                                <li class="showPromInfo"><div onclick="jumpPage('__MODULE__/SellerPromInfo/showList', this)"  class="li-color-3">广告列表</div></li>
                                 <li class="showSellerCat"><div onclick="jumpPage('__MODULE__/SellerCat/showList', this)"  class="li-color-3" >商家分类</div></li>
                                 <li class="showSellerInfo"><div onclick="jumpPage('__MODULE__/SellerInfo/showList', this)"  class="li-color-3" >商家信息</div></li>
-                                <li class="showSellerItems"><div onclick="jumpPage('__MODULE__/sellerIntegralGoods/showList', this)"  class="li-color-3">积分商品</div></li>
-                                <li class="showSellerItems"><div onclick="jumpPage('__MODULE__/GoodsExchangeRecord/showList', this)"  class="li-color-3">兑换记录</div></li>
+                                <li class="showGoods"><div onclick="jumpPage('__MODULE__/sellerIntegralGoods/showList', this)"  class="li-color-3">积分商品</div></li>
+                                <li class="showGoodsExchange"><div onclick="jumpPage('__MODULE__/GoodsExchangeRecord/showList', this)"  class="li-color-3">兑换记录</div></li>
                             </ul>
                         </li>
 
@@ -105,18 +106,18 @@
                             <ul id="div4" class="nav nav-list collapse secondmenu" style="height: 0px;">
                                 <li class="showActivCat"><div onclick="jumpPage('__MODULE__/ActivCat/showList', this)"  class="li-color-5" >活动分类</div></li>
                                 <li class="showActivInfo"><div onclick="jumpPage('__MODULE__/ActivInfo/showList', this)"  class="li-color-5" >活动列表</div></li>
-                                <!--<li><div onclick="jumpPage('__MODULE__/ActivStatistics/show', this)"  class="li-color-5" >活动统计</div></li>-->
                             </ul>
                         </li>
-                        <li class="listMenu">
+                        
+                        <li class="topMenu">
                             <div class="nav-header collapsed li-color-2" onclick="zkTab('div5')">
                                 <i class="glyphicon glyphicon-signal"></i>
                                 榜单统计
                                 <span class="pull-right glyphicon glyphicon-chevron-down"></span>
                             </div>
                             <ul id="div5" class="nav nav-list collapse secondmenu" style="height: 1px;">
-                                <li class=""><div onclick="jumpPage('__MODULE__/TopStatInfo/showTopList', this)"  class="li-color-2" >各类榜单</div></li>
-                                <li class=""><div onclick="jumpPage('__MODULE__/TopStatInfo/userConsumptionList', this)"  class="li-color-2" >运维统计</div></li>
+                                <li class="showTopList"><div onclick="jumpPage('__MODULE__/TopStatInfo/showTopList', this)"  class="li-color-2" >各类榜单</div></li>
+                                <li class="showStatList"><div onclick="jumpPage('__MODULE__/TopStatInfo/userConsumptionList', this)"  class="li-color-2" >运维统计</div></li>
                             </ul>
                         </li>
 
