@@ -303,29 +303,49 @@ class ApiController extends BaseDBController {
                     $returnData['msg'] = '该用户已签到！';
                     $returnData['timestamp'] = time();
                 } else {
-                    $returnData['status'] = 1;
-                    $returnData['msg'] = '成功签到！';
-                    $returnData['timestamp'] = time();
 
-                    $addArr['sign_type'] = '1';
+                    $addArr['sign_type'] = 1;
                     $addArr['user_id'] = $userInfo['id'];
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
-                    $addArr['tx_path'] = $userInfo['tx_path'];
-
-                    $addArr['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
-
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
 
+                    $tranModel = M();
+                    $tranModel->startTrans(); // 开启事务
                     //signinfo表入数据
-                    $addFlag = M('activ_signin_info')->add($addArr);
-                    $addArr['add_time'] = time();
-                    $addArr['new_id'] = $addFlag;
-                    //更新sign表
+                    $addFlag = $tranModel->table($this->dbFix . 'activ_signin_info')->add($addArr);
+                    //用户增加分数和经验值
+                    $userIntegralFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                            ->setInc('integral_num', $sign_integral);
+                    $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                            ->setInc('exp_num', $sign_integral);
                     //更新activ_info表
-                    //更新userapp_info表
+                    $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+                    $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                            ->setInc('join_num', 1);
+                    $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                            ->save(['join_ids' => $activInfo['join_ids'] . $user_id . ',']);
+                    $flag = $addFlag && $userIntegralFlag && $userExpFlag && $activJoinNumFlag && $activJoinIdsFlag;
 
-                    $returnData['data'] = $addArr;
+
+                    if ($flag) {
+                        $tranModel->commit(); // 成功则提交事务 
+                        //补充字段
+                        $addArr['tx_path'] = $userInfo['tx_path'];
+                        $addArr['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
+                        $addArr['add_time'] = time();
+                        $addArr['new_id'] = $addFlag;
+
+                        $returnData['data'] = $addArr;
+                        $returnData['status'] = 1;
+                        $returnData['msg'] = '成功签到！';
+                        $returnData['timestamp'] = time();
+                    } else {
+                        $tranModel->rollback(); // 否则将事务回滚 
+                        $returnData['status'] = 0;
+                        $returnData['msg'] = '签到失败！';
+                        $returnData['timestamp'] = time();
+                    }
                 }
             }
         }

@@ -150,13 +150,85 @@ class QrcodeurlController extends BaseController {
         //查询签到信息
         $where['id'] = ['EQ', $id];
         $signInfo = M('activ_signin')->where($where)->find();
-        $activInfo = M('activ_info')->where('id=' . $signInfo['activity_id'])->find();
+        $signInfo['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signInfo['id'])->count();
+
+        $activInfo = M('activ_info')->field('id,cat_id,like_num,integral,address_id,title,start_time')->where('id=' . $signInfo['activity_id'])->find();
+        $activInfo['cat_name'] = $this->getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
+        $activInfo['address_name'] = getConameById($activInfo['address_id']);
+        $activInfo['start_time'] = tranTimeToCom($activInfo['start_time']);
 
         $this->assign('signInfo', $signInfo);
         $this->assign('activInfo', $activInfo);
 
 
         $this->display();
+    }
+
+    /**
+     * 用户扫码签到
+     */
+    public function signIn() {
+        $user_id = $_POST['user_id'];
+        $sign_id = $_POST['sign_id'];
+        $sign_integral = $_POST['sign_integral'];
+        $activity_id = $_POST['activity_id'];
+
+
+
+
+        $swhere['sign_id'] = ['EQ', $sign_id];
+        $swhere['user_id'] = ['EQ', $user_id];
+        $signInfoInfo = M('activ_signin_info')->where($swhere)->find();
+        $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,tel')->where('id=' . $user_id)->find();
+
+//        dump($signInfoInfo);exit;
+
+        if (!empty($signInfoInfo)) {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '您已签到，请勿重复签到！';
+        } else {
+            $addArr['sign_type'] = 0;
+            $addArr['user_id'] = $user_id;
+            $addArr['sign_id'] = $sign_id;
+            $addArr['realname'] = $userInfo['realname'];
+            $addArr['sign_integral'] = $sign_integral;
+
+            $tranModel = M();
+
+            $tranModel->startTrans(); // 开启事务
+            //signinfo表入数据
+            $addFlag = $tranModel->table($this->dbFix . 'activ_signin_info')->add($addArr);
+
+            //用户增加分数和经验值
+            $userIntegralFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                    ->setInc('integral_num', $sign_integral);
+            $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                    ->setInc('exp_num', $sign_integral);
+            //更新activ_info表
+            $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+            $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                    ->setInc('join_num', 1);
+            $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                    ->save(['join_ids' => $activInfo['join_ids'] . $user_id . ',']);
+            $flag = $addFlag && $userIntegralFlag && $userExpFlag && $activJoinNumFlag && $activJoinIdsFlag;
+            if ($flag) {
+                $tranModel->commit(); // 成功则提交事务 
+                $returnData['flag'] = 1;
+                $returnData['msg'] = '签到成功';
+                $returnData['data'] = [
+                    'realname' => $userInfo['realname'],
+                    'tel' => $userInfo['tel'],
+                    'sign_integral' => $sign_integral,
+                    'sign_type' => '用户扫码签到',
+                    'sign_time' => date('Y.m.d H:i:s', time()),
+                ];
+            } else {
+                $tranModel->rollback(); // 否则将事务回滚 
+                $returnData['flag'] = 0;
+                $returnData['msg'] = '签到失败，请重试！';
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
     /**

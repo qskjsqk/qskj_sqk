@@ -34,7 +34,7 @@
         {$Assigndata}
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
         <script src="__PUBLIC__/appm/js/common.js"></script>
-        <!--<script src="__PUBLIC__/appm/js/.js"></script>-->
+        <script src="__PUBLIC__/appm/js/qrcodeurl_activ_signin.js"></script>
     </head>
 
     <body>
@@ -46,12 +46,25 @@
         <!--主体部分-->
         <div class="mui-content">
             <div class="mui-row">
-
+                <div class="mui-card">
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            <p style="color: #000;font-size:1.1em;">【{$activInfo.cat_name}】{$activInfo.title}</p>
+                            <div>
+                                <span class="mui-badge mui-badge-primary" style="float: left;">{$activInfo.integral}分</span>
+                                <span>&#12288;{$activInfo.address_name}/{$activInfo.start_time.ymd}</span>
+                                <span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span><span>{$activInfo.like_num}</span>人收藏</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mui-row">
                 <div class="mui-card">
                     <div class="mui-card-header">
-                        <span class="mui-card-link">第1次签到</span>
-                        <span class="mui-card-link">可获33积分</span>
-                        <span class="mui-card-link">已签20人</span>
+                        <span class="mui-card-link">第{$signInfo.sign_num}次签到</span>
+                        <span class="mui-card-link">可获{$signInfo.sign_integral}积分</span>
+                        <span class="mui-card-link">已签{$signInfo.signed_num}人</span>
                     </div>
                     <div class="mui-card-content">
                         <div class="mui-card-content-inner">
@@ -66,29 +79,23 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="mui-card-footer">
-                        <button type="button" class="mui-btn mui-btn-primary mui-btn-block">点击签到</button>
-                    </div>
-                </div>
-            </div>
-            <div class="mui-row">
-                <div class="mui-card">
-                    <div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(/Public/Upload/activity/2018-04-11/5acd833d494d2.PNG)" onclick="getActivDetail(' + data.data[i]['id'] + ')">
-                        <div class="p-modal"><div class="p-modal-div"><h4><i>已结束</i></h4></div></div>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="mui-card-content-inner">
-                            <p style="color: #000;font-size:1.1em;" onclick="getActivDetail()">【公益】放假啊看了电视剧分开拉就是打飞机阿斯利的空间看来飞机阿斯利的空间</p>
-                            <div>
-                                <span class="mui-badge mui-badge-primary" style="float: left;">300分</span>
-                                <span>&#12288;云景东里/2018.09.12</span>
-                                <span style="float: right;"><span class="mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-heart font14"></span><span id="like_num">0</span>人收藏</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="mui-card-footer text-center">
+                        <if condition="$signInfo.sign_status eq '0'">
+                            <span class="mui-card-link"></span>
+                                <span class="mui-card-link fontred">签到尚未开始</span>
+                                <span class="mui-card-link"></span>
+                            <elseif condition="$signInfo.sign_status eq '1'"/>
+                                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick='signIn()'>点击签到</button>
+                                <else/>
+                                <span class="mui-card-link"></span>
+                                <span class="mui-card-link fontred">签到已结束</span>
+                                <span class="mui-card-link"></span>
+                        </if>
 
+                    </div>
                 </div>
             </div>
+            
         </div>
         <!--页面主内容区结束-->
     </body>

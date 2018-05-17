@@ -53,10 +53,9 @@ class IndexController extends BaseController {
             'nickname' => '忘忧草',
         );
 
-
         //先检测是否已有帐号
-        $this->assign('headimgurl', $mxInfo['headimgurl']);
-        $this->assign('nickname', $mxInfo['nickname']);
+        $this->assign('headimgurl', $wxInfo['headimgurl']);
+        $this->assign('nickname', $wxInfo['nickname']);
         $this->display();
     }
 

@@ -23,7 +23,13 @@ class IndexController extends BaseController {
         parent::_initialize();
     }
 
-    
+    public function getAccessToken() {
+        $a = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + WXAPPID + '&secret=' . WXSECRET;
+        $a = httpRequest($a, '');
+        $wxInfo = json_decode($a, true);
+        dump($wxInfo);
+    }
+
 //    视图
 //------------------------------------------------------------------------------    
 
@@ -39,14 +45,13 @@ class IndexController extends BaseController {
         $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
         $b = httpRequest($b, '');
         $userInfo = json_decode($b, true);
-        
+
         $wx['headimgurl'] = $userInfo['headimgurl'];
         $wx['openid'] = $userInfo['openid'];
         $wx['nickname'] = $userInfo['nickname'];
         cookie('wxInfo', $wx, 3600 * 24 * 30);
-        
-        $this->redirect('Login/index');
 
+        $this->redirect('Login/index');
     }
 
     /**
