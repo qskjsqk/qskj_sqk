@@ -92,8 +92,6 @@ class IndexController extends BaseController {
         $this->assign('user_id', $_GET['user_id']);
         cookie('user_id', $_GET['user_id'], 3600 * 24 * 3);
         $this->assign('myInfo', $this->getUserappInfo());
-        //
-
         $this->display();
     }
 

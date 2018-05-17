@@ -99,7 +99,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <button type="button" class="btn btn-info btn-block" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">修改个人资料</button>
+                                    <button type="button" class="btn btn-info btn-block editUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">修改个人资料</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -126,11 +126,11 @@
                         </td>
                         <td>
                         <if condition="$userInfo.is_enable eq 1">
-                            <button class="btn btn-info btn-block" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
+                            <button class="btn btn-info btn-block editUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
                                 <span class="glyphicon glyphicon-remove-sign"></span> 禁用
                             </button>
                             <else/>
-                            <button class="btn btn-info btn-block" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
+                            <button class="btn btn-info btn-block editUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
                                 <span class="glyphicon glyphicon-ok-sign"></span> 启用
                             </button>
                         </if>
@@ -141,7 +141,7 @@
                             <th>注册手机号</th>
                             <td>{$userInfo.tel}</td>
                             <td>
-                                <button class="btn btn-info btn-block" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
+                                <button class="btn btn-info btn-block editUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/edit/id/{$userInfo.id}')">
                                     <span class="glyphicon glyphicon-edit"></span> 修改
                                 </button>
                             </td>
@@ -150,7 +150,7 @@
                             <th>社区实体卡</th>
                             <td><if condition="$userInfo.iccard_num eq 0"><span class="label label-default">未绑定</span><else/>{$userInfo.iccard_num}</if></td>
                         <td>
-                            <button class="btn btn-info btn-block" onclick="bindingCardLayer({$userInfo.id})">
+                            <button class="btn btn-info btn-block bindingUserAppInfo" onclick="bindingCardLayer({$userInfo.id})">
                                 <span class="glyphicon glyphicon-qrcode"></span> 绑卡
                             </button>
                         </td>

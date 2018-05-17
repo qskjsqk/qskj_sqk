@@ -23,13 +23,6 @@ class IndexController extends BaseController {
         parent::_initialize();
     }
 
-    public function getAccessToken() {
-        $a = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + WXAPPID + '&secret=' . WXSECRET;
-        $a = httpRequest($a, '');
-        $wxInfo = json_decode($a, true);
-        dump($wxInfo);
-    }
-
 //    视图
 //------------------------------------------------------------------------------    
 

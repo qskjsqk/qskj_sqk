@@ -260,8 +260,9 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 for ($i = 0; $i < count($signinInfoList); $i++) {
+                    $appInfo = M('sys_userapp_info')->find($signinInfoList['user_id']);
                     $signinInfoList[$i]['add_time'] = strtotime($signinInfoList[$i]['add_time']);
-                    $signinInfoList[$i]['tx_icon'] = "Public/admin/img/tx_icon/" . ($signinInfoList[$i]['id'] % 13 + 1) . ".jpg";
+                    $signinInfoList[$i]['tx_icon'] = $appInfo['tx_path'];
                 }
 
                 $returnData['data'] = $signinInfoList;

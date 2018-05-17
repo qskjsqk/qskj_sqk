@@ -8,6 +8,29 @@
  */
 
 /**
+ * * 截取中文字符串
+ * */
+function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true) {
+    if (function_exists("mb_substr")) {
+        $slice = mb_substr($str, $start, $length, $charset);
+    } elseif (function_exists('iconv_substr')) {
+        $slice = iconv_substr($str, $start, $length, $charset);
+    } else {
+        $re['utf-8'] = "/[x01-x7f]|[xc2-xdf][x80-xbf]|[xe0-xef][x80-xbf]{2}|[xf0-xff][x80-xbf]{3}/";
+        $re['gb2312'] = "/[x01-x7f]|[xb0-xf7][xa0-xfe]/";
+        $re['gbk'] = "/[x01-x7f]|[x81-xfe][x40-xfe]/";
+        $re['big5'] = "/[x01-x7f]|[x81-xfe]([x40-x7e]|xa1-xfe])/";
+        preg_match_all($re[$charset], $str, $match);
+        $slice = join("", array_slice($match[0], $start, $length));
+    }
+    $fix = '';
+    if (strlen($slice) < strlen($str)) {
+        $fix = '...';
+    }
+    return $suffix ? $slice . $fix : $slice;
+}
+
+/**
  * 生成查询条件
  * @param type $array 0变量 1key名 2条件 4标识（特殊条件）
  * @return type
@@ -361,19 +384,20 @@ function getFormData() {
 }
 
 function httpRequest($pUrl, $pData) {
-        $tCh = curl_init();
-        if ($pData) {
-            is_array($pData) && $pData = http_build_query($pData);
-            curl_setopt($tCh, CURLOPT_POST, true);
-            curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
-        }
-        curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
-        curl_setopt($tCh, CURLOPT_URL, $pUrl);
-        curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
-        curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
-        $tResult = curl_exec($tCh);
-        curl_close($tCh);
-        return $tResult;
+    $tCh = curl_init();
+    if ($pData) {
+        is_array($pData) && $pData = http_build_query($pData);
+        curl_setopt($tCh, CURLOPT_POST, true);
+        curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
     }
+    curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
+    curl_setopt($tCh, CURLOPT_URL, $pUrl);
+    curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
+    curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
+    $tResult = curl_exec($tCh);
+    curl_close($tCh);
+    return $tResult;
+}
+

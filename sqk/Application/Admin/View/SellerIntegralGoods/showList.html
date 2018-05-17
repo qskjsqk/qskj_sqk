@@ -40,10 +40,10 @@
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-4" style="min-width: 300px;">
-                        <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                        <button type="button" class="btn btn-danger delGoods" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
                         </button>
-                        <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
+                        <button type="button" class="btn btn-success" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')" style="height: 34px;">
                             显示全部积分商品
                         </button>
                     </div>
@@ -109,18 +109,18 @@
                         </td>
                         <td>
                             <div>
-                                <button class="btn btn-success" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
+                                <button class="btn btn-success showGoodsDetail" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
                                     查看详情
                                 </button>
-                                <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__MODULE__/GoodsExchangeRecord/showListById/goods_id/{$v.id}')">
+                                <button class="btn btn-default edit-btn showGoodsRecord" onclick="javascript:void(window.location.href = '__MODULE__/GoodsExchangeRecord/showListById/goods_id/{$v.id}')">
                                     兑换记录
                                 </button>
                                 <if condition="$v.status eq 1">
-                                    <button class="btn btn-danger delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
+                                    <button class="btn btn-danger upDownGoods change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         下架
                                     </button>
                                     <elseif condition="$v.status eq 2"/>
-                                    <button class="btn btn-success delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
+                                    <button class="btn btn-success upDownGoods change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         上架
                                     </button>
                                 </if>

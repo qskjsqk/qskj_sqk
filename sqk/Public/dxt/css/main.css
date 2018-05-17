@@ -66,14 +66,27 @@
 }
 
 .qrcodeArea{
-    width:111px;
-    height: 111px;
+    width:137px;
+    height: 137px;
     background: url(../img/qrcode.png);
-    background-size: 111px 111px;
+    background-size: 137px 137px;
     background-repeat: no-repeat;
     position: absolute;
-    left: 30px;
-    top:760px;
+    left: 20px;
+    top:800px;
+    padding: 4px;
+}
+.qrcodeTsTitle{
+    width:auto;
+    height: 30px;
+    position: absolute;
+    left: 20px;
+    top:940px;
+    font-family: "微软雅黑";
+    font-size: 20px;
+    line-height: 30px;
+    color:#D7EDFF;
+    font-weight: bold;
 }
 
 .logoutBtn{
@@ -81,8 +94,8 @@
     height: 41px;
     background: url(../img/back.png);
     position: absolute;
-    left: 30px;
-    top:900px;
+    left: 750px;
+    top:30px;
 }
 
 .adArea{

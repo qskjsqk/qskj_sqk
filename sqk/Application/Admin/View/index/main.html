@@ -50,11 +50,11 @@
                     <div class="b-tip b-color-tip3 hvr-buzz-out">
                         <div class="b-tip-body">
                             <div class="b-tip-left">
-                                <i class="glyphicon glyphicon-sound-dolby"></i>
+                                <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="b-tip-right">
-                                <div class="b-tip-titleb">{$mainNum['dang']+$mainNum['prop']}&#12288;条</div>
-                                <div class="b-tip-titlel"> 累计&#12288;<b>物业诉求反馈</b></div>
+                                <div class="b-tip-titleb">{$mainNum['appuser']}&#12288;人</div>
+                                <div class="b-tip-titlel"> 累计&#12288;<b>注册用户</b></div>
                             </div>
                         </div>
                         <div class="b-tip-footer">
@@ -93,7 +93,7 @@
                                 <foreach name="noticeArr" item="v" key="k">
                                     <tr class="tr">
                                         <td>
-                                            {$v.icon}<a href="__MODULE__/NoticeInfo/noticeDetail/id/{$v.id}">{$v.title}</a>
+                                            {$v.icon}<a href="__MODULE__/NoticeInfo/noticeDetail/id/{$v.id}">{$v.title|msubstr=0,17,'utf-8',true}</a>
                                         </td>
                                         <td><span class="label label-info" style="font-size: 13px;line-height: 13px;">{$v.realname}</span></td>
                                         <td style="text-align: right;">{$v.add_time}</td>
@@ -116,12 +116,12 @@
                                 <foreach name="activArr" item="v" key="k">
                                     <tr class="tr">
                                         <td>
-                                            {$v.icon}<a href="__MODULE__/ActivInfo/activDetail/id/{$v.id}">{$v.title}</a>
+                                            {$v.icon}<a href="__MODULE__/ActivInfo/activDetail/id/{$v.id}">{$v.title|msubstr=0,17,'utf-8',true}</a>
                                         </td>
                                         <td>
-                                            <span class="label label-success" style="font-size: 13px;line-height: 13px;">报名：{$v.join_num}</span>
+                                            <span class="label label-success" style="font-size: 13px;line-height: 13px;">{$v.integral}分</span>
                                         </td>
-                                        <td style="text-align: right;">{$v.add_time}</td>
+                                        <td style="text-align: right;">{$v.start_time.ymd}</td>
                                     </tr>
                                 </foreach>
                             </notempty>
