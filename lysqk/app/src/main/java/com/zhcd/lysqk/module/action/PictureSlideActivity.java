@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
 import com.zhcd.lysqk.net.ServiceProvider;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class PictureSlideActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (photoList != null && photoList.size() > position) {
-                String url = ServiceProvider.getImageBaseUrl() + photoList.get(position);
+                String url = ImagePathUtil.imageReallyUrl(photoList.get(position));
                 return PictureSlideFragment.newInstance(url);
             } else {
                 return null;

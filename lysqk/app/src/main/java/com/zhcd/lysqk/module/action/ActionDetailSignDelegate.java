@@ -30,7 +30,7 @@ public class ActionDetailSignDelegate implements ItemViewDelegate<ActionSignInfo
         holder.getConvertView().setTag(item);
         final Context context = holder.getConvertView().getContext();
         ((TextView) holder.getView(R.id.tv_sign_num_dec)).setText("第" + item.getSign_num() + "次签到");
-        ((TextView) holder.getView(R.id.tv_signed_num_dec)).setText("已签到" + item.getSign_sum() + "人");
+        ((TextView) holder.getView(R.id.tv_signed_num_dec)).setText("已签到" + item.getSigned_num() + "人");
         holder.getView(R.id.tv_open_sign).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

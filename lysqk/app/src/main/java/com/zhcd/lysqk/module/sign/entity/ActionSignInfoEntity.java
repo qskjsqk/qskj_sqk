@@ -23,7 +23,7 @@ public class ActionSignInfoEntity implements Serializable{
     //签到二维码
     private String sign_qrcode_path;
     //本次签到人次
-    private String sign_sum;
+    private String signed_num;
     //本次签到状态 0未开启  1正在  2结束
     private String sign_status;
 
@@ -75,12 +75,12 @@ public class ActionSignInfoEntity implements Serializable{
         this.sign_num = sign_num;
     }
 
-    public String getSign_sum() {
-        return sign_sum;
+    public String getSigned_num() {
+        return signed_num;
     }
 
-    public void setSign_sum(String sign_sum) {
-        this.sign_sum = sign_sum;
+    public void setSigned_num(String signed_num) {
+        this.signed_num = signed_num;
     }
 
     public String getSign_status() {

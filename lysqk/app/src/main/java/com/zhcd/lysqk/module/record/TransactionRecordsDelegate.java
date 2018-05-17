@@ -1,7 +1,6 @@
 package com.zhcd.lysqk.module.record;
 
 
-import android.content.Context;
 import android.widget.TextView;
 
 import com.zhcd.lysqk.R;

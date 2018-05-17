@@ -16,6 +16,7 @@ import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
 import com.zhcd.lysqk.module.action.entity.ActionDetailEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 import com.zhcd.lysqk.view.GlidePieceRoundTransform;
 import com.zhcd.utils.T;
 import com.zhcd.utils.TimeUtils;
@@ -112,7 +113,7 @@ public class ActionDetailActivity extends BaseActivity {
     private void viewSetData() {
         if (detailEntity != null) {
             if (detailEntity.getPic_list() != null && detailEntity.getPic_list().size() > 0) {
-                String imgUrl = ServiceProvider.getImageBaseUrl() + detailEntity.getPic_list().get(0);
+                String imgUrl = ImagePathUtil.imageReallyUrl(detailEntity.getPic_list().get(0));
                 GlidePieceRoundTransform transformation = new GlidePieceRoundTransform(ActionDetailActivity.this, 8, GlidePieceRoundTransform.CornerType.TOP);
                 Glide.with(ActionDetailActivity.this).load(imgUrl).bitmapTransform(transformation).into(actionLogo);
             }

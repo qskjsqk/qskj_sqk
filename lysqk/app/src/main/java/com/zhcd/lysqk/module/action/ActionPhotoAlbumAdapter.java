@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ActionPhotoAlbumAdapter extends RecyclerView.Adapter<ActionPhotoAlb
     @Override
     public void onBindViewHolder(PhotoAlbumViewHolder holder, int position) {
         if (lists != null && lists.size() > position) {
-            String URL = ServiceProvider.getImageBaseUrl() + lists.get(position);
+            String URL = ImagePathUtil.imageReallyUrl(lists.get(position));
             ImageLoaderUtils.displayImage(context, URL, R.color.gray_text, holder.getImageView());
             holder.itemView.setTag(position);
         }

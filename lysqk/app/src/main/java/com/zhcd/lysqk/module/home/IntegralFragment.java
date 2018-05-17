@@ -13,10 +13,13 @@ import com.pda.hf.ISO15693CardInfo;
 import com.pda.hf.demo.Tools;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseFragment;
+import com.zhcd.lysqk.manager.LoginInfoManager;
+import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.module.record.ReceivePointsActivity;
 import com.zhcd.lysqk.module.record.TransactionRecordsActivity;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 
 import java.util.List;
 
@@ -49,7 +52,12 @@ public class IntegralFragment extends BaseFragment {
                     TransactionRecordsActivity.start(getActivity());
                 }
             });
-            setQR("https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_70736499:1524820216_243_614827073");
+            if (LoginInfoManager.getInstance().isLogin()) {
+                LoginEntity loginEntity = LoginInfoManager.getInstance().getLoginEntity();
+                if (loginEntity != null && !TextUtils.isEmpty(loginEntity.getQrcode_path())) {
+                    setQR(ImagePathUtil.imageReallyUrl(loginEntity.getQrcode_path()));
+                }
+            }
             hfReader = HFRFIDTool.getHfReader();
             hfThread = new Thread(readTask);
         }
@@ -88,7 +96,7 @@ public class IntegralFragment extends BaseFragment {
                     }
                 }
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(4000);
                 } catch (Exception e) {
 
                 }

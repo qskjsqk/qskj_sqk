@@ -9,6 +9,7 @@ import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.module.sign.entity.SignInfoLisEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 import com.zhcd.lysqk.view.GlidePieceRoundTransform;
 import com.zhcd.utils.TimeUtils;
 import com.zjinv.uilibrary.recyclerview.zhy.base.ItemViewDelegate;
@@ -32,7 +33,7 @@ public class SignRecordDelegate implements ItemViewDelegate<SignInfoLisEntity> {
         holder.getConvertView().setTag(item);
         Context context = holder.getConvertView().getContext();
         ImageView ivUserHeard = holder.getView(R.id.iv_user_heard);
-        String url = ServiceProvider.getImageBaseUrl() + item.getTx_icon();
+        String url = ImagePathUtil.imageReallyUrl(item.getTx_icon());
         ImageLoaderUtils.displayImage(context, url, ivUserHeard);
         ((TextView) holder.getView(R.id.tv_user_name)).setText(item.getRealname());
         ((TextView) holder.getView(R.id.tv_receive_time)).setText("时间：" + TimeUtils.getDateYMDHM(item.getAdd_time()));

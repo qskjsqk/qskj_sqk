@@ -25,6 +25,7 @@ import com.zhcd.lysqk.module.sign.entity.UserSignEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 import com.zhcd.utils.T;
 import com.zhcd.utils.TimeUtils;
 
@@ -94,10 +95,10 @@ public class SignInfoActivity extends BaseActivity {
 
     private void setData() {
         if (signInfoEntity != null) {
-            String url = ServiceProvider.getImageBaseUrl() + signInfoEntity.getSign_qrcode_path();
+            String url = ImagePathUtil.imageReallyUrl(signInfoEntity.getSign_qrcode_path());
             ImageLoaderUtils.displayImage(this, url, ivQR);
             signNumDec.setText("第" + signInfoEntity.getSign_num() + "次签到");
-            signedNumDec.setText("已签到" + signInfoEntity.getSign_integral() + "人");
+            signedNumDec.setText("已签到" + signInfoEntity.getSigned_num() + "人");
             if (signInfoEntity.getSign_status().equals("0")) {
                 userSignInfo.setVisibility(View.GONE);
                 takeSignStatus.setText("开启");
@@ -170,7 +171,7 @@ public class SignInfoActivity extends BaseActivity {
                     if (signInfoEntity != null) {
                         getNewUserSignPos(signInfoEntity.getActivity_id(),
                                 signInfoEntity.getId());
-                        Thread.sleep(8000);
+                        Thread.sleep(7000);
                     } else {
                         signFlag = false;
                     }
@@ -207,7 +208,7 @@ public class SignInfoActivity extends BaseActivity {
                     }
                 }
                 try {
-                    Thread.sleep(6000);
+                    Thread.sleep(4000);
                 } catch (Exception e) {
                 }
             }
@@ -271,7 +272,7 @@ public class SignInfoActivity extends BaseActivity {
                         tvSignTime.setText("时间：" + TimeUtils.getDateYMDHM(entity.getAdd_time()));
                         tvDescription.setText("使用" + (entity.getSign_type().equals("0") ? "二维码" : "社区卡") + "签到成功");
                         signedNumDec.setText("已签到" + entity.getCount() + "人");
-                        String url = ServiceProvider.getImageBaseUrl() + entity.getTx_path();
+                        String url = ImagePathUtil.imageReallyUrl(entity.getTx_path());
                         ImageLoaderUtils.displayImage(SignInfoActivity.this, url, ivUserHeard);
                     }
                 } else {
@@ -299,7 +300,7 @@ public class SignInfoActivity extends BaseActivity {
                             tvSignTime.setText("时间：" + TimeUtils.getDateYMDHM(entity.getAdd_time()));
                             tvDescription.setText("使用" + (entity.getSign_type().equals("0") ? "二维码" : "社区卡") + "签到成功");
                             signedNumDec.setText("已签到" + entity.getCount() + "人");
-                            String url = ServiceProvider.getImageBaseUrl() + entity.getTx_path();
+                            String url = ImagePathUtil.imageReallyUrl(entity.getTx_path());
                             ImageLoaderUtils.displayImage(SignInfoActivity.this, url, ivUserHeard);
                         }
                         T.showShort(obj.getMsg());

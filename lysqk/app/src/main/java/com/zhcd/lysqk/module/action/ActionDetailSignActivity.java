@@ -19,6 +19,7 @@ import com.zhcd.lysqk.module.action.view.ActionDetailSignBottomView;
 import com.zhcd.lysqk.module.home.entity.ActionListEntity;
 import com.zhcd.lysqk.module.sign.entity.ActionSignInfoEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
+import com.zhcd.lysqk.tool.ImagePathUtil;
 import com.zhcd.lysqk.view.GlidePieceRoundTransform;
 import com.zhcd.utils.T;
 import com.zhcd.utils.TimeUtils;
@@ -80,7 +81,7 @@ public class ActionDetailSignActivity extends BaseActivity {
 
     private void setViewData() {
         if (listEntity != null) {
-            String imgUrl = ServiceProvider.getImageBaseUrl() + listEntity.getPic_path();
+            String imgUrl = ImagePathUtil.imageReallyUrl(listEntity.getPic_path());
             GlidePieceRoundTransform transformation = new GlidePieceRoundTransform(ActionDetailSignActivity.this, 8, GlidePieceRoundTransform.CornerType.TOP);
             Glide.with(ActionDetailSignActivity.this).load(imgUrl).bitmapTransform(transformation).into(actionLogo);
             actionName.setText("【" + listEntity.getCat_name() + "】" + listEntity.getTitle());
