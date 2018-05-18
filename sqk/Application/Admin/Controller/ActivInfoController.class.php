@@ -155,9 +155,13 @@ class ActivInfoController extends BaseDBController {
                 $signData['sign_integral'] = $fen;
             }
 
-            //生成二维码内容之后再补充
-            $signData['sign_qrcode_path'] = createQrcode('23423423423423');
-            $this->signModel->add($signData);
+            //生成签到二维码
+            $signData['sign_qrcode_path'] = '0';
+            $addId = $this->signModel->add($signData);
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/activ_signin/id/' . $addId . '/';
+            $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
+            $data['sign_qrcode_path'] = createQrcode($url);
+            $this->setField($this->signModel, $addId, $data);
         }
         $data = array(
             'is_publish' => '1',
@@ -272,7 +276,7 @@ class ActivInfoController extends BaseDBController {
         $signInfo = $this->signModel->where($signWhere)->select();
         for ($i = 0; $i < count($signInfo); $i++) {
             if ($signInfo[$i]['sign_sum'] != 0) {
-                $signInfo[$i]['data'] = $this->signInfoModel->where('sign_id='.$signInfo[$i]['id'])->select();
+                $signInfo[$i]['data'] = $this->signInfoModel->where('sign_id=' . $signInfo[$i]['id'])->select();
             }
         }
 //        dump($signInfo[0]['data']);

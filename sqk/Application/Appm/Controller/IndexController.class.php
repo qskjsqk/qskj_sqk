@@ -23,11 +23,13 @@ class IndexController extends BaseController {
         parent::_initialize();
     }
 
-    
 //    视图
 //------------------------------------------------------------------------------    
 
     public function index() {
+        
+        DeleteAllCookies();
+        
         $appid = WXAPPID;
         $secret = WXSECRET;
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
@@ -39,14 +41,13 @@ class IndexController extends BaseController {
         $b = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $wxInfo['access_token'] . "&openid=" . $wxInfo['openid'];
         $b = httpRequest($b, '');
         $userInfo = json_decode($b, true);
-        
+
         $wx['headimgurl'] = $userInfo['headimgurl'];
         $wx['openid'] = $userInfo['openid'];
         $wx['nickname'] = $userInfo['nickname'];
         cookie('wxInfo', $wx, 3600 * 24 * 30);
-        
-        $this->redirect('Login/index');
 
+        $this->redirect('Login/index');
     }
 
     /**
@@ -132,6 +133,11 @@ class IndexController extends BaseController {
         $user_id = cookie('user_id');
         $result = $userModel->where(array('id' => $user_id))->find();
         $result['address_name'] = getConameById($result['address_id']);
+        if (strpos($result['tx_path'], 'http') === FALSE) {
+            $result['tx_path'] = '../../../' . $result['tx_path'];
+        } else {
+            $result['tx_path'] = $result['tx_path'];
+        }
         if ($_GET['type'] == 'api') {
             $this->ajaxReturn($result);
         } else {
@@ -293,6 +299,15 @@ class IndexController extends BaseController {
             }
         }
         $this->ajaxReturn($returnData);
+    }
+
+    public function zxw() {
+        for ($i = 2020; $i >= 1900; $i--) {
+            echo '{';
+            echo "value: '" . $i . "',";
+            echo "text: '" . $i . "'";
+            echo "},";
+        }
     }
 
 }

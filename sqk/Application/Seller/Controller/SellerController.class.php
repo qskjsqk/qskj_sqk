@@ -72,7 +72,8 @@ class SellerController extends BaseController {
     public function my_qrcode() {
         $sellerInfo = $this->getSellerInfo();
         if ($sellerInfo['detail_qrcode_path'] == 0) {
-            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/seller_detail?id=' . $sellerInfo['id'];
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/seller_detail/id/' . $sellerInfo['id'] . '/';
+            $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
             $data['detail_qrcode_path'] = createQrcode($url);
             $this->setFieldData(M('seller_info'), $sellerInfo['id'], $data);
             $sellerInfo['detail_qrcode_path'] = $data['detail_qrcode_path'];
@@ -80,14 +81,15 @@ class SellerController extends BaseController {
         $this->assign('sellerInfo', $sellerInfo);
         $this->display();
     }
-    
+
     /**
      * 收款二维码
      */
     public function transfer_qrcode() {
         $sellerInfo = $this->getSellerInfo();
         if ($sellerInfo['detail_qrcode_path'] == 0) {
-            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_qrcode?id=' . $sellerInfo['id'];
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_qrcode/id/' . $sellerInfo['id'] . '/';
+            $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
             $data['transfer_qrcode_path'] = createQrcode($url);
             $this->setFieldData(M('seller_info'), $sellerInfo['id'], $data);
             $sellerInfo['transfer_qrcode_path'] = $data['transfer_qrcode_path'];

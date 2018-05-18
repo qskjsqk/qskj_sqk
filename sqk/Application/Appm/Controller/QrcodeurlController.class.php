@@ -25,10 +25,10 @@ class QrcodeurlController extends BaseController {
      * 扫描商家二维码
      */
     public function scan_seller() {
-        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
-        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
-        $wx['nickname'] = "忘忧草";
-        cookie('wxInfo', $wx, 3600 * 24 * 30);
+//        $wx['headimgurl'] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKpN65upRlsfibjY7Lia7l1v99lf7kOAp6tNe2Oa0X07yR0Pqun2tLcwGXyrrR08tMavSIBVblnOhLA/132";
+//        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
+//        $wx['nickname'] = "忘忧草";
+//        cookie('wxInfo', $wx, 3600 * 24 * 30);
 
         //判断用户是否存在
 
@@ -37,6 +37,9 @@ class QrcodeurlController extends BaseController {
         $this->redirect('seller_detail?id=' . $seller_id);
     }
 
+    /**
+     * 商品详情页
+     */
     public function goods_detail() {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
@@ -49,6 +52,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家详情页
+     */
     public function seller_detail() {
         //不管有没有分配上
         $this->assign('user_id', cookie('user_id'));
@@ -90,6 +96,9 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家收款交易二维码
+     */
     public function transfer_qrcode() {
         //不管有没有分配上
         $this->assign('user_id', cookie('user_id'));
@@ -107,6 +116,124 @@ class QrcodeurlController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 社区收款交易二维码
+     */
+    public function transfer_comm() {
+        //不管有没有分配上
+        $this->assign('user_id', cookie('user_id'));
+
+        $userInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
+        $this->assign('userInfo', $userInfo);
+
+        $id = $_GET['id'];
+        //查询商家信息
+        $where['id'] = ['EQ', $id];
+        $commInfo = M('sys_community_info')->where($where)->find();
+        $this->assign('commInfo', $commInfo);
+
+        $this->display();
+    }
+
+    /**
+     * 用户扫描签到二维码
+     */
+    public function activ_signin() {
+        //不管有没有分配上
+        $this->assign('user_id', cookie('user_id'));
+
+        $myInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
+        $myInfo['address_name'] = getConameById($myInfo['address_id']);
+        $this->assign('myInfo', $myInfo);
+
+        $id = $_GET['id'];
+        //查询签到信息
+        $where['id'] = ['EQ', $id];
+        $signInfo = M('activ_signin')->where($where)->find();
+        $signInfo['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signInfo['id'])->count();
+
+        $activInfo = M('activ_info')->field('id,cat_id,like_num,integral,address_id,title,start_time')->where('id=' . $signInfo['activity_id'])->find();
+        $activInfo['cat_name'] = $this->getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
+        $activInfo['address_name'] = getConameById($activInfo['address_id']);
+        $activInfo['start_time'] = tranTimeToCom($activInfo['start_time']);
+
+        $this->assign('signInfo', $signInfo);
+        $this->assign('activInfo', $activInfo);
+
+
+        $this->display();
+    }
+
+    /**
+     * 用户扫码签到
+     */
+    public function signIn() {
+        $user_id = $_POST['user_id'];
+        $sign_id = $_POST['sign_id'];
+        $sign_integral = $_POST['sign_integral'];
+        $activity_id = $_POST['activity_id'];
+
+
+
+
+        $swhere['sign_id'] = ['EQ', $sign_id];
+        $swhere['user_id'] = ['EQ', $user_id];
+        $signInfoInfo = M('activ_signin_info')->where($swhere)->find();
+        $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,tel')->where('id=' . $user_id)->find();
+
+//        dump($signInfoInfo);exit;
+
+        if (!empty($signInfoInfo)) {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '您已签到，请勿重复签到！';
+        } else {
+            $addArr['sign_type'] = 0;
+            $addArr['user_id'] = $user_id;
+            $addArr['sign_id'] = $sign_id;
+            $addArr['realname'] = $userInfo['realname'];
+            $addArr['sign_integral'] = $sign_integral;
+
+            $tranModel = M();
+
+            $tranModel->startTrans(); // 开启事务
+            //signinfo表入数据
+            $addFlag = $tranModel->table($this->dbFix . 'activ_signin_info')->add($addArr);
+
+            //用户增加分数和经验值
+            $userIntegralFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                    ->setInc('integral_num', $sign_integral);
+            $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                    ->setInc('exp_num', $sign_integral);
+            //更新activ_info表
+            $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+            $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                    ->setInc('join_num', 1);
+            $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                    ->save(['join_ids' => $activInfo['join_ids'] . $user_id . ',']);
+            $flag = $addFlag && $userIntegralFlag && $userExpFlag && $activJoinNumFlag && $activJoinIdsFlag;
+            if ($flag) {
+                $tranModel->commit(); // 成功则提交事务 
+                $returnData['flag'] = 1;
+                $returnData['msg'] = '签到成功';
+                $returnData['data'] = [
+                    'realname' => $userInfo['realname'],
+                    'tel' => $userInfo['tel'],
+                    'sign_integral' => $sign_integral,
+                    'sign_type' => '用户扫码签到',
+                    'sign_time' => date('Y.m.d H:i:s', time()),
+                ];
+            } else {
+                $tranModel->rollback(); // 否则将事务回滚 
+                $returnData['flag'] = 0;
+                $returnData['msg'] = '签到失败，请重试！';
+            }
+        }
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 提交入库反馈信息
+     */
     public function InsertComplaint() {
         $post = getFormData();
         if ($post['user_id'] != 0) {
@@ -127,6 +254,9 @@ class QrcodeurlController extends BaseController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 进行商品交易
+     */
     public function exchangeGoods() {
         //入库商品交易表
         $addArr = $_POST;
@@ -182,6 +312,9 @@ class QrcodeurlController extends BaseController {
         $this->ajaxReturn($returnData, "JSON");
     }
 
+    /**
+     * 进行转账交易
+     */
     public function transrerIntegral() {
         //入库商品交易表
         $addArr = $_POST;
@@ -191,6 +324,7 @@ class QrcodeurlController extends BaseController {
         $tranModel = M();
         //开启事务  
         $tranModel->startTrans();
+
         //入库交易总表
         $tradingData = [
             'income_id' => $_POST['seller_id'],
@@ -221,6 +355,57 @@ class QrcodeurlController extends BaseController {
             $returnData['msg'] = '交易成功';
             $returnData['data'] = $addArr;
             $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
+            $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
+            $returnData['data']['time'] = date('Y.m.d H:i:s', time());
+        } else {
+            $tranModel->rollback(); // 否则将事务回滚  
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，请重试';
+        }
+
+        $this->ajaxReturn($returnData, "JSON");
+    }
+
+    /**
+     * 用户与社区进行转账交易
+     */
+    public function transrerIntegralComm() {
+        $addArr = $_POST;
+
+        $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
+
+        $tranModel = M();
+        //开启事务  
+        $tranModel->startTrans();
+
+        //入库交易总表
+        $tradingData = [
+            'income_id' => $_POST['comm_id'],
+            'payment_id' => cookie('user_id'),
+            'income_type' => 1,
+            'payment_type' => 3,
+            'trading_integral' => $_POST['exchange_integral'],
+            'trading_number' => $addArr['trading_number'],
+            'exchange_method_id' => 5,
+            'relation_id' => 0,
+            'status' => 1,
+        ];
+        $tradingFlag = $tranModel->table($this->dbFix . 'integral_trading_record')->add($tradingData);
+        //商家积分增值
+        $commIntegralFlag = $tranModel->table($this->dbFix . 'sys_community_info')->where('id=' . $_POST['comm_id'])
+                ->setInc('com_integral', $_POST['exchange_integral']);
+        //用户积分减值
+        $userFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . cookie('user_id'))
+                ->setDec('integral_num', $_POST['exchange_integral']);
+
+        $flag = $tradingFlag && $commIntegralFlag && $userFlag;
+
+        if ($flag) {
+            $tranModel->commit(); // 成功则提交事务  
+            $returnData['flag'] = 1;
+            $returnData['msg'] = '交易成功';
+            $returnData['data'] = $addArr;
+            $returnData['data']['comm_name'] = $this->getDataKey(M('sys_community_info'), $returnData['data']['comm_id'], 'com_name');
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
         } else {

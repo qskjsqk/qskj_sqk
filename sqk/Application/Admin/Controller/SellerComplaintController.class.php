@@ -43,7 +43,7 @@ class SellerComplaintController extends BaseDBController {
             'seller_complaint.*',
             'sys_community_info.com_name',
             'seller_complaint_cat.cat_name',
-            'sys_userapp_info.usr',
+            'sys_userapp_info.realname',
             'seller_info.name',
             'seller_info.contacts',
             'seller_info.tel',

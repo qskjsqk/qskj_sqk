@@ -37,7 +37,7 @@ function getAdList(address_id) {
     $.post(c_path + "/getAdList", {'address_id': address_id}, function (data) {
         var str = "";
         for (var i = 0; i < data.length; i++) {
-            str += '<div class="adList" onclick="getDetail(' + address_id + ',' + data[i].id + ')">';
+            str += '<div class="adList hvr-forward" onclick="getDetail(' + address_id + ',' + data[i].id + ')">';
             str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
             str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>点击查看详情</div>';
             str += '</div>';

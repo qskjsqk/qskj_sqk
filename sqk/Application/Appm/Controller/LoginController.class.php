@@ -32,17 +32,17 @@ class LoginController extends Controller {
      */
     public function index() {
         //获取微信信息
-        $mxInfo = cookie('wxInfo');
-
+        $wxInfo = cookie('wxInfo');
         //验证用户是否存在
-        $where['open_id'] = ['EQ', $mxInfo['open_id']];
+        $where['wx_num'] = ['EQ', $wxInfo['openid']];
         $userInfo = M('sys_userapp_info')->where($where)->find();
 
-        if ($flag) {
+        if (!empty($userInfo)) {
             cookie('realname', $userInfo['realname'], 3600 * 24 * 30);
             cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
             cookie('address_id', $userInfo['address_id'], 3600 * 24 * 30);
             //直接进入主界面
+            $this->redirect('activity/activity_list');
         } else {
             $this->assign('headimgurl', $mxInfo['headimgurl']);
             $this->assign('nickname', $mxInfo['nickname']);
@@ -105,7 +105,6 @@ class LoginController extends Controller {
      * 用户登录
      */
     public function login() {
-
         cookie('pwd', '123', 3600 * 24 * 30);
         cookie('cookie_user', '张晓炜', 3600 * 24 * 30);
         cookie('user_id', 106, 3600 * 24 * 30);

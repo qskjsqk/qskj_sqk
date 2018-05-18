@@ -41,12 +41,21 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '错误的设备识别码！';
             $returnData['timestamp'] = time();
         } else {
-            $findArr['address_name'] = getConameById($findArr['id']);
+            $findArr['address_name'] = getConameById($findArr['address_id']);
+            $commInfo = M('sys_community_info')->field('com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
+            if ($commInfo['qrcode_path'] == 0) {
+                $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_comm/id/' . $commInfo['id'] . '/';
+                $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
+                $data['qrcode_path'] = createQrcode($url);
+                $this->setField(M('sys_community_info'), $commInfo['id'], $data);
+                $commInfo['qrcode_path'] = $data['qrcode_path'];
+            }
+
             $returnData['status'] = 1;
             $returnData['msg'] = '成功登录！';
             $returnData['timestamp'] = time();
 
-            $returnData['data'] = $findArr;
+            $returnData['data'] = array_merge($findArr, $commInfo);
         }
         $this->ajaxReturn($returnData, 'JSON');
     }
@@ -183,6 +192,9 @@ class ApiController extends BaseDBController {
         } else {
             $where['activity_id'] = ['EQ', $id];
             $signinList = M('activ_signin')->where($where)->select();
+            for ($i = 0; $i < count($signinList); $i++) {
+                $signinList[$i]['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signinList[$i]['id'])->count();
+            }
             if (empty($signinList)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '未查到这条数据！';
@@ -198,6 +210,9 @@ class ApiController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
 
+    /**
+     * 签到状态置位
+     */
     public function setSigninStatusPos() {
         $sign_id = $_GET['sign_id'];
         $status = $_GET['status'];
@@ -245,8 +260,9 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 for ($i = 0; $i < count($signinInfoList); $i++) {
+                    $appInfo = M('sys_userapp_info')->find($signinInfoList['user_id']);
                     $signinInfoList[$i]['add_time'] = strtotime($signinInfoList[$i]['add_time']);
-                    $signinInfoList[$i]['tx_icon'] = "Public/admin/img/tx_icon/" . ($signinInfoList[$i]['id'] % 13 + 1) . ".jpg";
+                    $signinInfoList[$i]['tx_icon'] = $appInfo['tx_path'];
                 }
 
                 $returnData['data'] = $signinInfoList;
@@ -288,29 +304,49 @@ class ApiController extends BaseDBController {
                     $returnData['msg'] = '该用户已签到！';
                     $returnData['timestamp'] = time();
                 } else {
-                    $returnData['status'] = 1;
-                    $returnData['msg'] = '成功签到！';
-                    $returnData['timestamp'] = time();
 
-                    $addArr['sign_type'] = '1';
+                    $addArr['sign_type'] = 1;
                     $addArr['user_id'] = $userInfo['id'];
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
-                    $addArr['tx_path'] = $userInfo['tx_path'];
-                    
-                    $addArr['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
-
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
 
+                    $tranModel = M();
+                    $tranModel->startTrans(); // 开启事务
                     //signinfo表入数据
-                    $addFlag = M('activ_signin_info')->add($addArr);
-                    $addArr['add_time'] = time();
-                    $addArr['new_id'] = $addFlag;
-                    //更新sign表
+                    $addFlag = $tranModel->table($this->dbFix . 'activ_signin_info')->add($addArr);
+                    //用户增加分数和经验值
+                    $userIntegralFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                            ->setInc('integral_num', $sign_integral);
+                    $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
+                            ->setInc('exp_num', $sign_integral);
                     //更新activ_info表
-                    //更新userapp_info表
+                    $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+                    $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                            ->setInc('join_num', 1);
+                    $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
+                            ->save(['join_ids' => $activInfo['join_ids'] . $user_id . ',']);
+                    $flag = $addFlag && $userIntegralFlag && $userExpFlag && $activJoinNumFlag && $activJoinIdsFlag;
 
-                    $returnData['data'] = $addArr;
+
+                    if ($flag) {
+                        $tranModel->commit(); // 成功则提交事务 
+                        //补充字段
+                        $addArr['tx_path'] = $userInfo['tx_path'];
+                        $addArr['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
+                        $addArr['add_time'] = time();
+                        $addArr['new_id'] = $addFlag;
+
+                        $returnData['data'] = $addArr;
+                        $returnData['status'] = 1;
+                        $returnData['msg'] = '成功签到！';
+                        $returnData['timestamp'] = time();
+                    } else {
+                        $tranModel->rollback(); // 否则将事务回滚 
+                        $returnData['status'] = 0;
+                        $returnData['msg'] = '签到失败！';
+                        $returnData['timestamp'] = time();
+                    }
                 }
             }
         }
@@ -349,7 +385,7 @@ class ApiController extends BaseDBController {
                 for ($i = 0; $i < count($signInfoList); $i++) {
                     $signInfoList[$i]['add_time'] = strtotime($signInfoList[$i]['add_time']);
                     $signInfoList[$i]['tx_path'] = $userInfo['tx_path'];
-                    $signInfoList[$i]['count'] = M('activ_signin_info')->where('sign_id='.$sign_id)->count();
+                    $signInfoList[$i]['count'] = M('activ_signin_info')->where('sign_id=' . $sign_id)->count();
                 }
                 $returnData['data'] = $signInfoList;
             }
@@ -368,12 +404,12 @@ class ApiController extends BaseDBController {
         $sign_status = $inputArr['sign_status'];
         $sign_id = $inputArr['sign_id'];
 
-        if (empty($sign_id) || $sign_status===NULL) {
+        if (empty($sign_id) || $sign_status === NULL) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
-            $where['sign_id'] = ['EQ', $sign_id];
+            $where['id'] = ['EQ', $sign_id];
             $data['sign_status'] = $sign_status;
             $flag = M('activ_signin')->where($where)->save($data);
             if ($flag) {
@@ -416,11 +452,11 @@ class ApiController extends BaseDBController {
             $where['income_id'] = $address_id;
             $where['exchange_method_id'] = 4;
             $tradingRecordList = $tradingRecordModel
-                ->where($where)
-                ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
-                ->order('id desc')
-                ->limit($first . ',' . $pageNum)
-                ->select();
+                    ->where($where)
+                    ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
+                    ->order('id desc')
+                    ->limit($first . ',' . $pageNum)
+                    ->select();
             $count = $tradingRecordModel->where($where)->count();
 
             if (!empty($tradingRecordList) && is_array($tradingRecordList)) {

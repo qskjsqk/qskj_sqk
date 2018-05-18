@@ -27,6 +27,10 @@ class SysUserAppInfoController extends BaseDBController {
      * function:显示用户列表
      */
     public function showList() {
+        if(session('address_id')!=0){
+            $where['address_id'] = array('EQ', session('address_id'));
+            $pageCondition['address_id'] = urldecode(session('address_id'));
+        }
         if (!empty($_GET['keyword'])) {
             $where['tel|realname'] = array('LIKE', '%' . urldecode($_GET['keyword']) . '%');
             $pageCondition['tel'] = urldecode($_GET['tel']);

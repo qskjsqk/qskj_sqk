@@ -52,8 +52,8 @@
             <div class="mui-row">
                 <ul class="mui-table-view mui-table-view-chevron">
                     <li class="mui-table-view-cell mui-media">
-                        <a class="mui-navigate-right" onclick="aHref('__MODULE__/index/my_info')">
-                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="/{$appUserInfo.txPath}">
+                        <a class="mui-navigate-right">
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="{$appUserInfo.txPath}">
                             <div class="mui-media-body">
                                 {$appUserInfo.userName}&#12288;[{$appUserInfo.comName}]
                                 <p class='mui-ellipsis'>累计兑换：{$appUserInfo.tradingCount}</p>
@@ -72,12 +72,13 @@
                         </a>
                     </li> -->
                 </ul>
+                <!--动态加载模块-->
+                <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
+                <input type="hidden" id="page" value="1">
             </div>
         </div>
 
-        <!--动态加载模块-->
-        <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
-        <input type="hidden" id="page" value="1">
+
 
         <!--页面主内容区结束-->
     </body>

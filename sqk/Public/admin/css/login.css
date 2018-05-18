@@ -26,7 +26,8 @@ and open the template in the editor.
     margin-top: 63px;
 }
 .b-login-bg{
-    background-image: url('../img/login/login-bg.png');
+    /*background-color: #444;*/
+    background-image: url('../img/login/login-bg.jpg');
     background-repeat: no-repeat;
     height: 700px;
 }
@@ -81,7 +82,7 @@ and open the template in the editor.
     
 }
 .b-icon-computer{
-    background-image: url('../img/login/computer.png');
+    /*background-image: url('../img/login/computer.png');*/
     background-repeat: no-repeat;
     background-position: center bottom;
     height: 600px;

@@ -35,7 +35,7 @@ class QrcodeurlController extends BaseController {
         $request = Request::all();
         //假设这里扫描用户的二维码拿到下面的值
         $iccard_num = $request['iccard_num'];
-        $iccard_num = '1362913101';
+//        $iccard_num = '1362913101';
 
         //判断用户是否存在
         $appUserModel = new SysUserappInfoModel();

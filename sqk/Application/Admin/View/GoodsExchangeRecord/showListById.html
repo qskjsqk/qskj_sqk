@@ -41,7 +41,7 @@
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-3" style="min-width: 300px;">
-                        <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                        <button type="button" class="btn btn-danger delGoodsExchangeRecord" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
                         </button>
                     </div>
@@ -69,11 +69,11 @@
                             <td>{$v.goods_name}</td>
                             <td>{$v.exchange_time}</td>
                             <td>{$v.seller_name}</td>
-                            <td>{$v.usr}</td>
+                            <td>{$v.realname}({$v.tel})</td>
                             <td>{$v.exchange_integral}</td>
                             <td>
                             <div>
-                                <button class="btn btn-success" onclick="showExchangeInfo({$v.id});">
+                                <button class="btn btn-success showGoodsExchangeRecordDetail" onclick="showExchangeInfo({$v.id});">
                                     查看详情
                                 </button>
                             </div>
@@ -112,9 +112,9 @@
                     </div>
                 </div>
                 <div class="form-group" style="width:500px;">
-                    <label for="usr" class="col-sm-3 control-label">交易人</label>
+                    <label for="tel" class="col-sm-3 control-label">交易人</label>
                     <div class="col-sm-7">
-                        <p class="usr">
+                        <p class="tel">
                         </p>
                     </div>
                 </div>

@@ -74,7 +74,7 @@ function showExchangeInfo(id) {
                 $("p[class='goods_name']").html(data.goods_name);
                 $("p[class='seller_name']").html(data.seller_name);
                 $("p[class='exchange_time']").html(data.exchange_time);
-                $("p[class='usr']").html(data.usr);
+                $("p[class='tel']").html(data.tel);
                 $("p[class='realname']").html(data.realname);
                 $("p[class='com_name']").html(data.com_name);
                 $("p[class='exchange_number']").html(data.exchange_number);

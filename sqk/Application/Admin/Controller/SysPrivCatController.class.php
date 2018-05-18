@@ -26,7 +26,7 @@ class SysPrivCatController extends BaseDBController {
      * function:显示权限分类列表
      */
     public function showList() {
-        $fatherCat = $this->catModel->where('parent_id=0')->select();
+        $fatherCat = $this->catModel->where('parent_id=0')->order('id asc')->select();
         foreach ($fatherCat as $v) {
             $v['catType'] = 'father';
             $v['cat_name'] = "<b>" . $v['cat_name'] . "</b>";

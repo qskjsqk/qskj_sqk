@@ -11,15 +11,10 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
-class IndexController extends Controller {
-
-    protected $config;
+class IndexController extends BaseDBController {
 
     public function _initialize() {
-//        配置字典信息
-        $configdefC = A('Configdef');
-        $this->config = $configdefC->getAllDef();
-        $this->assign('config', $this->config);
+        parent::_initialize();
     }
 
     /**
@@ -34,12 +29,6 @@ class IndexController extends Controller {
                 $this->assign('realname', $_SESSION['usr']);
             } else {
                 $this->assign('realname', $_SESSION['realname']);
-            }
-//            判断平台入口按钮显示状态
-            if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin') {
-                $this->assign('shome', 'block');
-            } else {
-                $this->assign('shome', 'none');
             }
 //            判断提醒按钮显示状态
             if ($_SESSION['sys_name'] == 'sysAdmin' || $_SESSION['sys_name'] == 'sqAdmin') {
@@ -64,9 +53,9 @@ class IndexController extends Controller {
      */
     public function main() {
         $this->assign('nowTime', date('Y年m月d日 H:i:s', time()));
-//        $this->assign('mainNum', $this->getMainNum());
-//        $this->assign('noticeArr', $this->getNoticeArr());
-//        $this->assign('activArr', $this->getActivArr());
+        $this->assign('mainNum', $this->getMainNum());
+        $this->assign('noticeArr', $this->getNoticeArr());
+        $this->assign('activArr', $this->getActivArr());
         $this->display();
     }
 
@@ -147,8 +136,13 @@ class IndexController extends Controller {
     }
 
     public function getNoticeArr() {
-        $noticeEnable = $this->getEnableCatIds(M('NoticeCat'), 1);
-        $noticeArr = M('NoticeInfo')->field('id,title,add_time,cat_id,user_id')->where('cat_id in (' . $noticeEnable . ') and is_publish=1')->order('id desc')->limit(10)->select();
+        $address_id = $_SESSION['address_id'];
+        $noticeEnable = $this->getEnableCatIds(M('NoticeCat'), 0);
+        if ($address_id == 0) {
+            $noticeArr = M('NoticeInfo')->field('id,title,add_time,cat_id,user_id,address_id')->where('cat_id in (' . $noticeEnable . ') and is_publish=1')->order('id desc')->limit(10)->select();
+        } else {
+            $noticeArr = M('NoticeInfo')->field('id,title,add_time,cat_id,user_id,address_id')->where('cat_id in (' . $noticeEnable . ') and is_publish=1 and address_id in (0,' . $address_id . ')')->order('id desc')->limit(10)->select();
+        }
         for ($i = 0; $i < count($noticeArr); $i++) {
             $noticeArr[$i]['realname'] = $this->getRealnameById($noticeArr[$i]['user_id']);
             $noticeArr[$i]['cat_name'] = $this->getCatNameById(M('NoticeCat'), $noticeArr[$i]['cat_id']);
@@ -159,12 +153,19 @@ class IndexController extends Controller {
     }
 
     public function getActivArr() {
+        $address_id = $_SESSION['address_id'];
         $activEnable = $this->getEnableCatIds(M('ActivCat'), 0);
-        $activArr = M('ActivInfo')->where('cat_id in (' . $activEnable . ') and is_publish=1')->order('id desc')->limit(10)->select();
+
+        if ($address_id == 0) {
+            $activArr = M('ActivInfo')->where('cat_id in (' . $activEnable . ') and is_publish=1')->order('id desc')->limit(10)->select();
+        } else {
+            $activArr = M('ActivInfo')->where('cat_id in (' . $activEnable . ') and is_publish=1 and address_id in (0,' . $address_id . ')')->order('id desc')->limit(10)->select();
+        }
         for ($i = 0; $i < count($activArr); $i++) {
             $activArr[$i]['cat_name'] = $this->getCatNameById(M('NoticeCat'), $activArr[$i]['cat_id']);
             $activArr[$i]['add_time'] = tranTime($activArr[$i]['add_time']);
             $activArr[$i]['icon'] = $this->getTitleIcon($activArr[$i]['id']);
+            $activArr[$i]['start_time'] = tranTimeToCom($activArr[$i]['start_time']);
         }
         return $activArr;
     }
@@ -172,60 +173,25 @@ class IndexController extends Controller {
     /**
      * 获取提醒消息接口
      */
-    public function getPropNum() {
-        $propArr = M('PropProbInfo')->field('id,title')->where('is_deal=0')->order('id desc')->limit(5)->select();
-        $dangArr = M('PropDangerInfo')->field('id,title,danger_level')->where('is_deal=0')->order('id desc')->limit(5)->select();
+    public function getTxNum() {
 
-        $return['propArr'] = $propArr;
-        $return['propNum'] = M('PropProbInfo')->field('id,title')->where('is_deal=0')->order('id desc')->count();
-        $return['dangArr'] = $dangArr;
-        $return['dangNum'] = M('PropDangerInfo')->field('id,title,danger_level')->order('id desc')->where('is_deal=0')->count();
-        $return['countSum'] = $return['propNum'] + $return['dangNum'];
-        $this->ajaxReturn($return);
-    }
-
-    /**
-     * 获取提醒条数接口
-     */
-    public function getNewNum() {
-        $sellerInfo = $this->isSeller();
-        if ($sellerInfo == null) {
-//            系统管理员和社区管理员
-            $sellerArr = M('SellerInfo')->where('cat_id in (' . $this->getEnableCatIds(M('SellerCat'), 1) . ') and is_checked=0')->order('id desc')->limit(5)->select();
-            $return['type'] = 'seller';
-            $return['sellerArr'] = $sellerArr;
-            $return['sellerNum'] = M('SellerInfo')->where('cat_id in (' . $this->getEnableCatIds(M('SellerCat'), 1) . ') and is_checked=0')->order('id desc')->count();
-
-            $itemArr = M('SellerItemsInfo')->where('cat_id in (' . $this->getEnableCatIds(M('SellerItemsCat'), 1) . ') and is_checked=0')->order('id desc')->limit(5)->select();
-            $return['itemArr'] = $itemArr;
-            $return['itemNum'] = M('SellerItemsInfo')->where('cat_id in (' . $this->getEnableCatIds(M('SellerItemsCat'), 1) . ') and is_checked=0')->order('id desc')->count();
-
-            $return['Num'] = intval($return['itemNum']) + intval($return['sellerNum']);
+        $address_id = $_SESSION['address_id'];
+        if ($address_id == 0) {
+            $txNum['seller'] = M('seller_info')->where('status=0')->count();
+            $txNum['prom'] = M('seller_prom_info')->where('status=0')->count();
+            $txNum['complaint'] = M('seller_complaint')->where('status=0')->count();
+            $txNum['all'] = $txNum['seller'] + $txNum['prom'] + $txNum['complaint'];
         } else {
-//            商家
-            $orderArr = M('SellerOrderInfo')
-                    ->join('as o left join qs_gryj_seller_info as s on o.seller_id=s.id')
-                    ->field('o.id,o.order_no,o.buyer_id,o.seller_id,o.send_type,o.deal_type,s.name,s.user_id')
-                    ->where('(o.deal_type=1 or o.deal_type=2) and s.user_id=' . $_SESSION['user_id'])
-                    ->order('id desc')
-                    ->limit(10)
-                    ->select();
-            for ($i = 0; $i < count($orderArr); $i++) {
-                $orderArr[$i]['order_no'] = '订单编号：' . $orderArr[$i]['order_no'];
-                $orderArr[$i]['realname'] = '买家：' . $this->getRealnameById($orderArr[$i]['buyer_id']);
-                $orderArr[$i]['deal_type'] = $orderArr[$i]['deal_type'] == 1 ? '<span class="label label-warning">待处理</span>' : '<span class="label label-info">处理中</span>';
-            }
-            $return['type'] = 'order';
-            $return['Arr'] = $orderArr;
-            $return['Num'] = M('SellerOrderInfo')
-                    ->join('as o left join qs_gryj_seller_info as s on o.seller_id=s.id')
-                    ->field('o.id,o.order_no,o.buyer_id,o.seller_id,o.send_type,o.deal_type,s.name,s.user_id')
-                    ->where('(o.deal_type=1 or o.deal_type=2) and s.user_id=' . $_SESSION['user_id'])
-                    ->order('o.id desc')
-                    ->count();
-        }
+            $txNum['seller'] = M('seller_info')->where('status=0 and address_id=' . $address_id)->count();
+            $txNum['prom'] = M('seller_prom_info')->where('status=0 and address_id=' . $address_id)->count();
 
-        $this->ajaxReturn($return);
+            $txNum['complaint'] = M('seller_complaint')->field($this->dbFix.'seller_complaint.status,'.$this->dbFix.'seller_info.address_id')
+                    ->join('left join '.$this->dbFix.'seller_info on '.$this->dbFix
+                    .'seller_complaint.seller_id='.$this->dbFix.'seller_info.id')->where($this->dbFix.'seller_complaint.status=0 and '
+                            .$this->dbFix.'seller_info.address_id='.$address_id)->count();
+            $txNum['all'] = $txNum['seller'] + $txNum['prom'] + $txNum['complaint'];
+        }
+        $this->ajaxReturn($txNum, 'JSON');
     }
 
     /**
@@ -233,11 +199,19 @@ class IndexController extends Controller {
      * @return type
      */
     public function getMainNum() {
-        $return['notice'] = M('NoticeInfo')->where('cat_id in (' . $this->getEnableCatIds(M('NoticeCat'), 1) . ') and is_publish=1')->count();
-        $return['activity'] = M('ActivInfo')->where('cat_id in (' . $this->getEnableCatIds(M('ActivCat'), 0) . ') and is_publish=1')->count();
-        $return['dang'] = M('PropDangerInfo')->where('cat_id in (' . $this->getEnableCatIds(M('PropDangerCat'), 1) . ')')->count();
-        $return['prop'] = M('PropProbInfo')->count();
-        $return['seller'] = M('SellerInfo')->where('cat_id in (' . $this->getEnableCatIds(M('SellerCat'), 1) . ') and is_checked=1')->count();
+        $address_id = $_SESSION['address_id'];
+        if ($address_id == 0) {
+            $return['notice'] = M('NoticeInfo')->where('1=1')->count();
+            $return['activity'] = M('ActivInfo')->where('1=1')->count();
+            $return['appuser'] = M('sys_userapp_info')->where('1=1')->count();
+            $return['seller'] = M('SellerInfo')->where('1=1')->count();
+        } else {
+            $return['notice'] = M('NoticeInfo')->where('address_id in(0,' . $address_id . ')')->count();
+            $return['activity'] = M('ActivInfo')->where('address_id in(0,' . $address_id . ')')->count();
+            $return['appuser'] = M('sys_userapp_info')->where('address_id in(0,' . $address_id . ')')->count();
+            $return['seller'] = M('SellerInfo')->where('address_id in(0,' . $address_id . ')')->count();
+        }
+
         return $return;
     }
 

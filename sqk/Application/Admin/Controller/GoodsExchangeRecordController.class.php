@@ -43,7 +43,8 @@ class GoodsExchangeRecordController extends BaseDBController {
         $field = [
             'goods_exchange_record.*',
             'seller_info.name as seller_name',
-            'sys_userapp_info.usr',
+            'sys_userapp_info.realname',
+            'sys_userapp_info.tel',
             'seller_integral_goods.goods_name',
         ];
         return [$join, $field];
@@ -117,7 +118,7 @@ class GoodsExchangeRecordController extends BaseDBController {
         $field = [
             'goods_exchange_record.*',
             'seller_info.name as seller_name',
-            'sys_userapp_info.usr',
+            'sys_userapp_info.tel',
             'sys_userapp_info.realname',
             'seller_integral_goods.goods_name',
             'sys_community_info.com_name',

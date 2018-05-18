@@ -57,8 +57,11 @@
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-3" style="min-width: 300px;">
-                        <button type="button" class="btn btn-danger delSellerInfo" id="delArrayInfo-btn" style="height: 34px;">
+                        <button type="button" class="btn btn-danger delGoods" id="delArrayInfo-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
+                        </button>
+                        <button type="button" class="btn btn-success delSellerInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/showListById')" style="height: 34px;">
+                            显示全部积分商品
                         </button>
                     </div>
                     <div class="col-sm-2"></div>

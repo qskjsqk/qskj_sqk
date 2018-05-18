@@ -22,6 +22,9 @@ class SellerIntegralGoodsController extends BaseController {
         parent::_initialize();
     }
 
+    /**
+     * 积分商城列表页
+     */
     public function item_list() {
         $this->assign('address_id', cookie('address_id'));
         //广告轮播图
@@ -36,7 +39,7 @@ class SellerIntegralGoodsController extends BaseController {
     }
 
     /**
-     * 获取列表
+     * 获取列表接口
      */
     public function getList() {
         $model = D('SellerIntegralGoods');
@@ -112,6 +115,9 @@ class SellerIntegralGoodsController extends BaseController {
         $this->ajaxReturn(syncData(0, 'success', $data));
     }
 
+    /**
+     * 商品详情
+     */
     public function goods_detail() {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
@@ -124,14 +130,22 @@ class SellerIntegralGoodsController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 商家详情
+     */
     public function seller_detail() {
         
+        $this->assign('user_id', cookie('user_id'));
+
         $id = $_GET['id'];
         //查询商家信息
         $where['id'] = ['EQ', $id];
         $sellerInfo = M('seller_info')->where($where)->find();
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
         $this->assign('sellerInfo', $sellerInfo);
+
+        //分配反馈类型信息
+        $this->assign('compalintCat', M('seller_complaint_cat')->select());
 
         //查询产品信息
         $model = D('SellerIntegralGoods');
@@ -147,17 +161,40 @@ class SellerIntegralGoodsController extends BaseController {
         $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
         //只查询一个店的商品
         $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $id;
-        
+
         //设置连表,查询信息
         $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
-        
+
         $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix . 'seller_integral_goods.id');
         $lists = $listsObj->order($this->dbFix . 'seller_integral_goods.id desc')->select();
-        
+
         $this->assign('goodsList', $lists);
-        
+
 //        dump($sellerInfo);
         $this->display();
+    }
+
+    /**
+     * 提交入库反馈信息
+     */
+    public function InsertComplaint() {
+        $post = getFormData();
+        if ($post['user_id'] != 0) {
+            $returnData['flag'] = 1;
+            $flag = M('seller_complaint')->add($post);
+            if ($flag) {
+                $returnData['flag'] = 1;
+                $returnData['msg'] = '已经收到您的反馈！';
+            } else {
+                $returnData['flag'] = 0;
+                $returnData['msg'] = '提交失败，请重试！';
+            }
+        } else {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '用户未登录！';
+        }
+//        dump($);
+        $this->ajaxReturn($returnData, 'JSON');
     }
 
 }

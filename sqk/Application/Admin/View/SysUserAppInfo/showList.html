@@ -14,10 +14,10 @@
             <form method="get" action="__CONTROLLER__/showList" class="form-horizontal" id="search-form" style="margin-top: 20px;">
                 <div class="form-group">
                     <div class="col-sm-2" style="min-width: 200px;">
-                        <button type="button" class="btn btn-success addUserInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/saveUserInfo/catName/appUser')" style="height: 34px;">
+                        <button type="button" class="btn btn-success addUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/saveUserInfo/catName/appUser')" style="height: 34px;">
                             <span class="glyphicon glyphicon-plus"></span> 新增
                         </button>
-                        <button type="button" class="btn btn-danger delUserInfo" id="delArrayGroup-btn" style="height: 34px;">
+                        <button type="button" class="btn btn-danger delUserAppInfo" id="delArrayGroup-btn" style="height: 34px;">
                             <span class="glyphicon glyphicon-trash"></span> 批量删除
                         </button>
                     </div>
@@ -72,10 +72,10 @@
 
                         <td>
                             <div>
-                                <button class="btn btn-default edit-btn editUserInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/appUserDetail/id/{$v.id}');">
+                                <button class="btn btn-default edit-btn editUserAppInfo" onclick="javascript:void(window.location.href = '__CONTROLLER__/appUserDetail/id/{$v.id}');">
                                     <span class="glyphicon glyphicon-edit"></span> 编辑
                                 </button>
-                                <button class="btn btn-default del-btn bindingUserInfo" onclick="bindingCardLayer({$v.id})">
+                                <button class="btn btn-default del-btn bindingUserAppInfo" onclick="bindingCardLayer({$v.id})">
                                     <span class="glyphicon glyphicon-qrcode"></span> 绑卡
                                 </button>
                             </div>

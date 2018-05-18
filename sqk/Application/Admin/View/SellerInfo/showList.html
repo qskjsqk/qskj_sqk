@@ -117,18 +117,18 @@
                     <foreach name="infoList" item="v" key="k">
                         <tr class="tr">
                             <td><input type="checkbox" name="rowChecked" value="{$v.id}"/></td>
-                            <td>{$v.id}</td>
+                            <td>{:(I('get.p'))?((I('get.p')-1)*C('PAGE_SIZE')+$k+1):($k+1)}</td>
                             <td>{$v.com_name}</td>
                             <td>{$v.name}</td>
                             <td>{$v.tel}</td>
                             <td>{$v.contacts}</td>
                             <td>
                         <if condition="$v.status eq 0">
-                            待审核
+                            <span class="label label-default" style="padding: 4px">&nbsp;待&nbsp;审&nbsp;核</span>
                             <elseif condition="$v.status eq 1"/>
-                            正常
+                            <span class="label label-success" style="padding: 4px">正&#12288;&#12288;常</span>
                             <elseif condition="$v.status eq 2"/>
-                            暂停账号
+                            <span class="label label-danger" style="padding: 4px">暂停账号</span>
                         </if>
                         </td>
                         <td>

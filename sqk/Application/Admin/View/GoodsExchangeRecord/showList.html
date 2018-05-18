@@ -94,7 +94,7 @@
                             <td>{$v.goods_name}</td>
                             <td>{$v.exchange_time}</td>
                             <td>{$v.seller_name}</td>
-                            <td>{$v.usr}</td>
+                            <td>{$v.realname}({$v.tel})</td>
                             <td>{$v.exchange_integral}</td>
                             <td>
                                 <div>
@@ -118,43 +118,42 @@
     </body>
 
     <div class="catLayer" style="display: none;">
-        <div class="container" style="width: 500px;">
+        <div class="container" style="width: 400px;">
+            </br></br>
             <div class="row">
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
                     <div class="col-sm-7">
                         <p class="goods_name"></p>
                     </div>
                 </div>
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="exchange_time" class="col-sm-3 control-label">交易时间</label>
                     <div class="col-sm-7">
                         <p class="exchange_time"></p>
                     </div>
                 </div>
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="seller_name" class="col-sm-3 control-label">交易店铺</label>
                     <div class="col-sm-7">
                         <p class="seller_name"></p>
                     </div>
                 </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="usr" class="col-sm-3 control-label">交易人</label>
+                <div class="form-group" style="width: 400px;;">
+                    <label for="tel" class="col-sm-3 control-label">交易人</label>
                     <div class="col-sm-7">
-                        <p class="usr">
-                        </p>
+                        <p class="tel"></p>
                     </div>
                 </div>
 
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="realname" class="col-sm-3 control-label">交易人姓名</label>
                     <div class="col-sm-7">
-                        <p class="realname">
-                        </p>
+                        <p class="realname"></p>
                     </div>
                 </div>
 
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="com_name" class="col-sm-3 control-label">交易人社区</label>
                     <div class="col-sm-7">
                         <p class="com_name">
@@ -162,7 +161,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="width:500px;">
+                <div class="form-group" style="width: 400px;;">
                     <label for="exchange_number" class="col-sm-3 control-label">交易单号</label>
                     <div class="col-sm-7">
                         <p class="exchange_number">
