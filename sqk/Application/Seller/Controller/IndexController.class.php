@@ -23,6 +23,9 @@ class IndexController extends BaseController {
     }
 
     public function login() {
+
+        DeleteAllCookies();
+
         $appid = WXAPPID;
         $secret = WXSECRET;
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
@@ -44,19 +47,23 @@ class IndexController extends BaseController {
     }
 
     public function index() {
-        $wxInfo = cookie('wxInfo');
+        //获取微信信息
+        $mxInfo = cookie('wxInfo');
+        //验证用户是否存在
+        $where['open_id'] = ['EQ', $mxInfo['openid']];
+        $sellerWx = M('seller_wechat_binding')->where($where)->find();
 
-        //测试数据
-        $wxInfo = array(
-            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
-            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
-            'nickname' => '忘忧草',
-        );
-
-        //先检测是否已有帐号
-        $this->assign('headimgurl', $wxInfo['headimgurl']);
-        $this->assign('nickname', $wxInfo['nickname']);
-        $this->display();
+        if (!empty($sellerWx)) {
+            $sellerInfo = M('seller_info')->find($sellerWx['seller_id']);
+            cookie('seller_id', $sellerInfo['id'], 3600 * 24 * 30);
+            cookie('address_id', $sellerInfo['address_id'], 3600 * 24 * 30);
+            $this->redirect('Seller/seller_home');
+        } else {
+            //先检测是否已有帐号
+            $this->assign('headimgurl', $wxInfo['headimgurl']);
+            $this->assign('nickname', $wxInfo['nickname']);
+            $this->display();
+        }
     }
 
     /**
@@ -85,7 +92,7 @@ class IndexController extends BaseController {
     public function perfect_info() {
         //获取微信信息
         $wxInfo = cookie('wxInfo');
-        //测试数据
+//        //测试数据
         $wxInfo = array(
             'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
             'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
@@ -163,6 +170,52 @@ class IndexController extends BaseController {
         cookie('seller_id', 43, 3600 * 24 * 30);
         cookie('address_id', 1, 3600 * 24 * 30);
         $this->redirect('Seller/seller_home');
+    }
+
+    /**
+     * 保存新注册商家信息
+     */
+    public function saveSellerInfo() {
+        $sellerModel = D('seller_info');
+
+
+        $saveArr['tel'] = $_POST['tel'];
+        $saveArr['address_id'] = $_POST['address_id'];
+        $saveArr['business_license'] = $_POST['business_license'];
+        $saveArr['address'] = $_POST['address'];
+        $saveArr['name'] = $_POST['name'];
+        $saveArr['address_api_url'] = $_POST['address_api_url'];
+        $saveArr['contacts'] = $_POST['contacts'];
+        $saveArr['tx_path'] = $_POST['headimgurl'];
+
+//        dump($saveArr);
+        if (!$sellerModel->create($saveArr)) {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => $sellerModel->getError());
+        } else {
+            $tranModel = M();
+            //开启事务  
+            $tranModel->startTrans();
+
+            $newSellerId = $tranModel->table($this->dbFix . 'seller_info')->add($saveArr);
+            $wxArr['seller_id'] = $newSellerId;
+            $wxArr['open_id'] = $_POST['openid'];
+            $wxArr['name'] = $_POST['nickname'];
+            $wxArr['headimgurl'] = $_POST['headimgurl'];
+
+            $addFlag = $tranModel->table($this->dbFix . 'seller_wechat_binding')->add($wxArr);
+
+            $flag = $newSellerId && $addFlag;
+
+            if ($flag) {
+                $tranModel->commit(); // 成功则提交事务  
+                $returnData['is_success'] = array('flag' => 0, 'msg' => '注册成功,请完善资质信息!');
+            } else {
+                $tranModel->rollback(); // 否则将事务回滚  
+                $returnData['is_success'] = array('flag' => 1, 'msg' => '注册失败!');
+            }
+            
+        }
+        $this->ajaxReturn($returnData);
     }
 
 }

@@ -8,6 +8,16 @@
  */
 
 /**
+ * 清理所有cookie
+ */
+function DeleteAllCookies()
+{
+    foreach ($_COOKIE as $key => $value) {
+        setcookie($key, null);
+    }
+}
+
+/**
  * * 截取中文字符串
  * */
 function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true) {

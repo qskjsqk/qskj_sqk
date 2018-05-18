@@ -27,6 +27,9 @@ class IndexController extends BaseController {
 //------------------------------------------------------------------------------    
 
     public function index() {
+        
+        DeleteAllCookies();
+        
         $appid = WXAPPID;
         $secret = WXSECRET;
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid

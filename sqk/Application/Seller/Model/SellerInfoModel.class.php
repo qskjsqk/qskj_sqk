@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @name SellerInfoModel
  * @info 描述：商家信息 Model
@@ -7,12 +8,19 @@
  */
 
 namespace Seller\Model;
+
 use Think\Model;
 use Admin\Model\BaseModel;
 
 class SellerInfoModel extends BaseModel {
 
-    public $tableName  = 'seller_info';
-
+    public $tableName = 'seller_info';
+    protected $_validate = array(
+        array('name', 'require', '姓名为必填项！'),
+        array('name', '0,50', '姓名长度应在0-50之间！', 0, 'length'),
+        array('tel', 'require', '手机号码为必填项！'),
+        array('tel', '', '手机号码已被注册！', 1, 'unique', 1),
+        array('tel', '/^1[3|5|7|8|][0-9]{9}$/', '手机格式不正确！', 2),
+    );
 
 }

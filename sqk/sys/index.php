@@ -46,13 +46,16 @@ $signPackage = $jssdk->GetSignPackage();
                     success: function (res) {
                         var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                         var numCheck = /^[0-9]{10}$/;
-                        var flag = 1;
-                        var msg='';
+                        var telCheck=/^1[3|5|7|8|9][0-9]{9}$/;
                         if (numCheck.test(result)) {
-                            flag = 1;
-                            location.href='../index.php/Seller/qrcodeurl/scan_user?iccard_num='+result;
-                        }else{
-                            
+                            location.href = '../index.php/Seller/qrcodeurl/scan_user?iccard_num=' + result;
+                        } else {
+                            result = result.substr(0, 11);
+                            if (telCheck.test(result)) {
+                                location.href = '../index.php/Seller/qrcodeurl/scan_user?iccard_num=' + result;
+                            }else{
+                                alert('无效的二维码！');
+                            }
                         }
                     }
                 });

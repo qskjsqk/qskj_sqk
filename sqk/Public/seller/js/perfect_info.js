@@ -1,6 +1,6 @@
 /**
- * @name setting
- * @info 描述：个人中心的js
+ * @name perfect_info
+ * @info 描述：商家完善信息
  * @author Hellbao <1036157505@qq.com>
  * @datetime 2017-3-2 9:02:30
  */
@@ -15,48 +15,43 @@ $(function () {
  * 修改资料
  * @returns {undefined}
  */
-function saveUserInfo() {
-    var flag = 1;
-    if ($('#realname').val() != '') {
-        flag = 1;
-    } else {
-        flag = 0;
-        msg = '请输入姓名';
-    }
-
-    birthdayCheck = /^[1-2][0-9]{3}-[0-1][1-9]-[0-3][1-9]$/;
-    if ($('#birthday').val() != '') {
-        if (birthdayCheck.test($('#birthday').val())) {
-            flag = 1;
-        } else {
-            flag = 0;
-            msg = '生日格式不正确';
-        }
-    }else {
-        flag = 0;
-        msg = '请输入生日';
-    }
-    if (flag == 0) {
-        mui.toast(msg, {duration: 'long', type: 'div'});
-    } else {
-        $.post(c_path + "/addUserappInfo", {
-            'tel': $('#tel').html(),
-            'realname': $('#realname').val(),
-            'birthday': $('#birthday').val(),
-            'gender': $('#gender').val(),
-            'address_id': $('#address_id').val(),
-            
-            'tx_path': $('#tx_path').val(),
-            'wx_num': $('#wx_num').val(),
-            'nickname': $('#nickname').val(),
-        }, function (data) {
-            if (data.is_success.flag == 1) {
-                aHref(c_path+'/index');
+function saveSellerInfo() {
+    var flag=1;
+    var map = new BMap.Map("container");
+    var local = new BMap.LocalSearch(map);
+    local.search($('#address').val());
+    var Longitude = $('#address_api_url').val();
+    local.setSearchCompleteCallback(function (searchResult) {
+        if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+            var poi = searchResult.getPoi(0);
+            $('#address_api_url').val(poi.point.lng + ',' + poi.point.lat);
+            if (flag == 0) {
+                mui.toast(msg, {duration: 'short', type: 'div'});
             } else {
-                mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+                $.post(c_path + "/saveSellerInfo", {
+                    'tel': $('#tel').html(),
+                    'name': $('#name').val(),
+                    'address': $('#address').val(),
+                    'contacts': $('#contacts').val(),
+                    'business_license': $('#business_license').val(),
+                    'address_api_url': $('#address_api_url').val(),
+                    'address_id': $('#address_id').val(),
+                    
+                    'headimgurl':$('#headimgurl').val(),
+                    'openid':$('#openid').val(),
+                    'nickname':$('#nickname').val(),
+                }, function (data) {
+                    if (data.is_success.flag == 1) {
+                        getSellerInfo();
+                        mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+                    } else {
+                        mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+                    }
+                }, 'json');
             }
-        }, 'json');
-    }
-
+        } else {
+            mui.toast("地址无法获取地图定位！", {duration: 'long', type: 'div'});
+        }
+    });
 }
 
