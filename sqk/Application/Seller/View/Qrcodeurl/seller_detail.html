@@ -61,7 +61,7 @@
                 <ul class="mui-table-view mui-table-view-chevron">
                     <li class="mui-table-view-cell mui-media">
                         <a class="mui-navigate-right">
-                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="/{$data.sellerInfo.tx_path}">
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="{$data.appUserInfo.tx_path}">
                             <div class="mui-media-body">
                                 {$data.appUserInfo.realname}&#12288;[{$data.sellerInfo.com_name}]
                                 <p class='mui-ellipsis'>可用积分:{$data.appUserInfo.integral_num}</p>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="mui-card-content">
                     <form class="mui-input-group">
-                        <div class="mui-input-row" style="width: 100%;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
+                        <div class="mui-input-row" style="width: 100%;background-color: #ccc;border:1px solid #ccc;border-radius: 4px;">
                             <input type="text" placeholder="请输入收取的积分值" name="trading_integral"  onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         </div>
                         <div class="mui-button-row" style="height:auto;">

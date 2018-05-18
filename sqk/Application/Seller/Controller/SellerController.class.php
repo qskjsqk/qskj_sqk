@@ -36,18 +36,6 @@ class SellerController extends BaseController {
     }
 
     /**
-     * 商家版首页
-     */
-    public function sys() {
-        vendor('jssdk');
-        $jssdk = new \JSSDK(WXAPPID, WXSECRET);
-        $signPackage = $jssdk->GetSignPackage();
-        $this->assign('signPackage', $signPackage);
-        dump($signPackage);
-        $this->display();
-    }
-
-    /**
      * 我的通知消息
      */
     public function my_notice() {
