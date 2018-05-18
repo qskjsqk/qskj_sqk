@@ -36,6 +36,18 @@ class SellerController extends BaseController {
     }
 
     /**
+     * 商家版首页
+     */
+    public function sys() {
+        vendor('jssdk');
+        $jssdk = new \JSSDK(WXAPPID, WXSECRET);
+        $signPackage = $jssdk->GetSignPackage();
+        $this->assign('signPackage', $signPackage);
+        dump($signPackage);
+        $this->display();
+    }
+
+    /**
      * 我的通知消息
      */
     public function my_notice() {
@@ -72,7 +84,7 @@ class SellerController extends BaseController {
     public function my_qrcode() {
         $sellerInfo = $this->getSellerInfo();
         if ($sellerInfo['detail_qrcode_path'] == 0) {
-            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/seller_detail/id/' . $sellerInfo['id'].'/';
+            $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/seller_detail/id/' . $sellerInfo['id'] . '/';
             $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
             $data['detail_qrcode_path'] = createQrcode($url);
             $this->setFieldData(M('seller_info'), $sellerInfo['id'], $data);

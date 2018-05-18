@@ -10,6 +10,7 @@
         <meta http-equiv="x-rim-auto-match" content="none">
 
         <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.min.css" type="text/css"/>
+        <link rel="stylesheet" href="__PUBLIC__/appm/css/mui.picker.min.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/icons-extra.css" type="text/css"/>
         <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css" type="text/css"/>
         <style type="text/css">
@@ -35,13 +36,44 @@
 
         <script type="text/javascript" src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="__PUBLIC__/appm/js/mui.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/mui.picker.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/appm/js/year.data.js"></script>
         <script type="text/javascript">
-            //启用双击监听
-            mui.init({
-                gestureConfig: {
-                    doubletap: true
-                },
-            });
+            (function ($, doc) {
+                $.init();
+                $.ready(function () {
+                    /**
+                     * 获取对象属性的值
+                     * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+                     * @param {Object} obj 对象
+                     * @param {String} param 属性名
+                     */
+                    var _getParam = function (obj, param) {
+                        return obj[param] || '';
+                    };
+                    //					//级联示例
+                    var Picker3 = new $.PopPicker({
+                        layer: 3
+                    });
+                    for (var i = 0; i < monthData.length; i++) {
+                        monthData[i].children = dayData;
+                    }
+                    for (var i = 0; i < yearData.length; i++) {
+                        yearData[i].children = monthData;
+                    }
+                    console.log(yearData);
+                    Picker3.setData(yearData);
+                    var showCityPickerButton = doc.getElementById('birthday');
+                    var cityResult3 = doc.getElementById('cityResult3');
+                    showCityPickerButton.addEventListener('tap', function (event) {
+                        Picker3.show(function (items) {
+                            showCityPickerButton.value = _getParam(items[0], 'text') + "-" + _getParam(items[1], 'text') + "-" + _getParam(items[2], 'text');
+                            //返回 false 可以阻止选择框的关闭
+                            //return false;
+                        });
+                    }, false);
+                });
+            })(mui, document);
 
         </script>
         {$Assigndata}
@@ -58,6 +90,7 @@
 
         <!--页面主内容区开始-->
         <div class="mui-content">
+
             <div class="mui-card">
                 <div class="mui-card-content">
                     <ul class="mui-table-view mui-table-view-chevron">
@@ -70,10 +103,15 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
             <div class="mui-card">
                 <div class="mui-card-content">
                     <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>姓名</label>
+
+                        </div>
                         <div class="mui-input-row">
                             <label>姓名</label>
                             <input type="text" id="realname" style="text-align: left;width: 50%;" placeholder="请输入姓名" >
@@ -85,9 +123,12 @@
                                 <option value="1">女</option>
                             </select>
                         </div>
+
                         <div class="mui-input-row">
                             <label>生日</label>
-                            <input type="text" id="birthday" style="text-align: left;width: 50%;" placeholder="如1970-01-01"  onkeyup="value = value.replace(/[^1234567890-]+/g, '')">
+                            <input id='birthday' style="text-align: left;width: 50%;" placeholder="请选择生日" type='text' onkeyup="value = value.replace(/[^1234567890-]+/g, '')">
+                            <div id='cityResult3' class="ui-alert"></div>
+                            <!--<input type="text" id="birthday" style="text-align: left;width: 50%;" placeholder="如1970-01-01"  onkeyup="value = value.replace(/[^1234567890-]+/g, '')">-->
                         </div>
                         <div class="mui-input-row">
                             <label>手机</label>

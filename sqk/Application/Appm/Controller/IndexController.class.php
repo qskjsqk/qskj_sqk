@@ -298,4 +298,13 @@ class IndexController extends BaseController {
         $this->ajaxReturn($returnData);
     }
 
+    public function zxw() {
+        for ($i = 2020; $i >= 1900; $i--) {
+            echo '{';
+            echo "value: '" . $i . "',";
+            echo "text: '" . $i . "'";
+            echo "},";
+        }
+    }
+
 }
