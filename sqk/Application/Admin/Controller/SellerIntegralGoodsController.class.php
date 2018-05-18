@@ -16,6 +16,7 @@ class SellerIntegralGoodsController extends BaseDBController {
     protected $infoModel;
     protected $communityInfoModel;
     protected $sellerInfoModel;
+    protected $weChatModel;
 
     public function _initialize() {
         parent::_initialize();
@@ -23,6 +24,7 @@ class SellerIntegralGoodsController extends BaseDBController {
         $this->infoModel = D('SellerIntegralGoods');
         $this->communityInfoModel = D('SysCommunityInfo');
         $this->sellerInfoModel = D('SellerInfo');
+        $this->weChatModel = D('SellerWechatBinding');
     }
 
     /**
@@ -103,7 +105,9 @@ class SellerIntegralGoodsController extends BaseDBController {
     public function delBatchSellerIntegralGoods() {
         $idArray = explode(',', rtrim($_POST['ids'], ","));
         foreach ($idArray as $value) {
-            $this->infoModel->where(['id' => $value])->delete();
+            if($this->infoModel->where(['id' => $value])->delete()) {
+                $this->weChatModel->where(['seller_id' => $value])->delete();
+            }
         }
         $logC = A('Actionlog')->addLog('SellerIntegralGoods', 'delBatchSellerIntegralGoods', '删除积分商品');
         $this->ajaxReturn(syncData(0, '已批量删除'));

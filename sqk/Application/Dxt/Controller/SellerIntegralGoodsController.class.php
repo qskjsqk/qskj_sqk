@@ -47,7 +47,6 @@ class SellerIntegralGoodsController extends BaseController {
         $num = C('PAGE_NUM')['goods'] * $request['page'];
 
         $join = [
-            ['goods_exchange_record', 'goods_id', 'seller_integral_goods', 'id'],
             ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
             ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
         ];
@@ -90,12 +89,11 @@ class SellerIntegralGoodsController extends BaseController {
 
         //没有任何条件:页面载入
         $lists = $lists->whereDB($lists, $where)
-            ->group($this->dbFix . 'seller_integral_goods.id')
             ->order($this->dbFix . 'seller_integral_goods.id desc')
             ->limit($num)
             ->select();
-        $count = count($lists);
         //echo $model->getLastSql();
+        $count = D('SellerIntegralGoods')->joinFieldDB($join, $field, $where)->count();
         if ($num < $count) {
             $ajaxLoad = '点击加载更多';
             $isEnd = 0;

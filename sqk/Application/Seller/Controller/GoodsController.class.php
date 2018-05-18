@@ -101,10 +101,9 @@ class GoodsController extends BaseController {
         $seller_id = cookie('seller_id');
         $request = Request::all();
 
-       $num = C('PAGE_NUM')['goods'] * $request['page'];
+       //$num = C('PAGE_NUM')['goods'] * $request['page'];
 
         $join = [
-            ['goods_exchange_record', 'goods_id', 'seller_integral_goods', 'id'],
             ['seller_info', 'id', 'seller_integral_goods', 'seller_id'],
         ];
         $field = ['seller_integral_goods.*', 'seller_info.name as seller_name'];
@@ -131,21 +130,19 @@ class GoodsController extends BaseController {
 
         //没有任何条件:页面载入
         $lists = $lists->whereDB($lists, $where)
-            ->group($this->dbFix .'seller_integral_goods.id')
             ->order($this->dbFix .'seller_integral_goods.id desc')
             ->select();
-        //echo $goodsModel->getLastSql();
-        $count = count($lists);
-        if($num < $count) {
+        //echo $goodsModel->getLastSql();exit;
+        /*if($num < $count) {
             $ajaxLoad = '点击加载更多';
             $isEnd = 0;
         } else {
             $ajaxLoad = '已加载全部';
             $isEnd = 1;
-        }
+        }*/
         $data = [
-            'ajaxLoad' => $ajaxLoad,
-            'is_end' => $isEnd,
+            //'ajaxLoad' => $ajaxLoad,
+            //'is_end' => $isEnd,
             'where' => $request,
             'lists' => $lists,
             'isEmpty' => !empty($lists) ? 1 : 0,
