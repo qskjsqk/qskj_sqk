@@ -25,26 +25,6 @@
                 height: 35px;;line-height: 35px;
             }
         </style>
-
-
-        <script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
-        <script src="__PUBLIC__/appm/js/mui.min.js"></script>
-        <script type="text/javascript">
-            //启用双击监听
-            mui.init({
-                gestureConfig: {
-                    doubletap: true
-                },
-            });
-            var slider = mui("#slider");
-            slider.slider({
-                interval: 5000
-            });
-        </script>
-        {$Assigndata}
-        <link rel="stylesheet" href="__PUBLIC__/appm/css/common.css">
-        <script src="__PUBLIC__/appm/js/common.js"></script>
-        <script src="__PUBLIC__/appm/js/item_list.js"></script>
     </head>
 
     <body>
@@ -198,3 +178,21 @@
 </body>
 
 </html>
+
+<script src="__PUBLIC__/appm/js/jquery-1.11.0.js"></script>
+<script src="__PUBLIC__/appm/js/mui.min.js"></script>
+<script type="text/javascript">
+            //启用双击监听
+            mui.init({
+                gestureConfig: {
+                    doubletap: true
+                },
+            });
+            var slider = mui("#slider");
+            slider.slider({
+                interval: 5000
+            });
+</script>
+{$Assigndata}
+<script src="__PUBLIC__/appm/js/common.js"></script>
+<script src="__PUBLIC__/appm/js/item_list.js"></script>
