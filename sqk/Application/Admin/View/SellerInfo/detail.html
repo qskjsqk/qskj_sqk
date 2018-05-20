@@ -88,8 +88,7 @@
                 <if condition="$data['sellerWechat'] neq NULL">
                     <foreach name="data.sellerWechat" item="val">
                         <p class="wechat-{$val.id}">
-                            <label style="width: 150px;">{$val.open_id}</label>
-                            <label style="width: 80px;">{$val.name}</label>
+                            [{$val.name}]{$val.open_id}
                         </p>
                     </foreach>
                     <else/>

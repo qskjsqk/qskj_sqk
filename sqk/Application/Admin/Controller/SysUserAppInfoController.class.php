@@ -27,7 +27,7 @@ class SysUserAppInfoController extends BaseDBController {
      * function:显示用户列表
      */
     public function showList() {
-        if(session('address_id')!=0){
+        if (session('address_id') != 0) {
             $where['address_id'] = array('EQ', session('address_id'));
             $pageCondition['address_id'] = urldecode(session('address_id'));
         }
@@ -128,8 +128,16 @@ class SysUserAppInfoController extends BaseDBController {
             $returnData['data']['category_name'] = $this->getCatName($returnData['data']['cat_id']);
             $returnData['data']['address_name'] = $this->getComInfoByCid($returnData['data']['address_id']);
             $returnData['data']['gender_name'] = ($returnData['data']['gender'] == 0) ? '男' : '女';
-//            $this->assign('priv', $this->getPriviledges());
+            $returnData['data']['liked_activ_num'] = M('activ_info')->where('like_ids like "%,' . $returnData['data']['id'] . ',%"')->count();
+            $returnData['data']['signed_activ_num'] = M('activ_signin_info')->where('user_id='.$returnData['data']['id'])->count();
+            if (strpos($returnData['data']['tx_path'], 'http') === FALSE) {
+                $returnData['data']['tx_path'] = '/' . $returnData['data']['tx_path'];
+            } else {
+                $returnData['data']['tx_path'] = $returnData['data']['tx_path'];
+            }
             $this->assign('userInfo', $returnData['data']);
+//            dump($returnData['data']);
+//            dump(M('activ_info')->getLastSql());
         } else {
             $this->assign();
         }
@@ -178,26 +186,6 @@ class SysUserAppInfoController extends BaseDBController {
         } else {
             return $comArr['com_name'];
         }
-    }
-
-    /**
-     * 获取该社区读卡器编码
-     */
-    public function getCardUfNum() {
-        //时间系数
-        $Ctime = 3600 * 24 * 1;
-        $address_id = $_SESSION['address_id'];
-        $userCat = $this->getCatInfoByCid($_SESSION['cat_id']);
-        $where['address_id'] = array('EQ', $address_id);
-        $where['timestamp'] = array('GT', time() - $Ctime);
-        $comInfo = M('sys_community_info')->where($where)->find();
-        if (!empty($comInfo)) {
-            $returnData['code'] = 500;
-            $returnData['uf_num'] = $comInfo['uf_num'];
-        } else {
-            $returnData['code'] = 502;
-        }
-        echo json_encode($returnData);
     }
 
     /**

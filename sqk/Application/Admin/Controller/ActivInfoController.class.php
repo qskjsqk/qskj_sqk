@@ -267,6 +267,9 @@ class ActivInfoController extends BaseDBController {
         echo json_encode($returnData);
     }
 
+    /**
+     * 展示活动签到列表
+     */
     public function showSignList() {
 
         $where['id'] = $signWhere['activity_id'] = array('EQ', $_GET['id']);
@@ -275,11 +278,10 @@ class ActivInfoController extends BaseDBController {
 
         $signInfo = $this->signModel->where($signWhere)->select();
         for ($i = 0; $i < count($signInfo); $i++) {
-            if ($signInfo[$i]['sign_sum'] != 0) {
                 $signInfo[$i]['data'] = $this->signInfoModel->where('sign_id=' . $signInfo[$i]['id'])->select();
-            }
+                $signInfo[$i]['sign_sum']=count($signInfo[$i]['data']);
         }
-//        dump($signInfo[0]['data']);
+       
         $this->assign('signInfo', $signInfo);
         $this->display();
     }

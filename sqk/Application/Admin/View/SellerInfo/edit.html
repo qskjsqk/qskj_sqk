@@ -50,7 +50,7 @@
                                 <div  id="filePicker">添加图片</div>
                             </div>
                             <div class="col-sm-9">
-                                <span class="tipMsg">营业执,照店面照片</span>
+                                <span class="tipMsg">请上传营业执照及店面照片</span>
                             </div>
 
                         </div>
@@ -121,8 +121,7 @@
                         <if condition="$data['sellerWechat'] neq NULL">
                             <foreach name="data.sellerWechat" item="val">
                             <p class="wechat-{$val.id}">
-                                <label style="width: 150px;">{$val.open_id}</label>
-                                <label style="width: 80px;">{$val.name}</label>
+                                [{$val.name}]{$val.open_id}
                                 <a class="btn btn-primary" title="{$val.id}">解绑</a>
                             </p>
                             </foreach>
