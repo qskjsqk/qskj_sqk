@@ -27,9 +27,9 @@ class IndexController extends BaseController {
 //------------------------------------------------------------------------------    
 
     public function index() {
-        
+
         DeleteAllCookies();
-        
+
         $appid = WXAPPID;
         $secret = WXSECRET;
         $a = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid
@@ -96,13 +96,13 @@ class IndexController extends BaseController {
         $this->display();
     }
 
-    /**
-     * 劵吗兑换记录
-     */
-    public function litem_list() {
-        $this->assign('myInfo', $this->getUserappInfo());
-        $this->display();
-    }
+//    /**
+//     * 劵吗兑换记录 （暂时废弃）
+//     */
+//    public function litem_list() {
+//        $this->assign('myInfo', $this->getUserappInfo());
+//        $this->display();
+//    }
 
     /**
      * 积分交易记录
@@ -168,6 +168,9 @@ class IndexController extends BaseController {
         $this->ajaxReturn($returnData);
     }
 
+    /**
+     * 获取我的活动列表
+     */
     public function getMyActivList() {
         $user_id = cookie('user_id');
 
@@ -231,6 +234,9 @@ class IndexController extends BaseController {
         $this->ajaxReturn($returnData);
     }
 
+    /**
+     * 获取我的签到列表
+     */
     public function getMySignList() {
         $user_id = cookie('user_id');
 
@@ -281,6 +287,7 @@ class IndexController extends BaseController {
     public function saveUserappInfo() {
         $userModel = D('SysUserappInfo');
         $user_id = cookie('user_id');
+        $saveArr['id'] = $user_id;
         $saveArr['tel'] = $_POST['tel'];
         $saveArr['usr'] = $_POST['usr'];
         $saveArr['realname'] = $_POST['realname'];
