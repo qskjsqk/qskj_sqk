@@ -139,28 +139,32 @@ class QrcodeurlController extends BaseController {
      */
     public function activ_signin() {
         //不管有没有分配上
-        $this->assign('user_id', cookie('user_id'));
+        if (empty(cookie('user_id'))) {
+            $this->redirect('Index/index');
+        } else {
+            $this->assign('user_id', cookie('user_id'));
 
-        $myInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
-        $myInfo['address_name'] = getConameById($myInfo['address_id']);
-        $this->assign('myInfo', $myInfo);
+            $myInfo = M('sys_userapp_info')->where('id=' . cookie('user_id'))->find();
+            $myInfo['address_name'] = getConameById($myInfo['address_id']);
+            $this->assign('myInfo', $myInfo);
 
-        $id = $_GET['id'];
-        //查询签到信息
-        $where['id'] = ['EQ', $id];
-        $signInfo = M('activ_signin')->where($where)->find();
-        $signInfo['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signInfo['id'])->count();
+            $id = $_GET['id'];
+            //查询签到信息
+            $where['id'] = ['EQ', $id];
+            $signInfo = M('activ_signin')->where($where)->find();
+            $signInfo['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signInfo['id'])->count();
 
-        $activInfo = M('activ_info')->field('id,cat_id,like_num,integral,address_id,title,start_time')->where('id=' . $signInfo['activity_id'])->find();
-        $activInfo['cat_name'] = $this->getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
-        $activInfo['address_name'] = getConameById($activInfo['address_id']);
-        $activInfo['start_time'] = tranTimeToCom($activInfo['start_time']);
+            $activInfo = M('activ_info')->field('id,cat_id,like_num,integral,address_id,title,start_time')->where('id=' . $signInfo['activity_id'])->find();
+            $activInfo['cat_name'] = $this->getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
+            $activInfo['address_name'] = getConameById($activInfo['address_id']);
+            $activInfo['start_time'] = tranTimeToCom($activInfo['start_time']);
 
-        $this->assign('signInfo', $signInfo);
-        $this->assign('activInfo', $activInfo);
+            $this->assign('signInfo', $signInfo);
+            $this->assign('activInfo', $activInfo);
 
 
-        $this->display();
+            $this->display();
+        }
     }
 
     /**
@@ -303,6 +307,29 @@ class QrcodeurlController extends BaseController {
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), $returnData['data']['user_id'], 'realname');
             $returnData['data']['good_name'] = $this->getDataKey(M('seller_integral_goods'), $returnData['data']['goods_id'], 'goods_name');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
+
+            //提醒消息
+            $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $_POST['seller_id'])->find();
+            $sellerInfo = M('seller_info')->find($_POST['seller_id']);
+            $incomeInfo = [
+                'open_id' => $sellerWx['open_id'],
+                'name' => $returnData['data']['seller_name'],
+                'type' => '用户扫码兑换商品',
+                'io' => '收取',
+                'exchange_integral' => $_POST['exchange_integral'],
+                'integral_num' => $sellerInfo['integral_num']
+            ];
+            $this->sendTradingMsg($incomeInfo);
+            $userWx = M('sys_userapp_info')->find(cookie('user_id'));
+            $paymentInfo = [
+                'open_id' => $userWx['wx_num'],
+                'name' => $userWx['realname'],
+                'type' => '用户扫码兑换商品',
+                'io' => '消费',
+                'exchange_integral' => $_POST['exchange_integral'],
+                'integral_num' => $userWx['integral_num']
+            ];
+            $this->sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -431,6 +458,17 @@ class QrcodeurlController extends BaseController {
             $returnData['data']['comm_name'] = $this->getDataKey(M('sys_community_info'), $returnData['data']['comm_id'], 'com_name');
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
+            
+            $userWx = M('sys_userapp_info')->find(cookie('user_id'));
+            $paymentInfo = [
+                'open_id' => $userWx['wx_num'],
+                'name' => $userWx['realname'],
+                'type' => '用户扫码转账给社区',
+                'io' => '消费',
+                'exchange_integral' => $_POST['exchange_integral'],
+                'integral_num' => $userWx['integral_num']
+            ];
+            $this->sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -485,7 +523,7 @@ class QrcodeurlController extends BaseController {
     public function sendTradingMsg($data) {
         //设置模板消息
         $str = '{
-	"touser": "'.$data['open_id'].'",
+	"touser": "' . $data['open_id'] . '",
 	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
 	"url": "http://weixin.qq.com/download",
 	"topcolor": "#FF0000",
@@ -495,7 +533,7 @@ class QrcodeurlController extends BaseController {
 			"color": "#FFA500"
 		},
 		"account": {
-			"value": "'.$data['name'].'",
+			"value": "' . $data['name'] . '",
 			"color": "#173177"
 		},
 		"time": {
@@ -503,19 +541,19 @@ class QrcodeurlController extends BaseController {
 			"color": "#173177"
 		},
                 "type": {
-			"value": "'.$data['type'].'",
+			"value": "' . $data['type'] . '",
 			"color": "#173177"
 		},
 		"creditChange": {
-			"value": "'.$data['io'].'",
+			"value": "' . $data['io'] . '",
 			"color": "#000"
 		},
 		"number": {
-			"value": "'.$data['exchange_integral'].'分",
+			"value": "' . $data['exchange_integral'] . '分",
 			"color": "#173177"
 		},
 		"amount": {
-			"value": "'.$data['integral_num'].'分",
+			"value": "' . $data['integral_num'] . '分",
 			"color": "#173177"
 		},
 		"remark": {
