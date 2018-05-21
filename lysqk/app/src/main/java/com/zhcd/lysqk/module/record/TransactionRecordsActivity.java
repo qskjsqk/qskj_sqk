@@ -97,9 +97,8 @@ public class TransactionRecordsActivity extends BaseActivity {
                 isLoadEnd = false;
                 page = 1;
             }
-            String address_id = loginEntity.getAddress_id();
             showProgressDialog();
-            ServiceProvider.getTradingRecordList(address_id, page, new IDataResponse() {
+            ServiceProvider.getTradingRecordList(loginEntity.getAddress_id(), page, new IDataResponse() {
                 @Override
                 public void onResponse(BaseData obj) {
                     hideProgressDialog();

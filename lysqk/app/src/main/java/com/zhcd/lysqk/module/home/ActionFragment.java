@@ -105,10 +105,8 @@ public class ActionFragment extends BaseFragment {
                 isLoadEnd = false;
                 page = 1;
             }
-            String address_id = loginEntity.getAddress_id();
-            address_id = "1";
             showProgressDialog();
-            ServiceProvider.getActivListPos(address_id, page, new IDataResponse() {
+            ServiceProvider.getActivListPos(loginEntity.getAddress_id(), page, new IDataResponse() {
                 @Override
                 public void onResponse(BaseData obj) {
                     hideProgressDialog();
