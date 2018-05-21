@@ -32,7 +32,7 @@ return array(
     //系统
     'SYSTEM_TOKEN'=>'qs_sqk',//识别码
 
-    'SHOW_PAGE_TRACE' => true, //开发过程中开启页面Trace
+//    'SHOW_PAGE_TRACE' => true, //开发过程中开启页面Trace
 
     //加载扩展配置文件
     'LOAD_EXT_CONFIG' => array(

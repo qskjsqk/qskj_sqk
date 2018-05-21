@@ -46,44 +46,42 @@
             <h1 class="mui-title header-a-l">我的签到</h1>	
         </header>
 
-    <!--主体部分-->
-    <div class="mui-content">
-        <div class="mui-row">
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell mui-media">
-                    <a class="mui-navigate-right" >
+        <!--主体部分-->
+        <div class="mui-content">
+            <div class="mui-row">
+                <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="mui-table-view-cell mui-media">
                         <img class="mui-media-object mui-pull-left head-img" id="head-img" src="{$myInfo.tx_path}">
                         <div class="mui-media-body">
                             {$myInfo.realname}&#12288;[{$myInfo.address_name}]
                             <p class='mui-ellipsis'>累计参加：{$myInfo.joined_act_num}</p>
                             <p class='mui-ellipsis'>签到：{}&#12288;积分：{$myInfo.integral_num}</p>
                         </div>
-                    </a>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="mui-row">
+                <ul class="mui-table-view" id="signinList">
+                    <!--                <li class="mui-table-view-cell mui-media">
+                                        <a href="javascript:;">
+                                            <img class="mui-media-object mui-pull-left" src="/Public/appm/img/card_sign.jpg">
+                                            <div class="mui-media-body">
+                                                <p class='mui-ellipsis'>签到时间：2018.04.25&nbsp;12:00:00</p>
+                                                <p class='mui-ellipsis'>活动名称：发科萨里叫东方卡家连锁店</p>
+                                                <p class='mui-ellipsis'>签到次数：1/3&#12288;获得积分：300分</p>
+                                            </div>
+                                        </a>
+                                    </li>       -->
+
+                </ul>
+                <!--动态加载模块-->
+                <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
+                <input type="hidden" id="page" value="1">
+            </div>
+
+
         </div>
-        <div class="mui-row">
-            <ul class="mui-table-view" id="signinList">
-                <!--                <li class="mui-table-view-cell mui-media">
-                                    <a href="javascript:;">
-                                        <img class="mui-media-object mui-pull-left" src="/Public/appm/img/card_sign.jpg">
-                                        <div class="mui-media-body">
-                                            <p class='mui-ellipsis'>签到时间：2018.04.25&nbsp;12:00:00</p>
-                                            <p class='mui-ellipsis'>活动名称：发科萨里叫东方卡家连锁店</p>
-                                            <p class='mui-ellipsis'>签到次数：1/3&#12288;获得积分：300分</p>
-                                        </div>
-                                    </a>
-                                </li>       -->
-
-            </ul>
-            <!--动态加载模块-->
-            <button id="loadMore" type="button" data-loading-icon="mui-spinner mui-spinner-custom" style="border:0px;width: 100%;color:#999;padding: 12px 0px;" class="mui-btn" sth onclick="loadMore()"></button>
-            <input type="hidden" id="page" value="1">
-        </div>
-
-
-    </div>
-    <!--页面主内容区结束-->
-</body>
+        <!--页面主内容区结束-->
+    </body>
 
 </html>

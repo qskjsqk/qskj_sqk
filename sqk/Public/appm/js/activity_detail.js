@@ -64,7 +64,7 @@ function getDetail(id) {
                 firstPic = appUpload_path + data.data.pics[0]['url'];
             }
 
-            $('#activ_first_pic').css('background-image', 'url('+firstPic+')');
+            $('#activ_first_pic').css('background-image', 'url(' + firstPic + ')');
 
             //为增强体验 图片加载完成之前隐藏，加载完成后显示
             $("#activ_content").css('display', 'none');
@@ -88,10 +88,28 @@ function getDetail(id) {
                 $("#activ_content").css('display', 'block');
             }
 
+            var commStr = '';
+            if (data.data.commFlag == 1) {
+                for (var i = 0; i < data.data.comm.length; i++) {
+                    commStr += '<li class="mui-table-view-cell" style="padding-left: 0px;">' +
+                            '<div class="mui-row">' +
+                            '<div class="pinglun-list m-margin-l15">' +
+                            '<div class="pinglun-title">' +
+                            '<div class="pinglun-title-img m-icon-tx"><img src="' + data.data.comm[i]['tx'] + '">' +
+                            '</div>' +
+                            '<div class="pinglun-title-title m-margin-l15">' + data.data.comm[i]['no'] + '&nbsp;楼--' + data.data.comm[i]['realname'] +
+                            '<p>' + data.data.comm[i]['add_time'] + '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="pinglun-content">' + data.data.comm[i]['content'] + '</div>' +
+                            '</div>' +
+                            '</li>';
+                }
 
-
-
-
+            } else {
+                commStr = '<li class="mui-table-view-cell" style="padding-left: 0px;text-align:center;">(=￣ω￣=)&#12288;赶快来吐槽一下吧！</li>';
+            }
+            $("#commList").html(commStr);
             $("#read_num").html("浏览" + data.data.read_num + "次");
             $("#comm_num").html("&nbsp;" + data.data.comm_num + "人评论");
 
@@ -116,4 +134,25 @@ function likeActiv(id) {
             mui.toast(data.msg);
         }
     }, 'json');
+}
+
+/**
+ * 添加评论事件
+ * @param {Object} id
+ */
+function addComm(id) {
+    if ($("#pl_input").val() == "") {
+        mui.toast('不可发送空评论！');
+    } else {
+        $.get(c_path + "/addComm", {'id': id, 'commContent': $("#pl_input").val()}, function (data) {
+            if (data.flag == 1) {
+                getDetail(id);
+                $("#pl_input").val('');
+                mui.toast(data.msg);
+            } else {
+                mui.toast(data.msg);
+            }
+        }, 'json');
+    }
+
 }

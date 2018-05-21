@@ -1,25 +1,42 @@
+<script src="__PUBLIC__/appm/js/mui.min.js"></script>
+<script type="text/javascript">
+    //启用双击监听
+    mui.init({
+        gestureConfig: {
+            doubletap: true
+        },
+    });
+</script>
 <nav class="mui-bar mui-bar-tab">
-    <a class="mui-tab-item" onclick="aHref('__MODULE__/notice/notice_list')" id="Notice_btn">
+    <a class="mui-tab-item" href="__MODULE__/notice/notice_list" id="Notice_btn">
         <span class="mui-icon mui-icon-extra mui-icon-extra-comment" id="notice_num">
         </span>
         <span class="mui-tab-label">通知</span>
     </a>
-    <a class="mui-tab-item" onclick="aHref('__MODULE__/activity/activity_list')" id="Activity_btn">
+    <a class="mui-tab-item" href="__MODULE__/activity/activity_list" id="Activity_btn">
         <span class="mui-icon mui-icon-extra mui-icon-extra-class" id="activity_num">
         </span>
         <span class="mui-tab-label">活动</span>
     </a>
-    <a class="mui-tab-item" onclick="aHref('__MODULE__/SellerIntegralGoods/item_list?type=0')" id="SellerIntegralGoods_btn">
+    <a class="mui-tab-item" href="__MODULE__/SellerIntegralGoods/item_list?type=0" id="SellerIntegralGoods_btn">
         <span class="mui-icon mui-icon-extra mui-icon-extra-gift" id="item_num">
         </span>
         <span class="mui-tab-label">积分</span>
     </a>
-    <a class="mui-tab-item" onclick="aHref('__MODULE__/top/top_home')" id="Top_btn">
+    <a class="mui-tab-item" href="__MODULE__/top/top_home" id="Top_btn">
         <span class="mui-icon mui-icon-extra mui-icon-extra-rank"></span>
         <span class="mui-tab-label">榜单</span>
     </a>
-    <a class="mui-tab-item" onclick="aHref('__MODULE__/index/setting')" id="Index_btn">
+    <a class="mui-tab-item" href="__MODULE__/index/setting" id="Index_btn">
         <span class="mui-icon mui-icon-extra mui-icon-extra-custom "></span>
         <span class="mui-tab-label">我的</span>
     </a>
 </nav>
+<script type="text/javascript">
+    mui('.mui-bar-tab').on('tap', 'a', function (e) {
+        var targetTab = this.getAttribute('href');
+        aHref(targetTab);
+    });
+</script>
+
+

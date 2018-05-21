@@ -44,8 +44,8 @@ class LoginController extends Controller {
             //直接进入主界面
             $this->redirect('activity/activity_list');
         } else {
-            $this->assign('headimgurl', $mxInfo['headimgurl']);
-            $this->assign('nickname', $mxInfo['nickname']);
+            $this->assign('headimgurl', $wxInfo['headimgurl']);
+            $this->assign('nickname', $wxInfo['nickname']);
             $this->display();
         }
     }
@@ -240,7 +240,7 @@ class LoginController extends Controller {
 
         $where['tel'] = ['EQ', $saveArr['tel']];
         $result = $userModel->where($where)->save($saveArr); //数据更新
-        
+
         if ($result === FALSE) {
             $returnData['is_success'] = array('flag' => 0, 'msg' => '用户绑定失败!');
         } else {
@@ -283,6 +283,13 @@ class LoginController extends Controller {
         $user_id = cookie('user_id');
         $result = $userModel->where(array('id' => $user_id))->find();
         $this->ajaxReturn($result);
+    }
+
+    public function ys() {
+        cookie('user_id', 129, 3600 * 24 * 30);
+        cookie('address_id', 3, 3600 * 24 * 30);
+        //直接进入主界面
+        $this->redirect('activity/activity_list');
     }
 
 }

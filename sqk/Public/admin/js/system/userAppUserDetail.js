@@ -116,7 +116,7 @@ function bindingCardLayer(id) {
                     event_e = window.event;
                 }
                 console.log(event_e);
-                var int_keycode = event_e.key||event_e.code;
+                var int_keycode = event_e.key || event_e.code;
                 if (int_keycode == 'Enter') {
                     submitCardInfo(id);
                     return false;
@@ -145,7 +145,8 @@ function submitCardInfo(id) {
                 location.reload();
             });
         } else {
-            layer.msg(constants.FAILD);
+            layer.msg(result.msg);
+            $('#card_num').val('');
         }
     });
 }

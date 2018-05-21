@@ -219,7 +219,7 @@ class ActivityController extends Controller {
      * @return int
      */
     public function getRealnameById($id) {
-        $userModel = M(C('DB_USER_INFO'));
+        $userModel = M(C('DB_USERAPP_INFO'));
         $findArr = $userModel->where('id=' . $id)->find();
         if (empty($findArr)) {
             return 0;
@@ -255,10 +255,15 @@ class ActivityController extends Controller {
             for ($i = 0; $i < count($selectArr); $i++) {
                 $data[$i]['id'] = $selectArr[$i]['id'];
                 $data[$i]['no'] = $i + 1;
-                $data[$i]['tx'] = $selectArr[$i]['user_id'] % 13 + 1;
                 $data[$i]['add_time'] = tranTime($selectArr[$i]['add_time']);
                 $data[$i]['content'] = $selectArr[$i]['content'];
-                $data[$i]['realname'] = $this->getRealnameById($selectArr[$i]['user_id']);
+                $appuserInfo = M('sys_userapp_info')->find($selectArr[$i]['user_id']);
+                $data[$i]['realname'] = $appuserInfo['realname'];
+                if (strpos($appuserInfo['tx_path'], 'http') === FALSE) {
+                    $data[$i]['tx'] = '../../../' . $appuserInfo['tx_path'];
+                } else {
+                    $data[$i]['tx'] = $appuserInfo['tx_path'];
+                }
             }
             $returnData['flag'] = 1;
             $returnData['data'] = $data;

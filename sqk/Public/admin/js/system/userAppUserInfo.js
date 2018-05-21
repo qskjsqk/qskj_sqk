@@ -112,14 +112,6 @@ function bindingCardLayer(id) {
         resize: false, //是否允许拉伸
         area: ['420px', '150px'], //宽高
         content: $('.bindingCardLayer'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-//        btn: ['确定', '取消'],
-//        yes: function (index) {
-////            alert(1);
-//            submitCardInfo(index, id);
-//        },
-//        btn2: function (index) {
-//
-//        },
         success: function (layero) {
 //            加载页面成功
             $('#card_num').focus();
@@ -159,7 +151,8 @@ function submitCardInfo(id) {
                 location.reload();
             });
         } else {
-            layer.msg(constants.FAILD);
+            layer.msg(result.msg);
+            $('#card_num').val('');
         }
     });
 }

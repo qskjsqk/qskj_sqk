@@ -129,7 +129,7 @@ class SysUserAppInfoController extends BaseDBController {
             $returnData['data']['address_name'] = $this->getComInfoByCid($returnData['data']['address_id']);
             $returnData['data']['gender_name'] = ($returnData['data']['gender'] == 0) ? '男' : '女';
             $returnData['data']['liked_activ_num'] = M('activ_info')->where('like_ids like "%,' . $returnData['data']['id'] . ',%"')->count();
-            $returnData['data']['signed_activ_num'] = M('activ_signin_info')->where('user_id='.$returnData['data']['id'])->count();
+            $returnData['data']['signed_activ_num'] = M('activ_signin_info')->where('user_id=' . $returnData['data']['id'])->count();
             if (strpos($returnData['data']['tx_path'], 'http') === FALSE) {
                 $returnData['data']['tx_path'] = '/' . $returnData['data']['tx_path'];
             } else {
@@ -197,13 +197,21 @@ class SysUserAppInfoController extends BaseDBController {
         $this->display();
     }
 
+    /**
+     * 绑定ic卡
+     */
     public function setUserAppUfNum() {
         $where['id'] = array('EQ', $_POST['id']);
         $updData['iccard_num'] = $_POST['card_num'];
-//        $updData['iccard_ufnum'] = $_POST['card_ufnum'];
-        $returnData = parent::setField($this->userappInfoModel, $where, $updData);
-//        $logC = A('Actionlog')->addLog('SysUserInfo', 'setUserAppUfNum', '居民用户绑定实体卡');
-        $this->ajaxReturn($returnData, 'JSON');
+        $info = M('sys_userapp_info')->where('iccard_num=' . $updData['iccard_num'])->find();
+        if (empty($info)) {
+            $returnData = parent::setField($this->userappInfoModel, $where, $updData);
+            $this->ajaxReturn($returnData, 'JSON');
+        } else {
+            $returnData['code'] = '502';
+            $returnData['msg'] = '该IC卡已经绑定！';
+            $this->ajaxReturn($returnData, 'JSON');
+        }
     }
 
 }
