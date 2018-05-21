@@ -19,7 +19,6 @@ use Seller\Model\ExchangeRecordModel;
 use Seller\Model\TradingRecordModel;
 use Admin\Model\SysUserappInfoModel;
 
-
 class QrcodeurlController extends BaseController {
 
     protected $config;
@@ -33,19 +32,20 @@ class QrcodeurlController extends BaseController {
      */
     public function scan_user() {
         $request = Request::all();
-        //假设这里扫描用户的二维码拿到下面的值
-        $iccard_num = $request['iccard_num'];
-//        $iccard_num = '1362913101';
 
+        $iccard_num = $request['iccard_num'];
+        //假设这里扫描用户的二维码拿到下面的值
+        //$iccard_num = '1362913101';
         //判断用户是否存在
-        $appUserModel = new SysUserappInfoModel();
-        if(empty($appUserModel->where(['iccard_num' => $iccard_num])->find())) {
-            $this->redirect('goods/goods_manage');
+        $appUserInfo = M('sys_userapp_info')->where('iccard_num=' . $iccard_num . ' or tel=' . $iccard_num)->find();
+        if (empty($appUserInfo)) {
+
+            $this->error("该用户异常！", U("seller/seller_home"), 3);
         }
 
         $seller_id = cookie('seller_id');
-        
-        $this->redirect('seller_detail?seller_id=' . $seller_id . '&iccard_num=' . $iccard_num);
+
+        $this->redirect('seller_detail?seller_id=' . $seller_id . '&user_id=' . $appUserInfo['id']);
     }
 
     public function goods_detail() {
@@ -68,10 +68,10 @@ class QrcodeurlController extends BaseController {
         $request = Request::all();
 
         $seller_id = $request['seller_id'];
-        $iccard_num = $request['iccard_num'];
+        $user_id = $request['user_id'];
 
-        if(empty($seller_id) || empty($iccard_num)) {
-            $this->redirect('goods/goods_manage');
+        if (empty($seller_id) || empty($user_id)) {
+            $this->redirect('seller/my_info');
         }
 
         $sellerModel = new SellerInfoModel();
@@ -79,7 +79,7 @@ class QrcodeurlController extends BaseController {
         $appUserModel = new SysUserappInfoModel();
 
         //用户信息
-        $appUserInfo = $appUserModel->where(['iccard_num' => $iccard_num])->find();
+        $appUserInfo = $appUserModel->where(['id' => $user_id])->find();
 
         //查询商家信息
         $sellerInfo = $sellerModel->where(['id' => $seller_id])->find();
@@ -98,10 +98,10 @@ class QrcodeurlController extends BaseController {
 
         //设置连表,查询信息
         $lists = $goodsModel
-            ->joinFieldDB($join, $field, $where)
-            ->group($this->dbFix . 'seller_integral_goods.id')
-            ->order($this->dbFix . 'seller_integral_goods.id desc')
-            ->select();
+                ->joinFieldDB($join, $field, $where)
+                ->group($this->dbFix . 'seller_integral_goods.id')
+                ->order($this->dbFix . 'seller_integral_goods.id desc')
+                ->select();
 
         $data = [
             'sellerInfo' => $sellerInfo,
@@ -121,13 +121,36 @@ class QrcodeurlController extends BaseController {
         $request['seller_id'] = cookie('seller_id');
         $request['user_id'] = $request['app_user_id'];
 
-        if(empty($request['trading_integral'])|| empty($request['seller_id']) || empty($request['user_id'])) {
+        if (empty($request['trading_integral']) || empty($request['seller_id']) || empty($request['user_id'])) {
             $this->ajaxReturn(syncData(-1, '提交有误'));
         }
 
         $res = $tradingModel->addRecord($request);
-        $this->ajaxReturn($res);
 
+        //提醒消息
+        $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $request['seller_id'])->find();
+        $sellerInfo = M('seller_info')->find($request['seller_id']);
+        $incomeInfo = [
+            'open_id' => $sellerWx['open_id'],
+            'name' => $sellerInfo['name'],
+            'type' => '[' . $sellerInfo['name'] . ']扫码直接收取',
+            'io' => '收取',
+            'exchange_integral' => $request['trading_integral'],
+            'integral_num' => $sellerInfo['integral_num']
+        ];
+        $this->sendTradingMsg($incomeInfo);
+        $userWx = M('sys_userapp_info')->find($request['user_id']);
+        $paymentInfo = [
+            'open_id' => $userWx['wx_num'],
+            'name' => $userWx['realname'],
+            'type' => '[' . $sellerInfo['name'] . ']扫码直接收取',
+            'io' => '消费',
+            'exchange_integral' => $request['trading_integral'],
+            'integral_num' => $userWx['integral_num']
+        ];
+        $this->sendTradingMsg($paymentInfo);
+
+        $this->ajaxReturn($res);
     }
 
     /**
@@ -139,13 +162,86 @@ class QrcodeurlController extends BaseController {
         $request['user_id'] = $request['app_user_id'];
         $request['seller_id'] = cookie('seller_id');
 
-        if(empty($request['exchange_integral'])|| empty($request['seller_id']) || empty($request['user_id']) || empty($request['goods_id']) || empty($request['book_num'])) {
+        if (empty($request['exchange_integral']) || empty($request['seller_id']) || empty($request['user_id']) || empty($request['goods_id']) || empty($request['book_num'])) {
             $this->ajaxReturn(syncData(-1, '提交有误'));
         }
 
         $res = $exchangeModel->addRecord($request);
-        $this->ajaxReturn($res);
 
+        //提醒消息
+        $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $request['seller_id'])->find();
+        $sellerInfo = M('seller_info')->find($request['seller_id']);
+        $incomeInfo = [
+            'open_id' => $sellerWx['open_id'],
+            'name' => $sellerInfo['name'],
+            'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
+            'io' => '收取',
+            'exchange_integral' => $request['exchange_integral'],
+            'integral_num' => $sellerInfo['integral_num']
+        ];
+        $this->sendTradingMsg($incomeInfo);
+        $userWx = M('sys_userapp_info')->find($request['user_id']);
+        $paymentInfo = [
+            'open_id' => $userWx['wx_num'],
+            'name' => $userWx['realname'],
+            'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
+            'io' => '消费',
+            'exchange_integral' => $request['exchange_integral'],
+            'integral_num' => $userWx['integral_num']
+        ];
+        $this->sendTradingMsg($paymentInfo);
+
+        $this->ajaxReturn($res);
+    }
+
+    /**
+     * 发送微信通知（交易）
+     * @param type $data
+     */
+    public function sendTradingMsg($data) {
+        //设置模板消息
+        $str = '{
+	"touser": "' . $data['open_id'] . '",
+	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "【梨园智能商圈】提醒您正在进行积分交易",
+			"color": "#FFA500"
+		},
+		"account": {
+			"value": "' . $data['name'] . '",
+			"color": "#173177"
+		},
+		"time": {
+			"value": "2018年05月21日 12:10:10",
+			"color": "#173177"
+		},
+                "type": {
+			"value": "' . $data['type'] . '",
+			"color": "#173177"
+		},
+		"creditChange": {
+			"value": "' . $data['io'] . '",
+			"color": "#000"
+		},
+		"number": {
+			"value": "' . $data['exchange_integral'] . '分",
+			"color": "#173177"
+		},
+		"amount": {
+			"value": "' . $data['integral_num'] . '分",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "",
+			"color": "#173177"
+		}
+	}
+}';
+        //发送模板消息
+        sendWxTemMsg($str);
     }
 
 }

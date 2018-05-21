@@ -153,7 +153,6 @@ class QrcodeurlController extends BaseController {
             $where['id'] = ['EQ', $id];
             $signInfo = M('activ_signin')->where($where)->find();
             $signInfo['signed_num'] = M('activ_signin_info')->where('sign_id=' . $signInfo['id'])->count();
-
             $activInfo = M('activ_info')->field('id,cat_id,like_num,integral,address_id,title,start_time')->where('id=' . $signInfo['activity_id'])->find();
             $activInfo['cat_name'] = $this->getDataKey(M('activ_cat'), $activInfo['cat_id'], 'cat_name');
             $activInfo['address_name'] = getConameById($activInfo['address_id']);
@@ -463,7 +462,7 @@ class QrcodeurlController extends BaseController {
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
                 'name' => $userWx['realname'],
-                'type' => '用户扫码转账给社区',
+                'type' => '用户扫码转账给['.$returnData['data']['comm_name'].'社区]',
                 'io' => '消费',
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $userWx['integral_num']

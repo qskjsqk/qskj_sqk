@@ -32,6 +32,8 @@ class ApiController extends BaseDBController {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
+//        $inputArr = $_POST;
+
         $token_num = $inputArr['token_num'];
         $where['token_num'] = ['EQ', "" . $token_num . ""];
         $where['is_enable'] = ['EQ', 1];
@@ -42,12 +44,13 @@ class ApiController extends BaseDBController {
             $returnData['timestamp'] = time();
         } else {
             $findArr['address_name'] = getConameById($findArr['address_id']);
-            $commInfo = M('sys_community_info')->field('com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
+            $commInfo = M('sys_community_info')->field('id,com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
             if ($commInfo['qrcode_path'] == 0) {
                 $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/transfer_comm/id/' . $commInfo['id'] . '/';
                 $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
                 $data['qrcode_path'] = createQrcode($url);
-                $this->setField(M('sys_community_info'), $commInfo['id'], $data);
+                $where['id'] = ['EQ', $commInfo['id']];
+                $this->setField(M('sys_community_info'), $where, $data);
                 $commInfo['qrcode_path'] = $data['qrcode_path'];
             }
 
@@ -260,7 +263,7 @@ class ApiController extends BaseDBController {
                 $returnData['timestamp'] = time();
 
                 for ($i = 0; $i < count($signinInfoList); $i++) {
-                    $appInfo = M('sys_userapp_info')->find($signinInfoList['user_id']);
+                    $appInfo = M('sys_userapp_info')->find($signinInfoList[$i]['user_id']);
                     $signinInfoList[$i]['add_time'] = strtotime($signinInfoList[$i]['add_time']);
                     $signinInfoList[$i]['tx_icon'] = $appInfo['tx_path'];
                 }

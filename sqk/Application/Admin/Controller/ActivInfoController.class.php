@@ -161,7 +161,8 @@ class ActivInfoController extends BaseDBController {
             $url = $this->config['system_ymurl'] . '/index.php/Appm/Qrcodeurl/activ_signin/id/' . $addId . '/';
             $url = $this->config['wx_token_p'] . $url . $this->config['wx_token_a'];
             $data['sign_qrcode_path'] = createQrcode($url);
-            $this->setField($this->signModel, $addId, $data);
+            $where['id']=['EQ',$addId];
+            $this->setField($this->signModel, $where, $data);
         }
         $data = array(
             'is_publish' => '1',
