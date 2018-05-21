@@ -29,7 +29,6 @@ class QrcodeurlController extends BaseController {
 //        $wx['openid'] = "ozF060wIC0F5P5GLlrfw0OEMpeGM";
 //        $wx['nickname'] = "忘忧草";
 //        cookie('wxInfo', $wx, 3600 * 24 * 30);
-
         //判断用户是否存在
 
         $seller_id = $_GET['id'];
@@ -173,9 +172,6 @@ class QrcodeurlController extends BaseController {
         $sign_integral = $_POST['sign_integral'];
         $activity_id = $_POST['activity_id'];
 
-
-
-
         $swhere['sign_id'] = ['EQ', $sign_id];
         $swhere['user_id'] = ['EQ', $user_id];
         $signInfoInfo = M('activ_signin_info')->where($swhere)->find();
@@ -217,11 +213,15 @@ class QrcodeurlController extends BaseController {
                 $returnData['msg'] = '签到成功';
                 $returnData['data'] = [
                     'realname' => $userInfo['realname'],
+                    'wx_num' => $userInfo['wx_num'],
                     'tel' => $userInfo['tel'],
                     'sign_integral' => $sign_integral,
                     'sign_type' => '用户扫码签到',
                     'sign_time' => date('Y.m.d H:i:s', time()),
+                    'title' => $activInfo['title'],
+                    'address' => $activInfo['address'],
                 ];
+                $this->sendSignMsg($returnData['data']);
             } else {
                 $tranModel->rollback(); // 否则将事务回滚 
                 $returnData['flag'] = 0;
@@ -357,6 +357,29 @@ class QrcodeurlController extends BaseController {
             $returnData['data']['seller_name'] = $this->getDataKey(M('seller_info'), $returnData['data']['seller_id'], 'name');
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
+
+            //提醒消息
+            $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $_POST['seller_id'])->find();
+            $sellerInfo = M('seller_info')->find($_POST['seller_id']);
+            $incomeInfo = [
+                'open_id' => $sellerWx['open_id'],
+                'name' => $returnData['data']['seller_name'],
+                'type' => '用户扫码转账',
+                'io' => '收取',
+                'exchange_integral' => $_POST['exchange_integral'],
+                'integral_num' => $sellerInfo['integral_num']
+            ];
+            $this->sendTradingMsg($incomeInfo);
+            $userWx = M('sys_userapp_info')->find(cookie('user_id'));
+            $paymentInfo = [
+                'open_id' => $userWx['wx_num'],
+                'name' => $userWx['realname'],
+                'type' => '用户扫码转账',
+                'io' => '消费',
+                'exchange_integral' => $_POST['exchange_integral'],
+                'integral_num' => $userWx['integral_num']
+            ];
+            $this->sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -415,6 +438,94 @@ class QrcodeurlController extends BaseController {
         }
 
         $this->ajaxReturn($returnData, "JSON");
+    }
+
+    /**
+     * 发送微信通知（签到）
+     * @param type $data
+     */
+    public function sendSignMsg($data) {
+        //设置模板消息
+        $str = '{
+	"touser": "' . $data['wx_num'] . '",
+	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "亲爱的“' . $data['realname'] . '”,通过' . $data['sign_type'] . '签到",
+			"color": "#FFA500"
+		},
+		"keyword1": {
+			"value": "' . $data['title'] . '",
+			"color": "#173177"
+		},
+                "keyword2": {
+			"value": "' . date('Y年m月d日 H:i:s') . '",
+			"color": "#173177"
+		},
+                "keyword3": {
+			"value": "' . $data['address'] . '",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "非常感谢您的到来，您可以获得【' . $data['sign_integral'] . '】积分！",
+			"color": "#173177"
+		}
+	}
+}';
+        //发送模板消息
+        sendWxTemMsg($str);
+    }
+
+    /**
+     * 发送微信通知（交易）
+     * @param type $data
+     */
+    public function sendTradingMsg($data) {
+        //设置模板消息
+        $str = '{
+	"touser": "'.$data['open_id'].'",
+	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "【梨园智能商圈】提醒您正在进行积分交易",
+			"color": "#FFA500"
+		},
+		"account": {
+			"value": "'.$data['name'].'",
+			"color": "#173177"
+		},
+		"time": {
+			"value": "2018年05月21日 12:10:10",
+			"color": "#173177"
+		},
+                "type": {
+			"value": "'.$data['type'].'",
+			"color": "#173177"
+		},
+		"creditChange": {
+			"value": "'.$data['io'].'",
+			"color": "#000"
+		},
+		"number": {
+			"value": "'.$data['exchange_integral'].'分",
+			"color": "#173177"
+		},
+		"amount": {
+			"value": "'.$data['integral_num'].'分",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "",
+			"color": "#173177"
+		}
+	}
+}';
+        //调用公共方法curl_post，发送模板消息
+        sendWxTemMsg($str);
     }
 
 }

@@ -7,19 +7,17 @@ return array(
     'DEFAULT_MODULE' => 'Admin', // 默认模块
     /* 数据库设置 */
     'DB_TYPE' => 'mysql', // 数据库类型
-
     'DB_HOST' => '111.204.78.45', // 服务器地址
     'DB_NAME' => 'qs_sqk_db_debug', // 数据库名
     'DB_USER' => 'db', // 用户名
     'DB_PWD' => 'qs-db', // 密码
     'DB_PORT' => '33060', // 端口
 
-    /*'DB_HOST' => '127.0.0.1', // 服务器地址
-    'DB_NAME' => 'qs_sqk_db_debug', // 数据库名
-    'DB_USER' => 'root', // 用户名
-    'DB_PWD' => '123', // 密码
-    'DB_PORT' => '3306', // 端口*/
-
+    /* 'DB_HOST' => '127.0.0.1', // 服务器地址
+      'DB_NAME' => 'qs_sqk_db_debug', // 数据库名
+      'DB_USER' => 'root', // 用户名
+      'DB_PWD' => '123', // 密码
+      'DB_PORT' => '3306', // 端口 */
     'DB_PREFIX' => 'qs_sqk_', // 数据库表前缀
     'DB_PARAMS' => array(), // 数据库连接参数    
     'DB_DEBUG' => TRUE, // 数据库调试模式 开启后可以记录SQL日志
@@ -30,13 +28,12 @@ return array(
     'DB_MASTER_NUM' => 1, // 读写分离后 主服务器数量
     'DB_SLAVE_NO' => '', // 指定从服务器序号
     //系统
-    'SYSTEM_TOKEN'=>'qs_sqk',//识别码
-
+    'SYSTEM_TOKEN' => 'qs_sqk', //识别码
 //    'SHOW_PAGE_TRACE' => true, //开发过程中开启页面Trace
-
     //加载扩展配置文件
     'LOAD_EXT_CONFIG' => array(
-        'EXCHANGE_METHOD' => 'exchange_method',   //积分交易方式配置
+        'EXCHANGE_METHOD' => 'exchange_method', //积分交易方式配置
     ),
-
+    'appId' => 'wx542ee14049aa74e0', // 
+    'appSecret' => '44e062595f48e1858dd3363f95d50f56', // 
 );

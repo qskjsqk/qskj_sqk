@@ -8,10 +8,42 @@
  */
 
 /**
+ * 获取access_token
+ * @return type
+ */
+function getAccessToken() {
+    // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
+    $data = json_decode(get_php_file("/sys/access_token.php"));
+    if ($data->expire_time < time()) {
+        // 如果是企业号用以下URL获取access_token
+        // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . WXAPPID . "&secret=" . WXSECRET;
+        $res = json_decode(httpGet($url));
+        $access_token = $res->access_token;
+        if ($access_token) {
+            $data->expire_time = time() + 7000;
+            $data->access_token = $access_token;
+            set_php_file("/sys/access_token.php", json_encode($data));
+        }
+    } else {
+        $access_token = $data->access_token;
+    }
+    return $access_token;
+}
+
+/**
+ * 发送微信模版消息
+ */
+function sendWxTemMsg($str) {
+    $access_token_arr = getAccessToken();
+    $return = httpRequest('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' . $access_token_arr, $str);
+    return $return;
+}
+
+/**
  * 清理所有cookie
  */
-function DeleteAllCookies()
-{
+function DeleteAllCookies() {
     foreach ($_COOKIE as $key => $value) {
         setcookie($key, null);
     }
@@ -411,3 +443,30 @@ function httpRequest($pUrl, $pData) {
     return $tResult;
 }
 
+function httpGet($pUrl, $pData = null) {
+    $tCh = curl_init();
+    if ($pData) {
+        is_array($pData) && $pData = http_build_query($pData);
+        curl_setopt($tCh, CURLOPT_POST, true);
+        curl_setopt($tCh, CURLOPT_POSTFIELDS, $pData);
+    }
+    curl_setopt($tCh, CURLOPT_HTTPHEADER, array("Content-type:application/json;charset=UTF-8"));
+    curl_setopt($tCh, CURLOPT_URL, $pUrl);
+    curl_setopt($tCh, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($tCh, CURLOPT_TIMEOUT, 10);
+    curl_setopt($tCh, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($tCh, CURLOPT_SSL_VERIFYPEER, false);
+    $tResult = curl_exec($tCh);
+    curl_close($tCh);
+    return $tResult;
+}
+
+function get_php_file($filename) {
+    return trim(substr(file_get_contents($filename), 15));
+}
+
+function set_php_file($filename, $content) {
+    $fp = fopen($filename, "w");
+    fwrite($fp, "<?php exit();?>" . $content);
+    fclose($fp);
+}
