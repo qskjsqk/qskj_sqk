@@ -138,6 +138,12 @@ class IndexController extends BaseController {
         } else {
             $result['tx_path'] = $result['tx_path'];
         }
+        if ($result['qrcode_path'] == 0) {
+            $encriptTel = R('Login/EncriptPWD', array($result['tel'])); //手机号加密
+            $data['qrcode_path'] = createQrcode($result['tel'] . $encriptTel);
+            M('sys_appuser_info')->where('id='.$user_id)->save($data);
+            $result['qrcode_path'] = $data['qrcode_path'];
+        }
         if ($_GET['type'] == 'api') {
             $this->ajaxReturn($result);
         } else {
@@ -317,13 +323,13 @@ class IndexController extends BaseController {
         for ($i = 0; $i < count($user); $i++) {
             //设置模板消息
             $str = '{
-	"touser": "'.$user[$i]['wx_num'].'",
+	"touser": "' . $user[$i]['wx_num'] . '",
 	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
 	"url": "http://weixin.qq.com/download",
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
-			"value": "亲爱的“'.$user[$i]['nickname'].'”,签到成功",
+			"value": "亲爱的“' . $user[$i]['nickname'] . '”,签到成功",
 			"color": "#FFA500"
 		},
 		"keyword1": {
@@ -335,7 +341,7 @@ class IndexController extends BaseController {
 			"color": "#173177"
 		},
 		"keyword3": {
-			"value": "'.date('Y年m月d日 H:i:s').'",
+			"value": "' . date('Y年m月d日 H:i:s') . '",
 			"color": "#173177"
 		},
 		"remark": {

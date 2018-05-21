@@ -150,3 +150,22 @@ function submitCardInfo(id) {
         }
     });
 }
+
+//解卡
+function unBinding(id) {
+    layer.confirm('确定要解绑此IC卡吗？', {
+        icon: 2,
+        title: '提示信息',
+        btn: ['确定', '取消'] //按钮
+    }, function (index) {
+        $.post(c_path + '/unBinding', {'id': id}, function (result) {
+            if (result.code == '500') {
+                layer.msg(constants.SUCCESS, {time: 1000}, function () {
+                    location.reload();
+                });
+            } else {
+                layer.msg(constants.FAILD);
+            }
+        }, 'json');
+    });
+}

@@ -43,22 +43,22 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="b-main-list col-xs-12 col-sm-4">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <span class="">收藏活动</span>
-                                <span class="" style="float: right;">{$userInfo.liked_act_num}</span>
-                            </div>
-                            <div class="panel-body">
-                                <span class="">分享活动</span>
-                                <span class="" style="float: right;">{$userInfo.shared_act_num}</span>
-                            </div>
-                            <div class="panel-body">
-                                <span class="">参加过的活动</span>
-                                <span class="" style="float: right;">{$userInfo.joined_act_num}</span>
-                            </div>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="b-main-list col-xs-12 col-sm-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <span class="">收藏活动</span>
+                                                    <span class="" style="float: right;">{$userInfo.liked_act_num}</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <span class="">分享活动</span>
+                                                    <span class="" style="float: right;">{$userInfo.shared_act_num}</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <span class="">参加过的活动</span>
+                                                    <span class="" style="float: right;">{$userInfo.joined_act_num}</span>
+                                                </div>
+                                            </div>
+                                        </div>-->
                 </div>   
             </div>
         </div>
@@ -142,9 +142,15 @@
                             <th>社区实体卡</th>
                             <td><if condition="$userInfo.iccard_num eq 0"><span class="label label-default">未绑定</span><else/>{$userInfo.iccard_num}</if></td>
                         <td>
-                            <button class="btn btn-info btn-block bindingUserAppInfo" onclick="bindingCardLayer({$userInfo.id})">
-                                <span class="glyphicon glyphicon-qrcode"></span> 绑卡
-                            </button>
+                            <div class="btn-group btn-group">
+                                <button class="btn btn-info  bindingUserAppInfo"  onclick="bindingCardLayer({$userInfo.id})">
+                                    <span class="glyphicon glyphicon-qrcode"></span> 绑卡
+                                </button>
+                                <button class="btn btn-warning  bindingUserAppInfo"  onclick="unBinding({$userInfo.id})">
+                                    <span class="glyphicon glyphicon-qrcode"></span> 解卡
+                                </button>
+                            </div>
+
                         </td>
                         </tr>
                         <tr>
@@ -169,14 +175,14 @@
                             <input type="text" class="form-control" id="card_num" name="card_num" value="{$userInfo.card_num}" placeholder="请输入IC卡面编号">
                         </div>
                     </div>
-<!--                    <div class="form-group">
-                        <label for="card_ufnum" class="col-sm-4 control-label">IC卡串号</label>
-
-                        <div class="col-sm-8">
-                            <button type="button" id="card_ufnum_btn" class="btn btn-primary btn-block" style="padding:5px 0;" onclick="getCardUfNum()">请放置读卡器上点击读卡</button>
-                            <input type="text" class="form-control" id="card_ufnum" name="card_ufnum" value="" placeholder="读卡成功！" style="display: none;width: 100%;" disabled="disabled">
-                        </div>
-                    </div>-->
+                    <!--                    <div class="form-group">
+                                            <label for="card_ufnum" class="col-sm-4 control-label">IC卡串号</label>
+                    
+                                            <div class="col-sm-8">
+                                                <button type="button" id="card_ufnum_btn" class="btn btn-primary btn-block" style="padding:5px 0;" onclick="getCardUfNum()">请放置读卡器上点击读卡</button>
+                                                <input type="text" class="form-control" id="card_ufnum" name="card_ufnum" value="" placeholder="读卡成功！" style="display: none;width: 100%;" disabled="disabled">
+                                            </div>
+                                        </div>-->
                 </form>
             </div>
         </div>

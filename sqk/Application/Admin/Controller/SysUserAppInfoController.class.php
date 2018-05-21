@@ -214,4 +214,12 @@ class SysUserAppInfoController extends BaseDBController {
         }
     }
 
+    public function unBinding() {
+        $id = $_POST['id'];
+        $where['id']=['EQ',$id];
+        $updData['iccard_num']="0000000000";
+        $returnData = parent::setField($this->userappInfoModel, $where, $updData);
+        $this->ajaxReturn($returnData, 'JSON');
+    }
+
 }
