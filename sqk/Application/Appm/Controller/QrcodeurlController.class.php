@@ -524,7 +524,7 @@ class QrcodeurlController extends BaseController {
 		}
 	}
 }';
-        //调用公共方法curl_post，发送模板消息
+        //发送模板消息
         sendWxTemMsg($str);
     }
 
