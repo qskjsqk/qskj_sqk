@@ -178,7 +178,7 @@ class QrcodeurlController extends BaseController {
         $swhere['sign_id'] = ['EQ', $sign_id];
         $swhere['user_id'] = ['EQ', $user_id];
         $signInfoInfo = M('activ_signin_info')->where($swhere)->find();
-        $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,tel')->where('id=' . $user_id)->find();
+        $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,tel,wx_num')->where('id=' . $user_id)->find();
 
 //        dump($signInfoInfo);exit;
 
@@ -507,7 +507,7 @@ class QrcodeurlController extends BaseController {
 		},
 		"remark": {
 			"value": "非常感谢您的到来，您可以获得【' . $data['sign_integral'] . '】积分！",
-			"color": "#173177"
+			"color": "#FFA500"
 		}
 	}
 }';
