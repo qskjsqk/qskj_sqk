@@ -88,18 +88,20 @@ public class SignRecordActivity extends BaseActivity {
             public void onResponse(BaseData obj) {
                 hideProgressDialog();
                 if (ServiceProvider.errorFilter(obj)) {
-                    if (ServiceProvider.errorFilter(obj)) {
-                        List<SignInfoLisEntity> list = (List<SignInfoLisEntity>) obj.getData();
+                    List<SignInfoLisEntity> list = (List<SignInfoLisEntity>) obj.getData();
+                    if (list != null && list.size() > 0) {
                         mList.clear();
                         mList.addAll(list);
                         recordAdapter.setData(mList);
                         mLoadMoreWrapper.notifyDataSetChanged();
-                        mLoadMoreWrapper.setLoadingState(true);
-                        mLoadMoreWrapper.setmFinish(true);
-                    } else {
-                        if (obj != null)
-                            T.showShort(obj.getMsg());
                     }
+                    mLoadMoreWrapper.setLoadingState(true);
+                    mLoadMoreWrapper.setmFinish(true);
+                } else {
+                    if (obj != null)
+                        T.showShort(obj.getMsg());
+                    mLoadMoreWrapper.setLoadingState(true);
+                    mLoadMoreWrapper.setmFinish(true);
                 }
             }
         }, SignRecordActivity.class.getSimpleName());

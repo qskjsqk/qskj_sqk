@@ -105,21 +105,26 @@ public class ActionDetailSignActivity extends BaseActivity {
         if (listEntity != null && TextUtils.isEmpty(listEntity.getId()))
             return;
         showProgressDialog();
-        ServiceProvider.getActivSigninPos("5", new IDataResponse() {
+        ServiceProvider.getActivSigninPos(listEntity.getId(), new IDataResponse() {
             @Override
             public void onResponse(BaseData obj) {
                 hideProgressDialog();
                 if (ServiceProvider.errorFilter(obj)) {
                     List<ActionSignInfoEntity> infoList = (List<ActionSignInfoEntity>) obj.getData();
-                    if (infoList != null) {
+                    if (infoList != null && infoList.size() > 0) {
                         adapter.setData(infoList);
                         mLoadMoreWrapper.notifyDataSetChanged();
+                        mLoadMoreWrapper.setmFinish(true);
+                        mLoadMoreWrapper.setLoadingState(true, true);
+                    } else {
                         mLoadMoreWrapper.setmFinish(true);
                         mLoadMoreWrapper.setLoadingState(true, true);
                     }
                 } else {
                     if (obj != null)
                         T.showShort(obj.getMsg());
+                    mLoadMoreWrapper.setmFinish(true);
+                    mLoadMoreWrapper.setLoadingState(true, true);
                 }
 
             }

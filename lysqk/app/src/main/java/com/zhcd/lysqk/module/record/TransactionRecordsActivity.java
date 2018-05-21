@@ -98,7 +98,6 @@ public class TransactionRecordsActivity extends BaseActivity {
                 page = 1;
             }
             String address_id = loginEntity.getAddress_id();
-            address_id = "8";
             showProgressDialog();
             ServiceProvider.getTradingRecordList(address_id, page, new IDataResponse() {
                 @Override

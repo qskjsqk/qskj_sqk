@@ -49,7 +49,6 @@ public class ReceivePointsActivity extends BaseActivity {
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         tvDescription = (TextView) findViewById(R.id.tv_description);
         etInputPoints = (EditText) findViewById(R.id.et_input_points);
-        cardId = "1362913101";
         loadCollectionIntegral(cardId);
 
         findViewById(R.id.tv_confirm_receive).setOnClickListener(new View.OnClickListener() {
