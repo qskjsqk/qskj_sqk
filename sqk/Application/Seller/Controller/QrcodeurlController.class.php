@@ -173,7 +173,6 @@ class QrcodeurlController extends BaseController {
         $res = $exchangeModel->addRecord($request);
 
         if ($res['ret'] == 0) {
-            dump();
             //提醒消息
             $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $request['seller_id'])->find();
             $sellerInfo = M('seller_info')->find($request['seller_id']);

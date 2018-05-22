@@ -295,7 +295,7 @@ class IndexController extends BaseController {
         $user_id = cookie('user_id');
         $saveArr['id'] = $user_id;
         $saveArr['tel'] = $_POST['tel'];
-        $saveArr['usr'] = $_POST['usr'];
+        $saveArr['usr'] = $_POST['tel'];
         $saveArr['realname'] = $_POST['realname'];
         $saveArr['gender'] = $_POST['gender'];
         $saveArr['birthday'] = $_POST['birthday'];
