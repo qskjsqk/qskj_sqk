@@ -17,7 +17,6 @@ header('Access-Control-Allow-Methods:POST,GET'); //支持的http 动作
 header('Access-Control-Allow-Headers:x-requested-with,content-type');  //响应头 请按照自己需求添加。
 
 class PromController extends BaseController {
-
     //put your code here
 
     /**
@@ -107,11 +106,11 @@ class PromController extends BaseController {
         $where['id'] = ['EQ', $id];
         $promInfo = M('SellerPromInfo')->where($where)->find();
         $attachList = $this->getAttachArr('sellerProm', $id);
-        if($attachList['flag']==1){
-            $attachList=$attachList['data'];
+        if ($attachList['flag'] == 1) {
+            $attachList = $attachList['data'];
             $this->assign('attachList', json_encode($attachList));
         }
-        
+
         $this->assign('promInfo', $promInfo);
         $this->display('prom_add');
     }
@@ -138,6 +137,85 @@ class PromController extends BaseController {
             }
         }
         $this->ajaxReturn($returnData, 'JSON');
+    }
+
+    /**
+     * 消耗积分兑换广告
+     */
+    public function exchangeAdInte() {
+        $sellerInfo = M('seller_info')->find(cookie('seller_id'));
+//        $number = \Think\Tool\GenerateUnique::generateExchangeNumber();
+        //商家积分扣除
+        $sellerIntegralFlag = M()->table($this->dbFix . 'seller_info')->where('id=' . cookie('seller_id'))
+                ->setDec('integral_num', 2000);
+        if($sellerIntegralFlag){
+            $return['flag']=1;
+            $return['msg']='扣除积分成功！';
+            
+            $sellerWx = M('seller_wechat_binding')->where('seller_id=' . cookie('seller_id'))->find();
+            $incomeInfo = [
+                'open_id' => $sellerWx['open_id'],
+                'name' => $sellerInfo['name'],
+                'type' => '商家兑换广告发布权限',
+                'io' => '消费',
+                'exchange_integral' => 2000,
+                'integral_num' => $sellerInfo['integral_num']
+            ];
+            $this->sendTradingMsg($incomeInfo);
+        }else{
+            $return['flag']=0;
+            $return['msg']='扣除积分失败！';
+        }
+    }
+    
+    /**
+     * 发送微信通知（交易）
+     * @param type $data
+     */
+    public function sendTradingMsg($data) {
+        //设置模板消息
+        $str = '{
+	"touser": "' . $data['open_id'] . '",
+	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "【梨园智能商圈】提醒您正在进行积分交易",
+			"color": "#FFA500"
+		},
+		"account": {
+			"value": "' . $data['name'] . '",
+			"color": "#173177"
+		},
+		"time": {
+			"value": "2018年05月21日 12:10:10",
+			"color": "#173177"
+		},
+                "type": {
+			"value": "' . $data['type'] . '",
+			"color": "#173177"
+		},
+		"creditChange": {
+			"value": "' . $data['io'] . '",
+			"color": "#000"
+		},
+		"number": {
+			"value": "' . $data['exchange_integral'] . '分",
+			"color": "#173177"
+		},
+		"amount": {
+			"value": "' . $data['integral_num'] . '分",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "",
+			"color": "#173177"
+		}
+	}
+}';
+        //发送模板消息
+        sendWxTemMsg($str);
     }
 
 }
