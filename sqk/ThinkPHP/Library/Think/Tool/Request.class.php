@@ -16,6 +16,14 @@ class Request {
      * @return array
      */
     public static function all() {
+        //去掉cookie中的元素
+        if(!empty($_REQUEST) && is_array($_REQUEST)) {
+            foreach($_REQUEST as $key => $value) {
+                if(in_array($key, array_keys($_COOKIE))) {
+                    unset($_REQUEST[$key]);
+                }
+            }
+        }
         return $_REQUEST;
     }
 
