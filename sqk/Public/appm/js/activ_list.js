@@ -66,8 +66,8 @@ function getMyActivList(type, page) {
                 }
 
 
-                str += '<div class="mui-card" onclick="qxLike(' + data.data[i]['id'] + ')">' +
-                        '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="getActivDetail(' + data.data[i]['id'] + ')">' + pModal + '</div>' +
+                str += '<div class="mui-card" >' +
+                        '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="qxLike(' + data.data[i]['id'] + ')">' + pModal + '</div>' +
                         '<div class="mui-card-content">' +
                         '<div class="mui-card-content-inner">' +
                         '<p style="color: #000;font-size:1.1em;">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
