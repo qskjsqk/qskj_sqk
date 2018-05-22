@@ -50,7 +50,7 @@ class SysUserAppInfoController extends BaseDBController {
             $param_arr = array();
             $form_data = $_POST['form_data'];
             parse_str($form_data, $param_arr); //转换数组
-            $param_arr['usr']=$param_arr['tel'];
+            $param_arr['usr'] = $param_arr['tel'];
             $encriptTel = R('Login/EncriptPWD', array($param_arr['tel'])); //手机号加密
             $param_arr['qrcode_path'] = createQrcode($param_arr['tel'] . $encriptTel);
             $returnData = parent::saveData($this->userappInfoModel, $param_arr);
@@ -75,6 +75,7 @@ class SysUserAppInfoController extends BaseDBController {
             $param_arr = array();
             $form_data = $_POST['form_data'];
             parse_str($form_data, $param_arr); //转换数组
+            $param_arr['usr'] = $param_arr['tel'];
             $returnData = parent::saveData($this->userappInfoModel, $param_arr);
             $this->ajaxReturn($returnData, 'JSON');
             exit;
@@ -217,8 +218,8 @@ class SysUserAppInfoController extends BaseDBController {
 
     public function unBinding() {
         $id = $_POST['id'];
-        $where['id']=['EQ',$id];
-        $updData['iccard_num']="0000000000";
+        $where['id'] = ['EQ', $id];
+        $updData['iccard_num'] = "0000000000";
         $returnData = parent::setField($this->userappInfoModel, $where, $updData);
         $this->ajaxReturn($returnData, 'JSON');
     }
