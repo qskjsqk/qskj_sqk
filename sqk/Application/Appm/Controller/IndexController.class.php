@@ -93,8 +93,8 @@ class IndexController extends BaseController {
      */
     public function signin_list() {
         $myInfo = $this->getUserappInfo();
-        $myInfo['joined_activ_num']=M('activ_info')->where('join_ids like "%,'.$myInfo['id'].',%"')->count();
-        $myInfo['signed_activ_num']=M('activ_signin_info')->where('user_id='.$myInfo['id'])->count();
+        $myInfo['joined_activ_num'] = M('activ_info')->where('join_ids like "%,' . $myInfo['id'] . ',%"')->count();
+        $myInfo['signed_activ_num'] = M('activ_signin_info')->where('user_id=' . $myInfo['id'])->count();
         $this->assign('myInfo', $myInfo);
         $this->display();
     }
@@ -144,7 +144,7 @@ class IndexController extends BaseController {
         if ($result['qrcode_path'] == 0) {
             $encriptTel = R('Login/EncriptPWD', array($result['tel'])); //手机号加密
             $data['qrcode_path'] = createQrcode($result['tel'] . $encriptTel);
-            M('sys_userapp_info')->where('id='.$user_id)->save($data);
+            M('sys_userapp_info')->where('id=' . $user_id)->save($data);
             $result['qrcode_path'] = $data['qrcode_path'];
         }
         if ($_GET['type'] == 'api') {
@@ -315,6 +315,23 @@ class IndexController extends BaseController {
             }
         }
         $this->ajaxReturn($returnData);
+    }
+
+    /**
+     * 取消活动收藏
+     */
+    public function qxLike() {
+        $activInfo = M('activ_info')->find($_POST['id']);
+        $data['like_ids'] = str_replace(',' . cookie('user_id') . ',', ',', $data['like_ids']);
+        $flag = M('activ_info')->where('id=' . $_POST['id'])->save($data);
+        if($flag){
+            $return['flag']=1;
+            $return['msg']="取消收藏成功！";
+        }else{
+            $return['flag']=0;
+            $return['msg']="取消收藏失败！";
+        }
+        $this->ajaxReturn($return, "JSON");
     }
 
     public function zxw() {

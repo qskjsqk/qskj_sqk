@@ -74,7 +74,7 @@ function getMyActivList(type, page) {
                         '<div>' +
                         '<span class="mui-badge mui-badge-primary" style="float: left;">' + data.data[i]['integral'] + '分</span>' +
                         '<span>&#12288;' + data.data[i]['address_name'] + '/' + data.data[i]['start_date'] + '</sapn>' +
-                        '<span style="float: right;"><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
+                        '<span style="float: right;" onclick="qxLike(' + data.data[i]['id'] + ')"><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -86,7 +86,7 @@ function getMyActivList(type, page) {
         }
 
         $("#activityList").html(str);
-        $("#activNum"+type).html('('+data.count+')');
+        $("#activNum" + type).html('(' + data.count + ')');
         //参数回显--------------------------------------------------------------
         $('#type').val(data.type);
         //动态加载--------------------------------------------------------------		
@@ -100,6 +100,22 @@ function getMyActivList(type, page) {
         $("#loadMore").html(data.ajaxLoad);
         //---------------------------------------------------------------------
     }, 'json');
+}
+
+function qxLike(id) {
+    var btnArray = ['取消', '确定'];
+    mui.confirm('确定取消收藏该活动吗？', '提示', btnArray, function (e) {
+        if (e.index == 1) {
+            //兑换发布权限
+            mui.post(c_path + "/qxLike", {'id': id}, function (data) {
+                if (data.flag == 1) {
+                    getMyActivList(0, 1);
+                } 
+                mui.toast(data.msg, {duration: 'long', type: 'div'});
+            }, 'json');
+
+        }
+    })
 }
 
 
