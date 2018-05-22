@@ -37,12 +37,12 @@ function getList(page, keyword) {
                 }
                 str += '<li class="mui-table-view-cell mui-media">' +
                         '<a href="#" onclick="getNoticeDetial(' + data.data[i]["id"] + ',1)">' +
-                        '<img class="mui-media-object mui-pull-left" src="../../../' + data.data[i]["notice_pic"] + '">' +
+                        '<img class="mui-media-object mui-pull-left" src="../../../' + data.data[i]["notice_pic"] + '" style="width:100px;">' +
                         '<div class="mui-media-body">' +
                         '<div class="mui-ellipsis ' + readClass + '">' + data.data[i]["title"] + '</div>' +
                         '</div>' +
                         '<div class="meta-info">' +
-                        ' <div class="author">[' + data.data[i]["cat_name"] + ']</div>' +
+                        '<div class="author">&#12288;[' + data.data[i]["cat_name"] + ']</div>' +
                         '<div class="time">' + data.data[i]["add_time"] + '</div>' +
                         '</div>' +
                         '</a>' +

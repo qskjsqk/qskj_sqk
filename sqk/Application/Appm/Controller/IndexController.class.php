@@ -92,7 +92,9 @@ class IndexController extends BaseController {
      * 我的签到
      */
     public function signin_list() {
-        $this->assign('myInfo', $this->getUserappInfo());
+        $myInfo = $this->getUserappInfo();
+        $myInfo['joined_activ_num']=M('activ_info')->where('join_ids like "%,'.$myInfo['id'].',%"')->count();
+        $myInfo['signed_activ_num']=M('activ_signin_info')->where('user_id='.$myInfo['id'])->count();
         $this->display();
     }
 

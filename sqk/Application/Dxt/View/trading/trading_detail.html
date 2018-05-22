@@ -64,7 +64,7 @@
                         <h4>收取积分</h4>
                     </div>
                     <div class="mui-card-link">
-                        <h4>+{$data.trading_integral}</h4>
+                        <h4 style="float:right;">+{$data.trading_integral}</h4>
                     </div>
                 </div>
                 <div class="mui-card-content">
@@ -77,8 +77,8 @@
                             <div class="mui-col-xs-6 mui-text-right">
                                 <span class="mui-h5">
                                     <if condition="$data.status eq 1">
-                                       交易成功
-                                    <else/>
+                                        交易成功
+                                        <else/>
                                         交易失败
                                     </if>
                                 </span>

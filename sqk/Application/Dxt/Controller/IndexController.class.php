@@ -104,8 +104,9 @@ class IndexController extends BaseController {
         if ($address_id != 0) {
             $where['address_id'] = ['EQ', $address_id];
         } else {
-            $where = "1=1";
+            $where['_string'] = "1=1";
         }
+        $where['status'] = ['EQ', 1];
         $adList = M('seller_info')->where($where)->order('RAND()')->limit(5)->select();
         for ($i = 0; $i < count($adList); $i++) {
             $adList[$i]['address_name'] = getConameById($adList[$i]['address_id']);
@@ -160,7 +161,10 @@ class IndexController extends BaseController {
      * 我的签到
      */
     public function signin_list() {
-        $this->assign('myInfo', $this->getUserappInfo());
+        $myInfo = $this->getUserappInfo();
+        $myInfo['joined_activ_num']=M('activ_info')->where('join_ids like "%,'.$myInfo['id'].',%"')->count();
+        $myInfo['signed_activ_num']=M('activ_signin_info')->where('user_id='.$myInfo['id'])->count();
+        $this->assign('myInfo', $myInfo);
         $this->display();
     }
 
