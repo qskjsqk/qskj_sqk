@@ -40,7 +40,7 @@ public class ActionPhotoAlbumAdapter extends RecyclerView.Adapter<ActionPhotoAlb
     public void onBindViewHolder(PhotoAlbumViewHolder holder, int position) {
         if (lists != null && lists.size() > position) {
             String URL = ImagePathUtil.imageReallyUrl(lists.get(position));
-            ImageLoaderUtils.displayImage(context, URL, R.color.gray_text, holder.getImageView());
+            ImageLoaderUtils.displayImage(context, URL, R.color.white, holder.getImageView());
             holder.itemView.setTag(position);
         }
     }

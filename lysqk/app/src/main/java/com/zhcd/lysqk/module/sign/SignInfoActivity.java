@@ -62,7 +62,7 @@ public class SignInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        titleBarBuilder.setTitleText("活动名称");
+        titleBarBuilder.setTitleText("活动签到");
         titleBarBuilder.setBackText("返回");
         signNumDec = (TextView) findViewById(R.id.tv_sign_num_dec);
         signedNumDec = (TextView) findViewById(R.id.tv_signed_num_dec);
@@ -105,7 +105,6 @@ public class SignInfoActivity extends BaseActivity {
                 takeSignStatus.setVisibility(View.VISIBLE);
                 allSignRecords.setBackgroundResource(R.mipmap.default_small_btn);
             } else if (signInfoEntity.getSign_status().equals("1")) {
-                userSignInfo.setVisibility(View.VISIBLE);
                 takeSignStatus.setText("结束");
                 takeSignStatus.setVisibility(View.VISIBLE);
                 allSignRecords.setBackgroundResource(R.mipmap.default_small_btn);
@@ -132,8 +131,10 @@ public class SignInfoActivity extends BaseActivity {
                     hideProgressDialog();
                     if (ServiceProvider.errorFilter(obj)) {
                         if (status.equals("0")) {
-                            initThread();
+                            signInfoEntity.setSign_status("1");
+                            setData();
                         } else if (status.equals("1")) {
+                            signInfoEntity.setSign_status("2");
                             finish();
                         }
                     } else {
@@ -267,7 +268,7 @@ public class SignInfoActivity extends BaseActivity {
                     if (infoList != null && infoList.size() > 0) {
                         if (userSignInfo != null && userSignInfo.getVisibility() == View.GONE)
                             userSignInfo.setVisibility(View.VISIBLE);
-                        NewestSignUserInfoEntity entity = infoList.get(infoList.size() - 1);
+                        NewestSignUserInfoEntity entity = infoList.get(0);
                         tvUserName.setText(entity.getRealname());
                         tvSignTime.setText("时间：" + TimeUtils.getDateYMDHM(entity.getAdd_time()));
                         tvDescription.setText("使用" + (entity.getSign_type().equals("0") ? "二维码" : "社区卡") + "签到成功");
@@ -275,9 +276,6 @@ public class SignInfoActivity extends BaseActivity {
                         String url = ImagePathUtil.imageReallyUrl(entity.getTx_path());
                         ImageLoaderUtils.displayImage(SignInfoActivity.this, url, ivUserHeard);
                     }
-                } else {
-                    if (obj != null)
-                        T.showShort(obj.getMsg());
                 }
             }
         }, SignInfoActivity.class.getSimpleName());
