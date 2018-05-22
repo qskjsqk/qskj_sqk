@@ -20,10 +20,16 @@ class PromController extends BaseController {
 
     //put your code here
 
+    /**
+     * 初始化函数
+     */
     public function _initialize() {
         parent::_initialize();
     }
 
+    /**
+     * 获取我的广告列表
+     */
     public function getMyPromList() {
         $sellerInfo = A('Seller')->getSellerInfo();
         $seller_id = cookie('seller_id');
@@ -72,6 +78,9 @@ class PromController extends BaseController {
         $this->ajaxReturn($returnData);
     }
 
+    /**
+     * 广告详情
+     */
     public function prom_detail() {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
@@ -82,10 +91,16 @@ class PromController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 广告添加视图
+     */
     public function prom_add() {
         $this->display();
     }
 
+    /**
+     * 广告修改视图
+     */
     public function prom_edit() {
         $id = $_GET['id'];
 
@@ -101,6 +116,9 @@ class PromController extends BaseController {
         $this->display('prom_add');
     }
 
+    /**
+     * 保存广告信息
+     */
     public function savePromInfo() {
         $post = getFormData();
 

@@ -71,10 +71,10 @@ function getMyPromList(type, page) {
         $('#count').html('数量(' + data.count + ')');
         $('#allReadNum').html('浏览量(' + data.allReadNum + ')');
         $('#integral_num').html('积分(' + data.sellerInfo.integral_num + ')');
-        
-        if(data.sellerInfo.integral_num>=2000){
+
+        if (data.sellerInfo.integral_num >= 2000) {
             $('#promBtn').html('<button type="button" class="mui-btn mui-btn-warning mui-btn-block" onclick="changeConfirm()">兑换广告发布</button>');
-        }else{
+        } else {
             $('#promBtn').html('<button type="button" class="mui-btn mui-btn-block">积分不足，无法发布</button>');
         }
 
@@ -86,8 +86,12 @@ function changeConfirm() {
     var btnArray = ['取消', '确定'];
     mui.confirm('广告发布权限兑换', '需消耗2000积分', btnArray, function (e) {
         if (e.index == 1) {
+            //兑换发布权限
+            mui.post(c_path + "/exchangeAdAdd", function (data) {
 //                跳转广告发布页面
-            aHref(m_path + '/prom/prom_add');
+//            aHref(m_path + '/prom/prom_add');
+            }, 'json');
+
         }
     })
 }
