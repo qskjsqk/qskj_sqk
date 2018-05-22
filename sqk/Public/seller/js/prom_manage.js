@@ -88,8 +88,13 @@ function changeConfirm() {
         if (e.index == 1) {
             //兑换发布权限
             mui.post(c_path + "/exchangeAdInte", function (data) {
-//                跳转广告发布页面
-//            aHref(m_path + '/prom/prom_add');
+                if(data.flag==1){
+                    //跳转广告发布页面
+                    aHref(m_path + '/prom/prom_add');
+                }else{
+                    mui.toast(data.msg, {duration: 'long', type: 'div'});
+                }
+
             }, 'json');
 
         }
