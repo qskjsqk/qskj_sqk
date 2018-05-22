@@ -219,7 +219,7 @@ class QrcodeurlController extends BaseController {
                     'wx_num' => $userInfo['wx_num'],
                     'tel' => $userInfo['tel'],
                     'sign_integral' => $sign_integral,
-                    'sign_type' => '用户扫码签到',
+                    'sign_type' => '用户扫码',
                     'sign_time' => date('Y.m.d H:i:s', time()),
                     'title' => $activInfo['title'],
                     'address' => $activInfo['address'],

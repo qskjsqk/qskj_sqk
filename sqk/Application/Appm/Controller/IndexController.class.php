@@ -141,7 +141,7 @@ class IndexController extends BaseController {
         if ($result['qrcode_path'] == 0) {
             $encriptTel = R('Login/EncriptPWD', array($result['tel'])); //手机号加密
             $data['qrcode_path'] = createQrcode($result['tel'] . $encriptTel);
-            M('sys_appuser_info')->where('id='.$user_id)->save($data);
+            M('sys_userapp_info')->where('id='.$user_id)->save($data);
             $result['qrcode_path'] = $data['qrcode_path'];
         }
         if ($_GET['type'] == 'api') {

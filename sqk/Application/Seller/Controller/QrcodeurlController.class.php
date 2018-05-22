@@ -58,20 +58,20 @@ class QrcodeurlController extends BaseController {
         $this->assign('sellerInfo', $sellerInfo);
 
         $appUserModel = new SysUserappInfoModel();
-        $this->assign('app_user_id', $appUserModel->where(['iccard_num' => $_GET['iccard_num']])->getField('id'));
+        $this->assign('app_user_id',  $_GET['user_id']);
 
 //        dump($sellerInfo);
         $this->display();
     }
 
     public function seller_detail() {
-        $request = Request::all();
+//        $request = Request::all();
 
-        $seller_id = $request['seller_id'];
-        $user_id = $request['user_id'];
+        $seller_id = $_GET['seller_id'];
+        $user_id = $_GET['user_id'];
 
         if (empty($seller_id) || empty($user_id)) {
-            $this->redirect('seller/my_info');
+            $this->redirect('seller/seller_home');
         }
 
         $sellerModel = new SellerInfoModel();
@@ -168,29 +168,33 @@ class QrcodeurlController extends BaseController {
 
         $res = $exchangeModel->addRecord($request);
 
-        //提醒消息
-        $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $request['seller_id'])->find();
-        $sellerInfo = M('seller_info')->find($request['seller_id']);
-        $incomeInfo = [
-            'open_id' => $sellerWx['open_id'],
-            'name' => $sellerInfo['name'],
-            'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
-            'io' => '收取',
-            'exchange_integral' => $request['exchange_integral'],
-            'integral_num' => $sellerInfo['integral_num']
-        ];
-        $this->sendTradingMsg($incomeInfo);
-        $userWx = M('sys_userapp_info')->find($request['user_id']);
-        $paymentInfo = [
-            'open_id' => $userWx['wx_num'],
-            'name' => $userWx['realname'],
-            'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
-            'io' => '消费',
-            'exchange_integral' => $request['exchange_integral'],
-            'integral_num' => $userWx['integral_num']
-        ];
-        $this->sendTradingMsg($paymentInfo);
+        if ($res['ret'] == 0) {
+            dump();
+                    //提醒消息
+            $sellerWx = M('seller_wechat_binding')->where('seller_id=' . $request['seller_id'])->find();
+            $sellerInfo = M('seller_info')->find($request['seller_id']);
+            $incomeInfo = [
+                'open_id' => $sellerWx['open_id'],
+                'name' => $sellerInfo['name'],
+                'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
+                'io' => '收取',
+                'exchange_integral' => $request['exchange_integral'],
+                'integral_num' => $sellerInfo['integral_num']
+            ];
+            $this->sendTradingMsg($incomeInfo);
+            $userWx = M('sys_userapp_info')->find($request['user_id']);
+            $paymentInfo = [
+                'open_id' => $userWx['wx_num'],
+                'name' => $userWx['realname'],
+                'type' => '[' . $sellerInfo['name'] . ']扫码兑换商品',
+                'io' => '消费',
+                'exchange_integral' => $request['exchange_integral'],
+                'integral_num' => $userWx['integral_num']
+            ];
+            $this->sendTradingMsg($paymentInfo);
+        }
 
+//
         $this->ajaxReturn($res);
     }
 
