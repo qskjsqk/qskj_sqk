@@ -47,10 +47,10 @@ class PromController extends BaseController {
         $promStat['status3'] = M('SellerPromInfo')->where('seller_id=' . $seller_id . ' and status=3')->count();
         $promStat['status02'] = M('SellerPromInfo')->where('seller_id=' . $seller_id . ' and (status=0 or status=2)')->count();
 
+        $allReadNum = 0;
         if (empty($promArr)) {
             $returnData['flag'] = 0;
         } else {
-            $allReadNum = 0;
             for ($i = 0; $i < count($promArr); $i++) {
                 $data[$i]['id'] = $promArr[$i]['id'];
                 $data[$i]['title'] = $promArr[$i]['title'];
@@ -70,10 +70,10 @@ class PromController extends BaseController {
             }
             $returnData['flag'] = 1;
             $returnData['data'] = $data;
-            $returnData['promStat'] = $promStat;
-            $returnData['allReadNum'] = $allReadNum;
-            $returnData['sellerInfo'] = $sellerInfo;
         }
+        $returnData['promStat'] = $promStat;
+        $returnData['allReadNum'] = $allReadNum;
+        $returnData['sellerInfo'] = $sellerInfo;
         $this->ajaxReturn($returnData);
     }
 
@@ -148,10 +148,10 @@ class PromController extends BaseController {
         //商家积分扣除
         $sellerIntegralFlag = M()->table($this->dbFix . 'seller_info')->where('id=' . cookie('seller_id'))
                 ->setDec('integral_num', 2000);
-        if($sellerIntegralFlag){
-            $return['flag']=1;
-            $return['msg']='扣除积分成功！';
-            
+        if ($sellerIntegralFlag) {
+            $return['flag'] = 1;
+            $return['msg'] = '扣除积分成功！';
+
             $sellerWx = M('seller_wechat_binding')->where('seller_id=' . cookie('seller_id'))->find();
             $incomeInfo = [
                 'open_id' => $sellerWx['open_id'],
@@ -161,13 +161,15 @@ class PromController extends BaseController {
                 'exchange_integral' => 2000,
                 'integral_num' => $sellerInfo['integral_num']
             ];
-            $this->sendTradingMsg($incomeInfo);
-        }else{
-            $return['flag']=0;
-            $return['msg']='扣除积分失败！';
+            $flag = $this->sendTradingMsg($incomeInfo);
+            $return['data'] = $flag;
+        } else {
+            $return['flag'] = 0;
+            $return['msg'] = '扣除积分失败！';
         }
+        $this->ajaxReturn($return, 'JSON');
     }
-    
+
     /**
      * 发送微信通知（交易）
      * @param type $data
