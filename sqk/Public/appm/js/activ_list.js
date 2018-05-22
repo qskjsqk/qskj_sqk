@@ -66,7 +66,7 @@ function getMyActivList(type, page) {
                 }
 
 
-                str += '<div class="mui-card">' +
+                str += '<div class="mui-card" onclick="qxLike(' + data.data[i]['id'] + ')">' +
                         '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="getActivDetail(' + data.data[i]['id'] + ')">' + pModal + '</div>' +
                         '<div class="mui-card-content">' +
                         '<div class="mui-card-content-inner">' +
@@ -74,7 +74,7 @@ function getMyActivList(type, page) {
                         '<div>' +
                         '<span class="mui-badge mui-badge-primary" style="float: left;">' + data.data[i]['integral'] + '分</span>' +
                         '<span>&#12288;' + data.data[i]['address_name'] + '/' + data.data[i]['start_date'] + '</sapn>' +
-                        '<span style="float: right;" onclick="qxLike(' + data.data[i]['id'] + ')"><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
+                        '<span style="float: right;" ><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
