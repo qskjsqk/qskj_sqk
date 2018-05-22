@@ -38,7 +38,6 @@
         <!--头栏-->
         <header class="mui-bar mui-bar-nav header-a-l">
             <h1 class="mui-title header-a-l">梨园智能商圈</h1>
-            <a  class="mui-icon mui-icon-chat mui-pull-right header-a" onclick="aHref('__MODULE__/seller/my_notice')"></a>
         </header>
 
         <!--主体部分-->
@@ -50,7 +49,10 @@
                             <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../../../{$sellerInfo.tx_path}">
                             <div class="mui-media-body">
                                 {$sellerInfo.name}&#12288;[{$sellerInfo.address_name}]
-                                <p class='mui-ellipsis'>排名:{$sellerInfo.top_num}&#12288;积分:{$sellerInfo.integral_num}&#12288;经验:{$sellerInfo.exp_num}</p>
+                                <p class='mui-ellipsis'>
+                                    <!--排名:{$sellerInfo.top_num}&#12288;-->
+                                    积分:{$sellerInfo.integral_num}&#12288;
+                                    经验:{$sellerInfo.exp_num}</p>
                             </div>
                         </a>
                     </li>
