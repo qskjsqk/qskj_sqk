@@ -66,20 +66,39 @@ function getMyActivList(type, page) {
                 }
 
 
-                str += '<div class="mui-card" >' +
-                        '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="qxLike(' + data.data[i]['id'] + ')">' + pModal + '</div>' +
-                        '<div class="mui-card-content">' +
-                        '<div class="mui-card-content-inner">' +
-                        '<p style="color: #000;font-size:1.1em;">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
-                        '<div>' +
-                        '<span class="mui-badge mui-badge-primary" style="float: left;">' + data.data[i]['integral'] + '分</span>' +
-                        '<span>&#12288;' + data.data[i]['address_name'] + '/' + data.data[i]['start_date'] + '</sapn>' +
-                        '<span style="float: right;" ><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
+                if (type == 0) {
+                    str += '<div class="mui-card" >' +
+                            '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" onclick="qxLike(' + data.data[i]['id'] + ')">' + pModal + '</div>' +
+                            '<div class="mui-card-content">' +
+                            '<div class="mui-card-content-inner">' +
+                            '<p style="color: #000;font-size:1.1em;">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
+                            '<div>' +
+                            '<span class="mui-badge mui-badge-primary" style="float: left;">' + data.data[i]['integral'] + '分</span>' +
+                            '<span>&#12288;' + data.data[i]['address_name'] + '/' + data.data[i]['start_date'] + '</sapn>' +
+                            '<span style="float: right;" ><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                } else {
+                    str += '<div class="mui-card" >' +
+                            '<div class="mui-card-header mui-card-media" style="height:40vw;position:relative;background-image:url(' + appUpload_path + data.data[i]['pics'][0]['url'] + ')" >' + pModal + '</div>' +
+                            '<div class="mui-card-content">' +
+                            '<div class="mui-card-content-inner">' +
+                            '<p style="color: #000;font-size:1.1em;">【' + data.data[i]['cat_name'] + '】' + data.data[i]['title'] + '</p>' +
+                            '<div>' +
+                            '<span class="mui-badge mui-badge-primary" style="float: left;">' + data.data[i]['integral'] + '分</span>' +
+                            '<span>&#12288;' + data.data[i]['address_name'] + '/' + data.data[i]['start_date'] + '</sapn>' +
+                            '<span style="float: right;" ><span class="mui-icon mui-icon-extra font14 ' + likeClass + '"></span>&nbsp;' + data.data[i]['like_num'] + '人收藏</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                }
             }
+
+
+
 
         } else {
             str = '<li class="mui-table-view-cell font999" style="padding-right: 10px;text-align:center;">(＞﹏＜)&#12288;暂无消息</li>';
@@ -110,7 +129,7 @@ function qxLike(id) {
             mui.post(c_path + "/qxLike", {'id': id}, function (data) {
                 if (data.flag == 1) {
                     getMyActivList(0, 1);
-                } 
+                }
                 mui.toast(data.msg, {duration: 'long', type: 'div'});
             }, 'json');
 
