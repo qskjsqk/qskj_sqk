@@ -95,6 +95,7 @@ class IndexController extends BaseController {
         $myInfo = $this->getUserappInfo();
         $myInfo['joined_activ_num']=M('activ_info')->where('join_ids like "%,'.$myInfo['id'].',%"')->count();
         $myInfo['signed_activ_num']=M('activ_signin_info')->where('user_id='.$myInfo['id'])->count();
+        $this->assign('myInfo', $myInfo);
         $this->display();
     }
 
