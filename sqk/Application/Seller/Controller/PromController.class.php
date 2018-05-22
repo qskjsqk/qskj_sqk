@@ -25,17 +25,12 @@ class PromController extends BaseController {
     }
 
     public function getMyPromList() {
-
         $sellerInfo = A('Seller')->getSellerInfo();
-
         $seller_id = cookie('seller_id');
-
         if ($_POST['type'] != 0) {
             $where['status'] = ['EQ', $_POST['type']];
         }
-
         $where['seller_id'] = ['EQ', $seller_id];
-
         $promArr = M('SellerPromInfo')->where($where)->order('id desc')->select();
         //调试sql
         $returnData['sql'] = M('SellerPromInfo')->getLastSql();
