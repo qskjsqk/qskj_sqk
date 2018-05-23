@@ -453,7 +453,7 @@ class ApiController extends BaseDBController {
             $tradingRecordModel = new IntegralTradingRecordModel();
             $appUserModel = new SysUserappInfoModel();
             $where['income_id'] = $address_id;
-            $where['exchange_method_id'] = 4;
+            $where['_string'] = "(exchange_method_id=4 or exchange_method_id=5)";
             $tradingRecordList = $tradingRecordModel
                     ->where($where)
                     ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
@@ -555,6 +555,56 @@ class ApiController extends BaseDBController {
         }
         $returnData['timestamp'] = time();
         $this->ajaxReturn($returnData, 'JSON');
+    }
+    
+    /**
+     * 发送微信通知（交易）
+     * @param type $data
+     */
+    public function sendTradingMsg($data) {
+        //设置模板消息
+        $str = '{
+	"touser": "' . $data['open_id'] . '",
+	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "【梨园智能商圈】提醒您正在进行积分交易",
+			"color": "#FFA500"
+		},
+		"account": {
+			"value": "' . $data['name'] . '",
+			"color": "#173177"
+		},
+		"time": {
+			"value": "2018年05月21日 12:10:10",
+			"color": "#173177"
+		},
+                "type": {
+			"value": "' . $data['type'] . '",
+			"color": "#173177"
+		},
+		"creditChange": {
+			"value": "' . $data['io'] . '",
+			"color": "#000"
+		},
+		"number": {
+			"value": "' . $data['exchange_integral'] . '分",
+			"color": "#173177"
+		},
+		"amount": {
+			"value": "' . $data['integral_num'] . '分",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "",
+			"color": "#173177"
+		}
+	}
+}';
+        //发送模板消息
+        sendWxTemMsg($str);
     }
 
 }
