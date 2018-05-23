@@ -348,7 +348,7 @@ class ApiController extends BaseDBController {
                         $returnData['timestamp'] = time();
 
                         if ($userInfo['wx_num'] != '00000000') {
-                            $userInfo=$userInfo = M('sys_userapp_info')->find($userInfo['id']);
+                            $userInfo = $userInfo = M('sys_userapp_info')->find($userInfo['id']);
                             $sendData = [
                                 'realname' => $userInfo['realname'],
                                 'wx_num' => $userInfo['wx_num'],
@@ -559,6 +559,20 @@ class ApiController extends BaseDBController {
                 $returnData['status'] = 1;
                 $returnData['msg'] = '积分收取成功！';
                 $returnData['data'] = $res;
+
+                //给微信发消息提醒
+                if ($user['wx_num'] != '00000000') {
+                    $userInfo = $userInfo = M('sys_userapp_info')->where(['iccard_num' => $iccard_num])->find();
+                    $sendData = [
+                        'open_id' => $userInfo['wx_num'],
+                        'name' => $userInfo['realname'],
+                        'type' => '[' . $returnData['data']['comm_name'] . '社区]刷卡收取积分',
+                        'io' => '消费',
+                        'exchange_integral' => $trading_integral,
+                        'integral_num' => $userInfo['integral_num']
+                    ];
+                    sendTradingMsg($sendData);
+                }
             } elseif ($res == -1) {
                 $returnData['status'] = -1;
                 $returnData['msg'] = '当前交易积分大于用户剩余积分';
