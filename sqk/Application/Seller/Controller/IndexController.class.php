@@ -48,9 +48,9 @@ class IndexController extends BaseController {
 
     public function index() {
         //获取微信信息
-        $mxInfo = cookie('wxInfo');
+        $wxInfo = cookie('wxInfo');
         //验证用户是否存在
-        $where['open_id'] = ['EQ', $mxInfo['openid']];
+        $where['open_id'] = ['EQ', $wxInfo['openid']];
         $sellerWx = M('seller_wechat_binding')->where($where)->find();
 
         if (!empty($sellerWx)) {
