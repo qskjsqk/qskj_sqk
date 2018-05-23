@@ -556,7 +556,7 @@ function sendTradingMsg($data) {
 			"color": "#173177"
 		},
 		"time": {
-			"value": "2018年05月21日 12:10:10",
+			"value": "'.date('Y年m月d日 H:i:s').'",
 			"color": "#173177"
 		},
                 "type": {

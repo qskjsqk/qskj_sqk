@@ -224,7 +224,7 @@ class QrcodeurlController extends BaseController {
                     'title' => $activInfo['title'],
                     'address' => $activInfo['address'],
                 ];
-                $this->sendSignMsg($returnData['data']);
+                sendSignMsg($returnData['data']);
             } else {
                 $tranModel->rollback(); // 否则将事务回滚 
                 $returnData['flag'] = 0;
@@ -318,7 +318,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $sellerInfo['integral_num']
             ];
-            $this->sendTradingMsg($incomeInfo);
+            sendTradingMsg($incomeInfo);
             $userWx = M('sys_userapp_info')->find(cookie('user_id'));
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
@@ -328,7 +328,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $userWx['integral_num']
             ];
-            $this->sendTradingMsg($paymentInfo);
+            sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -395,7 +395,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $sellerInfo['integral_num']
             ];
-            $this->sendTradingMsg($incomeInfo);
+            sendTradingMsg($incomeInfo);
             $userWx = M('sys_userapp_info')->find(cookie('user_id'));
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
@@ -405,7 +405,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $userWx['integral_num']
             ];
-            $this->sendTradingMsg($paymentInfo);
+            sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -467,7 +467,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $userWx['integral_num']
             ];
-            $this->sendTradingMsg($paymentInfo);
+            sendTradingMsg($paymentInfo);
         } else {
             $tranModel->rollback(); // 否则将事务回滚  
             $returnData['flag'] = 0;
@@ -475,94 +475,6 @@ class QrcodeurlController extends BaseController {
         }
 
         $this->ajaxReturn($returnData, "JSON");
-    }
-
-    /**
-     * 发送微信通知（签到）
-     * @param type $data
-     */
-    public function sendSignMsg($data) {
-        //设置模板消息
-        $str = '{
-	"touser": "' . $data['wx_num'] . '",
-	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
-	"url": "http://weixin.qq.com/download",
-	"topcolor": "#FF0000",
-	"data": {
-		"first": {
-			"value": "亲爱的“' . $data['realname'] . '”,通过' . $data['sign_type'] . '签到",
-			"color": "#FFA500"
-		},
-		"keyword1": {
-			"value": "' . $data['title'] . '",
-			"color": "#173177"
-		},
-                "keyword2": {
-			"value": "' . date('Y年m月d日 H:i:s') . '",
-			"color": "#173177"
-		},
-                "keyword3": {
-			"value": "' . $data['address'] . '",
-			"color": "#173177"
-		},
-		"remark": {
-			"value": "非常感谢您的到来，您可以获得【' . $data['sign_integral'] . '】积分！",
-			"color": "#FFA500"
-		}
-	}
-}';
-        //发送模板消息
-        sendWxTemMsg($str);
-    }
-
-    /**
-     * 发送微信通知（交易）
-     * @param type $data
-     */
-    public function sendTradingMsg($data) {
-        //设置模板消息
-        $str = '{
-	"touser": "' . $data['open_id'] . '",
-	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-	"url": "http://weixin.qq.com/download",
-	"topcolor": "#FF0000",
-	"data": {
-		"first": {
-			"value": "【梨园智能商圈】提醒您正在进行积分交易",
-			"color": "#FFA500"
-		},
-		"account": {
-			"value": "' . $data['name'] . '",
-			"color": "#173177"
-		},
-		"time": {
-			"value": "2018年05月21日 12:10:10",
-			"color": "#173177"
-		},
-                "type": {
-			"value": "' . $data['type'] . '",
-			"color": "#173177"
-		},
-		"creditChange": {
-			"value": "' . $data['io'] . '",
-			"color": "#000"
-		},
-		"number": {
-			"value": "' . $data['exchange_integral'] . '分",
-			"color": "#173177"
-		},
-		"amount": {
-			"value": "' . $data['integral_num'] . '分",
-			"color": "#173177"
-		},
-		"remark": {
-			"value": "",
-			"color": "#173177"
-		}
-	}
-}';
-        //发送模板消息
-        sendWxTemMsg($str);
-    }
+    }    
 
 }

@@ -566,7 +566,7 @@ class ApiController extends BaseDBController {
                     $sendData = [
                         'open_id' => $userInfo['wx_num'],
                         'name' => $userInfo['realname'],
-                        'type' => '[' . $returnData['data']['comm_name'] . '社区]刷卡收取积分',
+                        'type' => '社区刷卡收取积分',
                         'io' => '消费',
                         'exchange_integral' => $trading_integral,
                         'integral_num' => $userInfo['integral_num']
