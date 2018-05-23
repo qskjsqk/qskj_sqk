@@ -286,7 +286,7 @@ function getExchangeMethod($id) {
             return '感应卡扣分';
             break;
         case 5:
-            return '用户扫码社区收取';
+            return '用户扫码转账积分';
             break;
         case 6:
             return '商家兑换广告';

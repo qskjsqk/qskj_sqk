@@ -292,7 +292,7 @@ class ApiController extends BaseDBController {
         } else {
             $where['iccard_num'] = ['EQ', $iccard_num];
             $where['is_enable'] = ['EQ', 1];
-            $userInfo = M('sys_userapp_info')->field('realname,id,tx_path')->where($where)->find();
+            $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,wx_num')->where($where)->find();
             $user_id = $userInfo['id'];
             if (empty($userInfo)) {
                 $returnData['status'] = 2;
@@ -314,7 +314,7 @@ class ApiController extends BaseDBController {
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
-                    $sign_integral=$addArr['sign_integral'];
+                    $sign_integral = $addArr['sign_integral'];
 
                     $tranModel = M();
                     $tranModel->startTrans(); // 开启事务
@@ -326,7 +326,7 @@ class ApiController extends BaseDBController {
                     $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
                             ->setInc('exp_num', $sign_integral);
                     //更新activ_info表
-                    $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+                    $activInfo = M('activ_info')->where('id=' . $activity_id)->find();
                     $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
                             ->setInc('join_num', 1);
                     $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
@@ -346,6 +346,21 @@ class ApiController extends BaseDBController {
                         $returnData['status'] = 1;
                         $returnData['msg'] = '成功签到！';
                         $returnData['timestamp'] = time();
+
+                        if ($userInfo['wx_num'] != '00000000') {
+                            $userInfo=$userInfo = M('sys_userapp_info')->find($userInfo['id']);
+                            $sendData = [
+                                'realname' => $userInfo['realname'],
+                                'wx_num' => $userInfo['wx_num'],
+                                'tel' => $userInfo['tel'],
+                                'sign_integral' => $sign_integral,
+                                'sign_type' => '用户扫码',
+                                'sign_time' => date('Y.m.d H:i:s', time()),
+                                'title' => $activInfo['title'],
+                                'address' => $activInfo['address'],
+                            ];
+                            sendSignMsg($sendData);
+                        }
                     } else {
                         $tranModel->rollback(); // 否则将事务回滚 
                         $returnData['status'] = 0;
@@ -558,7 +573,5 @@ class ApiController extends BaseDBController {
         $returnData['timestamp'] = time();
         $this->ajaxReturn($returnData, 'JSON');
     }
-    
-
 
 }
