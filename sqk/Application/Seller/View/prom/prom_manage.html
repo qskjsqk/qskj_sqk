@@ -56,22 +56,22 @@
         <!--右上角弹出菜单-->
         <div id="popover" class="mui-popover" style="width:100px;">
             <ul class="mui-table-view">
-                <li class="mui-table-view-cell">
-                    <a href="javascript:void(0)" class="mui-pull-left" onclick="aHref('__MODULE__/seller/prom_manage')">
+                <li class="mui-table-view-cell" onclick="aHref('__MODULE__/prom/prom_manage')">
+                    <a href="javascript:void(0)" class="mui-pull-left" >
                         <span style="font-size: 14px;padding-left: 5px;">全部</span>
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a href="#" class="mui-pull-left">
+                    <a href="#" class="mui-pull-left" onclick="aHref('__MODULE__/prom/prom_manage?type=1')">
                         <span style="font-size: 14px;padding-left: 5px;">已发布</span>
                     </a>
                 </li>
-                <li class="mui-table-view-cell">
+                <li class="mui-table-view-cell" onclick="aHref('__MODULE__/prom/prom_manage?type=0')">
                     <a href="#" class="mui-pull-left">
                         <span style="font-size: 14px;padding-left: 5px;">正在审核</span>
                     </a>
                 </li>
-                <li class="mui-table-view-cell">
+                <li class="mui-table-view-cell" onclick="aHref('__MODULE__/prom/prom_manage?type=3')">
                     <a href="#" class="mui-pull-left">
                         <span style="font-size: 14px;padding-left: 5px;">已下架</span>
                     </a>
@@ -103,7 +103,7 @@
             </div>
             <div class="mui-row" id="myPromList">
 
-                <div class="mui-card" onclick="aHref('__MODULE__/prom/prom_detail')">
+<!--                <div class="mui-card" onclick="aHref('__MODULE__/prom/prom_detail')">
                     <div class="mui-card-header">
                         <div class="mui-card-link"><div class="seller_s"></div>已发布</div>
                         <p class="mui-card-link">浏览量：1000</p>
@@ -119,26 +119,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
 </body>
-
 </html>
-
-<script type="text/javascript">
-    $(function () {
-        checkIsLogin();
-    });
-
-    function changeConfirm() {
-        var btnArray = ['取消', '确定'];
-        mui.confirm('广告发布权限兑换', '需消耗2000积分', btnArray, function (e) {
-            if (e.index == 1) {
-//                跳转广告发布页面
-                aHref(m_path + '/prom/prom_add');
-            }
-        })
-    }
-</script>

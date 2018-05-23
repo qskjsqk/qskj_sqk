@@ -229,7 +229,7 @@ class TopStatInfoController extends BaseDBController {
                 //统计: 交易量
                 $tradingModel = new \Admin\Model\IntegralTradingRecordModel();
                 $lists = $tradingModel->getTradingCountGroupByAddress();
-                $title = ['xTitle' => '各社区交易量', 'yTitle' => '签到交易量'];
+                $title = ['xTitle' => '各社区交易量', 'yTitle' => '交易量'];
                 break;
         }
 
