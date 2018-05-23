@@ -59,7 +59,6 @@ class IndexController extends BaseController {
             cookie('address_id', $sellerInfo['address_id'], 3600 * 24 * 30);
             $this->redirect('Seller/seller_home');
         } else {
-            //先检测是否已有帐号
             $this->assign('headimgurl', $wxInfo['headimgurl']);
             $this->assign('nickname', $wxInfo['nickname']);
             $this->display();
@@ -83,6 +82,10 @@ class IndexController extends BaseController {
      * 申请页面
      */
     public function apply() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+        $this->assign('headimgurl', $wxInfo['headimgurl']);
+        $this->assign('nickname', $wxInfo['nickname']);
         $this->display();
     }
 
@@ -92,12 +95,13 @@ class IndexController extends BaseController {
     public function perfect_info() {
         //获取微信信息
         $wxInfo = cookie('wxInfo');
-//        //测试数据
-        $wxInfo = array(
-            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
-            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
-            'nickname' => '忘忧草',
-        );
+        
+////        //测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
         $this->assign('wxInfo', $wxInfo);
         $this->assign('tel', $_GET['tel']);
         $this->display();
@@ -213,7 +217,6 @@ class IndexController extends BaseController {
                 $tranModel->rollback(); // 否则将事务回滚  
                 $returnData['is_success'] = array('flag' => 1, 'msg' => '注册失败!');
             }
-            
         }
         $this->ajaxReturn($returnData);
     }
