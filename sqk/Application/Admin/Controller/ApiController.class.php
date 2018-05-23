@@ -293,6 +293,7 @@ class ApiController extends BaseDBController {
             $where['iccard_num'] = ['EQ', $iccard_num];
             $where['is_enable'] = ['EQ', 1];
             $userInfo = M('sys_userapp_info')->field('realname,id,tx_path')->where($where)->find();
+            $user_id = $userInfo['id'];
             if (empty($userInfo)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '无效卡信息！';
@@ -313,6 +314,7 @@ class ApiController extends BaseDBController {
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
+                    $sign_integral=$addArr['sign_integral'];
 
                     $tranModel = M();
                     $tranModel->startTrans(); // 开启事务
@@ -466,7 +468,7 @@ class ApiController extends BaseDBController {
                 foreach ($tradingRecordList as $key => $value) {
                     $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('realname');
                     //$tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
-                    $tradingRecordList[$key]['tradingType'] = '感应卡扣分';
+                    $tradingRecordList[$key]['tradingType'] = getExchangeMethod($tradingRecordList[$key]['exchange_method_id']);
                 }
 
                 $returnData['status'] = 1;
@@ -557,54 +559,6 @@ class ApiController extends BaseDBController {
         $this->ajaxReturn($returnData, 'JSON');
     }
     
-    /**
-     * 发送微信通知（交易）
-     * @param type $data
-     */
-    public function sendTradingMsg($data) {
-        //设置模板消息
-        $str = '{
-	"touser": "' . $data['open_id'] . '",
-	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-	"url": "http://weixin.qq.com/download",
-	"topcolor": "#FF0000",
-	"data": {
-		"first": {
-			"value": "【梨园智能商圈】提醒您正在进行积分交易",
-			"color": "#FFA500"
-		},
-		"account": {
-			"value": "' . $data['name'] . '",
-			"color": "#173177"
-		},
-		"time": {
-			"value": "2018年05月21日 12:10:10",
-			"color": "#173177"
-		},
-                "type": {
-			"value": "' . $data['type'] . '",
-			"color": "#173177"
-		},
-		"creditChange": {
-			"value": "' . $data['io'] . '",
-			"color": "#000"
-		},
-		"number": {
-			"value": "' . $data['exchange_integral'] . '分",
-			"color": "#173177"
-		},
-		"amount": {
-			"value": "' . $data['integral_num'] . '分",
-			"color": "#173177"
-		},
-		"remark": {
-			"value": "",
-			"color": "#173177"
-		}
-	}
-}';
-        //发送模板消息
-        sendWxTemMsg($str);
-    }
+
 
 }
