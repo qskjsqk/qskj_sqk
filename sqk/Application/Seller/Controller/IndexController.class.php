@@ -115,11 +115,11 @@ class IndexController extends BaseController {
         $wxInfo = cookie('wxInfo');
         
 ////        //测试数据
-//        $wxInfo = array(
-//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
-//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
-//            'nickname' => '忘忧草',
-//        );
+        $wxInfo = array(
+            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+            'nickname' => '忘忧草',
+        );
         $this->assign('wxInfo', $wxInfo);
         $this->assign('tel', $_GET['tel']);
         $this->display();

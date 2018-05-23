@@ -31,7 +31,7 @@
             <a class="mui-icon mui-icon-back mui-pull-left header-a-l" onclick="aHref('__MODULE__/index/index')">
                 <!--<sapn class="comfont">设置</span>-->
             </a>
-            <h1 id="title" class="mui-title header-a-l">微信绑定</h1>
+            <h1 class="mui-title header-a-l">微信绑定</h1>
         </header>
         <!--tab-->
         <div class="mui-content">
@@ -48,20 +48,19 @@
             </div>
             <div class="mui-card">
                 <div class="mui-card-content">
-                    <form class="mui-input-group">
-                        <div class="mui-input-row">
-                            <label>已注册手机</label>
-                            <input type="text" id="tel" style="text-align: right;" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
-                        </div>
-                    </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined">发送验证码至手机</button>
-                    <form class="mui-input-group">
-                        <div class="mui-input-row">
-                            <label>验证码</label>
-                            <input type="text" id="phone" style="text-align: right;" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
-                        </div>
-                    </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="aHref('__MODULE__/index/login')">下一步</button>
+                        <input type="hidden" name="tx_path" id="tx_path" value="{$wxInfo.headimgurl}"/>
+                        <input type="hidden" name="nickname" id="nickname" value="{$wxInfo.nickname}"/>
+                        <input type="hidden" name="wx_num" id="wx_num" value="{$wxInfo.openid}"/>
+                    <div class="m-inputheader">已注册手机</div>
+                    <div class="m-inputframe">
+                        <input type="text" id="tel" name="tel" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                        <button type="button" class="mui-btn-warning mui-btn-block" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
+                    </div>
+                    <div class="m-inputframe">
+                        <input type="text" id="keycode" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                        <input type="hidden" id="hiddenKeycode" value="0">
+                    </div>
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="checkApplyKeyCode()">下一步</button>
                 </div>
             </div>
         </div>
