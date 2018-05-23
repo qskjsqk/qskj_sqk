@@ -106,6 +106,24 @@ class IndexController extends BaseController {
         $this->assign('tel', $_GET['tel']);
         $this->display();
     }
+    
+    /**
+     * 完善信息页
+     */
+    public function wechat_binding() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+        
+////        //测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
+        $this->assign('wxInfo', $wxInfo);
+        $this->assign('tel', $_GET['tel']);
+        $this->display();
+    }
 
     /**
      * 获取手机验证码 验证手机是否存在
