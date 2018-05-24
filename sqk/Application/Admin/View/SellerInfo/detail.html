@@ -50,8 +50,8 @@
                         <td>
                 <if condition="$data['attachList'] neq NULL">
                     <foreach name="data.attachList" item="val">
-                        <div style="height:140px;float: left;margin-right: 20px;">
-                            <img src="/{$val.file_path}" width="140px"/>
+                        <div style="width:auto;height:140px;float: left;margin-right: 20px;">
+                            <img src="/{$val.file_path}" style="width:auto;height:140px;"/>
                         </div>
                     </foreach>
                     <else/>
