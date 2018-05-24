@@ -87,7 +87,7 @@ body{
     color: #999;
     font-size: 14px;
 }
-
+/*
 .list-xiaod {
     background-image: url(../img/xd.png);
     width: 10px;
@@ -95,7 +95,7 @@ body{
     float: left;
     background-repeat: no-repeat;
     background-position: 0px 6px;
-}
+}*/
 
 .listcontent {
     background-color: #eee;
@@ -440,7 +440,7 @@ body{
     width: 100%;
     height: 30px;
     /*background-color: red;*/
-    background-image: url(../img/xd.png);
+    /*background-image: url(../img/xd.png);*/
     background-repeat: no-repeat;
     background-position: 8px 12px;
     background-size: 5px;

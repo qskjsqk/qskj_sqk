@@ -8,7 +8,6 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <link rel="stylesheet" href="__PUBLIC__/seller/css/mui.min.css">
-        <link rel="stylesheet" href="__PUBLIC__/seller/css/activity.css">
 
         <script src="__PUBLIC__/seller/js/jquery-1.11.0.js"></script>
         <link rel="stylesheet" href="__PUBLIC__/seller/css/common.css">
@@ -23,6 +22,7 @@
         </script>
         {$Assigndata}
         <script src="__PUBLIC__/seller/js/common.js"></script>
+         <script src="__PUBLIC__/seller/js/wechat_binding.js"></script>
     </head>
 
     <body>
@@ -60,7 +60,7 @@
                         <input type="text" id="keycode" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         <input type="hidden" id="hiddenKeycode" value="0">
                     </div>
-                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="checkApplyKeyCode()">下一步</button>
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="subForm()">下一步</button>
                 </div>
             </div>
         </div>

@@ -95,7 +95,7 @@ class IndexController extends BaseController {
     public function perfect_info() {
         //获取微信信息
         $wxInfo = cookie('wxInfo');
-        
+
 ////        //测试数据
 //        $wxInfo = array(
 //            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
@@ -106,14 +106,14 @@ class IndexController extends BaseController {
         $this->assign('tel', $_GET['tel']);
         $this->display();
     }
-    
+
     /**
      * 完善信息页
      */
     public function wechat_binding() {
         //获取微信信息
         $wxInfo = cookie('wxInfo');
-        
+
 ////        //测试数据
         $wxInfo = array(
             'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
@@ -230,11 +230,32 @@ class IndexController extends BaseController {
 
             if ($flag) {
                 $tranModel->commit(); // 成功则提交事务  
-                $returnData['is_success'] = array('flag' => 0, 'msg' => '注册成功,请完善资质信息!');
+                $returnData['is_success'] = array('flag' => 1, 'msg' => '注册成功,请完善资质信息!');
             } else {
                 $tranModel->rollback(); // 否则将事务回滚  
-                $returnData['is_success'] = array('flag' => 1, 'msg' => '注册失败!');
+                $returnData['is_success'] = array('flag' => 0, 'msg' => '注册失败!');
             }
+        }
+        $this->ajaxReturn($returnData);
+    }
+
+    /**
+     * 微信绑定到已有的商家帐号上
+     */
+    public function bindingSellerInfo() {
+        $sellerInfo = M('seller_info')->where('tel=' . $_POST['tel'])->find();
+
+        $wxArr['seller_id'] = $sellerInfo['id'];
+        $wxArr['open_id'] = $_POST['wx_num'];
+        $wxArr['name'] = $_POST['nickname'];
+        $wxArr['headimgurl'] = $_POST['tx_path'];
+
+        $addFlag = M('seller_wechat_binding')->add($wxArr);
+
+        if ($addFlag) {
+            $returnData['is_success'] = array('flag' => 1, 'msg' => '微信绑定成功!');
+        } else {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => '微信绑定失败!');
         }
         $this->ajaxReturn($returnData);
     }

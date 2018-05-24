@@ -49,7 +49,7 @@ function subForm() {
     var keycode = $('#keycode').val();
     var hiddenKeycode = $('#hiddenKeycode').val();
     if (keycode == hiddenKeycode) {
-        $.post(c_path + "/bindingUserappInfo", {
+        $.post(c_path + "/bindingSellerInfo", {
             'tel': $('#tel').val(),
 
             'tx_path': $('#tx_path').val(),
