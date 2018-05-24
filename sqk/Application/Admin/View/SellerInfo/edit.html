@@ -21,7 +21,6 @@
             <form method="post" action="__CONTROLLER__/saveSellerInfo" enctype="multipart/form-data" class="form-horizontal" id="save-form" style="margin-top: 20px;">
                 <div id="fileJson" name="fileJson" style="display: none;">{$data.attachList}</div>
                 <input type="hidden" name="id" value="{$data.sellerInfo.id}"/>
-                <input type="hidden" name="address_api_url" value="{$data.sellerInfo.address_api_url}"/>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">营业执照号</label>
                     <div class="col-sm-8">
@@ -61,17 +60,17 @@
                 <div class="form-group">
                     <label for="address_id" class="col-sm-2 control-label">注册社区</label>
                     <if condition="$Think.session.sys_name eq 'sysAdmin'">
-                    <div class="col-sm-8">
-                        <select class="form-control" id="address_id2" name="address_id">
-                            <foreach name="data.communitys" item="val" >
-                                <option value='{$val.id}' <if condition="$val.id eq $data['sellerInfo']['address_id']"> selected </if> >
+                        <div class="col-sm-8">
+                            <select class="form-control" id="address_id2" name="address_id">
+                                <foreach name="data.communitys" item="val" >
+                                    <option value='{$val.id}' <if condition="$val.id eq $data['sellerInfo']['address_id']"> selected </if> >
                                     {$val.com_name}
-                                </option>
-                            </foreach>
-                        </select>
-                    </div>
-                    <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
-                    <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
+                                    </option>
+                                </foreach>
+                            </select>
+                        </div>
+                        <label class="col-sm-2"><span class="tipMsg">*必选</span></label>
+                        <elseif condition="$Think.session.sys_name eq 'sqAdmin'"/>
                         <label style="line-height: 33px;margin-left: 12px;">{$data.community}</label>
                     </if>
                 </div>
@@ -87,8 +86,9 @@
                 <div class="form-group">
                     <label for="address" class="col-sm-2 control-label">商家地址</label>
                     <div class="col-sm-8">
-                        <!--<input type="text" class="form-control" id="address" name="address" value="{$sellerInfo.address}" placeholder="请输入商家地址">-->
-                        <textarea class="form-control" id="address" name="address">{$data.sellerInfo.address}</textarea>
+                        <input type="text" class="form-control" id="address" name="address" value="{$data.sellerInfo.address}" placeholder="请输入商家地址">
+                        <input type="hidden" name="address_api_url" id="address_api_url" value="{$data.sellerInfo.address_api_url}">
+                        <div style="display:none"; id="container"></div>
                         <if condition="$data.errorMsg.address neq ''">
                             <span class="tipMsg">{$data.errorMsg.address}</span>
                         </if>
@@ -120,43 +120,20 @@
                     <div class="col-sm-8 wechat-list">
                         <if condition="$data['sellerWechat'] neq NULL">
                             <foreach name="data.sellerWechat" item="val">
-                            <p class="wechat-{$val.id}">
-                                [{$val.name}]{$val.open_id}
-                                <a class="btn btn-primary" title="{$val.id}">解绑</a>
-                            </p>
+                                <p class="wechat-{$val.id}">
+                                    [{$val.name}]{$val.open_id}
+                                    <a class="btn btn-primary" title="{$val.id}">解绑</a>
+                                </p>
                             </foreach>
-                        <else/>
+                            <else/>
                             <span style="color:red;font-size: 14px;">暂无微信绑定</span>
                         </if>
                     </div>
                 </div>
-                <!--<div class="form-group">
-                    <label for="logo_icon" class="col-sm-2 control-label">商家头像</label>
-                    <div class="col-sm-2">
-                        <div class="input-group">
-                            <input class="form-control" type="file" id="logo_icon" name="logo_icon" value="{$sellerInfo.logo_icon}" style="width:300px;height:30px;padding-bottom: 36px;">
-                            <div class="input-group-addon">
-                                <if condition="$sellerInfo.logo_icon neq ''">
-                                   <img src="/Public/Upload{$sellerInfo.logo_icon}" style="height: 20px;width: auto;"><else/>未上传
-                                </if>
-                            </div>
-                        </div>
-                        <if condition="$fileErrorMsg1 neq ''">
-                            <span class="tipMsg">{$fileErrorMsg1}</span>
-                        </if>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="editor" class="col-sm-2 control-label">商家介绍</label>
-                    <div class="col-sm-8">
-                        <script id="editor" type="text/plain" name="introduction"></script>
-                    </div>
-                </div>-->
                 <div class="form-group">
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-9">
-                        <button type="submit" class="btn btn-primary" id="saveInfo-btn">保&#12288;&#12288;存</button>
+                        <button type="submit" class="btn btn-primary" >保&#12288;&#12288;存</button>
                         <button type="button" class="btn btn-warning" onclick="javascript:void(window.location.href = '__CONTROLLER__/showList')">取&#12288;&#12288;消</button>
                     </div>
                 </div>
@@ -165,129 +142,129 @@
     </body>
     <script type="text/javascript" src="/Public/admin/js/seller/baiduMap.js"></script>
     <script type="text/javascript">
+                            //百度地图
+                            baiduMap($("input[name='address_api_url']").val());
+                            $('#address').focus(function (){ 
+                                setLongitude();
+                                
+                            });
 
-        //百度地图
-        baiduMap($("input[name='address_api_url']").val());
+                            $(document).ready(function () {
+                                if ($('#fileJson').text().length > 0) {
+                                    console.log($('#fileJson').text().length);
+                                    var jsonObj = $.parseJSON($('#fileJson').text());
+                                    if (jsonObj.length > 0) {
+                                        var strHtml = '';
+                                        $.each(jsonObj, function (index, value) {
+                                            strHtml += '<div id="WU_FILE_10' + index + '" class="file-item thumbnail" style="float:left;border:0px;">';
+                                            strHtml += '<div style="width:100px;margin-right:10px;">';
+                                            strHtml += '<img src="/' + value.file_path + '" style="width:100px;height:70px;">';
+                                            strHtml += '<div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div>';
+                                            strHtml += '<input type="hidden" name="files[]" value="' + value.id + '" />';
+                                            strHtml += '</div></div>';
+                                        });
+                                        $('#fileList').append(strHtml);// $list为容器jQuery实例
+                                    }
+                                }
 
-        $(document).ready(function () {
-            if ($('#fileJson').text().length > 0) {
-                console.log($('#fileJson').text().length);
-                var jsonObj = $.parseJSON($('#fileJson').text());
-                if (jsonObj.length > 0) {
-                    var strHtml = '';
-                    $.each(jsonObj, function (index, value) {
-                        strHtml += '<div id="WU_FILE_10' + index + '" class="file-item thumbnail" style="float:left;border:0px;">';
-                        strHtml += '<div style="width:100px;margin-right:10px;">';
-                        strHtml += '<img src="/' + value.file_path + '" style="width:100px;height:70px;">';
-                        strHtml += '<div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div>';
-                        strHtml += '<input type="hidden" name="files[]" value="' + value.id + '" />';
-                        strHtml += '</div></div>';
-                    });
-                    $('#fileList').append(strHtml);// $list为容器jQuery实例
-                }
-            }
-            
-            var introEditor = UE.getEditor('editor', {
-                //这里可以选择自己需要的工具按钮名称
-                toolbars: [[
-                        'fullscreen', 'source', '|', 'undo', 'redo', '|',
-                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
-                        'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-                        'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-                        'link', 'unlink', '|', 'simpleupload', 'insertimage'
-                    ]],
-                //focus时自动清空初始化时的内容
-                autoClearinitialContent: true,
-                //关闭字数统计
-                wordCount: true,
-                //关闭elementPath
-                elementPathEnabled: false,
-                //默认的编辑区域高度
-                initialFrameHeight: 450,
-            })
-            //初始化编辑器的值
-            introEditor.ready(function () {
-                introEditor.setContent('{$sellerInfo.introduction}');
-            });
-            
-            // 初始化Web Uploader
-            var uploader = WebUploader.create({
-                auto: true, // 选完文件后，是否自动上传。
-                swf: '/Public/admin/plugin/webuploader/Uploader.swf', // swf文件路径
-                server: '__MODULE__/allattach/uploadAttach/module_name/sellerInfo', // 文件接收服务端。
-                // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: '#filePicker',
-                accept: {
-                    title: 'Images',
-                    extensions: 'gif,jpg,jpeg,bmp,png',
-                    mimeTypes: 'image/*'
-                },
-                duplicate: true//可重复上传
-            });
-            // 当有文件添加进来的时候
-            uploader.on('fileQueued', function (file) {
-                var $li = $('<div id="' + file.id + '" class="file-item thumbnail" style="float:left;border:0px;"></div> ');
-                var $img = $li.find('img');
-                $('#fileList').append($li);// $list为容器jQuery实例
-            });
+//                                var introEditor = UE.getEditor('editor', {
+//                                    //这里可以选择自己需要的工具按钮名称
+//                                    toolbars: [[
+//                                            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+//                                            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+//                                            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+//                                            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+//                                            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+//                                            'link', 'unlink', '|', 'simpleupload', 'insertimage'
+//                                        ]],
+//                                    //focus时自动清空初始化时的内容
+//                                    autoClearinitialContent: true,
+//                                    //关闭字数统计
+//                                    wordCount: true,
+//                                    //关闭elementPath
+//                                    elementPathEnabled: false,
+//                                    //默认的编辑区域高度
+//                                    initialFrameHeight: 450,
+//                                })
+//                                //初始化编辑器的值
+//                                introEditor.ready(function () {
+//                                    introEditor.setContent('{$sellerInfo.introduction}');
+//                                });
 
-            // 文件上传过程中创建进度条实时显示。
-            uploader.on('uploadProgress', function (file, percentage) {
-                var $li = $('#' + file.id);
-                var $percent = $li.find('.progress span');
-                $percent.css('width', percentage * 100 + '%');
-            });
+                                // 初始化Web Uploader
+                                var uploader = WebUploader.create({
+                                    auto: true, // 选完文件后，是否自动上传。
+                                    swf: '/Public/admin/plugin/webuploader/Uploader.swf', // swf文件路径
+                                    server: '__MODULE__/allattach/uploadAttach/module_name/sellerInfo', // 文件接收服务端。
+                                    // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
+                                    pick: '#filePicker',
+                                    accept: {
+                                        title: 'Images',
+                                        extensions: 'gif,jpg,jpeg,bmp,png',
+                                        mimeTypes: 'image/*'
+                                    },
+                                    duplicate: true//可重复上传
+                                });
+                                // 当有文件添加进来的时候
+                                uploader.on('fileQueued', function (file) {
+                                    var $li = $('<div id="' + file.id + '" class="file-item thumbnail" style="float:left;border:0px;"></div> ');
+                                    var $img = $li.find('img');
+                                    $('#fileList').append($li);// $list为容器jQuery实例
+                                });
 
-            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-            uploader.on('uploadSuccess', function (file, response) {
-                $file = $('#' + file.id);
-                if (response.flag == 'success') {
-                    console.log(response.att_id);
-                    $file.append('<div style="width:100px;margin-right:10px;"><img src="/' + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
-                    $file.css('background-img', 'url()');
-                    if ($('#input-title').val() == '') {
-                        $('#input-title').val(file.name);
-                    }
-                } else {
-                    upload_error(file, response);
-                }
-            });
-            // 完成上传完了，成功或者失败，先删除进度条。
-            uploader.on('uploadComplete', function (file) {
-                $('#' + file.id).find('.progress').remove();
-                uploader.removeFile(file.id);
-            });
+                                // 文件上传过程中创建进度条实时显示。
+                                uploader.on('uploadProgress', function (file, percentage) {
+                                    var $li = $('#' + file.id);
+                                    var $percent = $li.find('.progress span');
+                                    $percent.css('width', percentage * 100 + '%');
+                                });
 
-            function upload_error(file, response) {
-                var $li = $('#' + file.id);
-                $li.remove();
-                $.messager.alert('上传错误', response.msg);
-            }
+                                // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+                                uploader.on('uploadSuccess', function (file, response) {
+                                    $file = $('#' + file.id);
+                                    if (response.flag == 'success') {
+                                        console.log(response.att_id);
+                                        $file.append('<div style="width:100px;margin-right:10px;"><img src="/' + response.url + '" style="width:100px;height:70px;"><div class="del fontred font12" style="background-color:#bbb;width:100px;border-radius:2px;">删除</div><input type="hidden" name="files[]" value="' + response.att_id + '" /></div>');
+                                        $file.css('background-img', 'url()');
+                                        if ($('#input-title').val() == '') {
+                                            $('#input-title').val(file.name);
+                                        }
+                                    } else {
+                                        upload_error(file, response);
+                                    }
+                                });
+                                // 完成上传完了，成功或者失败，先删除进度条。
+                                uploader.on('uploadComplete', function (file) {
+                                    $('#' + file.id).find('.progress').remove();
+                                    uploader.removeFile(file.id);
+                                });
 
-            // 删除图片
-            var $filelist = $('#fileList');
-            $filelist.on('click', '.del', function (e) {
-                $obj = $(this);
-                $.post('__CONTROLLER__/delAttach', {'id': $(this).next().val()}, function (result) {
-                    if (result.code == '500') {
-                        var id = $obj.parent().attr('id');
-                        if (typeof (id) != 'undefined') {
-                            uploader.removeFile($obj.parent().attr('id'));
-                        }
-                        $obj.parent().parent().remove();
-                    }
-                });
-            });
-            
-            $('#work_start').timepicker();
-            $('#work_end').timepicker();
+                                function upload_error(file, response) {
+                                    var $li = $('#' + file.id);
+                                    $li.remove();
+                                    $.messager.alert('上传错误', response.msg);
+                                }
 
-            //控制微信绑定列表在新增时不显示
-            if("{$data.sellerInfo.id}" == '') {
-                $(".wechat-div").hide();
-            }
+                                // 删除图片
+                                var $filelist = $('#fileList');
+                                $filelist.on('click', '.del', function (e) {
+                                    $obj = $(this);
+                                    $.post('__CONTROLLER__/delAttach', {'id': $(this).next().val()}, function (result) {
+                                        if (result.code == '500') {
+                                            var id = $obj.parent().attr('id');
+                                            if (typeof (id) != 'undefined') {
+                                                uploader.removeFile($obj.parent().attr('id'));
+                                            }
+                                            $obj.parent().parent().remove();
+                                        }
+                                    });
+                                });
 
-        });
+                                //控制微信绑定列表在新增时不显示
+                                if ("{$data.sellerInfo.id}" == '') {
+                                    $(".wechat-div").hide();
+                                }
+
+                            });
     </script>
 </html>
