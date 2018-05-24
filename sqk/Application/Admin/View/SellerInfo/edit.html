@@ -86,9 +86,13 @@
                 <div class="form-group">
                     <label for="address" class="col-sm-2 control-label">商家地址</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="address" name="address" value="{$data.sellerInfo.address}" placeholder="请输入商家地址">
-                        <input type="hidden" name="address_api_url" id="address_api_url" value="{$data.sellerInfo.address_api_url}">
-                        <div style="display:none"; id="container"></div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="address" name="address" value="{$data.sellerInfo.address}" placeholder="请输入商家地址">
+                            <input type="hidden" name="address_api_url" id="address_api_url" value="{$data.sellerInfo.address_api_url}">
+                            <div style="display:none"; id="container"></div>
+                            <span class="input-group-addon" onclick="setLongitude()" style="cursor: pointer;"><span class="glyphicon glyphicon-screenshot"></span> 点击定位</span>
+                        </div>
+
                         <if condition="$data.errorMsg.address neq ''">
                             <span class="tipMsg">{$data.errorMsg.address}</span>
                         </if>
@@ -144,10 +148,6 @@
     <script type="text/javascript">
                             //百度地图
                             baiduMap($("input[name='address_api_url']").val());
-                            $('#address').focus(function (){ 
-                                setLongitude();
-                                
-                            });
 
                             $(document).ready(function () {
                                 if ($('#fileJson').text().length > 0) {
