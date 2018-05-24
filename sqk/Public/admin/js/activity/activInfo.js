@@ -92,11 +92,12 @@ function delInfoLayer(isChecked) {
 }
 //发布活动信息
 function publishInfoLayer(isChecked) {
-    layer.confirm('确定要批量发布此信息嘛？', {
+    var a = layer.confirm('确定要批量发布此信息嘛？', {
         icon: 0,
         title: '提示信息',
         btn: ['确定', '取消'] //按钮
     }, function (index) {
+        layer.close(a);
         $.post(c_path + '/publishArrayInfo', {'ids': isChecked}, function (result) {
             if (result.code == '500') {
                 layer.msg(constants.SUCCESS, {time: 1000}, function () {

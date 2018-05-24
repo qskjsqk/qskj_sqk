@@ -17,7 +17,7 @@
                     <table class="table table-bordered font14">
                         <tr>
                             <td>商家名称：{$prom.seller_name}</td>
-                            <td>展示次数：6</td>
+                            <td>展示次数：{$prom.read_num}</td>
                             <td>
                         <if condition="$prom.status eq 0">
                             未审核
@@ -66,7 +66,9 @@
                         </foreach>
                     </notempty>
                     <empty name="imgInfo">
-                        <div class="comment_content">暂无图片</div>
+                        <div class="list_header" style="margin-left: 75px;margin-bottom: 5px;margin-top:20px;float: left;">
+                            暂无图片
+                        </div>
                     </empty>
                 </div>
             </div>
@@ -75,22 +77,22 @@
 </html>
 
 <script type="text/javascript">
-    
-function setPromStatus(id, status) {
+
+    function setPromStatus(id, status) {
     layer.confirm('确定要审核该广告嘛？', {
-        icon: 2,
-        title: '提示信息',
-        btn: ['确定', '取消'] //按钮
+    icon: 2,
+            title: '提示信息',
+            btn: ['确定', '取消'] //按钮
     }, function (index) {
-        $.post(c_path + '/setPromStatus', {'id': id, 'status': status}, function (result) {
-            if (result.code == '500') {
-                layer.msg(constants.SUCCESS, {time: 1000}, function () {
-                    location.reload();
-                });
-            } else {
-                layer.msg(constants.FAILD);
-            }
-        }, 'json');
+    $.post(c_path + '/setPromStatus', {'id': id, 'status': status}, function (result) {
+    if (result.code == '500') {
+    layer.msg(constants.SUCCESS, {time: 1000}, function () {
+    location.reload();
     });
-}
+    } else {
+    layer.msg(constants.FAILD);
+    }
+    }, 'json');
+    });
+    }
 </script>

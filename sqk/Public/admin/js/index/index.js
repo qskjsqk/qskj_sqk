@@ -72,13 +72,11 @@ function getTxNum() {
         if (data.all == 0) {
 
         } else {
+            str += '<li><a href="' + m_path + '/SellerInfo/showList" target="right">&#12288;<b>未审核商家</b>&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<span class="label label-danger">' + data.seller + '</span></a></li>';
             str += '<li class="divider"></li>';
-            str += '<li><a href="' + m_path + '/SellerInfo/showList" target="right">&#12288;<b>未审核商家</b><span class="label label-danger" style="margin-top:-20px; font-size: 13px;line-height: 13px; float: right;margin-right: 5px;">' + data.seller + '</span></a></li>';
+            str += '<li><a href="' + m_path + '/SellerPromInfo/showList" target="right">&#12288;<b>未审核广告</b>&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<span class="label label-danger">' + data.prom + '</span></a></li>';
             str += '<li class="divider"></li>';
-            str += '<li><a href="' + m_path + '/SellerPromInfo/showList" target="right">&#12288;<b>未审核广告</b><span class="label label-danger" style=" margin-top:-20px; font-size: 13px;line-height: 13px; float: right;margin-right: 5px;">' + data.prom + '</span></a></li>';
-            str += '<li class="divider"></li>';
-            str += '<li><a href="' + m_path + '/SellerComplaint/showList" target="right">&#12288;<b>未处理反馈</b><span class="label label-danger" style=" margin-top:-20px; font-size: 13px;line-height: 13px; float: right;margin-right: 5px;">' + data.complaint + '</span></a></li>';
-            str += '<li class="divider"></li>';
+            str += '<li><a href="' + m_path + '/SellerComplaint/showList" target="right">&#12288;<b>未处理反馈</b>&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<span class="label label-danger">' + data.complaint + '</span></a></li>';
         }
         $('#txNum').html(str);
     }, 'json');
