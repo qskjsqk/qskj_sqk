@@ -335,8 +335,53 @@ class IndexController extends BaseController {
     }
 
     public function wxDetail() {
-        $data = $_GET['data'];
-        dump($data);
+        $data = M('sys_wx_msg')->find($_GET['id']);
+        $data = json_decode($data['json_str'], TRUE);
+        if (isset($data['io'])) {
+            //消费提醒
+            $data['title'] = "积分交易详情";
+            $data['time'] = date('Y年m月d日 H:i:s', time());
+            
+            $data['str'] = '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-6">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易状态</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-6 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">交易成功</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-6">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">账户名称</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-6 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">'.$data['name'].'</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-6">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易方式</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-6 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">'.$data['type'].'</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-6">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易时间</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-6 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">'.$data['time'].'</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+        } else {
+            //签到提醒
+            $data['title'] = "签到详情";
+            $data['time'] = date('Y年m月d日 H:i:s', time());
+        }
+//        dump($data);
+        $this->assign('data', $data);
+        $this->display();
     }
 
     public function zxw() {
