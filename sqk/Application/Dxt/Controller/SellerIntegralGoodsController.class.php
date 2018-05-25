@@ -133,7 +133,7 @@ class SellerIntegralGoodsController extends BaseController {
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
         $this->assign('goodInfo', $goodInfo);
         $this->assign('sellerInfo', $sellerInfo);
-//        dump($sellerInfo);
+//        dump($goodInfo);
         $this->display();
     }
 
