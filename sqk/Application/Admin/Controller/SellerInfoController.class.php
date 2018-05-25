@@ -183,6 +183,7 @@ class SellerInfoController extends BaseDBController {
             'status' => 0,   //默认待审核
             'admin_id' => session('user_id'),
         ];
+        
         if ($this->infoModel->create($sellerInfo)) {
             if(empty(I('id'))) {
                 $result = $this->infoModel->add($sellerInfo);

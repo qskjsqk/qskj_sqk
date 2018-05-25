@@ -1,18 +1,20 @@
 <?php
+
 /**
  * @name GoodsExchangeRecordModel
  * @info 描述：积分商品兑换表模型
  * @author xiaohuihui
  * @datetime 2018-4-26 18:55:13
  */
+
 namespace Admin\Model;
+
 use Think\Model;
 use Admin\Model\BaseModel;
 
 class GoodsExchangeRecordModel extends BaseModel {
 
-    public $tableName = 'goods_exchange_record' ;
-
+    public $tableName = 'goods_exchange_record';
     protected $patchValidate = true;
 
     /**
@@ -24,7 +26,7 @@ class GoodsExchangeRecordModel extends BaseModel {
      */
     public function getExchangeCount($isAll = true) {
         $this->dbFix = C('DB_PREFIX');
-        if($isAll == false && !empty(session('address_id'))) {
+        if ($isAll == false && !empty(session('address_id'))) {
             $join = [
                 ['seller_info', 'id', 'goods_exchange_record', 'seller_id'],
             ];
@@ -36,10 +38,9 @@ class GoodsExchangeRecordModel extends BaseModel {
             $integral = $this->sum('exchange_integral');
         }
         return [
-            'count' => !empty($count) ? $count : 0,             //交易次数
-            'integral' => !empty($integral) ? $integral : 0,    //交易积分总和
+            'count' => !empty($count) ? $count : 0, //交易次数
+            'integral' => !empty($integral) ? $integral : 0, //交易积分总和
         ];
     }
-
 
 }

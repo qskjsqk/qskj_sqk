@@ -139,7 +139,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $request['trading_integral'],
                 'integral_num' => $sellerInfo['integral_num']
             ];
-            $this->sendTradingMsg($incomeInfo);
+            sendTradingMsg($incomeInfo);
             $userWx = M('sys_userapp_info')->find($request['user_id']);
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
@@ -149,7 +149,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $request['trading_integral'],
                 'integral_num' => $userWx['integral_num']
             ];
-            $this->sendTradingMsg($paymentInfo);
+            sendTradingMsg($paymentInfo);
         }
 
 
@@ -184,7 +184,7 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $request['exchange_integral'],
                 'integral_num' => $sellerInfo['integral_num']
             ];
-            $this->sendTradingMsg($incomeInfo);
+            sendTradingMsg($incomeInfo);
             $userWx = M('sys_userapp_info')->find($request['user_id']);
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
@@ -194,61 +194,11 @@ class QrcodeurlController extends BaseController {
                 'exchange_integral' => $request['exchange_integral'],
                 'integral_num' => $userWx['integral_num']
             ];
-            $this->sendTradingMsg($paymentInfo);
+            sendTradingMsg($paymentInfo);
         }
 
 //
         $this->ajaxReturn($res);
-    }
-
-    /**
-     * 发送微信通知（交易）
-     * @param type $data
-     */
-    public function sendTradingMsg($data) {
-        //设置模板消息
-        $str = '{
-	"touser": "' . $data['open_id'] . '",
-	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-	"url": "http://weixin.qq.com/download",
-	"topcolor": "#FF0000",
-	"data": {
-		"first": {
-			"value": "【梨园智能商圈】提醒您正在进行积分交易",
-			"color": "#FFA500"
-		},
-		"account": {
-			"value": "' . $data['name'] . '",
-			"color": "#173177"
-		},
-		"time": {
-			"value": "2018年05月21日 12:10:10",
-			"color": "#173177"
-		},
-                "type": {
-			"value": "' . $data['type'] . '",
-			"color": "#173177"
-		},
-		"creditChange": {
-			"value": "' . $data['io'] . '",
-			"color": "#000"
-		},
-		"number": {
-			"value": "' . $data['exchange_integral'] . '分",
-			"color": "#173177"
-		},
-		"amount": {
-			"value": "' . $data['integral_num'] . '分",
-			"color": "#173177"
-		},
-		"remark": {
-			"value": "",
-			"color": "#173177"
-		}
-	}
-}';
-        //发送模板消息
-        sendWxTemMsg($str);
     }
 
 }

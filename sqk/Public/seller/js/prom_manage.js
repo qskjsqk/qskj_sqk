@@ -87,9 +87,14 @@ function changeConfirm() {
     mui.confirm('广告发布权限兑换', '需消耗2000积分', btnArray, function (e) {
         if (e.index == 1) {
             //兑换发布权限
-            mui.post(c_path + "/exchangeAdAdd", function (data) {
-//                跳转广告发布页面
-//            aHref(m_path + '/prom/prom_add');
+            mui.post(c_path + "/exchangeAdInte", function (data) {
+                if(data.flag==1){
+                    //跳转广告发布页面
+                    aHref(m_path + '/prom/prom_add');
+                }else{
+                    mui.toast(data.msg, {duration: 'long', type: 'div'});
+                }
+
             }, 'json');
 
         }

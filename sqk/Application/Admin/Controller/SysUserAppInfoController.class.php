@@ -137,6 +137,14 @@ class SysUserAppInfoController extends BaseDBController {
             } else {
                 $returnData['data']['tx_path'] = $returnData['data']['tx_path'];
             }
+
+            if ($returnData['data']['qrcode_path'] == 0) {
+                $encriptTel = R('Login/EncriptPWD', array($returnData['data']['tel'])); //手机号加密
+                $data['qrcode_path'] = createQrcode($returnData['data']['tel'] . $encriptTel);
+                M('sys_userapp_info')->where('id=' . $id)->save($data);
+                $returnData['data']['qrcode_path'] = $data['qrcode_path'];
+            }
+
             $this->assign('userInfo', $returnData['data']);
 //            dump($returnData['data']);
 //            dump(M('activ_info')->getLastSql());

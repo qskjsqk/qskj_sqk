@@ -48,9 +48,9 @@ class IndexController extends BaseController {
 
     public function index() {
         //获取微信信息
-        $mxInfo = cookie('wxInfo');
+        $wxInfo = cookie('wxInfo');
         //验证用户是否存在
-        $where['open_id'] = ['EQ', $mxInfo['openid']];
+        $where['open_id'] = ['EQ', $wxInfo['openid']];
         $sellerWx = M('seller_wechat_binding')->where($where)->find();
 
         if (!empty($sellerWx)) {
@@ -59,7 +59,6 @@ class IndexController extends BaseController {
             cookie('address_id', $sellerInfo['address_id'], 3600 * 24 * 30);
             $this->redirect('Seller/seller_home');
         } else {
-            //先检测是否已有帐号
             $this->assign('headimgurl', $wxInfo['headimgurl']);
             $this->assign('nickname', $wxInfo['nickname']);
             $this->display();
@@ -83,6 +82,10 @@ class IndexController extends BaseController {
      * 申请页面
      */
     public function apply() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+        $this->assign('headimgurl', $wxInfo['headimgurl']);
+        $this->assign('nickname', $wxInfo['nickname']);
         $this->display();
     }
 
@@ -92,12 +95,31 @@ class IndexController extends BaseController {
     public function perfect_info() {
         //获取微信信息
         $wxInfo = cookie('wxInfo');
-//        //测试数据
-        $wxInfo = array(
-            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
-            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
-            'nickname' => '忘忧草',
-        );
+
+////        //测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
+        $this->assign('wxInfo', $wxInfo);
+        $this->assign('tel', $_GET['tel']);
+        $this->display();
+    }
+
+    /**
+     * 完善信息页
+     */
+    public function wechat_binding() {
+        //获取微信信息
+        $wxInfo = cookie('wxInfo');
+
+////        //测试数据
+//        $wxInfo = array(
+//            'headimgurl' => 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKHRoX9H0IXWmiaxlXzb3O9ILcicFoZqRjRZWe0xKk0bdPqiag4shDYyXw94TL6pDRiaV4svlVlKraBnw/132',
+//            'openid' => 'oadwq03_g0B0lvOGQG6Id5vUIwNQ',
+//            'nickname' => '忘忧草',
+//        );
         $this->assign('wxInfo', $wxInfo);
         $this->assign('tel', $_GET['tel']);
         $this->display();
@@ -167,7 +189,7 @@ class IndexController extends BaseController {
      * 演示帐号
      */
     public function ys() {
-        cookie('seller_id', 43, 3600 * 24 * 30);
+        cookie('seller_id', 53, 3600 * 24 * 30);
         cookie('address_id', 1, 3600 * 24 * 30);
         $this->redirect('Seller/seller_home');
     }
@@ -208,12 +230,32 @@ class IndexController extends BaseController {
 
             if ($flag) {
                 $tranModel->commit(); // 成功则提交事务  
-                $returnData['is_success'] = array('flag' => 0, 'msg' => '注册成功,请完善资质信息!');
+                $returnData['is_success'] = array('flag' => 1, 'msg' => '注册成功,请完善资质信息!');
             } else {
                 $tranModel->rollback(); // 否则将事务回滚  
-                $returnData['is_success'] = array('flag' => 1, 'msg' => '注册失败!');
+                $returnData['is_success'] = array('flag' => 0, 'msg' => '注册失败!');
             }
-            
+        }
+        $this->ajaxReturn($returnData);
+    }
+
+    /**
+     * 微信绑定到已有的商家帐号上
+     */
+    public function bindingSellerInfo() {
+        $sellerInfo = M('seller_info')->where('tel=' . $_POST['tel'])->find();
+
+        $wxArr['seller_id'] = $sellerInfo['id'];
+        $wxArr['open_id'] = $_POST['wx_num'];
+        $wxArr['name'] = $_POST['nickname'];
+        $wxArr['headimgurl'] = $_POST['tx_path'];
+
+        $addFlag = M('seller_wechat_binding')->add($wxArr);
+
+        if ($addFlag) {
+            $returnData['is_success'] = array('flag' => 1, 'msg' => '微信绑定成功!');
+        } else {
+            $returnData['is_success'] = array('flag' => 0, 'msg' => '微信绑定失败!');
         }
         $this->ajaxReturn($returnData);
     }

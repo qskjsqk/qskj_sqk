@@ -2,8 +2,61 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e2e67f2-4d2d-4539-bb14-d51260aed7a1" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221456-8206.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221459-2157.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221505-2588.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221515-6306.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221543-7959.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522221618-8478.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522222232-2965.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522222257-5254.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522222827-4918.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522222830-6035.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180522222832-4378.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180523085638-9326.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Temfile/qrcode/20180524102746-3647.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Public/Upload/common/no-pic.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/DocumentController.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sqk/Application/Appm/View/document/userGuide.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ActivInfoController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ActivInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/ApiController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/SellerInfoController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/SellerInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Controller/SysUserAppInfoController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Controller/SysUserAppInfoController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/ActivInfoModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/ActivInfoModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/SellerInfoModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/SellerInfoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/Model/SysUserappInfoModel.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Admin/Model/SysUserappInfoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/ActivInfo/activDetail.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/ActivInfo/activDetail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerInfo/detail.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerInfo/detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerInfo/edit.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerInfo/edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerIntegralGoods/showListById.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerIntegralGoods/showListById.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerPromInfo/promDetail.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/SellerPromInfo/promDetail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/SysUserAppInfo/appUserDetail.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/SysUserAppInfo/appUserDetail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/TopStatInfo/userConsumptionList.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/TopStatInfo/userConsumptionList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Admin/View/index/index.html" afterPath="$PROJECT_DIR$/sqk/Application/Admin/View/index/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/IndexController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/NoticeController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/NoticeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/QrcodeurlController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/QrcodeurlController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Appm/View/login/index.html" afterPath="$PROJECT_DIR$/sqk/Application/Appm/View/login/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Common/Common/function.php" afterPath="$PROJECT_DIR$/sqk/Application/Common/Common/function.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Dxt/Controller/NoticeController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Dxt/Controller/NoticeController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Controller/IndexController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Controller/PromController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Controller/PromController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/Controller/QrcodeurlController.class.php" afterPath="$PROJECT_DIR$/sqk/Application/Seller/Controller/QrcodeurlController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_manage.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/goods/goods_manage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/index/apply.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/index/apply.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/index/wechat_binding.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/index/wechat_binding.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Application/Seller/View/prom/prom_manage.html" afterPath="$PROJECT_DIR$/sqk/Application/Seller/View/prom/prom_manage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/admin/js/activity/activInfo.js" afterPath="$PROJECT_DIR$/sqk/Public/admin/js/activity/activInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/admin/js/index/index.js" afterPath="$PROJECT_DIR$/sqk/Public/admin/js/index/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/admin/js/seller/sellerInfo.js" afterPath="$PROJECT_DIR$/sqk/Public/admin/js/seller/sellerInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/appm/js/activ_list.js" afterPath="$PROJECT_DIR$/sqk/Public/appm/js/activ_list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/appm/js/activity_list.js" afterPath="$PROJECT_DIR$/sqk/Public/appm/js/activity_list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/seller/css/common.css" afterPath="$PROJECT_DIR$/sqk/Public/seller/css/common.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/seller/js/prom_manage.js" afterPath="$PROJECT_DIR$/sqk/Public/seller/js/prom_manage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqk/Public/seller/js/wechat_binding.js" afterPath="$PROJECT_DIR$/sqk/Public/seller/js/wechat_binding.js" />
     </list>
     <ignored path="qskj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,22 +77,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GoodsExchangeRecordController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/GoodsExchangeRecordController.class.php">
+      <file leaf-file-name="item_list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/View/SellerIntegralGoods/item_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
+            <state relative-caret-position="183">
+              <caret line="119" column="85" selection-start-line="119" selection-start-column="78" selection-end-line="119" selection-end-column="85" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoodsExchangeRecordModel.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php">
+      <file leaf-file-name="SellerIntegralGoodsController.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-              <folding />
+            <state relative-caret-position="216">
+              <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+              <folding>
+                <element signature="e#180#201#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,13 +158,13 @@
         <option value="$PROJECT_DIR$/sqk/Application/Common/Conf/exchange_method.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Controller/SellerIntegralGoodsController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Dxt/Controller/SellerIntegralGoodsController.class.php" />
-        <option value="$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Controller/TopStatInfoController.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/IntegralTradingRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/ThinkPHP/Library/Think/Tool/Request.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Seller/Controller/GoodsController.class.php" />
-        <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php" />
         <option value="$PROJECT_DIR$/sqk/Application/Admin/Controller/GoodsExchangeRecordController.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php" />
+        <option value="$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php" />
       </list>
     </option>
   </component>
@@ -200,6 +255,110 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Appm" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Appm" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="View" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Appm" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="View" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SellerIntegralGoods" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qskj" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqk" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Appm" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -342,12 +501,12 @@
       <workItem from="1527073799104" duration="150000" />
       <workItem from="1527132857680" duration="690000" />
       <workItem from="1527157106412" duration="651000" />
-      <workItem from="1527158002466" duration="621000" />
+      <workItem from="1527158002466" duration="4385000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201301000" />
+    <option name="totallyTimeSpent" value="205065000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="793" extended-state="6" />
@@ -409,20 +568,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/BaseDBController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Dxt/Conf/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -440,13 +585,6 @@
     <entry file="file://$PROJECT_DIR$/sqk/Application/Dxt/View/SellerIntegralGoods/item_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-252">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2502">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
@@ -553,13 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="65" column="55" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/BaseModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="75" column="69" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="69" />
         </state>
       </provider>
     </entry>
@@ -745,26 +876,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php">
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/BaseModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1617">
-          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+        <state relative-caret-position="792">
+          <caret line="49" column="37" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Controller/GoodsExchangeRecordController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
+        <state relative-caret-position="151">
+          <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/DocumentController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-432">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1525858737368" expanded="true" signature="11840:11846" ph=" " />
+            <marker date="1525858737368" expanded="true" signature="11847:11853" ph=" " />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sqk/Application/Admin/Model/GoodsExchangeRecordModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+        <state relative-caret-position="543">
+          <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+          <folding>
+            <element signature="e#7#124#0#PHP" expanded="true" />
+            <element signature="e#150#166#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/View/SellerIntegralGoods/item_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="119" column="85" selection-start-line="119" selection-start-column="78" selection-end-line="119" selection-end-column="85" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sqk/Application/Appm/Controller/SellerIntegralGoodsController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+          <folding>
+            <element signature="e#180#201#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

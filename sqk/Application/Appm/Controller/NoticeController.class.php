@@ -34,12 +34,13 @@ class NoticeController extends Controller {
      */
     public function getList() {
         $user_id = cookie('user_id');
+        $address_id = cookie('address_id');
         $keyword = $_POST['keyword'];
         $num = C('PAGE_NUM')['notice'] * $_POST['page'];
         $isEnable = $this->getEnableCatIds();
-//            未读
-        $noticeArr = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ')')->order('id desc')->limit($num)->select();
-        $count = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ')')->count();
+        
+        $noticeArr = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and address_id in (0,'.$address_id.')')->order('id desc')->limit($num)->select();
+        $count = M('NoticeInfo')->where('is_publish=1 and cat_id in (' . $isEnable . ') and address_id in (0,'.$address_id.')')->count();
 
 //        dump(M('NoticeInfo')->getLastSql());exit;
         if ($num < $count) {

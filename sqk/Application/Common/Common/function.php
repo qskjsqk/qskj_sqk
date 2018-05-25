@@ -268,6 +268,32 @@ function createQrcode($data) {
 //    dump($a);
 }
 
+function getExchangeMethod($id) {
+    switch ($id) {
+        case 0:
+            return '用户扫码商家收取';
+            break;
+        case 1:
+            return '用户扫码商家兑换';
+            break;
+        case 2:
+            return '商家扫码用户转账';
+            break;
+        case 3:
+            return '商家扫码用户兑换';
+            break;
+        case 4:
+            return '感应卡扣分';
+            break;
+        case 5:
+            return '用户扫码转账积分';
+            break;
+        case 6:
+            return '商家兑换广告';
+            break;
+    }
+}
+
 //获取社区名称
 function getConameById($id) {
     switch ($id) {
@@ -469,4 +495,92 @@ function set_php_file($filename, $content) {
     $fp = fopen($filename, "w");
     fwrite($fp, "<?php exit();?>" . $content);
     fclose($fp);
+}
+
+/**
+ * 发送微信通知（签到）
+ * @param type $data
+ */
+function sendSignMsg($data) {
+    //设置模板消息
+    $str = '{
+	"touser": "' . $data['wx_num'] . '",
+	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "亲爱的“' . $data['realname'] . '”,通过' . $data['sign_type'] . '签到",
+			"color": "#FFA500"
+		},
+		"keyword1": {
+			"value": "' . $data['title'] . '",
+			"color": "#173177"
+		},
+                "keyword2": {
+			"value": "' . date('Y年m月d日 H:i:s') . '",
+			"color": "#173177"
+		},
+                "keyword3": {
+			"value": "' . $data['address'] . '",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "非常感谢您的到来，您可以获得【' . $data['sign_integral'] . '】积分！",
+			"color": "#FFA500"
+		}
+	}
+}';
+    //发送模板消息
+    sendWxTemMsg($str);
+}
+
+/**
+ * 发送微信通知（交易）
+ * @param type $data
+ */
+function sendTradingMsg($data) {
+    //设置模板消息
+    $str = '{
+	"touser": "' . $data['open_id'] . '",
+	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
+	"url": "http://weixin.qq.com/download",
+	"topcolor": "#FF0000",
+	"data": {
+		"first": {
+			"value": "【梨园智能商圈】提醒您正在进行积分交易",
+			"color": "#FFA500"
+		},
+		"account": {
+			"value": "' . $data['name'] . '",
+			"color": "#173177"
+		},
+		"time": {
+			"value": "'.date('Y年m月d日 H:i:s').'",
+			"color": "#173177"
+		},
+                "type": {
+			"value": "' . $data['type'] . '",
+			"color": "#173177"
+		},
+		"creditChange": {
+			"value": "' . $data['io'] . '",
+			"color": "#000"
+		},
+		"number": {
+			"value": "' . $data['exchange_integral'] . '分",
+			"color": "#173177"
+		},
+		"amount": {
+			"value": "' . $data['integral_num'] . '分",
+			"color": "#173177"
+		},
+		"remark": {
+			"value": "",
+			"color": "#173177"
+		}
+	}
+}';
+    //发送模板消息
+    sendWxTemMsg($str);
 }

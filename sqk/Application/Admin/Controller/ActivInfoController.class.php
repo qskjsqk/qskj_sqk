@@ -213,6 +213,8 @@ class ActivInfoController extends BaseDBController {
      */
     public function activDetail() {
         $returnData = parent::getData($this->infoModel, $_GET['id']);
+        $returnData['data']['start_time']= date('Y.m.d H:i',strtotime($returnData['data']['start_time']));
+        $returnData['data']['end_time']= date('Y.m.d H:i',strtotime($returnData['data']['end_time']));
         $usrCondition['id'] = array('EQ', $returnData['data']['user_id']);
         $usrInfo = $this->userInfoModel->field('realname,usr')->where($usrCondition)->find();
         $returnData['data']['usr'] = (!empty($usrInfo['realname']) ? $usrInfo['realname'] : $usrInfo['usr']);

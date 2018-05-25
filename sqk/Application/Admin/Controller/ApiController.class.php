@@ -292,7 +292,8 @@ class ApiController extends BaseDBController {
         } else {
             $where['iccard_num'] = ['EQ', $iccard_num];
             $where['is_enable'] = ['EQ', 1];
-            $userInfo = M('sys_userapp_info')->field('realname,id,tx_path')->where($where)->find();
+            $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,wx_num')->where($where)->find();
+            $user_id = $userInfo['id'];
             if (empty($userInfo)) {
                 $returnData['status'] = 2;
                 $returnData['msg'] = '无效卡信息！';
@@ -313,6 +314,7 @@ class ApiController extends BaseDBController {
                     $addArr['sign_id'] = $sign_id;
                     $addArr['realname'] = $userInfo['realname'];
                     $addArr['sign_integral'] = parent::getDataKey(M('activ_signin'), $sign_id, 'sign_integral');
+                    $sign_integral = $addArr['sign_integral'];
 
                     $tranModel = M();
                     $tranModel->startTrans(); // 开启事务
@@ -324,7 +326,7 @@ class ApiController extends BaseDBController {
                     $userExpFlag = $tranModel->table($this->dbFix . 'sys_userapp_info')->where('id=' . $user_id)
                             ->setInc('exp_num', $sign_integral);
                     //更新activ_info表
-                    $activInfo = M('activ_info')->field($activInfo)->where('id=' . $activity_id)->find();
+                    $activInfo = M('activ_info')->where('id=' . $activity_id)->find();
                     $activJoinNumFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
                             ->setInc('join_num', 1);
                     $activJoinIdsFlag = $tranModel->table($this->dbFix . 'activ_info')->where('id=' . $activity_id)
@@ -344,6 +346,21 @@ class ApiController extends BaseDBController {
                         $returnData['status'] = 1;
                         $returnData['msg'] = '成功签到！';
                         $returnData['timestamp'] = time();
+
+                        if ($userInfo['wx_num'] != '00000000') {
+                            $userInfo = $userInfo = M('sys_userapp_info')->find($userInfo['id']);
+                            $sendData = [
+                                'realname' => $userInfo['realname'],
+                                'wx_num' => $userInfo['wx_num'],
+                                'tel' => $userInfo['tel'],
+                                'sign_integral' => $sign_integral,
+                                'sign_type' => '社区卡刷卡',
+                                'sign_time' => date('Y.m.d H:i:s', time()),
+                                'title' => $activInfo['title'],
+                                'address' => $activInfo['address'],
+                            ];
+                            sendSignMsg($sendData);
+                        }
                     } else {
                         $tranModel->rollback(); // 否则将事务回滚 
                         $returnData['status'] = 0;
@@ -453,7 +470,7 @@ class ApiController extends BaseDBController {
             $tradingRecordModel = new IntegralTradingRecordModel();
             $appUserModel = new SysUserappInfoModel();
             $where['income_id'] = $address_id;
-            $where['exchange_method_id'] = 4;
+            $where['_string'] = "(exchange_method_id=4 or exchange_method_id=5)";
             $tradingRecordList = $tradingRecordModel
                     ->where($where)
                     ->field('id,trading_integral,trading_time,exchange_method_id,payment_id')
@@ -466,7 +483,7 @@ class ApiController extends BaseDBController {
                 foreach ($tradingRecordList as $key => $value) {
                     $tradingRecordList[$key]['user'] = $appUserModel->where(['id' => $value['payment_id']])->getField('realname');
                     //$tradingRecordList[$key]['tradingType'] = getExchangeMethodById($value['exchange_method_id'])['name'];
-                    $tradingRecordList[$key]['tradingType'] = '感应卡扣分';
+                    $tradingRecordList[$key]['tradingType'] = getExchangeMethod($tradingRecordList[$key]['exchange_method_id']);
                 }
 
                 $returnData['status'] = 1;
@@ -542,6 +559,20 @@ class ApiController extends BaseDBController {
                 $returnData['status'] = 1;
                 $returnData['msg'] = '积分收取成功！';
                 $returnData['data'] = $res;
+
+                //给微信发消息提醒
+                if ($user['wx_num'] != '00000000') {
+                    $userInfo = $userInfo = M('sys_userapp_info')->where(['iccard_num' => $iccard_num])->find();
+                    $sendData = [
+                        'open_id' => $userInfo['wx_num'],
+                        'name' => $userInfo['realname'],
+                        'type' => '社区刷卡收取积分',
+                        'io' => '消费',
+                        'exchange_integral' => $trading_integral,
+                        'integral_num' => $userInfo['integral_num']
+                    ];
+                    sendTradingMsg($sendData);
+                }
             } elseif ($res == -1) {
                 $returnData['status'] = -1;
                 $returnData['msg'] = '当前交易积分大于用户剩余积分';
