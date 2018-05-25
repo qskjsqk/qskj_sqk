@@ -89,6 +89,7 @@ class GoodsController extends BaseController {
             'exchangeLists' => $exchangeLists,
             'exchangeCount' => count($exchangeLists),
         ];
+        $data['goodsInfo']['user_exchange_limit']=($data['goodsInfo']['user_exchange_limit']==0)?'(不限购)':$data['goodsInfo']['user_exchange_limit'];
         $this->assign('data', $data);
         $this->display();
     }

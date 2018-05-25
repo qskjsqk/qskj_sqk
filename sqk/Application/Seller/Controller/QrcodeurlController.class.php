@@ -52,6 +52,7 @@ class QrcodeurlController extends BaseController {
         $id = $_GET['id'];
         $where['id'] = ['EQ', $id];
         $goodInfo = M('seller_integral_goods')->where($where)->find();
+        $goodInfo['user_exchange_limit']=($goodInfo['user_exchange_limit']==0)?'(不限购)':$goodInfo['user_exchange_limit'];
         $sellerInfo = M('seller_info')->where('id=' . $goodInfo['seller_id'])->find();
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
         $this->assign('goodInfo', $goodInfo);
