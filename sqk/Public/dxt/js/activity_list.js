@@ -11,7 +11,7 @@
 $(function () {
     checkIsLogin();
     $('#keyword').val('');
-    getActivList(1, '', assignData.address_id, 0, 0);
+    getActivList(1, '', 0, 0, 0);
 
     document.onkeydown = function (event_e) {
         if (window.event) {
@@ -20,7 +20,7 @@ $(function () {
         console.log(event_e);
         var int_keycode = event_e.key || event_e.code;
         if (int_keycode == 'Enter') {
-            getActivList(1, $('#keyword').val(), assignData.address_id, 0, 0);
+            getActivList(1, $('#keyword').val(), 0, 0, 0);
             return false;
         }
     }
@@ -126,10 +126,10 @@ function getActivDetail(id) {
 function loadMore() {
     mui("#loadMore").button('loading');
     var page = parseInt($("#page").val()) + 1;
-    var address_id = $('input[name="address_id"]').val();
+    var address_id = $('input[name="address_id"]:checked').val();
     var cat_id = $('select[name="cat_id"]').val();
     var integral = $('select[name="integral"]').val();
-    
+
     getActivList(page, '', address_id, cat_id, integral);
 }
 
@@ -159,7 +159,7 @@ function closeModal() {
 }
 
 function subForm() {
-    var address_id = $('input[name="address_id"]').val();
+    var address_id = $('input[name="address_id"]:checked').val();
     var cat_id = $('select[name="cat_id"]').val();
     var integral = $('select[name="integral"]').val();
 

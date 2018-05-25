@@ -79,16 +79,17 @@
                                 <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
                                     <div class="mui-input-row mui-radio">
                                         <label>本社区</label>
-                                        <input name="address_id" type="radio" value="{$address_id}" id="local_address" checked>
+                                        <input name="address_id" type="radio" value="{$address_id}" id="local_address" >
                                     </div>
                                     <div class="mui-input-row mui-radio" >
                                         <label>全体社区</label>
-                                        <input name="address_id" type="radio" value="0" id="0_address">
+                                        <input name="address_id" type="radio" value="0" id="0_address" checked>
                                     </div>
                                 </div>
                                 <h5 class="mui-content-padded font333">活动类型</h5>
                                 <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
                                     <select style="margin: 0;" name="cat_id" id="cat_id">
+                                        <option value="0">不限</option>
                                         <foreach name="catData" item="cat">
                                             <option value="{$cat.id}">{$cat.cat_name}</option>
                                         </foreach>
@@ -97,6 +98,7 @@
                                 <h5 class="mui-content-padded font333">积分等级</h5>
                                 <div class="mui-input-group" style="width: 100%;height:auto;background-color: #fff;border:1px solid #ccc;border-radius: 4px;">
                                     <select style="margin: 0;" name="integral" id="integral">
+                                        <option value="0">不限</option>
                                         <option value="100">100分</option>
                                         <option value="200">200分</option>
                                         <option value="300">300分</option>

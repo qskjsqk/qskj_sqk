@@ -87,6 +87,13 @@ class SellerIntegralGoodsController extends BaseController {
                     $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
                 }
                 $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
+            }else{
+                //第一个筛选   不选
+                if ($request['address'] == 'current') {
+                    //当前社区最受欢迎(兑换次数最多的商品)
+                    $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
+                }
+                $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
             }
         }
 

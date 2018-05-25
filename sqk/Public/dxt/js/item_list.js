@@ -94,7 +94,10 @@ function getGoodsList(page, keyword, orderBy, address, cat_type) {
 function loadMore() {
     mui("#loadMore").button('loading');
     var page = parseInt($("#page").val()) + 1;
-    getGoodsList(page, $('#keyword').val(), '', '', '');
+    var orderBy = $('input[name="orderBy"]:checked').val();
+    var address = $('input[name="address"]:checked').val();
+    var cat_type = $('input[name="cat_type"]:checked').val();
+    getGoodsList(page, $('#keyword').val(), orderBy, address, cat_type);
 }
 
 /**

@@ -90,10 +90,16 @@ class SellerIntegralGoodsController extends BaseController {
                     //当前社区最受欢迎(兑换次数最多的商品)
                     $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
                 }
+            } else {
+                $orderByWelcome = true;
+                if ($request['address'] == 'current') {
+                    //当前社区最受欢迎(兑换次数最多的商品)
+                    $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
+                }
             }
         }
 
-        if($orderByWelcome == true) {
+        if ($orderByWelcome == true) {
             $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
         } else {
             $lists = $lists->order($this->dbFix . 'seller_integral_goods.id desc');
@@ -101,8 +107,8 @@ class SellerIntegralGoodsController extends BaseController {
 
         //没有任何条件:页面载入
         $lists = $lists->whereDB($lists, $where)
-            ->limit($num)
-            ->select();
+                ->limit($num)
+                ->select();
         //echo $model->getLastSql();exit;
         $count = D('SellerIntegralGoods')->joinFieldDB($join, $field, $where)->count();
         if ($num < $count) {
@@ -143,14 +149,14 @@ class SellerIntegralGoodsController extends BaseController {
      */
     public function seller_detail() {
         $this->assign('user_id', cookie('user_id'));
-        
+
         $id = $_GET['id'];
         //查询商家信息
         $where['id'] = ['EQ', $id];
         $sellerInfo = M('seller_info')->where($where)->find();
         $sellerInfo['address_name'] = getConameById($sellerInfo['address_id']);
         $this->assign('sellerInfo', $sellerInfo);
-        
+
         //分配反馈类型信息
         $this->assign('compalintCat', M('seller_complaint_cat')->select());
 
@@ -168,19 +174,19 @@ class SellerIntegralGoodsController extends BaseController {
         $where[$this->dbFix . 'seller_integral_goods.status'] = 1;
         //只查询一个店的商品
         $where[$this->dbFix . 'seller_integral_goods.seller_id'] = $id;
-        
+
         //设置连表,查询信息
         $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
-        
+
         $listsObj = $lists->whereDB($lists, $where)->group($this->dbFix . 'seller_integral_goods.id');
         $lists = $listsObj->order($this->dbFix . 'seller_integral_goods.id desc')->select();
-        
+
         $this->assign('goodsList', $lists);
-        
+
 //        dump($sellerInfo);
         $this->display();
     }
-    
+
     /**
      * 提交入库反馈信息
      */

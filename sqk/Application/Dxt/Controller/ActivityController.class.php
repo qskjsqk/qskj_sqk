@@ -59,6 +59,9 @@ class ActivityController extends Controller {
         if ($_POST['integral'] != 0) {
             $where['integral'] = array('EQ', $_POST['integral']);
         }
+        if ($_POST['address_id'] != 0) {
+            $where['address_id'] = array('EQ', $_POST['address_id']);
+        }
 
         $acitvArr = M('ActivInfo')->where($where)->order('id desc')->limit($num)->select();
         $count = M('ActivInfo')->where($where)->count();
