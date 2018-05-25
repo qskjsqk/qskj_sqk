@@ -341,7 +341,7 @@ class IndexController extends BaseController {
             //消费提醒
             $data['title'] = "积分交易详情";
             $data['time'] = date('Y年m月d日 H:i:s', time());
-            
+
             $data['str'] = '<div class="mui-row">';
             $data['str'] .= '    <div class="mui-col-xs-4">';
             $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易状态</p>';
@@ -355,7 +355,7 @@ class IndexController extends BaseController {
             $data['str'] .= '        <p class="mui-h5 mui-ellipsis">账户名称</p>';
             $data['str'] .= '    </div>';
             $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
-            $data['str'] .= '        <span class="mui-h5">'.$data['name'].'</span>';
+            $data['str'] .= '        <span class="mui-h5">' . $data['name'] . '</span>';
             $data['str'] .= '    </div>';
             $data['str'] .= '</div>';
             $data['str'] .= '<div class="mui-row">';
@@ -363,7 +363,7 @@ class IndexController extends BaseController {
             $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易方式</p>';
             $data['str'] .= '    </div>';
             $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
-            $data['str'] .= '        <span class="mui-h5">'.$data['type'].'</span>';
+            $data['str'] .= '        <span class="mui-h5">' . $data['type'] . '</span>';
             $data['str'] .= '    </div>';
             $data['str'] .= '</div>';
             $data['str'] .= '<div class="mui-row">';
@@ -371,15 +371,49 @@ class IndexController extends BaseController {
             $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易时间</p>';
             $data['str'] .= '    </div>';
             $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
-            $data['str'] .= '        <span class="mui-h5">'.$data['time'].'</span>';
+            $data['str'] .= '        <span class="mui-h5">' . $data['time'] . '</span>';
             $data['str'] .= '    </div>';
             $data['str'] .= '</div>';
         } else {
             //签到提醒
             $data['title'] = "签到详情";
             $data['time'] = date('Y年m月d日 H:i:s', time());
+            $data['io'] = "获得";
+            $data['exchange_integral'] = $data['sign_integral'];
+
+            $data['str'] = '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-4">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">签到状态</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">签到成功</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-4">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">账户名称</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">' . $data['realname'] . '('.$data['tel'].')</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-4">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">签到方式</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">' . $data['sign_type'] . '</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
+            $data['str'] .= '<div class="mui-row">';
+            $data['str'] .= '    <div class="mui-col-xs-4">';
+            $data['str'] .= '        <p class="mui-h5 mui-ellipsis">交易时间</p>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '    <div class="mui-col-xs-8 mui-text-right">';
+            $data['str'] .= '        <span class="mui-h5">' . $data['time'] . '</span>';
+            $data['str'] .= '    </div>';
+            $data['str'] .= '</div>';
         }
-//        dump($data);
         $this->assign('data', $data);
         $this->display();
     }
