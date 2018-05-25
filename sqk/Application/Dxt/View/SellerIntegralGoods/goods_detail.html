@@ -113,7 +113,12 @@
                 </div>
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner font666">
-                        兑换总量：{$goodInfo.exchange_limit_number}
+                        库存：{$data.goodsInfo.stock}&#12288;每个用户限购：
+                        <if condition="$data.goodsInfo.user_exchange_limit eq 0">
+                            (不限购)
+                            <else/>
+                            {$data.goodsInfo.user_exchange_limit}
+                        </if>
                     </div>
                 </div>
             </div>
