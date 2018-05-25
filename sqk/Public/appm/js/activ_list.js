@@ -96,10 +96,6 @@ function getMyActivList(type, page) {
                             '</div>';
                 }
             }
-
-
-
-
         } else {
             str = '<li class="mui-table-view-cell font999" style="padding-right: 10px;text-align:center;">(＞﹏＜)&#12288;暂无消息</li>';
         }
