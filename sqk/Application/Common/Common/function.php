@@ -509,7 +509,7 @@ function sendSignMsg($data) {
     $str = '{
 	"touser": "' . $data['wx_num'] . '",
 	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
-	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?id='.$id.'"
+	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?id=' . $id . '",
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
