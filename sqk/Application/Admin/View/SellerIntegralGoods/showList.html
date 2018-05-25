@@ -84,8 +84,8 @@
                     <th>&nbsp;类型</th>
                     <th>发布商家</th>
                     <th>发布时间</th>
-                    <th>兑换次数</th>
                     <th>所需积分</th>
+                    <th>所需加价</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -98,8 +98,8 @@
                             <td>{$v.cat_name}</td>
                             <td>{$v.seller_name}</td>
                             <td>{$v.public_time}</td>
-                            <td>兑换次数</td>
                             <td>{$v.required_integral}</td>
+                            <td>￥{$v.payment_amount}</td>
                             <td>
                         <if condition="$v.status eq 1">
                             已发布
@@ -143,38 +143,38 @@
     <div class="catLayer" style="display: none;">
         <div class="container" style="width: 500px;">
             <div class="row">
-                <div class="form-group" style="width:500px;">
-                    <label for="goods_pic" class="col-sm-3 control-label">商品图片</label>
-                    <div class="col-sm-7">
-                        <img src="" class="goods_pic" width="200"/>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
-                    <div class="col-sm-7">
-                        <p class="goods_name"></p>
-                        <p class="required_integral"></p>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="goods_detail" class="col-sm-3 control-label">商品详情</label>
-                    <div class="col-sm-7">
-                        <p class="goods_detail"></p>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="seller_name" class="col-sm-3 control-label">适用门店</label>
-                    <div class="col-sm-7">
-                        <p class="seller_name"></p>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="use_of_knowledge" class="col-sm-3 control-label">适用须知</label>
-                    <div class="col-sm-7">
-                        <p class="use_of_knowledge">
-                        </p>
-                    </div>
-                </div>
+                <table class="table table-hover">
+                    <tr>
+                        <th style="width:80px;">商品图片</th>
+                        <td><img src="" class="goods_pic" width="200"/></td>
+                    </tr>
+                    <tr>
+                        <th>商品名称</th>
+                        <td>
+                            <p class="goods_name"></p>
+                            <p class="required_integral"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>商品详情</th>
+                        <td>
+                             <p class="goods_detail"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>适用门店</th>
+                        <td>
+                            <p class="seller_name"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>适用须知</th>
+                        <td>
+                            <p class="use_of_knowledge"></p>
+                        </td>
+                    </tr>
+                </table>
+                
             </div>
         </div>
     </div>

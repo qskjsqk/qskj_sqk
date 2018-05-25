@@ -23,7 +23,7 @@
         .score-field{width: 100%;float:left;height: 50px;line-height: 50px;}
     </style>
     <body>
-         <div class="panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-body">
                 <div class="col-sm-4 text-left" >
                     梨园镇积分商品数量:&nbsp;&nbsp;{$data.allGoodsCount}
@@ -61,8 +61,8 @@
                     <th>&nbsp;类型</th>
                     <th>发布商家</th>
                     <th>发布时间</th>
-                    <th>兑换次数</th>
                     <th>所需积分</th>
+                    <th>所需加价</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -75,28 +75,28 @@
                             <td>{$v.cat_name}</td>
                             <td>{$v.seller_name}</td>
                             <td>{$v.public_time}</td>
-                            <td>兑换次数</td>
                             <td>{$v.required_integral}</td>
+                            <td>￥{$v.payment_amount}</td>
                             <td>
-                                <if condition="$v.status eq 1">
-                                    已发布
-                                <elseif condition="$v.status eq 2"/>
-                                    已下架
-                                </if>
-                            </td>
+                        <if condition="$v.status eq 1">
+                            已发布
+                            <elseif condition="$v.status eq 2"/>
+                            已下架
+                        </if>
+                        </td>
                         <td>
                             <div>
                                 <button class="btn btn-success" onclick="showGoodsInfo({$v.id}, '{$v.seller_name}');">
                                     查看详情
                                 </button>
                                 <button class="btn btn-default edit-btn editSellerInfo" onclick="javascript:void(window.location.href = '__MODULE__/GoodsExchangeRecord/showListById/goods_id/{$v.id}')">
-                                     兑换记录
+                                    兑换记录
                                 </button>
                                 <if condition="$v.status eq 1">
                                     <button class="btn btn-danger delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         下架
                                     </button>
-                                <elseif condition="$v.status eq 2"/>
+                                    <elseif condition="$v.status eq 2"/>
                                     <button class="btn btn-success delSellerInfo change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         上架
                                     </button>
@@ -118,38 +118,37 @@
     <div class="catLayer" style="display: none;">
         <div class="container" style="width: 500px;">
             <div class="row">
-                    <div class="form-group" style="width:500px;">
-                        <label for="goods_pic" class="col-sm-3 control-label">商品图片</label>
-                        <div class="col-sm-7">
-                            <img src="" class="goods_pic" width="200"/>
-                        </div>
-                    </div>
-                    <div class="form-group" style="width:500px;">
-                        <label for="goods_name" class="col-sm-3 control-label">商品名称</label>
-                        <div class="col-sm-7">
+                <table class="table table-hover">
+                    <tr>
+                        <th style="width:80px;">商品图片</th>
+                        <td><img src="" class="goods_pic" width="200"/></td>
+                    </tr>
+                    <tr>
+                        <th>商品名称</th>
+                        <td>
                             <p class="goods_name"></p>
                             <p class="required_integral"></p>
-                        </div>
-                    </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="goods_detail" class="col-sm-3 control-label">商品详情</label>
-                    <div class="col-sm-7">
-                        <p class="goods_detail"></p>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="seller_name" class="col-sm-3 control-label">适用门店</label>
-                    <div class="col-sm-7">
-                        <p class="seller_name"></p>
-                    </div>
-                </div>
-                <div class="form-group" style="width:500px;">
-                    <label for="use_of_knowledge" class="col-sm-3 control-label">适用须知</label>
-                    <div class="col-sm-7">
-                        <p class="use_of_knowledge">
-                        </p>
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>商品详情</th>
+                        <td>
+                            <p class="goods_detail"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>适用门店</th>
+                        <td>
+                            <p class="seller_name"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>适用须知</th>
+                        <td>
+                            <p class="use_of_knowledge"></p>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
