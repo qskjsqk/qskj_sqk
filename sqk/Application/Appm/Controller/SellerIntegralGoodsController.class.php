@@ -43,11 +43,10 @@ class SellerIntegralGoodsController extends BaseController {
      */
     public function getList() {
         $model = D('SellerIntegralGoods');
+        $appUserModel = new SysUserappInfoModel;
         $user_id = cookie('user_id');
-        $address_id = cookie('address_id');
+        $address_id = $appUserModel->where(['id' => cookie('user_id')])->getField('address_id');
         $request = Request::all();
-
-
 
         $num = C('PAGE_NUM')['goods'] * $request['page'];
 
@@ -63,6 +62,8 @@ class SellerIntegralGoodsController extends BaseController {
 
         //设置连表,查询信息
         $lists = $model->joinDB($model, $join)->fieldDB($model, $field);
+
+        $orderByWelcome = false;
 
         //关键字搜索:商家名称或者积分商品名称模糊搜索
         if (!empty($request['keyword'])) {
@@ -84,20 +85,25 @@ class SellerIntegralGoodsController extends BaseController {
             if ($request['orderBy'] == 'distance') {
                 $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
             } elseif ($request['orderBy'] == 'welcome') {    //选中最受欢迎
+                $orderByWelcome = true;
                 if ($request['address'] == 'current') {
                     //当前社区最受欢迎(兑换次数最多的商品)
                     $where[$this->dbFix . 'seller_integral_goods.address_id'] = $address_id;
                 }
-                $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
             }
+        }
+
+        if($orderByWelcome == true) {
+            $lists = $lists->order($this->dbFix . 'seller_integral_goods.exchange_times desc');
+        } else {
+            $lists = $lists->order($this->dbFix . 'seller_integral_goods.id desc');
         }
 
         //没有任何条件:页面载入
         $lists = $lists->whereDB($lists, $where)
-            ->order($this->dbFix . 'seller_integral_goods.id desc')
             ->limit($num)
             ->select();
-        //echo $model->getLastSql();
+        //echo $model->getLastSql();exit;
         $count = D('SellerIntegralGoods')->joinFieldDB($join, $field, $where)->count();
         if ($num < $count) {
             $ajaxLoad = '点击加载更多';

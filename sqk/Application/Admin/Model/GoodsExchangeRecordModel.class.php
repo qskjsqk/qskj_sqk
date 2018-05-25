@@ -31,12 +31,8 @@ class GoodsExchangeRecordModel extends BaseModel {
                 ['seller_info', 'id', 'goods_exchange_record', 'seller_id'],
             ];
             $where[$this->dbFix . 'seller_info.address_id'] = session('address_id');
-            
-            $object = $this->joinFieldDB($join, [], $where);
-            $count = $object->count();
-            
-            $object = $this->joinFieldDB($join, [], $where);
-            $integral = $object->sum('exchange_integral');
+            $count = $this->joinFieldDB($join, [], $where)->count();
+            $integral = $this->joinFieldDB($join, [], $where)->sum($this->dbFix .'goods_exchange_record.exchange_integral');
         } else {
             $count = $this->count();
             $integral = $this->sum('exchange_integral');
