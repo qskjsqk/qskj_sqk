@@ -91,6 +91,7 @@ class ActivityController extends Controller {
                 $data[$i]['integral'] = $acitvArr[$i]['integral'];
 
                 $data[$i]['like_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'like');
+                $data[$i]['read_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'read');
 
                 $data[$i]['is_open'] = $acitvArr[$i]['is_open'];
                 $picsInfo = $this->getAttachArr($acitvArr[$i]['id']);

@@ -35,6 +35,7 @@ class NoticeController extends Controller {
     public function getList() {
         $user_id = cookie('user_id');
         $address_id = cookie('address_id');
+
         $keyword = $_POST['keyword'];
         $num = C('PAGE_NUM')['notice'] * $_POST['page'];
         $isEnable = $this->getEnableCatIds();
@@ -61,7 +62,6 @@ class NoticeController extends Controller {
                 $data[$i]['content'] = $noticeArr[$i]['content'];
                 $data[$i]['notice_pic'] = $this->getNoticePicPath($noticeArr[$i]['id']);
                 $data[$i]['is_read'] = strstr($noticeArr[$i]['read_ids'], ',' . $user_id . ',') == FALSE ? 0 : 1;
-                $data[$i]['not_read_num'] = $notReadCount;
             }
             $returnData['page'] = $_POST['page'];
 

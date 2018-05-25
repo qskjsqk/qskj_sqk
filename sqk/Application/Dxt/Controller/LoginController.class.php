@@ -72,13 +72,14 @@ class LoginController extends Controller {
      */
     public function checkIsLogin() {
         $user_id = cookie('user_id');
+        $address_id = cookie('address_id');
         if ($user_id == null) {
             $returnData['flag'] = 0;
         } else {
             //通知条数
             $noticeC = A('Notice');
             $isEnableNoticeCat = $noticeC->getEnableCatIds();
-            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ')')->count();
+            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ') and address_id='.$address_id)->count();
             //活动条数
             $activityC = A('Activity');
             $isEnableActivityCat = $activityC->getEnableCatIds();

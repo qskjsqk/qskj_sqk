@@ -33,8 +33,8 @@ class TopStatInfoController extends BaseDBController {
         $lWhere = $this->dbFix . 'activ_signin_info.add_time < "' . $quarter['lend'] . '" and ' . $this->dbFix . 'activ_signin_info.add_time > "' . $quarter['lstart'] . '"';
 
         //交易表
-        $snWhere = $this->dbFix . 'goods_exchange_record.exchange_time < "' . $quarter['nend'] . '" and ' . $this->dbFix . 'goods_exchange_record.exchange_time > "' . $quarter['nstart'] . '"';
-        $slWhere = $this->dbFix . 'goods_exchange_record.exchange_time < "' . $quarter['lend'] . '" and ' . $this->dbFix . 'goods_exchange_record.exchange_time > "' . $quarter['lstart'] . '"';
+        $snWhere = $this->dbFix . 'integral_trading_record.trading_time < "' . $quarter['nend'] . '" and ' . $this->dbFix . 'integral_trading_record.trading_time > "' . $quarter['nstart'] . '"';
+        $slWhere = $this->dbFix . 'integral_trading_record.trading_time < "' . $quarter['lend'] . '" and ' . $this->dbFix . 'integral_trading_record.trading_time > "' . $quarter['lstart'] . '"';
 
 
         switch ($data['type']) {
@@ -111,14 +111,16 @@ class TopStatInfoController extends BaseDBController {
      * @return string
      */
     public function getSellerList($where) {
-        $Arr = M('GoodsExchangeRecord')
-                ->field('sum(' . $this->dbFix . 'goods_exchange_record.exchange_integral) as exchange_integral,'
-                        . $this->dbFix . 'seller_info.name,' . $this->dbFix . 'seller_info.tx_path,' . $this->dbFix . 'seller_info.address_id')
-                ->join('left join ' . $this->dbFix . 'seller_info on ' . $this->dbFix . 'goods_exchange_record.seller_id=' . $this->dbFix . 'seller_info.id')
-                ->where($where)->group('seller_id')->order('exchange_integral desc')->limit(10)
+        $Arr = M('IntegralTradingRecord')
+                ->field('sum(' . $this->dbFix . 'integral_trading_record.trading_integral) as exchange_integral,'
+                        . $this->dbFix . 'seller_info.name,' 
+                        . $this->dbFix . 'seller_info.tx_path,' 
+                        . $this->dbFix . 'seller_info.address_id')
+                ->join('left join ' . $this->dbFix . 'seller_info on ' . $this->dbFix . 'integral_trading_record.income_id=' . $this->dbFix . 'seller_info.id')
+                ->where($where.' and ' . $this->dbFix . 'integral_trading_record.income_type=2')->group('income_id')->order('exchange_integral desc')->limit(10)
                 ->select();
         for ($i = 0; $i < count($Arr); $i++) {
-            $Arr[$i]['sql'] = M('GoodsExchangeRecord')->getLastSql();
+            $Arr[$i]['sql'] = M('IntegralTradingRecord')->getLastSql();
             $Arr[$i]['top'] = $Arr[$i]['name'];
             $Arr[$i]['bottom'] = getConameById($Arr[$i]['address_id']);
             $Arr[$i]['right'] = '累计' . $Arr[$i]['exchange_integral'] . '分';
