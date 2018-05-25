@@ -334,92 +334,13 @@ class IndexController extends BaseController {
         $this->ajaxReturn($return, "JSON");
     }
 
+    public function wxDetail() {
+        $data = $_GET['data'];
+        dump($data);
+    }
+
     public function zxw() {
-        $user = M('sys_userapp_info')->field('wx_num,nickname')->where('wx_num<>"00000000" and id=137')->select();
-
-//        dump($user);
-//        exit;
-
-        for ($i = 0; $i < count($user); $i++) {
-            //设置模板消息
-            $str = '{
-	"touser": "' . $user[$i]['wx_num'] . '",
-	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
-	"url": "http://weixin.qq.com/download",
-	"topcolor": "#FF0000",
-	"data": {
-		"first": {
-			"value": "亲爱的“' . $user[$i]['nickname'] . '”,签到成功",
-			"color": "#FFA500"
-		},
-		"keyword1": {
-			"value": "中央军委领导在通州参加义务植树活动",
-			"color": "#173177"
-		},
-                "keyword2": {
-			"value": "北京市通州区玉带河东街",
-			"color": "#173177"
-		},
-		"keyword3": {
-			"value": "' . date('Y年m月d日 H:i:s') . '",
-			"color": "#173177"
-		},
-		"remark": {
-			"value": "非常感谢您的到来，您可以获得【100】积分！",
-			"color": "#173177"
-		}
-	}
-}';
-            //调用公共方法curl_post，发送模板消息
-//            dump('"value": "'.date('Y年m月d日 H:i:s').'"');exit;
-            sendWxTemMsg($str);
-        }
-
-//        exit;
-//        //发送模版消息
-//        //设置模板消息
-//        $str = '{
-//	"touser": "oadwq03_g0B0lvOGQG6Id5vUIwNQ",
-//	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-//	"url": "http://weixin.qq.com/download",
-//	"topcolor": "#FF0000",
-//	"data": {
-//		"first": {
-//			"value": "【梨园智能商圈】提醒您正在进行积分交易",
-//			"color": "#FFA500"
-//		},
-//		"account": {
-//			"value": "忘忧草（13521447599）",
-//			"color": "#173177"
-//		},
-//		"time": {
-//			"value": "2018年05月21日 12:10:10",
-//			"color": "#173177"
-//		},
-//                "type": {
-//			"value": "转账",
-//			"color": "#173177"
-//		},
-//		"creditChange": {
-//			"value": "消费",
-//			"color": "#000"
-//		},
-//		"number": {
-//			"value": "900分",
-//			"color": "#173177"
-//		},
-//		"amount": {
-//			"value": "65040分",
-//			"color": "#173177"
-//		},
-//		"remark": {
-//			"value": "",
-//			"color": "#173177"
-//		}
-//	}
-//}';
-//        //调用公共方法curl_post，发送模板消息
-//        sendWxTemMsg($str);
+        
     }
 
 }

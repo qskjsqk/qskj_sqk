@@ -506,7 +506,7 @@ function sendSignMsg($data) {
     $str = '{
 	"touser": "' . $data['wx_num'] . '",
 	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
-	"url": "http://weixin.qq.com/download",
+	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?data=' . json_encode($data) . '",
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
@@ -544,7 +544,7 @@ function sendTradingMsg($data) {
     $str = '{
 	"touser": "' . $data['open_id'] . '",
 	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-	"url": "http://weixin.qq.com/download",
+	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?data=' . json_encode($data) . '",
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
@@ -556,7 +556,7 @@ function sendTradingMsg($data) {
 			"color": "#173177"
 		},
 		"time": {
-			"value": "'.date('Y年m月d日 H:i:s').'",
+			"value": "' . date('Y年m月d日 H:i:s') . '",
 			"color": "#173177"
 		},
                 "type": {
