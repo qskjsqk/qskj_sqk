@@ -502,11 +502,14 @@ function set_php_file($filename, $content) {
  * @param type $data
  */
 function sendSignMsg($data) {
+    $addArr['open_id'] = $data['wx_num'];
+    $addArr['json_str'] = json_encode($data);
+    $id = M('sys_wx_msg')->add($addArr);
     //设置模板消息
     $str = '{
 	"touser": "' . $data['wx_num'] . '",
 	"template_id": "l6t0WSabIXd3JHgus-7T6QAUcG5bCLeuSltLetzR-OM",
-	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?data=' . json_encode($data) . '",
+	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?id='.$id.'"
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
@@ -540,11 +543,14 @@ function sendSignMsg($data) {
  * @param type $data
  */
 function sendTradingMsg($data) {
+    $addArr['open_id'] = $data['open_id'];
+    $addArr['json_str'] = json_encode($data);
+    $id = M('sys_wx_msg')->add($addArr);
     //设置模板消息
     $str = '{
 	"touser": "' . $data['open_id'] . '",
 	"template_id": "dnBhToLU9wd1oqirEZu9a-TfqZjwT2kCDvSpgEFqmoM",
-	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?data=' . json_encode($data) . '",
+	"url": "http://lyznsq.qmtsc.com/index.php/appm/index/wxDetail?id=' . $id . '",
 	"topcolor": "#FF0000",
 	"data": {
 		"first": {
