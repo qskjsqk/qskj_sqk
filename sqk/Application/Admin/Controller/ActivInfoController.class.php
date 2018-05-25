@@ -91,6 +91,11 @@ class ActivInfoController extends BaseDBController {
         $form_data = $_POST['form_data'];
         parse_str($form_data, $param_arr); //转换数组
         $param_arr['user_id'] = $_SESSION['user_id'];
+        if(empty($param_arr['id'])){
+            $param_arr['read_ids']=',';
+            $param_arr['like_ids']=',';
+            $param_arr['join_ids']=',';
+        }
         $returnData = parent::saveData($this->infoModel, $param_arr); //添加活动信息
         if ($returnData['code'] == '500') {
             foreach ($param_arr['files'] as $value) {

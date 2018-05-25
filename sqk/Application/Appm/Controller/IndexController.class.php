@@ -121,7 +121,7 @@ class IndexController extends BaseController {
     }
 
     /**
-     * 商家版我的资料
+     * 上传头像
      */
     public function tx_upload() {
         $this->assign('myInfo', $this->getUserappInfo());
@@ -155,7 +155,7 @@ class IndexController extends BaseController {
     }
 
     /**
-     * 保存商家头像
+     * 保存头像
      */
     public function saveTxInfo() {
         $param_arr = array();

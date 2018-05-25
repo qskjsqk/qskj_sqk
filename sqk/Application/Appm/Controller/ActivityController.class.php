@@ -93,6 +93,7 @@ class ActivityController extends Controller {
                 $data[$i]['integral'] = $acitvArr[$i]['integral'];
 
                 $data[$i]['like_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'like');
+                $data[$i]['read_flag'] = $this->checkReadLikeJoin($acitvArr[$i]['id'], 'read');
 
                 $data[$i]['is_open'] = $acitvArr[$i]['is_open'];
                 $picsInfo = $this->getAttachArr($acitvArr[$i]['id']);
@@ -165,13 +166,7 @@ class ActivityController extends Controller {
             $returnData['flag'] = 0;
             $returnData['msg'] = '操作失败,请重新操作';
         } else {
-            $newstr = $findArr['read_ids'] . $user_id;
-            $newstrArr = explode(',', trim($newstr, ','));
-            $newstr = implode(',', array_unique($newstrArr));
-            $newstr = ',' . $newstr . ',';
-            $updData['read_ids'] = $newstr;
-            $updData['read_num'] = $findArr['read_num'] + 1;
-            $updArr = M('ActivInfo')->where('id=' . $_GET['id'])->save($updData);
+            $updArr=$this->setReadLikeJoin($_GET['id'], 'read');
             if ($updArr === FALSE) {
                 $returnData['flag'] = 0;
                 $returnData['msg'] = '操作失败,请重新操作';

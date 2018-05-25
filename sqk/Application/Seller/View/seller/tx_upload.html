@@ -196,7 +196,7 @@
     function subForm() {
         $.post(c_path + '/saveTxInfo', {"form_data": $('#form').serialize()}, function (result) {
             if (result.is_success.flag == 1) {
-                window.location.href = c_path + '/seller_home';
+                window.location.href = c_path + '/my_info';
             } else {
 
             }

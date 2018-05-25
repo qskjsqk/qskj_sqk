@@ -79,7 +79,12 @@
 <script type="text/javascript">
 
     function setPromStatus(id, status) {
-    layer.confirm('确定要审核该广告嘛？', {
+    if (status == 3){
+    var str = "下架";
+    } else{
+    var str = "审核";
+    }
+    layer.confirm('确定要' + str + '该广告嘛？', {
     icon: 2,
             title: '提示信息',
             btn: ['确定', '取消'] //按钮
