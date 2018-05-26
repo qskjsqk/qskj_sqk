@@ -71,20 +71,6 @@ public class ActionFragment extends BaseFragment {
                 getData(true);
             }
         });
-        listAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                if (actionList != null && actionList.size() > position) {
-                    ActionListEntity listEntity = actionList.get(position);
-                    ActionDetailSignActivity.start(getActivity(), listEntity);
-                }
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
-            }
-        });
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {

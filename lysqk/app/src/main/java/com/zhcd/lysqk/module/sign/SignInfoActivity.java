@@ -227,6 +227,7 @@ public class SignInfoActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(uid)) {
                         int decimalUid = HFRFIDTool.changeToDecimal(uid);
                         if (decimalUid > 0 && signInfoEntity != null) {
+                            HFRFIDTool.playAudio(SignInfoActivity.this);
                             setUserSigninPos(signInfoEntity.getActivity_id(),
                                     signInfoEntity.getId(), String.valueOf(decimalUid));
                         }

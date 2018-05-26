@@ -125,6 +125,7 @@ public class IntegralFragment extends BaseFragment {
                     if (!TextUtils.isEmpty(uid)) {
                         int decimalUid = HFRFIDTool.changeToDecimal(uid);
                         if (decimalUid > 0) {
+                            HFRFIDTool.playAudio(getContext());
                             ReceivePointsActivity.start(getActivity(), String.valueOf(decimalUid));
                         }
                     }
