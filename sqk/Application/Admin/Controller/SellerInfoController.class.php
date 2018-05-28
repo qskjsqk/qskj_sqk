@@ -72,7 +72,7 @@ class SellerInfoController extends BaseDBController {
      */
     public function edit() {
         $data = $attachList = $sellerInfo = $sellerWechat = [];
-        if(!empty(I('id'))) {
+        if (!empty(I('id'))) {
             list($attachList, $sellerInfo, $sellerWechat) = self::getInfo(I('id'));
         }
         $data = [
@@ -81,7 +81,8 @@ class SellerInfoController extends BaseDBController {
             'sellerInfo' => $sellerInfo,
             'sellerWechat' => $sellerWechat,
         ];
-        if(!empty(I('id'))) $data['attachList'] = $attachList;
+        if (!empty(I('id')))
+            $data['attachList'] = $attachList;
         $this->assign('data', $data);
         $this->display();
     }
@@ -106,7 +107,8 @@ class SellerInfoController extends BaseDBController {
      * 获取详情
      */
     public function getInfo($id) {
-        if(empty($id)) $this->redirect('/Admin/SellerInfo/showList');
+        if (empty($id))
+            $this->redirect('/Admin/SellerInfo/showList');
 
         $attachList = $sellerInfo = $sellerWechat = [];
         $returnData = parent::getData($this->infoModel, $id);
@@ -117,7 +119,7 @@ class SellerInfoController extends BaseDBController {
             ];
             $attachList = json_encode($this->attachModel->where($condition)->select());
             $sellerInfo = $returnData['data'];
-            $sellerWechat= $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();
+            $sellerWechat = $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();
         } else {
             $this->redirect('/Admin/SellerInfo/showList');
         }
@@ -136,7 +138,7 @@ class SellerInfoController extends BaseDBController {
      * 解绑商家微信
      */
     public function untieWechat() {
-        if($this->sellerWechatBindingModel->where(['id' => I('id')])->save(['seller_id' => 0]) == true) {
+        if ($this->sellerWechatBindingModel->where(['id' => I('id')])->save(['seller_id' => 0]) == true) {
             $this->ajaxReturn(syncData(0, '解绑成功'));
         } else {
             $this->ajaxReturn(syncData(-1, '解绑失败,请重新操作'));
@@ -148,7 +150,7 @@ class SellerInfoController extends BaseDBController {
      */
     public function changeSellerStatus() {
         $status['status'] = (I('status') == 0 || I('status') == 2) ? 1 : 2;
-        if($this->infoModel->where(['id' => I('id')])->save($status) == true) {
+        if ($this->infoModel->where(['id' => I('id')])->save($status) == true) {
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
@@ -159,7 +161,12 @@ class SellerInfoController extends BaseDBController {
      * 异步删除商家
      */
     public function delSellerSync() {
-        if($this->infoModel->where(['id' => I('id')])->delete() == true) {
+        if ($this->infoModel->where(['id' => I('id')])->delete() == true) {
+            M('seller_wechat_binding')->where(['seller_id' => I('id')])->delete();
+            M('seller_complaint')->where(['seller_id' => I('id')])->delete();
+            M('seller_integral_goods')->where(['seller_id' => I('id')])->delete();
+            M('goods_exchange_record')->where(['seller_id' => I('id')])->delete();
+            M('integral_tradint_record')->where('(income_id=' . I('id') . ' and income_type=3) or (payment_id=' . I('id') . ' and payment_type=3)')->delete();
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
@@ -180,19 +187,19 @@ class SellerInfoController extends BaseDBController {
             'address_api_url' => I('address_api_url'),
             'address' => I('address'),
             'address_id' => !empty(I('address_id')) ? I('address_id') : session('address_id'),
-            'status' => 0,   //默认待审核
+            'status' => 0, //默认待审核
             'admin_id' => session('user_id'),
         ];
-        
+
         if ($this->infoModel->create($sellerInfo)) {
-            if(empty(I('id'))) {
+            if (empty(I('id'))) {
                 $result = $this->infoModel->add($sellerInfo);
             } else {
                 $this->infoModel->save($sellerInfo);
                 $result = I('id');
             }
             if ($result !== false) {
-                if(!empty(I('files')) && is_array(I('files'))) {
+                if (!empty(I('files')) && is_array(I('files'))) {
                     foreach (I('files') as $value) {
                         $this->attachModel->where(['id' => $value])->save(['module_info_id' => $result]);
                     }
@@ -231,6 +238,11 @@ class SellerInfoController extends BaseDBController {
         $idArray = explode(',', rtrim($_POST['ids'], ","));
         foreach ($idArray as $value) {
             $result = $this->infoModel->where(['id' => $value])->save(['status' => 1]);
+            M('seller_wechat_binding')->where(['seller_id' => I('id')])->delete();
+            M('seller_complaint')->where(['seller_id' => I('id')])->delete();
+            M('seller_integral_goods')->where(['seller_id' => I('id')])->delete();
+            M('goods_exchange_record')->where(['seller_id' => I('id')])->delete();
+            M('integral_tradint_record')->where('(income_id=' . I('id') . ' and income_type=3) or (payment_id=' . I('id') . ' and payment_type=3)')->delete();
         }
         $logC = A('Actionlog')->addLog('SellerInfo', 'checkArrayInfo', '审核商家信息');
         $this->ajaxReturn(syncData(0, '已批量审核'));
