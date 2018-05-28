@@ -20,6 +20,7 @@ import com.zhcd.utils.T;
 
 public class ReceivePointsActivity extends BaseActivity {
     private static final String CardId = "cardId";
+    private static final String ReceiveIntegralEntity = "pointsEntity";
     private String cardId;
 
     private TextView tvUserName, tvDescription;
@@ -32,9 +33,10 @@ public class ReceivePointsActivity extends BaseActivity {
         return R.layout.activity_record_receive_points;
     }
 
-    public static void start(Context context, String cardId) {
-        if (context != null) {
+    public static void start(Context context, ReceiveIntegralEntity pointsEntity, String cardId) {
+        if (context != null && pointsEntity != null) {
             Intent intent = new Intent(context, ReceivePointsActivity.class);
+            intent.putExtra(ReceiveIntegralEntity, pointsEntity);
             intent.putExtra(CardId, cardId);
             context.startActivity(intent);
         }
@@ -46,11 +48,14 @@ public class ReceivePointsActivity extends BaseActivity {
         titleBarBuilder.setTitleText("社区卡收取积分");
         titleBarBuilder.setBackText("    ");
         cardId = getIntent().getStringExtra(CardId);
+        pointsEntity = (ReceiveIntegralEntity) getIntent().getSerializableExtra(ReceiveIntegralEntity);
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         tvDescription = (TextView) findViewById(R.id.tv_description);
         etInputPoints = (EditText) findViewById(R.id.et_input_points);
-        loadCollectionIntegral(cardId);
-
+        if (pointsEntity != null) {
+            tvUserName.setText("用户名：" + pointsEntity.getUser());
+            tvDescription.setText("剩余积分：" + pointsEntity.getIntegral_num());
+        }
         findViewById(R.id.tv_confirm_receive).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,32 +64,6 @@ public class ReceivePointsActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    private void loadCollectionIntegral(String cardNum) {
-        if (TextUtils.isEmpty(cardNum))
-            return;
-        showProgressDialog();
-        ServiceProvider.loadCollectionIntegral(cardNum, new IDataResponse() {
-            @Override
-            public void onResponse(BaseData obj) {
-                hideProgressDialog();
-                if (ServiceProvider.errorFilter(obj)) {
-                    pointsEntity = (ReceiveIntegralEntity) obj.getData();
-                    setViewData();
-                } else if (obj != null) {
-                    T.showShort(obj.getMsg());
-                }
-
-            }
-        }, ReceivePointsActivity.class.getSimpleName());
-    }
-
-    private void setViewData() {
-        if (pointsEntity != null) {
-            tvUserName.setText("用户名：" + pointsEntity.getUser());
-            tvDescription.setText("剩余积分：" + pointsEntity.getIntegral_num());
-        }
     }
 
     private boolean checkPreCondition() {
@@ -96,6 +75,9 @@ public class ReceivePointsActivity extends BaseActivity {
                 integralNum = Integer.parseInt(pointsEntity.getIntegral_num());
             if (inputPoints > integralNum) {
                 T.showShort("扣除积分不能大于剩余积分");
+                return false;
+            } else if (inputPoints <= 0) {
+                T.showShort("扣除积分不能小于0");
                 return false;
             }
         } catch (NumberFormatException e) {
@@ -122,7 +104,6 @@ public class ReceivePointsActivity extends BaseActivity {
                 } else if (obj != null) {
                     T.showShort(obj.getMsg());
                 }
-
             }
         }, ReceivePointsActivity.class.getSimpleName());
     }

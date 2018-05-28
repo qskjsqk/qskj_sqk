@@ -20,6 +20,7 @@ import com.zhcd.lysqk.module.home.entity.ActionListEntity;
 import com.zhcd.lysqk.module.sign.entity.ActionSignInfoEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.ImagePathUtil;
+import com.zhcd.lysqk.view.CustomRecyclerView;
 import com.zhcd.lysqk.view.GlidePieceRoundTransform;
 import com.zhcd.utils.T;
 import com.zhcd.utils.TimeUtils;
@@ -34,7 +35,7 @@ public class ActionDetailSignActivity extends BaseActivity {
     private ImageView actionLogo;
     private TextView actionName, actionValue, actionInfo;
     private ActionListEntity listEntity;
-    private RecyclerView recyclerView;
+    private CustomRecyclerView recyclerView;
     private ActionDetailSignAdapter adapter;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LoadMoreWrapper mLoadMoreWrapper;
@@ -62,9 +63,9 @@ public class ActionDetailSignActivity extends BaseActivity {
         actionName = (TextView) findViewById(R.id.tv_action_name);
         actionValue = (TextView) findViewById(R.id.tv_action_value);
         actionInfo = (TextView) findViewById(R.id.tv_action_info);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (CustomRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView.setNestedScrollingEnabled(false);
         adapter = new ActionDetailSignAdapter(this);
 
         initHeaderAndFooter();

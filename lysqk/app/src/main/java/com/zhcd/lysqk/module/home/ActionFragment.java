@@ -71,6 +71,20 @@ public class ActionFragment extends BaseFragment {
                 getData(true);
             }
         });
+        listAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                if (actionList != null && actionList.size() > position) {
+                    ActionListEntity listEntity = actionList.get(position);
+                    ActionDetailSignActivity.start(getActivity(), listEntity);
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -96,16 +110,19 @@ public class ActionFragment extends BaseFragment {
                 @Override
                 public void onResponse(BaseData obj) {
                     hideProgressDialog();
+                    mLoadMoreWrapper.setmFinish(false);
                     if (ServiceProvider.errorFilter(obj)) {
                         List<ActionListEntity> list = (List<ActionListEntity>) obj.getData();
                         if (isRefresh)
                             actionList.clear();
-                        if (list != null && list.size() > 0) {
+                        if (list != null) {
                             actionList.addAll(list);
                             listAdapter.setData(actionList);
                             mLoadMoreWrapper.notifyDataSetChanged();
                             if (list.size() < SConstant.PAGE_NUM) {
                                 isLoadEnd = true;
+                                mLoadMoreWrapper.setmFinish(true);
+                                mLoadMoreWrapper.setLoadingState(true);
                             } else {
                                 page++;
                             }
@@ -113,10 +130,7 @@ public class ActionFragment extends BaseFragment {
                             mLoadMoreWrapper.setLoadingState(true);
                             mLoadMoreWrapper.setmFinish(true);
                         }
-
                     } else {
-                        if (obj != null)
-                            T.showShort(obj.getMsg());
                         mLoadMoreWrapper.setmFinish(true);
                         mLoadMoreWrapper.setLoadingState(true);
                     }

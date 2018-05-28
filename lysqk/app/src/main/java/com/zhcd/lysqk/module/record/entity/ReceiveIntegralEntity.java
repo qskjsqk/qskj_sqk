@@ -1,7 +1,9 @@
 package com.zhcd.lysqk.module.record.entity;
 
 
-public class ReceiveIntegralEntity {
+import java.io.Serializable;
+
+public class ReceiveIntegralEntity implements Serializable {
     //    "usr": "13456753456",     （用户名）
 //            "integral_num": "200",          （用户剩余积分）
 //            " com_name": "翠景北里社区",    （社区名称）

@@ -102,16 +102,19 @@ public class TransactionRecordsActivity extends BaseActivity {
                 @Override
                 public void onResponse(BaseData obj) {
                     hideProgressDialog();
+                    mLoadMoreWrapper.setmFinish(false);
                     if (ServiceProvider.errorFilter(obj)) {
                         List<TradingRecordListEntity> list = (List<TradingRecordListEntity>) obj.getData();
                         if (isRefresh)
                             recordList.clear();
-                        if (list != null && list.size() > 0) {
+                        if (list != null ) {
                             recordList.addAll(list);
                             recordsAdapter.setData(recordList);
                             mLoadMoreWrapper.notifyDataSetChanged();
                             if (list.size() < SConstant.PAGE_NUM) {
                                 isLoadEnd = true;
+                                mLoadMoreWrapper.setmFinish(true);
+                                mLoadMoreWrapper.setLoadingState(true);
                             } else {
                                 page++;
                             }

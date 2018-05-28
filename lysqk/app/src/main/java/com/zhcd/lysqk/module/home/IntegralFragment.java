@@ -11,15 +11,20 @@ import android.widget.TextView;
 import com.pda.hf.HFReader;
 import com.pda.hf.ISO15693CardInfo;
 import com.pda.hf.demo.Tools;
+import com.sanjieke.datarequest.neworkWrapper.BaseData;
+import com.sanjieke.datarequest.neworkWrapper.IDataResponse;
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseFragment;
 import com.zhcd.lysqk.manager.LoginInfoManager;
 import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.module.record.ReceivePointsActivity;
 import com.zhcd.lysqk.module.record.TransactionRecordsActivity;
+import com.zhcd.lysqk.module.record.entity.ReceiveIntegralEntity;
+import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
 import com.zhcd.lysqk.tool.ImagePathUtil;
+import com.zhcd.utils.T;
 
 import java.util.List;
 
@@ -126,13 +131,34 @@ public class IntegralFragment extends BaseFragment {
                         String decimalUid = HFRFIDTool.changeToDecimal(uid);
                         if (!TextUtils.isEmpty(decimalUid)) {
                             HFRFIDTool.playAudio(getContext());
-                            ReceivePointsActivity.start(getActivity(), decimalUid);
+                            loadCollectionIntegral(decimalUid);
                         }
                     }
                     break;
             }
         }
     };
+
+    private void loadCollectionIntegral(final String cardNum) {
+        if (TextUtils.isEmpty(cardNum))
+            return;
+        showProgressDialog();
+        ServiceProvider.loadCollectionIntegral(cardNum, new IDataResponse() {
+            @Override
+            public void onResponse(BaseData obj) {
+                hideProgressDialog();
+                if (ServiceProvider.errorFilter(obj)) {
+                    ReceiveIntegralEntity pointsEntity = (ReceiveIntegralEntity) obj.getData();
+                    if (pointsEntity != null) {
+                        ReceivePointsActivity.start(getActivity(), pointsEntity, cardNum);
+                    }
+                } else if (obj != null) {
+                    T.showShort(obj.getMsg());
+                }
+
+            }
+        }, ReceivePointsActivity.class.getSimpleName());
+    }
 
     @Override
     public void onResume() {

@@ -114,8 +114,6 @@ public class ServiceProvider {
     /**
      * 获取最新用户签到信息
      */
-
-
     public static void getNewUserSigninPos(String activity_id, String sign_id, IDataResponse iHttpResponse, String flag) {
         ApiPostParams apiParams = new ApiPostParams();
         apiParams.with(Constants.activity_id, activity_id);
