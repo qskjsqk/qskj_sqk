@@ -123,10 +123,10 @@ public class IntegralFragment extends BaseFragment {
                 case MSG_CARD:
                     String uid = msg.getData().getString("uid");
                     if (!TextUtils.isEmpty(uid)) {
-                        int decimalUid = HFRFIDTool.changeToDecimal(uid);
-                        if (decimalUid > 0) {
+                        String decimalUid = HFRFIDTool.changeToDecimal(uid);
+                        if (!TextUtils.isEmpty(decimalUid)) {
                             HFRFIDTool.playAudio(getContext());
-                            ReceivePointsActivity.start(getActivity(), String.valueOf(decimalUid));
+                            ReceivePointsActivity.start(getActivity(), decimalUid);
                         }
                     }
                     break;

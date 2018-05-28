@@ -3,6 +3,7 @@ package com.zhcd.lysqk;
 import com.sanjieke.datarequest.network.RequestManager;
 import com.zhcd.baseall.ZHBaseApplication;
 import com.zhcd.lysqk.net.ServiceProvider;
+import com.zhcd.lysqk.tool.HFRFIDTool;
 
 public class LYApplication extends ZHBaseApplication {
     @Override
@@ -14,6 +15,7 @@ public class LYApplication extends ZHBaseApplication {
     public void onCreate() {
         super.onCreate();
         RequestManager.init(LYApplication.getAppContext());
+        HFRFIDTool.initSoundPool(LYApplication.getAppContext());
         checkEnvironment();
     }
 

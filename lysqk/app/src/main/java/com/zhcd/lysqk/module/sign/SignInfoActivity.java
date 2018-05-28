@@ -225,11 +225,11 @@ public class SignInfoActivity extends BaseActivity {
                 case MSG_CARD:
                     String uid = msg.getData().getString("uid");
                     if (!TextUtils.isEmpty(uid)) {
-                        int decimalUid = HFRFIDTool.changeToDecimal(uid);
-                        if (decimalUid > 0 && signInfoEntity != null) {
+                        String decimalUid = HFRFIDTool.changeToDecimal(uid);
+                        if (!TextUtils.isEmpty(decimalUid) && signInfoEntity != null) {
                             HFRFIDTool.playAudio(SignInfoActivity.this);
                             setUserSigninPos(signInfoEntity.getActivity_id(),
-                                    signInfoEntity.getId(), String.valueOf(decimalUid));
+                                    signInfoEntity.getId(), decimalUid);
                         }
                     }
                     break;
