@@ -58,16 +58,14 @@
 
         <div class="mui-content" style="padding-top: 45px;background-color: #fefefe;">
 
-            <div class="mui-row" onclick="aHref('__MODULE__/seller/my_info');">
+            <div class="mui-row" >
                 <ul class="mui-table-view mui-table-view-chevron">
                     <li class="mui-table-view-cell mui-media">
-                        <a class="mui-navigate-right">
                             <img class="mui-media-object mui-pull-left head-img" id="head-img" src="/{$data.sellerInfo.tx_path}">
                             <div class="mui-media-body">
                                 {$data.sellerInfo.name}&#12288;[{$data.sellerInfo.com_name}]
                                 <p class='mui-ellipsis'>积分：{$data.sellerInfo.integral_num}&nbsp;&nbsp;&nbsp;经验：{$data.sellerInfo.exp_num}</p>
                             </div>
-                        </a>
                     </li>
                 </ul>
             </div>
