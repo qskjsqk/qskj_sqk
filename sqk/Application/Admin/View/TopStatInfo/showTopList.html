@@ -10,10 +10,9 @@
         <script type="text/javascript">
             $(function () {
                 $('#tabBtn').find('button').removeClass('btn-success');
-                if(assignData.address_id==0){
-                    location.href = a_path + '?type=1';
-                    $('#btn_1').addClass('btn-success');
-                }else{
+                if (assignData.sys_name == 'sysAdmin' && assignData.data.type==0) {
+                    showTopList(1);
+                } else {
                     $('#btn_' + assignData.data.type).addClass('btn-success');
                 }
             });
