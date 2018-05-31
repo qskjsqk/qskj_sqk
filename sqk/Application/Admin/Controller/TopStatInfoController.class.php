@@ -24,6 +24,7 @@ class TopStatInfoController extends BaseDBController {
      * function:显示榜单列表
      */
     public function showTopList() {
+        $this->assign('sys_name', $_SESSION['sys_name']);
         $this->assign('address_id', $_SESSION['address_id']);
         $data['type'] = empty($_GET['type']) ? 0 : $_GET['type'];
 

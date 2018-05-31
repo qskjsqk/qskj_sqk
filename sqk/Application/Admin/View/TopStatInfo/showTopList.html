@@ -23,9 +23,11 @@
         <div class="container" style="width: 100%;background-color: #e9ecf3;">
             <div class="option_search">
                 <div class="btn-group btn-group-lg" id='tabBtn'>
-                    <button type="button" id='btn_0' class="btn btn-default btn-success" onclick="showTopList(0)">
-                        本社区用户榜单
-                    </button>
+                    <if condition="$sys_name neq 'sysAdmin'">
+                        <button type="button" id='btn_0' class="btn btn-default btn-success" onclick="showTopList(0)">
+                            本社区用户榜单
+                        </button>
+                    </if>
                     <button type="button" id='btn_1' class="btn btn-default" onclick="showTopList(1)">
                         梨园镇用户榜单
                     </button>
