@@ -10,7 +10,12 @@
         <script type="text/javascript">
             $(function () {
                 $('#tabBtn').find('button').removeClass('btn-success');
-                $('#btn_' + assignData.data.type).addClass('btn-success');
+                if(assignData.address_id==0){
+                    location.href = a_path + '?type=1';
+                    $('#btn_1').addClass('btn-success');
+                }else{
+                    $('#btn_' + assignData.data.type).addClass('btn-success');
+                }
             });
             function showTopList(type) {
                 location.href = a_path + '?type=' + type;
