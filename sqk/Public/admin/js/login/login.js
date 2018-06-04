@@ -41,6 +41,10 @@ $(function () {
 function aHrefNew(sys_name) {
     window.open(sys_name);
 }
+
+function aHref($a) {
+    window.location.href = c_path +"/"+ $a;
+}
 /**
  * 登录
  * @returns {undefined}

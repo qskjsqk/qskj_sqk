@@ -38,7 +38,7 @@ return array(
         'SMTP_USER' => 'zxwcx0222@163.com', //SMTP服务器用户名
         'SMTP_PASS' => 'zxw18303012080', //SMTP服务器密码
         'FROM_EMAIL' => 'zxwcx0222@163.com',
-        'FROM_NAME' => '格瑞雅居智慧生活服务系统', //发件人名称
+        'FROM_NAME' => '梨园智能商圈-社区卡系统', //发件人名称
         'REPLY_EMAIL' => '', //回复EMAIL（留空则为发件人EMAIL）
         'REPLY_NAME' => '', //回复名称（留空则为发件人名称）
         'SESSION_EXPIRE' => '72'
