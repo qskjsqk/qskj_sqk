@@ -113,10 +113,8 @@ class SellerInfoController extends BaseDBController {
         $attachList = $sellerInfo = $sellerWechat = [];
         $returnData = parent::getData($this->infoModel, $id);
         if ($returnData['code'] == '500') {
-            $condition = [
-                'module_info_id' => $id,
-                //'module_name' => 'sellerInfo or zz_seller',
-            ];
+            $condition['module_info_id'] = ['EQ', $id];
+            $condition['module_name'] = ['IN', "('tx_seller','zz_seller')"];
             $attachList = json_encode($this->attachModel->where($condition)->select());
             $sellerInfo = $returnData['data'];
             $sellerWechat = $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();
@@ -256,6 +254,5 @@ class SellerInfoController extends BaseDBController {
         $treeData[0] = array('id' => 0, 'cat_name' => '', 'parent_id_path' => '', 'children' => $result);
         echo json_encode($treeData);
     }
-
 
 }
