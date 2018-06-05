@@ -79,7 +79,7 @@ class LoginController extends Controller {
             //通知条数
             $noticeC = A('Notice');
             $isEnableNoticeCat = $noticeC->getEnableCatIds();
-            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ') and address_id='.$address_id)->count();
+            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ') and address_id in (0,'.$address_id.')')->count();
             //活动条数
             $activityC = A('Activity');
             $isEnableActivityCat = $activityC->getEnableCatIds();
