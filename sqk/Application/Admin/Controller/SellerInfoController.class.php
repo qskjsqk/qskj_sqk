@@ -114,7 +114,7 @@ class SellerInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $id);
         if ($returnData['code'] == '500') {
             $condition['module_info_id'] = ['EQ', $id];
-            $condition['module_name'] = ['IN', "('tx_seller','zz_seller')"];
+            $condition['module_name'] = ['LIKE', ['tx_seller','zz_seller'],'OR'];
             $attachList = json_encode($this->attachModel->where($condition)->select());
             $sellerInfo = $returnData['data'];
             $sellerWechat = $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();

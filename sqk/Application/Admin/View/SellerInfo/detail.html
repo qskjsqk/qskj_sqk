@@ -51,7 +51,7 @@
                 <if condition="$data['attachList'] neq NULL">
                     <foreach name="data.attachList" item="val">
                         <div style="width:auto;height:140px;float: left;margin-right: 20px;">
-                            <img src="/{$val.file_path}" style="width:auto;height:140px;"/>
+                            <a href="/{$val.file_path}" target="_blank"><img src="/{$val.file_path}" style="width:auto;height:140px;"/></a>
                         </div>
                     </foreach>
                     <else/>
