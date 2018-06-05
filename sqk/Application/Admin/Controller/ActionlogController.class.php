@@ -29,10 +29,12 @@ class ActionlogController extends BaseDBController {
         $data['a_name'] = $actionName;
         $data['action_info'] = $actionInfo;
 
-        if (session('realname') != NULL && session('realname') != NULL) {
+        if (session('realname') != NULL) {
             $data['user_name'] = session('realname');
-        } else {
+        } elseif (session('usr') != NULL) {
             $data['user_name'] = session('usr');
+        }else{
+            $data['user_name'] = "超级管理员";
         }
         $data['ip'] = get_client_ip();
         $flag = M(C('DB_ACTION_LOG'))->add($data);

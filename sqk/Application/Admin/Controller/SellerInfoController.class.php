@@ -115,7 +115,7 @@ class SellerInfoController extends BaseDBController {
         if ($returnData['code'] == '500') {
             $condition = [
                 'module_info_id' => $id,
-                'module_name' => 'sellerInfo',
+                'module_name' => 'sellerInfo or zz_seller',
             ];
             $attachList = json_encode($this->attachModel->where($condition)->select());
             $sellerInfo = $returnData['data'];
