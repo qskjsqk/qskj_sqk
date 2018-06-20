@@ -19,6 +19,7 @@
         $(function () {
             $('#tabBtn').find('button').removeClass('btn-success');
             $('#btn_' + assignData.data.type).addClass('btn-success');
+            
         });
         function showTopList(type) {
             location.href = a_path + '?type=' + type;
@@ -99,6 +100,8 @@
                 }],
 
             });
+            
+            $('.highcharts-credits').hide();
 
         });
     </script>
