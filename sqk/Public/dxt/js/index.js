@@ -21,7 +21,7 @@ $(function () {
         console.log(event_e);
         var int_keycode = event_e.key || event_e.code;
         if (int_keycode == 'Enter') {
-             submitCardInfo();
+            submitCardInfo();
             return false;
         }
     }
@@ -60,13 +60,15 @@ function getDetail(address_id, id) {
 
 function submitCardInfo() {
     $cardNum = $('#card_num').val();
-    if($cardNum==''||$cardNum==null){
+    if ($cardNum == '' || $cardNum == null) {
         return;
     }
     $.post(c_path + "/getCardUserInfo", {'iccard_num': $cardNum}, function (data) {
-        if(data.flag==0){
+        if (data.flag == 0) {
             alert(data.msg);
-        }else{
+            $('#card_num').val('');
+            $('#card_num').focus();
+        } else {
             window.location.href = c_path + '/main?address_id=' + assignData.address_id + '&user_id=' + data.data.id;
         }
     }, 'json');
