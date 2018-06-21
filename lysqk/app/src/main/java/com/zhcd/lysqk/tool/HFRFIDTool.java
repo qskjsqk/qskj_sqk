@@ -23,6 +23,11 @@ public class HFRFIDTool {
     public static String changeToDecimal(String hexString) {
         try {
             //十六进制每两位 倒叙拼接 ，然后转为十进制
+            if (hexString.length() < 10) {
+                for (int i = 0; i <= 10 - hexString.length(); i++) {
+                    hexString = "0" + hexString;
+                }
+            }
             if (hexString.length() % 2 == 0) {
                 String regex = "(.{2})";
                 hexString = hexString.replaceAll(regex, "$1 ");
@@ -61,7 +66,7 @@ public class HFRFIDTool {
                 float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                 float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
                 float volumnRatio = audioCurrentVolume / audioMaxVolume;
-               return sp.play(suondMap.get(1), //
+                return sp.play(suondMap.get(1), //
                         audioCurrentVolume, //
                         audioCurrentVolume, //
                         1,

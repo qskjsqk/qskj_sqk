@@ -6,11 +6,7 @@ public class SimpleResponse {
     public boolean intermediate = false;//是否是中间数据
 
     public SimpleResponse(String data) {
-        if (!RequestManager.isDebug() ) {
-            response = data.toUpperCase();
-        } else {
-            response = data;
-        }
+        response = data;
     }
 
     @Override

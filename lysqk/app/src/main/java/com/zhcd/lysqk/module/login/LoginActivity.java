@@ -16,6 +16,7 @@ import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
 import com.zhcd.lysqk.module.login.entity.LoginEntity;
 import com.zhcd.lysqk.net.ServiceProvider;
+import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.view.CustomizeKeyboard;
 import com.zhcd.lysqk.view.PasswordInputView;
 import com.zhcd.utils.T;
@@ -75,8 +76,10 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 if (checkPreCondition()) {
                     String input = inputPwd.getTextString();
-                    checkLoginPos(input);
-
+//                    checkLoginPos(input);
+                    String  uid ="00e9b583";
+//                    uid="30e9b583";
+                    String decimalUid = HFRFIDTool.changeToDecimal(uid);
                 }
             }
         });

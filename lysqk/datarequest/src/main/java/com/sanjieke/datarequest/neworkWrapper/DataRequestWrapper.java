@@ -325,13 +325,9 @@ public class DataRequestWrapper {
             } finally {
                 Logger.d(Constants.NetworkTag, String.format(" response builder : code = %d, msg = %s", res.getStatus(), res.getMsg()));
                 if (mDataResponse != null) {
-                    if (RequestManager.isDebug()) {
+                    try {
                         mDataResponse.onResponse(res);
-                    } else {
-                        try {
-                            mDataResponse.onResponse(res);
-                        } catch (Exception e) {
-                        }
+                    } catch (Exception e) {
                     }
                 }
             }
