@@ -23,11 +23,7 @@ public class HFRFIDTool {
     public static String changeToDecimal(String hexString) {
         try {
             //十六进制每两位 倒叙拼接 ，然后转为十进制
-            if (hexString.length() < 10) {
-                for (int i = 0; i <= 10 - hexString.length(); i++) {
-                    hexString = "0" + hexString;
-                }
-            }
+
             if (hexString.length() % 2 == 0) {
                 String regex = "(.{2} )";
                 hexString = hexString.replaceAll(regex, "$1 ");
@@ -36,7 +32,13 @@ public class HFRFIDTool {
                 for (int i = strings.length - 1; i > -1; i--) {
                     builder.append(strings[i]);
                 }
-                return Long.parseLong(builder.toString(), 16) + "";
+                String changeString = Long.parseLong(builder.toString(), 16) + "";
+//                if (changeString.length() < 10) {
+//                    for (int i = 0; i <= 10 - changeString.length(); i++) {
+//                        changeString = "0" + changeString;
+//                    }
+//                }
+                return changeString;
             }
         } catch (NumberFormatException e) {
             return "";
