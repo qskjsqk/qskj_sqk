@@ -29,7 +29,7 @@ public class HFRFIDTool {
                 }
             }
             if (hexString.length() % 2 == 0) {
-                String regex = "(.{2})";
+                String regex = "(.{2} )";
                 hexString = hexString.replaceAll(regex, "$1 ");
                 String[] strings = hexString.split(" ");
                 StringBuilder builder = new StringBuilder();
