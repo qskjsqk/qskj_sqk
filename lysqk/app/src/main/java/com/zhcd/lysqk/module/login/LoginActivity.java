@@ -76,10 +76,7 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 if (checkPreCondition()) {
                     String input = inputPwd.getTextString();
-//                    checkLoginPos(input);
-                    String  uid ="00e9b583";
-//                    uid="30e9b583";
-                    String decimalUid = HFRFIDTool.changeToDecimal(uid);
+                    checkLoginPos(input);
                 }
             }
         });
