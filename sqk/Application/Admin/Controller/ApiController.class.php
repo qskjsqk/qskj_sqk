@@ -281,6 +281,8 @@ class ApiController extends BaseDBController {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
+        //$inputArr=$_POST;
+
         $iccard_num = $inputArr['iccard_num'];
         $activity_id = $inputArr['activity_id'];
         $sign_id = $inputArr['sign_id'];
@@ -290,6 +292,11 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
+            if (strlen($iccard_num) < 10) {
+                $zero = str_repeat("0", 10 - strlen($iccard_num));
+                $iccard_num = $zero . $iccard_num;
+            }
+
             $where['iccard_num'] = ['EQ', $iccard_num];
             $where['is_enable'] = ['EQ', 1];
             $userInfo = M('sys_userapp_info')->field('realname,id,tx_path,wx_num')->where($where)->find();
@@ -512,12 +519,20 @@ class ApiController extends BaseDBController {
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
+        //$inputArr = $_POST;
+
         $iccard_num = $inputArr['iccard_num'];
         if (empty($iccard_num)) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
+
+            if (strlen($iccard_num) < 10) {
+                $zero = str_repeat("0", 10 - strlen($iccard_num));
+                $iccard_num = $zero . $iccard_num;
+            }
+
             $appUserModel = new SysUserappInfoModel();
             $user = $appUserModel->where(['iccard_num' => $iccard_num])
                     ->join($this->dbFix . 'sys_community_info ON ' . $this->dbFix . 'sys_community_info.id = ' . $this->dbFix . 'sys_userapp_info.address_id')
@@ -553,6 +568,12 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
         } else {
+            
+            if (strlen($iccard_num) < 10) {
+                $zero = str_repeat("0", 10 - strlen($iccard_num));
+                $iccard_num = $zero . $iccard_num;
+            }
+            
             $tradingRecordModel = new IntegralTradingRecordModel();
             $res = $tradingRecordModel->addTradingRecord($iccard_num, $trading_integral);
             if (is_array($res)) {
