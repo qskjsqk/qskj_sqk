@@ -58,6 +58,7 @@ $signPackage = $jssdk->GetSignPackage();
                             }
                         }
                     }
+                    
                 });
             });
         });

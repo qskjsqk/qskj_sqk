@@ -10,7 +10,7 @@ var monthData = [{
         text: "03"
     }, {
         value: "04",
-        text: "05"
+        text: "04"
     }, {
         value: "05",
         text: "05"
@@ -47,7 +47,7 @@ var dayData = [{
         text: "03"
     }, {
         value: "04",
-        text: "05"
+        text: "04"
     }, {
         value: "05",
         text: "05"

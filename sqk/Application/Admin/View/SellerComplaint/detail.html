@@ -38,7 +38,7 @@
             <div class="field-group">
                 <div class="field-name">反馈用户名</div>
                 <div class="field-value">
-                    <a href="__MODULE__/SysUserInfo/detail/id/{$complaintInfo.user_id}">{$complaintInfo.userInfo.usr}</a>
+                    {$complaintInfo.userInfo.realname}
                 </div>
             </div>
 
@@ -65,12 +65,12 @@
             </div>
 
             <div class="field-group">
-                <div class="field-name">联系人</div>
+                <div class="field-name">商家联系人</div>
                 <div class="field-value">{$complaintInfo.sellerInfo.contacts}</div>
             </div>
 
             <div class="field-group">
-                <div class="field-name">联系方式</div>
+                <div class="field-name">商家联系方式</div>
                 <div class="field-value">{$complaintInfo.sellerInfo.tel}</div>
             </div>
 

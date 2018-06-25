@@ -114,7 +114,7 @@ class SellerComplaintController extends BaseDBController {
     public function detail() {
         if(empty(I('id'))) $this->redirect('/Admin/SellerComplaint/showList');
         $complaintInfo = $this->infoModel->find(I('id'));
-        $complaintInfo['userInfo'] = $this->sysUserappInfoModel->where(['id' => $complaintInfo['user_id']])->field('usr,address_id,tel')->find();
+        $complaintInfo['userInfo'] = $this->sysUserappInfoModel->where(['id' => $complaintInfo['user_id']])->field('usr,address_id,tel,realname')->find();
         $complaintInfo['userInfo']['com_name'] = self::getComName($complaintInfo['userInfo']['address_id']);
         $complaintInfo['com_name'] = self::getComName($complaintInfo['address_id']);
         $complaintInfo['cat_name'] = $this->sellerComplaintCatModel->where(['id' => $complaintInfo['cat_id']])->getField('cat_name');
