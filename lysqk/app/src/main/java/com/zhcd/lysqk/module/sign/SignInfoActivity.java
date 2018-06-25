@@ -26,6 +26,7 @@ import com.zhcd.lysqk.net.ServiceProvider;
 import com.zhcd.lysqk.tool.HFRFIDTool;
 import com.zhcd.lysqk.tool.ImageLoaderUtils;
 import com.zhcd.lysqk.tool.ImagePathUtil;
+import com.zhcd.lysqk.view.CommonDialog;
 import com.zhcd.utils.T;
 import com.zhcd.utils.TimeUtils;
 
@@ -45,6 +46,7 @@ public class SignInfoActivity extends BaseActivity {
     private boolean running = false;
     private Thread hfThread;
     private String icCardNum = "";
+    private CommonDialog mDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -64,6 +66,7 @@ public class SignInfoActivity extends BaseActivity {
         super.initView();
         titleBarBuilder.setTitleText("活动签到");
         titleBarBuilder.setBackText("返回");
+        initDialog();
         signNumDec = (TextView) findViewById(R.id.tv_sign_num_dec);
         signedNumDec = (TextView) findViewById(R.id.tv_signed_num_dec);
         ivQR = (ImageView) findViewById(R.id.iv_QR);
@@ -86,7 +89,7 @@ public class SignInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (signInfoEntity != null && !signInfoEntity.getSign_status().equals("2")) {
-                    setSignStatus(signInfoEntity.getId(), signInfoEntity.getSign_status());
+                    setDialogData(signInfoEntity.getSign_status());
                 }
             }
         });
@@ -117,6 +120,39 @@ public class SignInfoActivity extends BaseActivity {
                 initThread();
             }
         }
+    }
+
+    private void initDialog() {
+        mDialog = new CommonDialog(this);
+        mDialog.setButtonText(getResources().getString(R.string.cancel), getResources().getString(R.string.sure));
+        mDialog.setClickEvent(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+                if (signInfoEntity != null && !signInfoEntity.getSign_status().equals("2")) {
+                    setSignStatus(signInfoEntity.getId(), signInfoEntity.getSign_status());
+                }
+            }
+        });
+    }
+
+    private void setDialogData(String status) {
+        if (mDialog == null) {
+            initDialog();
+        }
+        if (status.equals("0")) {
+            mDialog.setTitleText("是否开启活动签到");
+            mDialog.show();
+        } else if (status.equals("1")) {
+            mDialog.setTitleText("是否结束活动签到");
+            mDialog.show();
+        }
+
     }
 
     private void setSignStatus(String sign_id, final String status) {
