@@ -35,13 +35,36 @@ function getApplyKeyCode() {
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
     } else {
+        
         $.post(c_path + "/getApplyKeyCode", {'tel': $('#tel').val()}, function (data) {
             $('#hiddenKeycode').val(data.keycode);
             if (data.status == 1) {
+                yzmdjs();
             } else {
                 mui.toast(data.msg, {duration: 'long', type: 'div'});
             }
         }, 'json');
+
+    }
+}
+
+function yzmdjs() {
+    var validCode = true;
+    var time = 60;
+    var $code = $("#yzmBtn");
+    if (validCode) {
+        validCode = false;
+        $code.attr('disabled','disabled');
+        var t = setInterval(function () {
+            time--;
+            $code.html("验证码已发送（"+time + "秒后重试）");
+            if (time == 0) {
+                clearInterval(t);
+                $code.html("重新获取");
+                validCode = true;
+                $code.removeAttr('disabled');
+            }
+        }, 1000)
     }
 }
 

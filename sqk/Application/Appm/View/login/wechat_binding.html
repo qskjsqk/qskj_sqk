@@ -50,6 +50,24 @@
             </div>
             <div class="mui-card">
                 <div class="mui-card-content">
+
+                    <input type="hidden" name="tx_path" id="tx_path" value="{$wxInfo.headimgurl}"/>
+                    <input type="hidden" name="nickname" id="nickname" value="{$wxInfo.nickname}"/>
+                    <input type="hidden" name="wx_num" id="wx_num" value="{$wxInfo.openid}"/>
+                    <div class="m-inputheader">已注册手机</div>
+                    <div class="m-inputframe">
+                        <input type="text" id="tel" name="tel" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                        <button id="yzmBtn" type="button"  class="mui-btn-warning mui-btn-block" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
+                    </div>
+
+                    <div class="m-inputframe">
+                        <input type="text" id="keycode" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
+                        <input type="hidden" id="hiddenKeycode" value="0">
+                    </div>
+
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="subForm()">提交</button>
+
+<!--
                     <form class="mui-input-group">
                         <input type="hidden" name="tx_path" id="tx_path" value="{$wxInfo.headimgurl}"/>
                         <input type="hidden" name="nickname" id="nickname" value="{$wxInfo.nickname}"/>
@@ -59,7 +77,7 @@
                             <input type="text" id="tel" style="text-align: right;" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
                         </div>
                     </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block mui-btn-outlined" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
+                    <button type="button" id="yzmBtn" class="mui-btn-primary mui-btn-block mui-btn-outlined" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
                     <form class="mui-input-group">
                         <div class="mui-input-row">
                             <label>验证码</label>
@@ -67,7 +85,7 @@
                             <input type="hidden" id="hiddenKeycode" value="0">
                         </div>
                     </form>
-                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="subForm()">提交</button>
+                    <button type="button" class="mui-btn-primary mui-btn-block" onclick="subForm()">提交</button>-->
                 </div>
             </div>
         </div>

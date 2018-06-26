@@ -54,7 +54,7 @@
                     <div class="m-inputheader">已注册手机</div>
                     <div class="m-inputframe">
                         <input type="text" id="tel" name="tel" placeholder="请输入手机号码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
-                        <button type="button" class="mui-btn-warning mui-btn-block" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
+                        <button type="button" id="yzmBtn" class="mui-btn-warning mui-btn-block" onclick="getApplyKeyCodeCheckExist()">发送验证码至手机</button>
                     </div>
                     <div class="m-inputframe">
                         <input type="text" id="keycode" placeholder="请输入验证码" onkeyup="value = value.replace(/[^1234567890]+/g, '')">
