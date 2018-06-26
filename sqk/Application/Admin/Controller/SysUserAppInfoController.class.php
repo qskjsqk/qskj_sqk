@@ -91,6 +91,9 @@ class SysUserAppInfoController extends BaseDBController {
         $successFlag = true;
         $returnData = parent::delData($this->userappInfoModel, $id);
 
+        M('activ_signin_info')->where(['user_id' => $id])->delete();
+
+
         if ($returnData['code'] == '502') {
             $successFlag = fasle;
         }
