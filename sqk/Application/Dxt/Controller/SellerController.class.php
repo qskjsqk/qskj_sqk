@@ -344,7 +344,7 @@ class SellerController extends Controller {
             }
             $str = ltrim($str, ',');
             $model = M(C('DB_ALL_ATTACH'));
-            $attachArr = $model->where('module_name="sellerProm" and module_info_id in (' . $str . ')')->order('id desc')->select();
+            $attachArr = $model->where('module_name="sellerProm" and module_info_id in (' . $str . ')')->order('RAND()')->limit(5)->select();
             if (empty($attachArr)) {
                 $returnData = 0;
             } else {
