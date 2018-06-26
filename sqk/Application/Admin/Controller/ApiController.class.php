@@ -219,6 +219,7 @@ class ApiController extends BaseDBController {
     public function setSigninStatusPos() {
         $sign_id = $_GET['sign_id'];
         $status = $_GET['status'];
+        
         if (empty($_GET['sign_id']) || empty($_GET['status'])) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
@@ -441,7 +442,7 @@ class ApiController extends BaseDBController {
             $flag = M('activ_signin')->where($where)->save($data);
             if ($flag) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '置位状态失败！';
+                $returnData['msg'] = '置位状态失败！'+$flag;
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
