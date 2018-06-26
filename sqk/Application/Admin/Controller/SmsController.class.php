@@ -44,7 +44,7 @@ class SmsController extends Controller {
 
         $extra->ext = '';
         $extra->extend = '';
-        $extra->sign = "千松科技";
+        $extra->sign = "智慧传递";
         $extra->params = array($checkCode, '3');
         $extra->sig = $this->createSign($sigData);
         $extra->tel->mobile = $tel;

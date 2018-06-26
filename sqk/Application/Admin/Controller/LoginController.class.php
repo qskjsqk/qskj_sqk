@@ -401,7 +401,9 @@ class LoginController extends Controller {
     }
 
     public function zxw() {
-        $this->success('23423423sfasdfasdfasd4234', 'index/main', 300);
+        $smsC = A('Sms');
+        $flag = $smsC->sendCode("13521447599", "123456");
+//        $this->success('23423423sfasdfasdfasd4234', 'index/main', 300);
     }
 
 }

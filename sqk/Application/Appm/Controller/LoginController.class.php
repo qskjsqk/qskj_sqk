@@ -292,5 +292,10 @@ class LoginController extends Controller {
         //直接进入主界面
         $this->redirect('activity/activity_list');
     }
+    
+    public function zxw(){
+        $smsC = A('Sms');
+        $flag = $smsC->sendCode("15727363233", "123456");
+    }
 
 }
