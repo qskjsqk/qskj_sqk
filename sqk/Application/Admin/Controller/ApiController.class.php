@@ -219,7 +219,7 @@ class ApiController extends BaseDBController {
     public function setSigninStatusPos() {
         $sign_id = $_GET['sign_id'];
         $status = $_GET['status'];
-        
+
         if (empty($_GET['sign_id']) || empty($_GET['status'])) {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
@@ -229,9 +229,9 @@ class ApiController extends BaseDBController {
             $data['status'] = $status;
             $signinFlag = M('activ_signin')->where($where)->setField($data);
 
-            if ($signinFlag) {
+            if ($signinFlag == 1) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '状态置位错误！'.$signinFlag;
+                $returnData['msg'] = '状态置位错误！' . $signinFlag;
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
@@ -440,9 +440,9 @@ class ApiController extends BaseDBController {
             $where['id'] = ['EQ', $sign_id];
             $data['sign_status'] = $sign_status;
             $flag = M('activ_signin')->where($where)->save($data);
-            if ($flag) {
+            if ($flag == 1) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '置位状态失败！'+$flag;
+                $returnData['msg'] = '置位状态失败！' + $flag;
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
@@ -569,12 +569,12 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 0;
             $returnData['msg'] = '参数错误！';
         } else {
-            
+
             if (strlen($iccard_num) < 10) {
                 $zero = str_repeat("0", 10 - strlen($iccard_num));
                 $iccard_num = $zero . $iccard_num;
             }
-            
+
             $tradingRecordModel = new IntegralTradingRecordModel();
             $res = $tradingRecordModel->addTradingRecord($iccard_num, $trading_integral);
             if (is_array($res)) {
