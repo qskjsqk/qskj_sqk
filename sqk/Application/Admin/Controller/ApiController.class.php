@@ -229,9 +229,9 @@ class ApiController extends BaseDBController {
             $data['status'] = $status;
             $signinFlag = M('activ_signin')->where($where)->setField($data);
 
-            if ($signinFlag == 1) {
+            if ($signinFlag != 1) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '状态置位错误！' . $signinFlag;
+                $returnData['msg'] = '状态置位错误！';
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
@@ -440,9 +440,9 @@ class ApiController extends BaseDBController {
             $where['id'] = ['EQ', $sign_id];
             $data['sign_status'] = $sign_status;
             $flag = M('activ_signin')->where($where)->save($data);
-            if ($flag == 1) {
+            if ($flag != 1) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '置位状态失败！' + $flag;
+                $returnData['msg'] = '置位状态失败！';
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
