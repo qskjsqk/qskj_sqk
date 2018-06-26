@@ -230,7 +230,7 @@ class ApiController extends BaseDBController {
 
             if ($signinFlag) {
                 $returnData['status'] = 2;
-                $returnData['msg'] = '状态置位错误！';
+                $returnData['msg'] = '状态置位错误！'.$signinFlag;
                 $returnData['timestamp'] = time();
             } else {
                 $returnData['status'] = 1;
