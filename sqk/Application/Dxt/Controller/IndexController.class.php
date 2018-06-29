@@ -95,10 +95,16 @@ class IndexController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 显示首页
+     */
     public function home() {
         $this->display();
     }
 
+    /*
+     * 获取广告列表
+     */
     public function getAdList() {
         $address_id = $_POST['address_id'];
         if ($address_id != 0) {
