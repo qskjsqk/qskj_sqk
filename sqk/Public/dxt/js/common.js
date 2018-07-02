@@ -11,23 +11,6 @@ root_path = '';
 function aHref(sys_name) {
     window.location.href = sys_name;
 }
-/**
- * 返回首页 （弃用）
- * @returns {undefined}
- */
-function aHome() {
-    mui.openWindow({
-        url: 'main.html',
-        extras: {
-            //传递参数
-        },
-        show: {
-            autoShow: true, //页面loaded事件发生后自动显示，默认为true  
-            aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；  
-            duration: 1000, //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；  
-        },
-    });
-}
 
 /**
  * 正则表达式方法获取url参数获取时记着解码 decodeURI(getUrl(name));
