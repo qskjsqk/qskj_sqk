@@ -25,6 +25,15 @@ $(function () {
             return false;
         }
     }
+
+    $(document).mousedown(function () {
+        alert(1);
+    }).keydown(function () {
+        alert(1);
+    }).mousemove(function () {
+        alert(1);
+    });
+
 });
 
 
