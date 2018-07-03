@@ -29,9 +29,9 @@ $(function () {
     $(document).mousedown(function () {
         parent.aa;
     }).keydown(function () {
-        alert(1);
+        parent.aa;
     }).mousemove(function () {
-        alert(1);
+        parent.aa;
     });
 
 });
