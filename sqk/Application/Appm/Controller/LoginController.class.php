@@ -42,7 +42,11 @@ class LoginController extends Controller {
             cookie('user_id', $userInfo['id'], 3600 * 24 * 30);
             cookie('address_id', $userInfo['address_id'], 3600 * 24 * 30);
             //直接进入主界面
-            $this->redirect('activity/activity_list');
+            if ($userInfo['is_enable'] == 1) {
+                $this->redirect('activity/activity_list');
+            } else {
+                echo "该用户已禁用！请联系社区管理员。";
+            }
         } else {
             $this->assign('headimgurl', $wxInfo['headimgurl']);
             $this->assign('nickname', $wxInfo['nickname']);
@@ -185,7 +189,7 @@ class LoginController extends Controller {
             //通知条数
             $noticeC = A('Notice');
             $isEnableNoticeCat = $noticeC->getEnableCatIds();
-            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ') and address_id in (0,'.$address_id.')')->count();
+            $data['notice_num'] = M('NoticeInfo')->where('is_publish=1 and read_ids not like "%,' . $user_id . ',%" and cat_id in (' . $isEnableNoticeCat . ') and address_id in (0,' . $address_id . ')')->count();
             //活动条数
             $activityC = A('Activity');
             $isEnableActivityCat = $activityC->getEnableCatIds();
@@ -292,8 +296,8 @@ class LoginController extends Controller {
         //直接进入主界面
         $this->redirect('activity/activity_list');
     }
-    
-    public function zxw(){
+
+    public function zxw() {
         $smsC = A('Sms');
         $flag = $smsC->sendCode("15727363233", "123456");
     }
