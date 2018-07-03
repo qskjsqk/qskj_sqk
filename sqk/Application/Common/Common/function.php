@@ -378,13 +378,13 @@ function getConameById($id) {
  */
 function getQuarter() {
     $year = date('Y', time());
-    $month = date('m', time());
+    $month = (int)date('m', time());
     if ($month > 9) {
         $data['nstart'] = $year . '-' . '10-01 00:00:00';
         $data['nend'] = $year . '-' . '12-31 23:59:59';
         $data['lstart'] = $year . '-' . '07-01 00:00:00';
         $data['lend'] = $year . '-' . '09-30 23:59:59';
-    } elseif ($month > 7 && $month < 9) {
+    } elseif ($month >6 && $month < 10) {
         $data['nstart'] = $year . '-' . '07-01 00:00:00';
         $data['nend'] = $year . '-' . '09-30 23:59:59';
         $data['lstart'] = $year . '-' . '04-01 00:00:00';

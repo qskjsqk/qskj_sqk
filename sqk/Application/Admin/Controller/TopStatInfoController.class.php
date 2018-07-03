@@ -103,7 +103,9 @@ class TopStatInfoController extends BaseDBController {
                 $Arr[$i]['tx_icon'] = '<img src="' . $Arr[$i]['tx_path'] . '">';
             }
         }
+//        dump(M('ActivSigninInfo')->getLastSql());
         return $Arr;
+        
     }
     
     /**
