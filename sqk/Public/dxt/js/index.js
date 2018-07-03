@@ -43,7 +43,9 @@ function getAdList(address_id, page) {
             str += '</div>';
         }
         $('#adList').html(str);
+        $('#page').val(parseInt(data[0].page)+1);
     }, 'json');
+    
     $('#card_num').val('');
     $('#card_num').focus();
 }
@@ -51,6 +53,7 @@ function getAdList(address_id, page) {
 function getAdListNext() {
     var address_id = $('#address_id').val();
     var page = $('#page').val();
+    getAdList(address_id, page);
 }
 
 /**

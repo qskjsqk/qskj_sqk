@@ -105,7 +105,12 @@ class IndexController extends BaseController {
     /*
      * 获取广告列表
      */
+
     public function getAdList() {
+        $page = $_POST['page'];
+
+        $num = ($page - 1) * 5;
+
         $address_id = $_POST['address_id'];
         if ($address_id != 0) {
             $where['address_id'] = ['EQ', $address_id];
@@ -113,9 +118,17 @@ class IndexController extends BaseController {
             $where['_string'] = "1=1";
         }
         $where['status'] = ['EQ', 1];
-        $adList = M('seller_info')->where($where)->order('RAND()')->limit(5)->select();
+        $adList = M('seller_info')->where($where)->order('exp_num desc')->limit($num, 5)->select();
+        $count = M('seller_info')->where($where)->order('exp_num desc')->count();
+        if (ceil($count / 5) > $page) {
+            $page = $page;
+        } else {
+            $page = 0;
+        }
         for ($i = 0; $i < count($adList); $i++) {
             $adList[$i]['address_name'] = getConameById($adList[$i]['address_id']);
+
+            $adList[$i]['page'] = $page;
 
             if (strpos($adList[$i]['tx_path'], 'http') === FALSE) {
                 $adList[$i]['tx_path'] = '../../../' . $adList[$i]['tx_path'];
@@ -168,8 +181,8 @@ class IndexController extends BaseController {
      */
     public function signin_list() {
         $myInfo = $this->getUserappInfo();
-        $myInfo['joined_activ_num']=M('activ_info')->where('join_ids like "%,'.$myInfo['id'].',%"')->count();
-        $myInfo['signed_activ_num']=M('activ_signin_info')->where('user_id='.$myInfo['id'])->count();
+        $myInfo['joined_activ_num'] = M('activ_info')->where('join_ids like "%,' . $myInfo['id'] . ',%"')->count();
+        $myInfo['signed_activ_num'] = M('activ_signin_info')->where('user_id=' . $myInfo['id'])->count();
         $this->assign('myInfo', $myInfo);
         $this->display();
     }

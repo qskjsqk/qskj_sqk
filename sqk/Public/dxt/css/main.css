@@ -33,6 +33,16 @@
     left: 592px;
     top:904px;
 }
+
+.changeBtn{
+    width:130px;
+    height:43px;
+    /*background-color: red;*/
+    background: url(../img/change.png);
+    position: absolute;
+    left: 85px;
+    top:750px;
+}
 .infoArea{
     width:auto;
     height: 80px;

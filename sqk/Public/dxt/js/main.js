@@ -7,9 +7,9 @@
 $(function () {
     var address_id = getUrl('address_id');
     if (address_id == null) {
-        getAdList(0);
+        getAdList(0, 1);
     } else {
-        getAdList(address_id);
+        getAdList(address_id, 1);
     }
 });
 
@@ -18,17 +18,24 @@ $(function () {
  * @param {type} address_id
  * @returns {undefined}
  */
-function getAdList(address_id) {
-    $.post(c_path + "/getAdList", {'address_id': address_id}, function (data) {
+function getAdList(address_id, page) {
+    $.post(c_path + "/getAdList", {'address_id': address_id, 'page': page}, function (data) {
         var str = "";
         for (var i = 0; i < data.length; i++) {
             str += '<div class="adList" >';
             str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
-            str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</div>';
+            str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>积分：' + data[i].exp_num + '</div>';
             str += '</div>';
         }
+        $('#page').val(parseInt(data[0].page) + 1);
         $('#adList').html(str);
     }, 'json');
+}
+
+function getAdListNext() {
+    var address_id = $('#address_id').val();
+    var page = $('#page').val();
+    getAdList(address_id, page);
 }
 
 /**
@@ -41,7 +48,7 @@ function getDetail(address_id, id) {
     window.location.href = c_path + '/detail?address_id=' + address_id + '&id=' + id;
 }
 
-function backHome(address_id){
+function backHome(address_id) {
     window.location.href = c_path + '/index?address_id=' + address_id;
 }
 

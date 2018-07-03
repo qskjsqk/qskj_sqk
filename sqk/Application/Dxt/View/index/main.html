@@ -20,6 +20,11 @@
                     可用积分：&nbsp;<b>{$myInfo.integral_num}</b>&nbsp;
                 </div>
             </div>
+            
+            <input type="hidden" id="address_id" name="address_id" value="0" >
+            <input type="hidden" id="page" name="page" value="1" >
+
+            <div class="changeBtn hvr-pop" onclick="getAdListNext()"></div>
 
             <div class="adArea" id="adList">
 
