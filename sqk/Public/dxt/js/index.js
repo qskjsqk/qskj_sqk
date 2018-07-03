@@ -27,7 +27,7 @@ $(function () {
     }
 
     $(document).mousedown(function () {
-        alert(1);
+        parent.aa;
     }).keydown(function () {
         alert(1);
     }).mousemove(function () {
