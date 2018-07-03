@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 //初始化-----------------------------------------------------------------------------------------
+document.domain="http://loclahost";
 $(function () {
     var address_id = getUrl('address_id');
     if (address_id == null) {
@@ -26,13 +27,6 @@ $(function () {
         }
     }
 
-    $(document).mousedown(function () {
-        parent.aa;
-    }).keydown(function () {
-        parent.aa;
-    }).mousemove(function () {
-        parent.aa;
-    });
 
 });
 
