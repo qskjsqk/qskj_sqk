@@ -230,6 +230,7 @@ class IndexController extends BaseController {
         $num = C('PAGE_NUM')['activity'] * $_POST['page'];
         if ($_POST['type'] == 0) {
             $where['like_ids'] = array('LIKE', '%,' . $user_id . ',%');
+            $where['is_open'] = array('EQ', 1);
         } else {
             $where['join_ids'] = array('LIKE', '%,' . $user_id . ',%');
         }
