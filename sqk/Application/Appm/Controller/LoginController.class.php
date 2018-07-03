@@ -45,7 +45,7 @@ class LoginController extends Controller {
             if ($userInfo['is_enable'] == 1) {
                 $this->redirect('activity/activity_list');
             } else {
-                echo "该用户已禁用！请联系社区管理员。";
+                echo "<script>alert('该用户已禁用！请联系社区管理员。');</script>";
             }
         } else {
             $this->assign('headimgurl', $wxInfo['headimgurl']);
