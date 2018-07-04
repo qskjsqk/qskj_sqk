@@ -10,7 +10,7 @@ $signPackage = $jssdk->GetSignPackage();
         <title></title>
     </head>
     <body>
-
+<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx542ee14049aa74e0&redirect_uri=http://lyznsq.qmtsc.com/index.php/seller/index/login/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect">返回商家</a>
     </body>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script>
