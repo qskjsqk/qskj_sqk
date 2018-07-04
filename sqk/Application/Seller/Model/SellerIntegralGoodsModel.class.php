@@ -170,6 +170,8 @@ class SellerIntegralGoodsModel extends BaseModel {
                 $data['status'] = 1;
             } elseif($param['status'] == 'lower_frame') {
                 $data['status'] = 2;
+            }else{
+                $data['status'] = 0;
             }
         }
 
