@@ -47,7 +47,10 @@ function changeGoodsStatus(str) {
         var operNotice = '确定要下架该商品吗？';
     } else if(idStatusArray[1] == 2) {
         var operNotice = '确定要将该商品上架吗？';
+    }else{
+        var operNotice = '确定审核通过该商品并上架？';
     }
+    
     layer.confirm(operNotice, {
         icon:2,
         title:'提示信息',

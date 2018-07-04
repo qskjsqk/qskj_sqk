@@ -105,6 +105,8 @@
                             已发布
                             <elseif condition="$v.status eq 2"/>
                             已下架
+                            <else/>
+                            未发布
                         </if>
                         </td>
                         <td>
@@ -120,6 +122,10 @@
                                         下架
                                     </button>
                                     <elseif condition="$v.status eq 2"/>
+                                    <button class="btn btn-success upDownGoods change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
+                                        上架
+                                    </button>
+                                    <else/>
                                     <button class="btn btn-success upDownGoods change-goods-status" onclick="changeGoodsStatus('{$v.id}-{$v.status}')">
                                         上架
                                     </button>

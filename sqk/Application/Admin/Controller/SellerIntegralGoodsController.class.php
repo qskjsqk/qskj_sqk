@@ -69,7 +69,7 @@ class SellerIntegralGoodsController extends BaseDBController {
         }
 
         //管理员不能看到未发布的积分商品
-        $where[$this->dbFix . 'seller_integral_goods.status'] = ['neq', 0];
+        //$where[$this->dbFix . 'seller_integral_goods.status'] = ['neq', 0];
 
         list($join, $field) = self::createJoinAndField();
         list($page, $pageCondition, $infoList) = $this->infoModel->listPage($where, $pageCondition, $join, $field);
@@ -135,7 +135,7 @@ class SellerIntegralGoodsController extends BaseDBController {
         if(!isset($seller_id) || empty($seller_id)) $this->redirect('/Admin/SellerInfo/showList');
 
         $where = [
-            $this->dbFix . 'seller_integral_goods.status' => ['neq', 0],     //管理员不能看到未发布的积分商品(本条件可以不设置)
+            //$this->dbFix . 'seller_integral_goods.status' => ['neq', 0],     //管理员不能看到未发布的积分商品(本条件可以不设置)
             $this->dbFix . 'seller_integral_goods.seller_id' => $seller_id,
         ];
 
