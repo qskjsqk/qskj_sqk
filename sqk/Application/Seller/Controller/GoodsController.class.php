@@ -51,7 +51,7 @@ class GoodsController extends BaseController {
         $seller_id = cookie('seller_id');
         $data = [
             'sellerInfo' => $sellerModel->find($seller_id),
-            'exchangeCount' => $goodsModel->getSellerExchangeCount($seller_id),
+            'exchangeCount' => $goodsModel->getSellerExchangeCount($seller_id)==NULL?0:$goodsModel->getSellerExchangeCount($seller_id),
             'goodsCount' => $goodsModel->getGoodsCount($seller_id),
         ];
         $this->assign('data', $data);
