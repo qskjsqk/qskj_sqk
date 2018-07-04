@@ -62,7 +62,7 @@ $(function () {
             $("#address_id").find("option[value='" + assignData.activInfo.address_id + "']").attr("selected", 'selected');
         }
         $("#integral").find("option[value='" + assignData.activInfo.integral + "']").attr("selected", 'selected');
-    } else if (action == "add") {
+    } else  {
         if (assignData.address_id != 0) {
             $("#address_id").find("option[value='" + assignData.address_id + "']").attr("selected", 'selected');
             $("#address_id").find("option[value!='" + assignData.address_id + "']").attr("disabled", "disabled");
