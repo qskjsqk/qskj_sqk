@@ -34,14 +34,45 @@
     top:904px;
 }
 
-.changeBtn{
+
+.addressSelect{
+    float:left;
+    width:273px;
+    height:36px;
+    border: 1px solid #D7EDFF;
+    position: absolute;
+    left: 20px;
+    top:120px;
+    //background-color: red;
+
+}
+.addressSelect select{
+    font-weight:bold;
+    background-color: #132645;
+    width:271px;
+    height:34px;
+    color:#fff;
+    font-size: 16px;
+}
+
+.changeBtn1{
     width:130px;
     height:43px;
     /*background-color: red;*/
-    background: url(../img/change.png);
+    background: url(../img/change1.png);
     position: absolute;
-    left: 85px;
-    top:750px;
+    left: 20px;
+    top:746px;
+}
+
+.changeBtn2{
+    width:130px;
+    height:43px;
+    /*background-color: red;*/
+    background: url(../img/change2.png);
+    position: absolute;
+    left: 163px;
+    top:746px;
 }
 .infoArea{
     width:auto;

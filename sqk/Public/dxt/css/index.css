@@ -58,11 +58,30 @@
     font-weight: bold;
 }
 
+.addressSelect{
+    float:left;
+    width:273px;
+    height:36px;
+    border: 1px solid #D7EDFF;
+    position: absolute;
+    left: 20px;
+    top:120px;
+    //background-color: red;
+
+}
+.addressSelect select{
+    font-weight:bold;
+    background-color: #132645;
+    width:271px;
+    height:34px;
+    color:#fff;
+    font-size: 16px;
+}
+
 .adArea{
     width:275px;
     height:580px;
     /*border: 1px solid #eee;*/
-
     position: absolute;
     left: 20px;
     top:160px;
@@ -97,13 +116,23 @@
     font-weight: bold;
 }
 
-.changeBtn{
+.changeBtn1{
     width:130px;
     height:43px;
     /*background-color: red;*/
-    background: url(../img/change.png);
+    background: url(../img/change1.png);
     position: absolute;
-    left: 85px;
+    left: 20px;
+    top:770px;
+}
+
+.changeBtn2{
+    width:130px;
+    height:43px;
+    /*background-color: red;*/
+    background: url(../img/change2.png);
+    position: absolute;
+    left: 163px;
     top:770px;
 }
 

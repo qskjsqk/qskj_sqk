@@ -17,43 +17,72 @@
                 <div class="logo"></div>
                 <div class="sysName">梨园智能商圈</div>
             </div>
+            <div class="addressSelect">
+                <select name="address_id" id="address_id" onchange="getAddressAdList()">
+                    <option value='0'>全体社区</option>
+                    <option value='1'>翠景北里</option>
+                    <option value='2'>翠屏北里</option>
+                    <option value='3'>翠屏南里</option>
+                    <option value='4'>大方居</option>
+                    <option value='5'>格瑞雅居</option>
+                    <option value='6'>葛布店东里</option>
+                    <option value='7'>金侨时代</option>
+                    <option value='8'>京洲园</option>
+                    <option value='9'>靓景明居</option>
+                    <option value='10'>梨园东里</option>
+                    <option value='11'>龙鼎园</option>
+                    <option value='12'>曼城家园</option>
+                    <option value='13'>群芳园</option>
+                    <option value='14'>万盛北里</option>
+                    <option value='15'>欣达园</option>
+                    <option value='16'>新城乐居</option>
+                    <option value='17'>新华联南区</option>
+                    <option value='18'>颐瑞东里</option>
+                    <option value='19'>颐瑞西里</option>
+                    <option value='20'>云景北里</option>
+                    <option value='21'>云景东里</option>
+                    <option value='22'>云景里</option>
+                </select>
+            </div>
             <div class="adArea" id="adList">
-<!--                <div class="adList hvr-forward">
-                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
-                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
-                </div>
-                <div class="adList">
-                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
-                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
-                </div>
-                <div class="adList">
-                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
-                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
-                </div>
-                <div class="adList">
-                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
-                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
-                </div>
-                <div class="adList">
-                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
-                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
-                </div>-->
+                <!--                <div class="adList hvr-forward">
+                                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                                </div>
+                                <div class="adList">
+                                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                                </div>
+                                <div class="adList">
+                                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                                </div>
+                                <div class="adList">
+                                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                                </div>
+                                <div class="adList">
+                                    <div class="adImgArea"><img class="adImg" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKaR0qCS2Z3iaj4IyVwF1STcrrWe5jicHbKHFz1k0P5KW0knapiaxgZTNaCUW6egbpDb8whj7HyicO3Wg/132"></div>
+                                    <div class="adTitle">将社区卡放置于导向台的读卡器上</div>
+                                </div>-->
 
             </div>
-            
-            <input type="hidden" id="address_id" name="address_id" value="0" >
+
             <input type="hidden" id="page" name="page" value="1" >
+            <input type="hidden" id="end" name="end" value="0" >
+
+            <div class="changeBtn1 hvr-pop" onclick="getAdListPre()"></div>
             
-            <div class="changeBtn hvr-pop" onclick="getAdListNext()"></div>
-            
+            <div class="changeBtn2 hvr-pop" onclick="getAdListNext()"></div>
+
             <div class="tspicArea">
                 <img src="__PUBLIC__/dxt/img/ystp.jpg">
             </div>
-            
+
             <div class="tsArea">将社区卡放置于导向台的读卡器上</div>
-            
+
             <input type="text" name="card_num" id="card_num" class="inputArea" maxlength="10" onkeyup="value = value.replace(/[^1234567890]+/g, '')"/>
-            
+
             <div class="qrcodeArea">
                 <img src='__PUBLIC__/dxt/img/lyznsq_qrcode.jpg' style="width:129px;height:129px;">
             </div>

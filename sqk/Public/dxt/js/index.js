@@ -60,14 +60,20 @@ $(function () {
 function getAdList(address_id, page) {
     $.post(c_path + "/getAdList", {'address_id': address_id, 'page': page}, function (data) {
         var str = "";
-        for (var i = 0; i < data.length; i++) {
-            str += '<div class="adList hvr-forward" onclick="getDetail(' + address_id + ',' + data[i].id + ')">';
-            str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
-            str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>点击查看详情</div>';
-            str += '</div>';
+        if (data.length == 0) {
+            str = "<font color='#fff'>该社区暂无商家</font>";
+            $('#page').val(0);
+        } else {
+            for (var i = 0; i < data.length; i++) {
+                str += '<div class="adList hvr-forward" onclick="getDetail(' + address_id + ',' + data[i].id + ')">';
+                str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
+                str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>点击查看详情</div>';
+                str += '</div>';
+            }
+            $('#page').val(data[0].page);
+            $('#end').val(data[0].end);
         }
         $('#adList').html(str);
-        $('#page').val(parseInt(data[0].page) + 1);
     }, 'json');
 
     $('#card_num').val('');
@@ -76,8 +82,30 @@ function getAdList(address_id, page) {
 
 function getAdListNext() {
     var address_id = $('#address_id').val();
-    var page = $('#page').val();
-    getAdList(address_id, page);
+    var page = parseInt($('#page').val());
+    var end = parseInt($('#end').val());
+    if (page == 0 || end == 1) {
+
+    } else {
+        page = parseInt(page) + 1;
+        getAdList(address_id, page);
+    }
+}
+
+function getAdListPre() {
+    var address_id = $('#address_id').val();
+    var page = parseInt($('#page').val());
+    if (page == 0 || page == 1) {
+
+    } else {
+        page = parseInt(page) - 1;
+        getAdList(address_id, page);
+    }
+}
+
+function getAddressAdList() {
+    var address_id = $('#address_id').val();
+    getAdList(address_id, 1);
 }
 
 /**

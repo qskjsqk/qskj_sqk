@@ -110,7 +110,6 @@ class IndexController extends BaseController {
         $page = $_POST['page'];
 
         $num = ($page - 1) * 5;
-
         $address_id = $_POST['address_id'];
         if ($address_id != 0) {
             $where['address_id'] = ['EQ', $address_id];
@@ -121,15 +120,14 @@ class IndexController extends BaseController {
         $adList = M('seller_info')->where($where)->order('exp_num desc')->limit($num, 5)->select();
         $count = M('seller_info')->where($where)->order('exp_num desc')->count();
         if (ceil($count / 5) > $page) {
-            $page = $page;
+            $end = 0;
         } else {
-            $page = 0;
+            $end = 1;
         }
         for ($i = 0; $i < count($adList); $i++) {
             $adList[$i]['address_name'] = getConameById($adList[$i]['address_id']);
-
             $adList[$i]['page'] = $page;
-
+            $adList[$i]['end'] = $end;
             if (strpos($adList[$i]['tx_path'], 'http') === FALSE) {
                 $adList[$i]['tx_path'] = '../../../' . $adList[$i]['tx_path'];
             } else {

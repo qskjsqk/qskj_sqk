@@ -11,8 +11,8 @@ $(function () {
     } else {
         getAdList(address_id, 1);
     }
-    
-        var TimeNum = new Date().getTime();
+
+    var TimeNum = new Date().getTime();
 //mousedown() 监听鼠标是否使用 keydown() 监听键盘是否可用
     $(document).mousedown(function () {
         TimeNum = new Date().getTime();
@@ -33,8 +33,10 @@ $(function () {
             window.location.href = c_path + '/index';
         }
     }, 1000);
-    
+
 });
+
+
 
 /**
  * 获取广告列表
@@ -44,21 +46,49 @@ $(function () {
 function getAdList(address_id, page) {
     $.post(c_path + "/getAdList", {'address_id': address_id, 'page': page}, function (data) {
         var str = "";
-        for (var i = 0; i < data.length; i++) {
-            str += '<div class="adList" >';
-            str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
-            str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>积分：' + data[i].exp_num + '</div>';
-            str += '</div>';
+        if (data.length == 0) {
+            str = "<font color='#fff'>该社区暂无商家</font>";
+            $('#page').val(0);
+        } else {
+            for (var i = 0; i < data.length; i++) {
+                str += '<div class="adList" >';
+                str += '   <div class="adImgArea"><img class="adImg" src="../../../' + data[i].tx_path + '"></div>';
+                str += '   <div class="adTitle">' + data[i].name + '</br>[' + data[i].address_name + ']</br>积分：' + data[i].exp_num + '</div>';
+                str += '</div>';
+            }
+            $('#page').val(data[0].page);
+            $('#end').val(data[0].end);
         }
-        $('#page').val(parseInt(data[0].page) + 1);
         $('#adList').html(str);
     }, 'json');
 }
 
 function getAdListNext() {
     var address_id = $('#address_id').val();
-    var page = $('#page').val();
-    getAdList(address_id, page);
+    var page = parseInt($('#page').val());
+    var end = parseInt($('#end').val());
+    if (page == 0 || end == 1) {
+
+    } else {
+        page = parseInt(page) + 1;
+        getAdList(address_id, page);
+    }
+}
+
+function getAdListPre() {
+    var address_id = $('#address_id').val();
+    var page = parseInt($('#page').val());
+    if (page == 0 || page == 1) {
+
+    } else {
+        page = parseInt(page) - 1;
+        getAdList(address_id, page);
+    }
+}
+
+function getAddressAdList() {
+    var address_id = $('#address_id').val();
+    getAdList(address_id, 1);
 }
 
 /**
