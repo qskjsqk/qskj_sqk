@@ -293,6 +293,7 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
+            M('test')->add(array('json_str'=>$input));
             if (strlen($iccard_num) < 10) {
                 $zero = str_repeat("0", 10 - strlen($iccard_num));
                 $iccard_num = $zero . $iccard_num;
