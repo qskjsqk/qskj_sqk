@@ -25,7 +25,7 @@ public class HFRFIDTool {
             //十六进制每两位 倒叙拼接 ，然后转为十进制
 
             if (hexString.length() % 2 == 0) {
-                String regex = "(.{2} )";
+                String regex = "(.{2})";
                 hexString = hexString.replaceAll(regex, "$1 ");
                 String[] strings = hexString.split(" ");
                 StringBuilder builder = new StringBuilder();
@@ -33,11 +33,6 @@ public class HFRFIDTool {
                     builder.append(strings[i]);
                 }
                 String changeString = Long.parseLong(builder.toString(), 16) + "";
-//                if (changeString.length() < 10) {
-//                    for (int i = 0; i <= 10 - changeString.length(); i++) {
-//                        changeString = "0" + changeString;
-//                    }
-//                }
                 return changeString;
             }
         } catch (NumberFormatException e) {
