@@ -63,7 +63,8 @@ class ActivityController extends Controller {
             $where['address_id'] = array('EQ', $_POST['address_id']);
         }
 
-        $acitvArr = M('ActivInfo')->where($where)->order('id desc')->limit($num)->select();
+        $acitvArr = M('ActivInfo')->where($where)->order('is_open desc,id desc')->limit($num)->select();
+        //dump(M('ActivInfo')->getLastSql());
         $count = M('ActivInfo')->where($where)->count();
 
         if ($num < $count) {
