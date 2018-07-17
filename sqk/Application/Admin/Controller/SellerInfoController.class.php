@@ -114,7 +114,7 @@ class SellerInfoController extends BaseDBController {
         $returnData = parent::getData($this->infoModel, $id);
         if ($returnData['code'] == '500') {
             $condition['module_info_id'] = ['EQ', $id];
-            $condition['module_name'] = ['LIKE', ['tx_seller','zz_seller'],'OR'];
+            $condition['module_name'] = ['LIKE', ['tx_seller', 'zz_seller'], 'OR'];
             $attachList = json_encode($this->attachModel->where($condition)->select());
             $sellerInfo = $returnData['data'];
             $sellerWechat = $this->sellerWechatBindingModel->where(['seller_id' => $id])->select();
@@ -160,12 +160,21 @@ class SellerInfoController extends BaseDBController {
      */
     public function delSellerSync() {
         if ($this->infoModel->where(['id' => I('id')])->delete() == true) {
-            M('seller_wechat_binding')->where(['seller_id' => I('id')])->delete();
-            M('seller_complaint')->where(['seller_id' => I('id')])->delete();
-            M('seller_integral_goods')->where(['seller_id' => I('id')])->delete();
-            M('goods_exchange_record')->where(['seller_id' => I('id')])->delete();
-            M('integral_tradint_record')->where('(income_id=' . I('id') . ' and income_type=3) or (payment_id=' . I('id') . ' and payment_type=3)')->delete();
-            $this->ajaxReturn(syncData(0, '操作成功'));
+            $tranModel = M();
+            $tranModel->startTrans(); // 开启事务
+            $delFlag0 = $tranModel->table($this->dbFix . 'seller_wechat_binding')->where(['seller_id' => I('id')])->delete();
+            $delFlag1 = $tranModel->table($this->dbFix . 'seller_complaint')->where(['seller_id' => I('id')])->delete();
+            $delFlag2 = $tranModel->table($this->dbFix . 'seller_integral_goods')->where(['seller_id' => I('id')])->delete();
+            $delFlag3 = $tranModel->table($this->dbFix . 'goods_exchange_record')->where(['seller_id' => I('id')])->delete();
+            $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . I('id') . ' and income_type=3) or (payment_id=' . I('id') . ' and payment_type=3)')->delete();
+            $flag = $delFlag0 && $delFlag1 && $delFlag2 && $delFlag3 && $delFlag4;
+            if ($flag) {
+                $tranModel->commit(); // 成功则提交事务 
+                $this->ajaxReturn(syncData(0, '操作成功'));
+            } else {
+                $tranModel->rollback(); // 否则将事务回滚 
+                $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
+            }
         } else {
             $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
         }

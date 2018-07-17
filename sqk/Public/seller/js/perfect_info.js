@@ -42,8 +42,7 @@ function saveSellerInfo() {
                     'nickname':$('#nickname').val(),
                 }, function (data) {
                     if (data.is_success.flag == 1) {
-                        getSellerInfo();
-                        mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+                        location.href=c_path + "/index";
                     } else {
                         mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
                     }
