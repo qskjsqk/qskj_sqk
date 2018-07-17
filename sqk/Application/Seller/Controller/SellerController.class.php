@@ -138,6 +138,7 @@ class SellerController extends BaseController {
         $saveArr['name'] = $_POST['name'];
         $saveArr['address_api_url'] = $_POST['address_api_url'];
         $saveArr['contacts'] = $_POST['contacts'];
+        $saveArr['status'] = 0;
 
 //        dump($saveArr);
         if (!$sellerModel->create($saveArr)) {
