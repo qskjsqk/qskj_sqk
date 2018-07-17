@@ -189,7 +189,7 @@ class IndexController extends BaseController {
      * 演示帐号
      */
     public function ys() {
-        cookie('seller_id', 55, 3600 * 24 * 30);
+        cookie('seller_id', 82, 3600 * 24 * 30);
         cookie('address_id', 1, 3600 * 24 * 30);
         $this->redirect('Seller/seller_home');
     }
