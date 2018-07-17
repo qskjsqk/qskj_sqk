@@ -37,7 +37,7 @@ class SellerController extends BaseController {
         } else {
             $data['tx_path'] = $data['tx_path'];
         }
-        $this->assign('sellerInfo', $this->getSellerInfo());
+        $this->assign('sellerInfo', $data);
         $this->display();
     }
 
@@ -52,7 +52,13 @@ class SellerController extends BaseController {
      * 商家版我的资料
      */
     public function my_info() {
-        $this->assign('sellerInfo', $this->getSellerInfo());
+        $data = $this->getSellerInfo();
+        if (strpos($data['tx_path'], 'http') === FALSE) {
+            $data['tx_path'] = '../../../' . $data['tx_path'];
+        } else {
+            $data['tx_path'] = $data['tx_path'];
+        }
+        $this->assign('sellerInfo', $data);
         $this->display();
     }
 
@@ -60,7 +66,13 @@ class SellerController extends BaseController {
      * 商家版我的资料
      */
     public function tx_upload() {
-        $this->assign('sellerInfo', $this->getSellerInfo());
+        $data = $this->getSellerInfo();
+        if (strpos($data['tx_path'], 'http') === FALSE) {
+            $data['tx_path'] = '../../../' . $data['tx_path'];
+        } else {
+            $data['tx_path'] = $data['tx_path'];
+        }
+        $this->assign('sellerInfo', $data);
         $this->display();
     }
 
