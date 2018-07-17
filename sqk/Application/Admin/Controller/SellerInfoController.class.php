@@ -168,8 +168,8 @@ class SellerInfoController extends BaseDBController {
         $delFlag2 = $tranModel->table($this->dbFix . 'seller_integral_goods')->where(['seller_id' => I('id')])->delete();
         $delFlag3 = $tranModel->table($this->dbFix . 'goods_exchange_record')->where(['seller_id' => I('id')])->delete();
         $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . $id . ' and income_type=3) or (payment_id=' . $id . ' and payment_type=3)')->delete();
-        $flag = $delFlag & $delFlag0 & $delFlag1 & $delFlag2 & $delFlag3 & $delFlag4;
-        $this->ajaxReturn(syncData(0, $tranModel->getLastSql()));
+
+        $flag = ($delFlag === FALSE) && ($delFlag0 === FALSE) && ($delFlag1 === FALSE) && ($delFlag2 === FALSE) && ($delFlag3 === FALSE) && ($delFlag4 === FALSE);
         if ($flag) {
             $tranModel->commit(); // 成功则提交事务 
             $this->ajaxReturn(syncData(0, '操作成功'));
