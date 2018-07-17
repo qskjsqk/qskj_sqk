@@ -175,7 +175,7 @@ class SellerInfoController extends BaseDBController {
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $tranModel->rollback(); // 否则将事务回滚 
-            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作));
+            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
         }
     }
 
