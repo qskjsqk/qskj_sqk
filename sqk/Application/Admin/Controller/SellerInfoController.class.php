@@ -164,20 +164,18 @@ class SellerInfoController extends BaseDBController {
         $tranModel->startTrans(); // 开启事务
         $delFlag = $tranModel->table($this->dbFix . 'seller_info')->where(['id' => I('id')])->delete();
         $delFlag0 = $tranModel->table($this->dbFix . 'seller_wechat_binding')->where(['seller_id' => I('id')])->delete();
-        $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . $id . ' and income_type=3) or (payment_id=' . $id . ' and payment_type=3)')->delete();
         $delFlag1 = $tranModel->table($this->dbFix . 'seller_complaint')->where(['seller_id' => I('id')])->delete();
         $delFlag2 = $tranModel->table($this->dbFix . 'seller_integral_goods')->where(['seller_id' => I('id')])->delete();
         $delFlag3 = $tranModel->table($this->dbFix . 'goods_exchange_record')->where(['seller_id' => I('id')])->delete();
-        $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . $id . ' and income_type=3) or (payment_id=' . $id . ' and payment_type=3)')->delete();
-$delFlag4=$tranModel->getLastSql();
+        $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . $id . ' and income_type=2) or (payment_id=' . $id . ' and payment_type=2)')->delete();
 
-        $flag = ($delFlag === FALSE) && ($delFlag0 === FALSE) && ($delFlag1 === FALSE) && ($delFlag2 === FALSE) && ($delFlag3 === FALSE) && ($delFlag4 === FALSE);
+        $flag = $delFlag && $delFlag0 ;
         if ($flag) {
             $tranModel->commit(); // 成功则提交事务 
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $tranModel->rollback(); // 否则将事务回滚 
-            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作' . $delFlag . '-' . $delFlag0 . '-' . $delFlag1 . '-' . $delFlag2 . '-' . $delFlag3 . '-' . $delFlag4));
+            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作));
         }
     }
 
