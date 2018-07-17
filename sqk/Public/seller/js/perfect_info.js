@@ -41,10 +41,10 @@ function saveSellerInfo() {
                     'openid':$('#openid').val(),
                     'nickname':$('#nickname').val(),
                 }, function (data) {
-                    if (data.is_success.flag == 1) {
-                        location.href=c_path + "/index";
-                    } else {
+                    if (data.is_success.flag == 0) {
                         mui.toast(data.is_success.msg, {duration: 'long', type: 'div'});
+                    } else {
+                        location.href=c_path + "/index";
                     }
                 }, 'json');
             }
