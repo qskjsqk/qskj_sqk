@@ -31,6 +31,12 @@ class SellerController extends BaseController {
      * 商家版首页
      */
     public function seller_home() {
+        $data = $this->getSellerInfo();
+        if (strpos($data['tx_path'], 'http') === FALSE) {
+            $data['tx_path'] = '../../../' . $data['tx_path'];
+        } else {
+            $data['tx_path'] = $data['tx_path'];
+        }
         $this->assign('sellerInfo', $this->getSellerInfo());
         $this->display();
     }

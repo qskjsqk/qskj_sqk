@@ -159,6 +159,7 @@ class SellerInfoController extends BaseDBController {
      * 异步删除商家
      */
     public function delSellerSync() {
+        $id = I('id');
         $tranModel = M();
         $tranModel->startTrans(); // 开启事务
         $delFlag = $tranModel->table($this->dbFix . 'seller_info')->where(['id' => I('id')])->delete();
@@ -166,14 +167,15 @@ class SellerInfoController extends BaseDBController {
         $delFlag1 = $tranModel->table($this->dbFix . 'seller_complaint')->where(['seller_id' => I('id')])->delete();
         $delFlag2 = $tranModel->table($this->dbFix . 'seller_integral_goods')->where(['seller_id' => I('id')])->delete();
         $delFlag3 = $tranModel->table($this->dbFix . 'goods_exchange_record')->where(['seller_id' => I('id')])->delete();
-        $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . I('id') . ' and income_type=3) or (payment_id=' . I('id') . ' and payment_type=3)')->delete();
-        $flag = $delFlag &&$delFlag0 && $delFlag1 && $delFlag2 && $delFlag3 && $delFlag4;
+        $delFlag4 = $tranModel->table($this->dbFix . 'integral_trading_record')->where('(income_id=' . $id . ' and income_type=3) or (payment_id=' . $id . ' and payment_type=3)')->delete();
+        $flag = $delFlag & $delFlag0 & $delFlag1 & $delFlag2 & $delFlag3 & $delFlag4;
+        $this->ajaxReturn(syncData(0, $tranModel->getLastSql()));
         if ($flag) {
             $tranModel->commit(); // 成功则提交事务 
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $tranModel->rollback(); // 否则将事务回滚 
-            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
+            $this->ajaxReturn(syncData(-1, '操作失败,请重新操作' . $delFlag . '-' . $delFlag0 . '-' . $delFlag1 . '-' . $delFlag2 . '-' . $delFlag3 . '-' . $delFlag4));
         }
     }
 
