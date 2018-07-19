@@ -43,7 +43,7 @@ $(function () {
         var minutes = Math.floor((TimeCount - TimeNum) / 1000);
         console.log(minutes);
 //如果两个时间差大于1分钟
-        if (minutes >= 300) {
+        if (minutes >= 60) {
             window.location.href = c_path + '/index';
         }
     }, 1000);
