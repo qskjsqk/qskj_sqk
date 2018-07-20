@@ -23,13 +23,13 @@ $(function () {
         TimeNum = new Date().getTime();
     });
     
-    $(document.frames('right').document).mousedown(function () {
-        TimeNum = new Date().getTime();
-    }).keydown(function () {
-        TimeNum = new Date().getTime();
-    }).mousemove(function () {
-        TimeNum = new Date().getTime();
-    });
+//    $(document.frames('right').document).mousedown(function () {
+//        TimeNum = new Date().getTime();
+//    }).keydown(function () {
+//        TimeNum = new Date().getTime();
+//    }).mousemove(function () {
+//        TimeNum = new Date().getTime();
+//    });
 
 //setInterval用来判断 当前时间之差
     setInterval(function () {
