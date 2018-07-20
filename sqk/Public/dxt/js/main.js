@@ -22,6 +22,14 @@ $(function () {
     }).mousemove(function () {
         TimeNum = new Date().getTime();
     });
+    
+    $(document.frames('rightMain').document).mousedown(function () {
+        TimeNum = new Date().getTime();
+    }).keydown(function () {
+        TimeNum = new Date().getTime();
+    }).mousemove(function () {
+        TimeNum = new Date().getTime();
+    });
 
 //setInterval用来判断 当前时间之差
     setInterval(function () {
