@@ -5,6 +5,7 @@
  */
 //初始化-----------------------------------------------------------------------------------------
 $(function () {
+    var client_id = getUrl('client_id');
     var address_id = getUrl('address_id');
     if (address_id == null) {
         getAdList(0, 1);
@@ -41,10 +42,13 @@ $(function () {
 //这里判断按键或鼠标 事件是否触发了 
         var TimeCount = new Date().getTime();
         var minutes = Math.floor((TimeCount - TimeNum) / 1000);
-        console.log(minutes);
+        console.log("打开首页"+minutes+"s");
 //如果两个时间差大于1分钟
         if (minutes >= 60) {
-            window.location.href = c_path + '/index';
+            $.get('http://218.249.59.12/setcardstatus.php?action=1&client_id='+client_id+'&status=0', function (data) {
+                console.log("打开首页120s超时！关闭弹窗！");
+                console.log("打开首页"+minutes+"s");
+            });
         }
     }, 1000);
 
@@ -58,6 +62,7 @@ $(function () {
  * @returns {undefined}
  */
 function getAdList(address_id, page) {
+    TimeNum = new Date().getTime();
     $.post(c_path + "/getAdList", {'address_id': address_id, 'page': page}, function (data) {
         var str = "";
         if (data.length == 0) {
@@ -81,6 +86,7 @@ function getAdList(address_id, page) {
 }
 
 function getAdListNext() {
+    TimeNum = new Date().getTime();
     var address_id = $('#address_id').val();
     var page = parseInt($('#page').val());
     var end = parseInt($('#end').val());
@@ -93,6 +99,7 @@ function getAdListNext() {
 }
 
 function getAdListPre() {
+    TimeNum = new Date().getTime();
     var address_id = $('#address_id').val();
     var page = parseInt($('#page').val());
     if (page == 0 || page == 1) {
@@ -115,7 +122,7 @@ function getAddressAdList() {
  * @returns {undefined}
  */
 function getDetail(address_id, id) {
-    window.location.href = c_path + '/detail?address_id=' + address_id + '&id=' + id;
+    window.location.href = c_path + '/detail?address_id=' + address_id + '&id=' + id + '&client_id=' + client_id;
 }
 
 function submitCardInfo() {
@@ -129,7 +136,7 @@ function submitCardInfo() {
             $('#card_num').val('');
             $('#card_num').focus();
         } else {
-            window.location.href = c_path + '/main?address_id=' + assignData.address_id + '&user_id=' + data.data.id;
+            window.location.href = c_path + '/main?address_id=' + assignData.address_id + '&user_id=' + data.data.id + '&client_id=' + client_id;
         }
     }, 'json');
 }

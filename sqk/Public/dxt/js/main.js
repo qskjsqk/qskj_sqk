@@ -5,6 +5,7 @@
  */
 //初始化-----------------------------------------------------------------------------------------
 $(function () {
+    var client_id = getUrl('client_id');
     var address_id = getUrl('address_id');
     if (address_id == null) {
         getAdList(0, 1);
@@ -30,7 +31,7 @@ $(function () {
         console.log(minutes);
 //如果两个时间差大于1分钟
         if (minutes >= 60) {
-            window.location.href = c_path + '/index';
+            window.location.href = c_path + '/index?client_id=' + client_id;
         }
     }, 1000);
 
@@ -64,6 +65,7 @@ function getAdList(address_id, page) {
 }
 
 function getAdListNext() {
+    TimeNum = new Date().getTime();
     var address_id = $('#address_id').val();
     var page = parseInt($('#page').val());
     var end = parseInt($('#end').val());
@@ -76,6 +78,7 @@ function getAdListNext() {
 }
 
 function getAdListPre() {
+    TimeNum = new Date().getTime();
     var address_id = $('#address_id').val();
     var page = parseInt($('#page').val());
     if (page == 0 || page == 1) {
@@ -102,7 +105,7 @@ function getDetail(address_id, id) {
 }
 
 function backHome(address_id) {
-    window.location.href = c_path + '/index?address_id=' + address_id;
+    window.location.href = c_path + '/index?address_id=' + address_id + '&client_id=' + client_id;
 }
 
 /**
