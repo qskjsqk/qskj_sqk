@@ -10,6 +10,15 @@
 //初始化-----------------------------------------------------------------------------------------
 $(function () {
     
+    //mousedown() 监听鼠标是否使用 keydown() 监听键盘是否可用
+    $(document).mousedown(function () {
+        parent.timeZero();
+    }).keydown(function () {
+        parent.timeZero();
+    }).mousemove(function () {
+        parent.timeZero();
+    });
+    
     checkIsLogin();
     getUserappInfo();
 });
@@ -17,8 +26,9 @@ $(function () {
 //函数--------------------------------------------------------------------------------------------
 function getUserappInfo() {
     mui.post(c_path + "/getUserappInfo?type=api", function (data) {
+        console.log(data);
         $('#realname').val(data.realname);
-        $('#tel').val(data.tel);
+        $('#tel').val(data.tel.substring(0, 3)+"****"+data.tel.substring(7, 11));
         $('#birthday').val(data.birthday);
         $('#headimgurl').attr('src', data.tx_path);
 
@@ -36,20 +46,20 @@ function getUserappInfo() {
 function saveUserInfo() {
     getUserappInfo();
     var flag = 1;
-    telCheck = /^1[3|5|7|8|][0-9]{9}$/;
-    if ($('#tel').val() != '') {
-        if (telCheck.test($('#tel').val())) {
-            flag = 1;
-        } else {
-            flag = 0;
-            msg = '手机号码不正确';
-        }
-    }
+//    telCheck = /^1[3|5|7|8|][0-9]{9}$/;
+//    if ($('#tel').val() != '') {
+//        if (telCheck.test($('#tel').val())) {
+//            flag = 1;
+//        } else {
+//            flag = 0;
+//            msg = '手机号码不正确';
+//        }
+//    }
     if (flag == 0) {
         mui.toast(msg, {duration: 'long', type: 'div'});
     } else {
         $.post(c_path + "/saveUserappInfo", {
-            'tel': $('#tel').val(),
+            //'tel': $('#tel').val(),
             'realname': $('#realname').val(),
             'birthday': $('#birthday').val(),
             'gender': $('#gender').val(),

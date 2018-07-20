@@ -202,7 +202,7 @@ class IndexController extends BaseController {
      * 获取个人信息
      */
     public function getUserappInfo() {
-        $userModel = M(C('DB_USERAPP_INFO'));
+        $userModel = M('sys_userapp_info');
         $user_id = cookie('user_id');
         $result = $userModel->where(array('id' => $user_id))->find();
         $result['address_name'] = getConameById($result['address_id']);
@@ -338,7 +338,7 @@ class IndexController extends BaseController {
     public function saveUserappInfo() {
         $userModel = D('SysUserappInfo');
         $user_id = cookie('user_id');
-        $saveArr['tel'] = $_POST['tel'];
+        //$saveArr['tel'] = $_POST['tel'];
         $saveArr['usr'] = $_POST['tel'];
         $saveArr['realname'] = $_POST['realname'];
         $saveArr['gender'] = $_POST['gender'];

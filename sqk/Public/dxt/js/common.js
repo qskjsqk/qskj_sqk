@@ -60,14 +60,13 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
-    parent.TimeNum=0;
-    $(document).mousedown(function () {
-        parent.timeZero();
-    }).keydown(function () {
-        parent.timeZero();
-    }).mousemove(function () {
-        parent.timeZero();
-    });
+//    $(document).mousedown(function () {
+//        parent.timeZero();
+//    }).keydown(function () {
+//        parent.timeZero();
+//    }).mousemove(function () {
+//        parent.timeZero();
+//    });
     
     
     console.log('====正在访问【'+module+'】【'+controller+'】【'+action+'】');
