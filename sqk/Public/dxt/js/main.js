@@ -23,7 +23,7 @@ $(function () {
         TimeNum = new Date().getTime();
     });
     
-    $(document.frames('rightMain').document).mousedown(function () {
+    $(document.frames('right').document).mousedown(function () {
         TimeNum = new Date().getTime();
     }).keydown(function () {
         TimeNum = new Date().getTime();
