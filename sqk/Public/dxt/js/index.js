@@ -45,6 +45,7 @@ $(function () {
         console.log("打开首页"+minutes+"s");
 //如果两个时间差大于1分钟
         if (minutes >= 60) {
+            TimeNum = new Date().getTime();
             $.get('http://218.249.59.12/setcardstatus.php?action=1&client_id='+client_id+'&status=0', function (data) {
                 console.log("打开首页120s超时！关闭弹窗！");
                 console.log("打开首页"+minutes+"s");
