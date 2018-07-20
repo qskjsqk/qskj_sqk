@@ -37,6 +37,10 @@ $(function () {
 
 });
 
+function timeZero(){
+    TimeNum = new Date().getTime();
+}
+
 
 
 /**

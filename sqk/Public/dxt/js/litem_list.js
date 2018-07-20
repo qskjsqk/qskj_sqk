@@ -6,5 +6,15 @@
 
 
 $(function () {
+    
+    //mousedown() 监听鼠标是否使用 keydown() 监听键盘是否可用
+    $(document).mousedown(function () {
+        parent.timeZero();
+    }).keydown(function () {
+        parent.timeZero();
+    }).mousemove(function () {
+        parent.timeZero();
+    });
+    
     checkIsLogin();
 });
