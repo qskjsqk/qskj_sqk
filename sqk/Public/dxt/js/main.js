@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 //初始化-----------------------------------------------------------------------------------------
+var TimeNum = new Date().getTime();
 $(function () {
     var client_id = getUrl('client_id');
     var address_id = getUrl('address_id');
@@ -13,7 +14,7 @@ $(function () {
         getAdList(address_id, 1);
     }
 
-    var TimeNum = new Date().getTime();
+    
 //mousedown() 监听鼠标是否使用 keydown() 监听键盘是否可用
     $(document).mousedown(function () {
         TimeNum = new Date().getTime();
@@ -22,14 +23,6 @@ $(function () {
     }).mousemove(function () {
         TimeNum = new Date().getTime();
     });
-    
-//    $(document.frames('right').document).mousedown(function () {
-//        TimeNum = new Date().getTime();
-//    }).keydown(function () {
-//        TimeNum = new Date().getTime();
-//    }).mousemove(function () {
-//        TimeNum = new Date().getTime();
-//    });
 
 //setInterval用来判断 当前时间之差
     setInterval(function () {
@@ -48,7 +41,6 @@ $(function () {
 function timeZero(){
     TimeNum = new Date().getTime();
 }
-
 
 
 /**

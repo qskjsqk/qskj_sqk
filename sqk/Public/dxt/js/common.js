@@ -60,6 +60,16 @@ function delHttp(str) {
  * @returns {undefined}
  */
 function checkIsLogin() {
+    parent.TimeNum=0;
+    $(document).mousedown(function () {
+        parent.timeZero();
+    }).keydown(function () {
+        parent.timeZero();
+    }).mousemove(function () {
+        parent.timeZero();
+    });
+    
+    
     console.log('====正在访问【'+module+'】【'+controller+'】【'+action+'】');
     $('#'+controller+'_btn').addClass('mui-active');
     $.post(m_path + "/login/checkIsLogin", function (data) {
