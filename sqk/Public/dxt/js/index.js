@@ -123,10 +123,12 @@ function getAddressAdList() {
  * @returns {undefined}
  */
 function getDetail(address_id, id) {
+    var client_id = getUrl('client_id');
     window.location.href = c_path + '/detail?address_id=' + address_id + '&id=' + id + '&client_id=' + client_id;
 }
 
 function submitCardInfo() {
+    var client_id = getUrl('client_id');
     $cardNum = $('#card_num').val();
     if ($cardNum == '' || $cardNum == null) {
         return;

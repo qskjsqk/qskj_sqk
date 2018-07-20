@@ -105,6 +105,7 @@ function getDetail(address_id, id) {
 }
 
 function backHome(address_id) {
+    var client_id = getUrl('client_id');
     window.location.href = c_path + '/index?address_id=' + address_id + '&client_id=' + client_id;
 }
 

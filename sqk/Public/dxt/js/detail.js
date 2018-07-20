@@ -97,10 +97,12 @@ function getAddressAdList() {
  * @returns {undefined}
  */
 function getDetail(address_id, id) {
+    var client_id = getUrl('client_id');
     window.location.href = c_path + '/detail?address_id=' + address_id + '&id=' + id + '&client_id=' + client_id;
 }
 
 function backHome(address_id) {
+    var client_id = getUrl('client_id');
     window.location.href = c_path + '/index?address_id=' + address_id + '&client_id=' + client_id;
 }
 
