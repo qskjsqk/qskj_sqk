@@ -19,7 +19,6 @@
             (function ($, doc) {
                 $.init();
             })(mui, document);
-
         </script>
         {$Assigndata}
         <script src="__PUBLIC__/appm/js/common.js"></script>
@@ -44,10 +43,11 @@
             </div>
             <div class="mui-row">
                 <div class="mui-content-padded">
-                    <button type="button" class="mui-btn mui-btn-primary mui-btn-block">实体卡用户</button>
-                    <button type="button" class="mui-btn mui-btn-success mui-btn-block">虚拟卡用户</button>
-                    <button type="button" class="mui-btn mui-btn-warning mui-btn-block">商家用户</button>
-                    <button type="button" class="mui-btn mui-btn-royal mui-btn-block">社区管理员用户</button>
+                    <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="download(0)">实体卡用户</button>
+                    <button type="button" class="mui-btn mui-btn-success mui-btn-block" onclick="download(1)">虚拟卡用户</button>
+                    <button type="button" class="mui-btn mui-btn-warning mui-btn-block" onclick="download(2)">商家用户</button>
+                    <button type="button" class="mui-btn mui-btn-royal mui-btn-block" onclick="download(3)">社区管理员用户</button>
+                    <button type="button" class="mui-btn mui-btn-danger mui-btn-block" onclick="download(4)">系统管理员用户</button>
                 </div>
             </div>
             <!--页面主内容区结束-->
@@ -55,3 +55,20 @@
     </body>
 
 </html>
+<script type="text/javascript">
+    function download(id){
+        if(id==0){
+            window.open("../../../Public/Plugin/实体卡用户使用手册.pdf");
+        }else if(id==1){
+            window.open("../../../Public/Plugin/移动端用户版使用手册.pdf");
+        }else if(id==2){
+            window.open("../../../Public/Plugin/移动端商家版使用手册.pdf");
+        }else if(id==3){
+            window.open("../../../Public/Plugin/社区管理员用户使用手册.pdf");
+        }else{
+            window.open("../../../Public/Plugin/系统管理员用户使用手册.pdf");
+        }
+    }
+
+</script>
+
