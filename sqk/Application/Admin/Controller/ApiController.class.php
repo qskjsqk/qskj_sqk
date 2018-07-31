@@ -29,6 +29,7 @@ class ApiController extends BaseDBController {
      * 检测管理员登录
      */
     public function checkLoginPos() {
+        $updUrl = "https://www.pgyer.com/Sm6N";
         $input = file_get_contents("php://input"); //接收POST数据
         $inputArr = json_decode($input, true);
 
@@ -42,6 +43,7 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 0;
             $returnData['msg'] = '错误的设备识别码！';
             $returnData['timestamp'] = time();
+            $returnData['updurl'] = $updUrl;
         } else {
             $findArr['address_name'] = getConameById($findArr['address_id']);
             $commInfo = M('sys_community_info')->field('id,com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
@@ -57,6 +59,7 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 1;
             $returnData['msg'] = '成功登录！';
             $returnData['timestamp'] = time();
+            $returnData['updurl'] = $updUrl;
 
             $returnData['data'] = array_merge($findArr, $commInfo);
         }
@@ -293,7 +296,7 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '参数错误！';
             $returnData['timestamp'] = time();
         } else {
-            M('test')->add(array('json_str'=>$input));
+            M('test')->add(array('json_str' => $input));
             if (strlen($iccard_num) < 10) {
                 $zero = str_repeat("0", 10 - strlen($iccard_num));
                 $iccard_num = $zero . $iccard_num;
