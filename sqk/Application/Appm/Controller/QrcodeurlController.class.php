@@ -427,7 +427,7 @@ class QrcodeurlController extends BaseController {
             $returnData['flag'] = 0;
             $returnData['msg'] = '兑换失败，您的余额不足！';
             $this->ajaxReturn($returnData, "JSON");
-            exit;
+            exit();
         }
 
         $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
