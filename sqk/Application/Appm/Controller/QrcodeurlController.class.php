@@ -344,6 +344,15 @@ class QrcodeurlController extends BaseController {
     public function transrerIntegral() {
         //入库商品交易表
         $addArr = $_POST;
+        
+        //检查余额是否足够
+        $userYe = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'integral_num');
+        if ($userYe < $_POST['exchange_integral']) {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '交易失败，您的余额不足！';
+            $this->ajaxReturn($returnData, "JSON");
+            exit();
+        }
 
         $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
 
