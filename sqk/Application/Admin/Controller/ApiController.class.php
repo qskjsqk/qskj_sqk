@@ -61,7 +61,7 @@ class ApiController extends BaseDBController {
             
             $commInfo['updurl'] = $updUrl;
 
-            $commInfo['data'] = array_merge($findArr, $commInfo);
+            $returnData['data'] = array_merge($findArr, $commInfo);
         }
         $this->ajaxReturn($returnData, 'JSON');
     }
