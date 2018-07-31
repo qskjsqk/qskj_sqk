@@ -59,7 +59,7 @@ class ApiController extends BaseDBController {
             $returnData['msg'] = '成功登录！';
             $returnData['timestamp'] = time();
             
-            $returnData['updurl'] = $updUrl;
+            $commInfo['updurl'] = $updUrl;
 
             $commInfo['data'] = array_merge($findArr, $commInfo);
         }
