@@ -23,10 +23,10 @@ public class ServiceProvider {
     public static final int DEVELOP = 0;
     public static final int ONLINE = 2;
 
-    private static final String REQUEST_URL_ONLINE = "http://111.204.78.45:9100/index.php/admin/api";
-    private static final String REQUEST_URL_DEVELOP = "http://111.204.78.45:9100/index.php/admin/api";
-    private static final String IMAGE_URL_ONLINE = "http://111.204.78.45:9100/";
-    private static final String IMAGE_URL_DEVELOP = "http://111.204.78.45:9100/";
+    private static final String REQUEST_URL_ONLINE = "http://lyznsq.qmtsc.com/index.php/admin/api";
+    private static final String REQUEST_URL_DEVELOP = "http://lyznsq.qmtsc.com/index.php/admin/api";
+    private static final String IMAGE_URL_ONLINE = "http://lyznsq.qmtsc.com/";
+    private static final String IMAGE_URL_DEVELOP = "http://lyznsq.qmtsc.com/";
     //    public static final String REQUEST_URL_DEVELOP = "http://api_m.pre.sanjieke.cn/app";
     private static int mIsDevelopEnv = 0;
     private static int mIsOnlineEnv = 1;

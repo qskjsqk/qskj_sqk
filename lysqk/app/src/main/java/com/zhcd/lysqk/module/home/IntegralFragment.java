@@ -64,7 +64,6 @@ public class IntegralFragment extends BaseFragment {
                 }
             }
             hfReader = HFRFIDTool.getHfReader();
-            hfThread = new Thread(readTask);
         }
     }
 
@@ -165,8 +164,8 @@ public class IntegralFragment extends BaseFragment {
         super.onResume();
         if (!running)
             running = true;
-        if (hfThread == null)
-            hfThread = new Thread(readTask);
+//        if (hfThread == null)
+        hfThread = new Thread(readTask);
         hfThread.start();
     }
 

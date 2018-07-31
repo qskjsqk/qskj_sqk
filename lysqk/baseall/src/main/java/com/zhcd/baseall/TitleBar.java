@@ -128,7 +128,7 @@ public class TitleBar extends RelativeLayout {
         return this;
     }
 
-    public TitleBar setRignt(String text, final OnClickListener listener) {
+    public TitleBar setRight(String text, final OnClickListener listener) {
         tvRight.setText(text);
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setOnClickListener(listener);

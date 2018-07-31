@@ -7,6 +7,7 @@ public class LoginEntity {
     private String address_name;
     private String com_integral;
     private String qrcode_path;
+    private String updurl;
 
     public String getId() {
         return id;
@@ -54,5 +55,13 @@ public class LoginEntity {
 
     public void setQrcode_path(String qrcode_path) {
         this.qrcode_path = qrcode_path;
+    }
+
+    public String getUpdurl() {
+        return updurl;
+    }
+
+    public void setUpdurl(String updurl) {
+        this.updurl = updurl;
     }
 }

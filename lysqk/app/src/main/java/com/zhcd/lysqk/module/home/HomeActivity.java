@@ -2,7 +2,9 @@ package com.zhcd.lysqk.module.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -10,6 +12,10 @@ import android.widget.TextView;
 
 import com.zhcd.lysqk.R;
 import com.zhcd.lysqk.base.BaseActivity;
+import com.zhcd.lysqk.manager.LoginInfoManager;
+import com.zhcd.lysqk.module.login.entity.LoginEntity;
+import com.zhcd.lysqk.tool.ImagePathUtil;
+import com.zhcd.utils.T;
 
 public class HomeActivity extends BaseActivity {
     private static final String HomeSelectedTab = "HomeSelectedTab";
@@ -66,6 +72,17 @@ public class HomeActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_container, actionFragment)
                 .commitAllowingStateLoss();
+        if (LoginInfoManager.getInstance().isLogin()) {
+            final LoginEntity loginEntity = LoginInfoManager.getInstance().getLoginEntity();
+            if (loginEntity != null && !TextUtils.isEmpty(loginEntity.getUpdurl())) {
+                titleBarBuilder.setRight("升级>", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoBrowser(loginEntity.getUpdurl());
+                    }
+                });
+            }
+        }
         tvActionTab = (TextView) findViewById(R.id.tv_action_tab);
         tvIntegralTab = (TextView) findViewById(R.id.tv_integral_tab);
         homeContainer = (RelativeLayout) findViewById(R.id.home_container);
@@ -83,6 +100,16 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void gotoBrowser(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri content_url = Uri.parse(url);
+            intent.setData(content_url);
+            startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        }
     }
 
     /**
