@@ -421,6 +421,15 @@ class QrcodeurlController extends BaseController {
     public function transrerIntegralComm() {
         $addArr = $_POST;
 
+        //检查余额是否足够
+        $userYe = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'integral_num');
+        if ($userYe < $_POST['exchange_integral']) {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '兑换失败，您的余额不足！';
+            $this->ajaxReturn($returnData, "JSON");
+            exit;
+        }
+
         $addArr['trading_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
 
         $tranModel = M();
@@ -457,12 +466,12 @@ class QrcodeurlController extends BaseController {
             $returnData['data']['comm_name'] = $this->getDataKey(M('sys_community_info'), $returnData['data']['comm_id'], 'com_name');
             $returnData['data']['user_name'] = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'realname');
             $returnData['data']['time'] = date('Y.m.d H:i:s', time());
-            
+
             $userWx = M('sys_userapp_info')->find(cookie('user_id'));
             $paymentInfo = [
                 'open_id' => $userWx['wx_num'],
                 'name' => $userWx['realname'],
-                'type' => '用户扫码转账给['.$returnData['data']['comm_name'].'社区]',
+                'type' => '用户扫码转账给[' . $returnData['data']['comm_name'] . '社区]',
                 'io' => '消费',
                 'exchange_integral' => $_POST['exchange_integral'],
                 'integral_num' => $userWx['integral_num']
@@ -475,6 +484,6 @@ class QrcodeurlController extends BaseController {
         }
 
         $this->ajaxReturn($returnData, "JSON");
-    }    
+    }
 
 }
