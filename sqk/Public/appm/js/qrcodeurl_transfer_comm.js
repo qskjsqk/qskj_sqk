@@ -38,7 +38,7 @@ function transrerIntegral () {
                     mui.alert(str, data.msg);
                     history.go(0);
                 } else {
-                    mui.alert(data.msg,"交易失败");
+                    mui.alert(data.msg);
                 }
             }, 'json');
         }
