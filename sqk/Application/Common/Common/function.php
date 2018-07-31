@@ -37,6 +37,7 @@ function getAccessToken() {
 function sendWxTemMsg($str) {
     $access_token_arr = getAccessToken();
     $return = httpRequest('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' . $access_token_arr, $str);
+    M('test')->add(array('json_str' => $return));
     return $return;
 }
 
