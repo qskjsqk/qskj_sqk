@@ -267,6 +267,15 @@ class QrcodeurlController extends BaseController {
         $addArr['exchange_number'] = \Think\Tool\GenerateUnique::generateExchangeNumber();
         $addArr['exchange_method_id'] = 1;
         $addArr['status'] = 1;
+        
+        //检查余额是否足够
+        $userYe = $this->getDataKey(M('sys_userapp_info'), cookie('user_id'), 'integral_num');
+        if ($userYe < $_POST['exchange_integral']) {
+            $returnData['flag'] = 0;
+            $returnData['msg'] = '交易失败，您的余额不足！';
+            $this->ajaxReturn($returnData, "JSON");
+            exit();
+        }
 
         $tranModel = M();
 
