@@ -43,7 +43,6 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 0;
             $returnData['msg'] = '错误的设备识别码！';
             $returnData['timestamp'] = time();
-            $returnData['updurl'] = $updUrl;
         } else {
             $findArr['address_name'] = getConameById($findArr['address_id']);
             $commInfo = M('sys_community_info')->field('id,com_name,com_integral,qrcode_path')->where('id=' . $findArr['address_id'])->find();
@@ -59,9 +58,10 @@ class ApiController extends BaseDBController {
             $returnData['status'] = 1;
             $returnData['msg'] = '成功登录！';
             $returnData['timestamp'] = time();
+            
             $returnData['updurl'] = $updUrl;
 
-            $returnData['data'] = array_merge($findArr, $commInfo);
+            $commInfo['data'] = array_merge($findArr, $commInfo);
         }
         $this->ajaxReturn($returnData, 'JSON');
     }
