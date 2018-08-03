@@ -177,51 +177,51 @@ class LoginController extends Controller {
         } else if ($_POST['password'] == '') {
             $errorMsg['flag'] = 0;
             $errorMsg['msg'] = '你还没有输入密码！';
-        } /* else if ($_POST['validate'] == '') {
-          $errorMsg['flag'] = 0;
-          $errorMsg['msg'] = '你还没有输入验证码！';
-          } */ else {
-            /* if (!$this->check_verify($_POST['validate'])) {
-              $errorMsg['flag'] = 0;
-              $errorMsg['msg'] = '验证码错误！';
-              } else { */
-            $userModel = M(C('DB_USER_INFO'));
-            $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
-            if (!empty($userArr)) {
-                $userInfoC = A('SysUserInfo');
-                $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
-                if ($catInfo['sys_name'] != 'appUser') {
-                    if ($catInfo != 0) {
-                        session('sys_name', $catInfo['sys_name']);
-                        session('cat_name', $catInfo['cat_name']);
-                        $errorMsg['userGroup'] = $catInfo['sys_name'];
+        } else if ($_POST['validate'] == '') {
+            $errorMsg['flag'] = 0;
+            $errorMsg['msg'] = '你还没有输入验证码！';
+        } else {
+            if (!$this->check_verify($_POST['validate'])) {
+                $errorMsg['flag'] = 0;
+                $errorMsg['msg'] = '验证码错误！';
+            } else {
+                $userModel = M(C('DB_USER_INFO'));
+                $userArr = $userModel->where('binary usr="' . $_POST['username'] . '" and pwd="' . $this->EncriptPWD($_POST['password']) . '"')->find();
+                if (!empty($userArr)) {
+                    $userInfoC = A('SysUserInfo');
+                    $catInfo = $userInfoC->getCatInfoByCid($userArr['cat_id']);
+                    if ($catInfo['sys_name'] != 'appUser') {
+                        if ($catInfo != 0) {
+                            session('sys_name', $catInfo['sys_name']);
+                            session('cat_name', $catInfo['cat_name']);
+                            $errorMsg['userGroup'] = $catInfo['sys_name'];
+                        } else {
+                            $errorMsg['userGroup'] = 0;
+                        }
+
+                        $loginUpd['last_ip'] = get_client_ip();
+                        $loginUpd['last_login_time'] = date('Y-m-d H:i:s', time());
+                        $userModel->where('id=' . $userArr['id'])->save($loginUpd);
+
+                        session('usr', $userArr['usr']);
+                        session('sys_token', $this->config['system_token']);
+                        session('pwd', $userArr['pwd']);
+                        session('user_id', $userArr['id']);
+                        session('cat_id', $userArr['cat_id']);
+                        session('address_id', $userArr['address_id']);
+                        session('realname', $userArr['realname']);
+                        $logC = A('Actionlog')->addLog('login', 'loginSys', '登录系统');
+                        $errorMsg['flag'] = 1;
+                        $errorMsg['cat_id'] = $userArr['cat_id'];
                     } else {
-                        $errorMsg['userGroup'] = 0;
+                        $errorMsg['flag'] = 0;
+                        $errorMsg['msg'] = '后台不允许登录APP用户！';
                     }
-
-                    $loginUpd['last_ip'] = get_client_ip();
-                    $loginUpd['last_login_time'] = date('Y-m-d H:i:s', time());
-                    $userModel->where('id=' . $userArr['id'])->save($loginUpd);
-
-                    session('usr', $userArr['usr']);
-                    session('sys_token', $this->config['system_token']);
-                    session('pwd', $userArr['pwd']);
-                    session('user_id', $userArr['id']);
-                    session('cat_id', $userArr['cat_id']);
-                    session('address_id', $userArr['address_id']);
-                    session('realname', $userArr['realname']);
-                    $logC = A('Actionlog')->addLog('login', 'loginSys', '登录系统');
-                    $errorMsg['flag'] = 1;
-                    $errorMsg['cat_id'] = $userArr['cat_id'];
                 } else {
                     $errorMsg['flag'] = 0;
-                    $errorMsg['msg'] = '后台不允许登录APP用户！';
+                    $errorMsg['msg'] = '用户名或密码输入错误！';
                 }
-            } else {
-                $errorMsg['flag'] = 0;
-                $errorMsg['msg'] = '用户名或密码输入错误！';
             }
-            //}
         }
         $this->ajaxReturn($errorMsg);
     }
