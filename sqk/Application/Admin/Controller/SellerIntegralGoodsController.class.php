@@ -30,8 +30,7 @@ class SellerIntegralGoodsController extends BaseDBController {
     /**
      * 返回列表页查询时连表信息和查询字段
      */
-    private static function createJoinAndField()
-    {
+    private static function createJoinAndField() {
         $join = [
             ['sys_community_info', 'id', 'seller_integral_goods', 'address_id'],
             ['seller_integral_goods_cat', 'id', 'seller_integral_goods', 'cat_id'],
@@ -90,9 +89,15 @@ class SellerIntegralGoodsController extends BaseDBController {
      */
     public function goodsFrame() {
         $id = I('id');
-        if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-2, '操作失败,请重新操作'));
-        $toStatus = I('status') == 1 ? 2: 1;
-        if($this->infoModel->where(['id' => $id])->save(['status' => $toStatus]) == true) {
+
+        if (!isset($id) || empty($id))
+            $this->ajaxReturn(syncData(-2, '操作失败,请重新操作'));
+        $goodInfo = M('seller_integral_goods')->where(['id' => $id])->find();
+        $sellerInfo = M('seller_info')->where(['id' => $id])->find();
+        if ($sellerInfo['status'] != 1)
+            $this->ajaxReturn(syncData(-2, '该商家尚未通过审核'));
+        $toStatus = I('status') == 1 ? 2 : 1;
+        if ($this->infoModel->where(['id' => $id])->save(['status' => $toStatus]) == true) {
             $this->ajaxReturn(syncData(0, '操作成功'));
         } else {
             $this->ajaxReturn(syncData(-1, '操作失败,请重新操作'));
@@ -105,7 +110,7 @@ class SellerIntegralGoodsController extends BaseDBController {
     public function delBatchSellerIntegralGoods() {
         $idArray = explode(',', rtrim($_POST['ids'], ","));
         foreach ($idArray as $value) {
-            if($this->infoModel->where(['id' => $value])->delete()) {
+            if ($this->infoModel->where(['id' => $value])->delete()) {
                 $this->weChatModel->where(['seller_id' => $value])->delete();
             }
         }
@@ -118,9 +123,10 @@ class SellerIntegralGoodsController extends BaseDBController {
      */
     public function getGoodsInfoSync() {
         $id = I('id');
-        if(!isset($id) || empty($id)) $this->ajaxReturn(syncData(-1, '获取失败,请重新操作'));
+        if (!isset($id) || empty($id))
+            $this->ajaxReturn(syncData(-1, '获取失败,请重新操作'));
         $info = $this->infoModel->find($id);
-        if(!empty($info)) {
+        if (!empty($info)) {
             $this->ajaxReturn(syncData(0, '获取数据成功', $info));
         } else {
             $this->ajaxReturn(syncData(-2, '获取失败,请重新操作'));
@@ -132,7 +138,8 @@ class SellerIntegralGoodsController extends BaseDBController {
      */
     public function showListById() {
         $seller_id = I('seller_id');
-        if(!isset($seller_id) || empty($seller_id)) $this->redirect('/Admin/SellerInfo/showList');
+        if (!isset($seller_id) || empty($seller_id))
+            $this->redirect('/Admin/SellerInfo/showList');
 
         $where = [
             //$this->dbFix . 'seller_integral_goods.status' => ['neq', 0],     //管理员不能看到未发布的积分商品(本条件可以不设置)
