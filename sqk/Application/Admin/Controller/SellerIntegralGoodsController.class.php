@@ -93,7 +93,7 @@ class SellerIntegralGoodsController extends BaseDBController {
         if (!isset($id) || empty($id))
             $this->ajaxReturn(syncData(-2, '操作失败,请重新操作'));
         $goodInfo = M('seller_integral_goods')->where(['id' => $id])->find();
-        $sellerInfo = M('seller_info')->where(['id' => $id])->find();
+        $sellerInfo = M('seller_info')->where(['id' => $goodInfo['seller_id']])->find();
         if ($sellerInfo['status'] != 1)
             $this->ajaxReturn(syncData(-2, '该商家尚未通过审核'));
         $toStatus = I('status') == 1 ? 2 : 1;
