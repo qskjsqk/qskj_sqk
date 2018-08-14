@@ -41,7 +41,8 @@ function getDetail(id) {
 
 //基本信息
 
-            $("#activ_title").html(data.data.title + "<p>" + data.data.realname + "&nbsp;发表于&nbsp;" + data.data.add_time + "</p>");
+            //$("#activ_title").html(data.data.title + "<p>" + data.data.realname + "&nbsp;发表于&nbsp;" + data.data.add_time + "</p>");
+            $("#activ_title").html(data.data.title + "<p>发表于&nbsp;" + data.data.add_time + "</p>");
             $("#integral").text(data.data.integral + "分");
             $("#address_name_a_start_date").html("&nbsp;" + data.data.address_name + "/" + data.data.start_date);
             $("#like_num").html('&nbsp;' + data.data.like_num + '人收藏');
