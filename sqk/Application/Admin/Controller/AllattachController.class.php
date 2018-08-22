@@ -156,6 +156,7 @@ class AllattachController extends Controller {
                 }
             };
         }
+        
         $this->success('删除成功', U('index/main'), 3);
     }
 

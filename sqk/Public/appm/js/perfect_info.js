@@ -26,12 +26,12 @@ function saveUserInfo() {
 
     birthdayCheck = /^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$/;
     if ($('#birthday').val() != '') {
-        if (birthdayCheck.test($('#birthday').val())) {
-            flag = 1;
-        } else {
-            flag = 0;
-            msg = '生日格式不正确';
-        }
+//        if (birthdayCheck.test($('#birthday').val())) {
+//            flag = 1;
+//        } else {
+//            flag = 0;
+//            msg = '生日格式不正确';
+//        }
     }else {
         flag = 0;
         msg = '请输入生日';
