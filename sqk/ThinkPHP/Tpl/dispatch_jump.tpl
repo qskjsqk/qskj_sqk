@@ -52,7 +52,7 @@
     </style>
     </head>
     <body>
-    <div class="system-message">
+        <div class="system-message" style="background-color:#fff;">
       <?php if(isset($message)) {?>
       <h1>√</h1>
       <p class="success"><?php echo($message); ?></p>

@@ -188,11 +188,13 @@ class AllattachController extends Controller {
 //        dump($selectArr);
 
 
+        $num = count($selectArr);
+
         foreach ($selectArr as $v) {
             $path = C('UPLOAD_PATH') . $v['file_path'];
 //            dump(unlink($path));
             if (unlink($path)) {
-//                $delFlag = $model->delete($v['id']);
+                $delFlag = $model->delete($v['id']);
                 if ($delFlag > 0) {
                     echo '<hr><div class="alert alert-success"><img style="width:100px;height:auto;" class="img-responsive" alt="Cinque Terre" src="http://lyznsq.qmtsc.com/' . $v['file_path'] . '">' . '<font color="green">-------|' . $v['module_name'] . '|-------|' . $v['file_real_name'] . '|-------|删除成功|</font></div></br>';
                 } else {
@@ -201,9 +203,11 @@ class AllattachController extends Controller {
             } else {
                 echo '<hr><div class="alert alert-success"><img style="width:100px;height:auto;" class="img-responsive" alt="Cinque Terre" src="http://lyznsq.qmtsc.com/' . $v['file_path'] . '">' . '<font color="#666">-------|' . $v['module_name'] . '|-------|' . $v['file_real_name'] . '|-------|文件不存在|</font></div></br>';
             }
+            $num--;
         }
-
-//        $this->success('删除成功', U('index/main'), 3);
+        if ($num <= 0) {
+            $this->success('删除成功', U('index/main'), 3);
+        }
     }
 
     /**
