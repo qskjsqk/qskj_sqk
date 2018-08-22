@@ -20,7 +20,7 @@ class SysUserappInfoModel extends Model {
         array('birthday', 'require', '出生日期为必填项！'),
         array('tel', 'require', '手机号码为必填项！'),
         array('tel', '', '手机号码已被注册！', 1, 'unique', 1),
-        array('tel', '/^1[3|5|7|8|9][0-9]{9}$/', '手机格式不正确！', 2),
+        array('tel', '/^1[0-9]{10}$/', '手机格式不正确！', 2),
     );
 
 }

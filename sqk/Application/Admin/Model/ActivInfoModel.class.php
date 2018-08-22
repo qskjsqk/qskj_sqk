@@ -22,7 +22,7 @@ class ActivInfoModel extends Model {
         array('end_time', 'require', '请选择结束时间！'),
         array('link_name', 'require', '活动联系人为必填项！'),
         array('link_tel', 'require', '联系电话为必填项！'),
-        array('link_tel', '/^1[3|5|7|8|9][0-9]{9}$/', '号码格式不正确！'),
+        array('link_tel', '/^1[0-9]{10}$/', '号码格式不正确！'),
         
         array('address', 'require', '活动地点为必填项！'),
         array('signin_time', 'require', '签到次数为必填项！'),

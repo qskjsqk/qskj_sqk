@@ -35,7 +35,7 @@ function getUserappInfo() {
 function saveUserInfo() {
     getUserappInfo();
     var flag = 1;
-    telCheck = /^1[3|5|7|8|][0-9]{9}$/;
+    telCheck = /^1[0-9]{10}$/;
     if ($('#tel').val() != '') {
         if (telCheck.test($('#tel').val())) {
             flag = 1;

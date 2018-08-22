@@ -22,7 +22,7 @@ class SysUserInfoModel extends Model {
         array('realname', 'require', '真实姓名为必填项！'),
         array('realname', '0,50', '真实姓名长度应在0-50之间！', 0, 'length'),
         array('tel', 'require', '手机号码为必填项！'),
-        array('tel', '/^1[3|5|7|8|][0-9]{9}$/', '手机格式不正确！', 2),
+        array('tel', '/^1[0-9]{10}$/', '手机格式不正确！', 2),
         array('email', 'require', '电子邮箱为必填项！'),
         array('email', '/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/', '邮箱格式不正确！', 2),
     );

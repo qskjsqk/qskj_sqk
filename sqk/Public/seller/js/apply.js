@@ -18,7 +18,7 @@ $(function () {
  */
 function getApplyKeyCode() {
     var flag = 1;
-    emailCheck = /^1[3|5|7|8|][0-9]{9}$/;
+    emailCheck = /^1[0-9]{10}$/;
     if ($('#tel').val() != '') {
         if (emailCheck.test($('#tel').val())) {
             flag = 1;

@@ -24,7 +24,7 @@ function saveUserInfo() {
         msg = '请输入姓名';
     }
 
-    birthdayCheck = /^[1-2][0-9]{3}-[0-1][1-9]-[0-3][1-9]$/;
+    birthdayCheck = /^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$/;
     if ($('#birthday').val() != '') {
         if (birthdayCheck.test($('#birthday').val())) {
             flag = 1;
