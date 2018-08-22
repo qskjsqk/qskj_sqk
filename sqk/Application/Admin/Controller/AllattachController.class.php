@@ -144,20 +144,66 @@ class AllattachController extends Controller {
      */
     public function delAttachs() {
         $model = M(C('DB_ALL_ATTACH'));
-        $selectArr = $model->where('module_info_id=0')->select();
+        //为0的图片
+        $selectArr = $model->where('module_info_id=0 and module_name not in("sellerGoods","sellerInfo","tx_app","tx_seller","zz_seller")')->select();
+        $noticeArr = M('notice_info')->field('id')->select();
+        if (empty($noticeArr)) {
+            $noticeStr = "0,0";
+        } else {
+            $noticeStr = "0,0";
+            foreach ($noticeArr as $a) {
+                $noticeStr .= "," . $a['id'];
+            }
+        }
+        $activityArr = M('activ_info')->field('id')->select();
+        if (empty($activityArr)) {
+            $activityStr = "0,0";
+        } else {
+            $activityStr = "0,0";
+            foreach ($activityArr as $b) {
+                $activityStr .= "," . $b['id'];
+            }
+        }
+        $promArr = M('seller_prom_info')->field('id')->select();
+        if (empty($promArr)) {
+            $promStr = "0,0";
+        } else {
+            $promStr = "0,0";
+            foreach ($promArr as $c) {
+                $promStr .= "," . $c['id'];
+            }
+        }
+        //通知无用图片
+        $nArr = $model->where('module_name="notice" and module_info_id not in(' . $noticeStr . ')')->select();
+        //活动无用图片
+        $aArr = $model->where('module_name="activity" and module_info_id not in(' . $activityStr . ')')->select();
+        //广告无用图片
+        $pArr = $model->where('module_name="sellerProm" and module_info_id not in(' . $promStr . ')')->select();
+//        dump(count($nArr));
+//        dump(count($aArr));
+//        dump(count($pArr));
+//        dump(count($selectArr));
+        $selectArr = array_merge($selectArr, $nArr, $aArr, $pArr);
+
+//        dump($selectArr);
+
+
         foreach ($selectArr as $v) {
             $path = C('UPLOAD_PATH') . $v['file_path'];
+//            dump(unlink($path));
             if (unlink($path)) {
-                $delFlag = $model->delete($v['id']);
+//                $delFlag = $model->delete($v['id']);
                 if ($delFlag > 0) {
-                    echo $path . '<font color="green">-------删除成功！</font></br></br>';
+                    echo '<hr><div class="alert alert-success"><img style="width:100px;height:auto;" class="img-responsive" alt="Cinque Terre" src="http://lyznsq.qmtsc.com/' . $v['file_path'] . '">' . '<font color="green">-------|' . $v['module_name'] . '|-------|' . $v['file_real_name'] . '|-------|删除成功|</font></div></br>';
                 } else {
-                    echo $path . '<font color="red">-------删除失败！</font></br></br>';
+                    echo '<hr><div class="alert alert-success"><img style="width:100px;height:auto;" class="img-responsive" alt="Cinque Terre" src="http://lyznsq.qmtsc.com/' . $v['file_path'] . '">' . '<font color="red">-------|' . $v['module_name'] . '|-------|' . $v['file_real_name'] . '|-------|删除失败|</font></div></br>';
                 }
-            };
+            } else {
+                echo '<hr><div class="alert alert-success"><img style="width:100px;height:auto;" class="img-responsive" alt="Cinque Terre" src="http://lyznsq.qmtsc.com/' . $v['file_path'] . '">' . '<font color="#666">-------|' . $v['module_name'] . '|-------|' . $v['file_real_name'] . '|-------|文件不存在|</font></div></br>';
+            }
         }
-        
-        $this->success('删除成功', U('index/main'), 3);
+
+//        $this->success('删除成功', U('index/main'), 3);
     }
 
     /**

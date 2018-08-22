@@ -14,14 +14,14 @@ return array(
     'DB_ALL_ATTACH' => 'Sys_all_attach', //配置附件数据库
     'DB_CONFIG_DEF' => 'Sys_config_def', //配置系统字典数据库
     'DB_DB_BACKUP' => 'Sys_db_backup', //配置数据备份数据库
-    'BACKUP_MYSQL_PATH' => 'E:/wamp/www/qskj_project_sqk_debug/trunk/dbsql/', //配置数据备份数据库
+    'BACKUP_MYSQL_PATH' => 'D:/wamp/www/qskj_project_sqk_debug/trunk/dbsql/', //配置数据备份数据库
     'DB_USER_INFO' => 'Sys_user_info', //配置用户信息数据库
     'DB_USER_GROUP' => 'Sys_user_group', //配置用户组数据库
 	
     //附件处理模块
     'UPLOAD_SIZE'=>3145728,//上传文件大小限制
     'UPLOAD_ROOT'=>'Public/Upload',//上传文件根目录
-    'UPLOAD_PATH'=>'E:/wamp/www/qskj_project_sqk_debug/trunk/sqk/',//上传文件绝对路径
+    'UPLOAD_PATH'=>'D:/wamp/www/qskj_project_sqk_debug/sqk/',//上传文件绝对路径
     'UPLOAD_EXT'=> array(
         'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
         'photo' => array('jpg', 'jpeg', 'png'),
